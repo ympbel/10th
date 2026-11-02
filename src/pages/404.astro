@@ -1,0 +1,32 @@
+---
+// 404. GitHub Pages serves dist/404.html for every missing address under the site, in either language, so there is
+// one page with the Korean lines and the English lines, each linking to its home page. Served at whatever address
+// was missing, it has no address of its own: every link goes through url(), and the KR/EN toggle links the two
+// home pages.
+import '../styles/global.css';
+import '../styles/not-found.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url.ts';
+import { t } from '../i18n/index.ts';
+
+const ko = t('ko').notFound;
+const en = t('en').notFound;
+---
+
+<BaseLayout title={`${ko.title} · ${en.title}`} locale="ko" languageHrefs={{ ko: url('/'), en: url('/en/') }}>
+  <div class="wrap">
+    <div class="not-found">
+      <p class="not-found-code">404</p>
+      <section class="not-found-part">
+        <h1>{ko.title}</h1>
+        <p>{ko.lead}</p>
+        <a class="btn-outline" href={url('/')}>{ko.home}</a>
+      </section>
+      <section class="not-found-part" lang="en">
+        <h2>{en.title}</h2>
+        <p>{en.lead}</p>
+        <a class="btn-outline" href={url('/en/')}>{en.home}</a>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

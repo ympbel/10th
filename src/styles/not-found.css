@@ -1,0 +1,30 @@
+/* The 404 page: the Korean lines, then the English lines under a hairline, each with a link to its home page. */
+.not-found {
+  padding: var(--s-2xl) 0;
+}
+.not-found-code {
+  color: var(--c-yonsei-navy);
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+}
+.not-found-part {
+  margin-top: var(--s-lg);
+}
+.not-found-part + .not-found-part {
+  padding-top: var(--s-lg);
+  border-top: 1px solid var(--c-hairline);
+}
+.not-found-part h1,
+.not-found-part h2 {
+  color: var(--c-graphite);
+  font-size: var(--fs-title);
+  line-height: 1.6;
+}
+.not-found-part p {
+  margin-top: var(--s-2xs);
+  color: var(--c-slate);
+}
+.not-found-part .btn-outline {
+  margin-top: var(--s-md);
+}

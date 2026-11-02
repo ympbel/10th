@@ -6,6 +6,7 @@ import { load } from 'cheerio';
 import { BASE, DIST, allHtmlFiles, isRedirect, page } from './helpers.mjs';
 
 const SECTIONS = ['PEOPLE', 'PUBLICATION', 'AWARD', 'PROJECT', 'ACTIVITY', 'ARCHIVE'];
+const NOT_FOUND = `${BASE}/404.html`;
 
 /** The URL path a built file is served at: `dist/people/students/index.html` → `/10th/people/students/`,
  * `dist/404.html` → `/10th/404.html`. */
@@ -65,7 +66,10 @@ test('the KR/EN toggle links the same page in both languages and marks the curre
     const [kr, en] = $('.topmenu .langbut a').map((_, a) => $(a).attr('href')).get();
     assert.ok(!isEnglish(kr), `${path}: KR → ${kr}`);
     assert.equal(en, englishOf(kr), path);
-    assert.equal(isEnglish(path) ? en : kr, path, `${path}: the current language links to this page`);
+    // The 404 page is served at whatever address was missing, so it has no page of its own to link: the toggle
+    // links the two home pages.
+    const current = path === NOT_FOUND ? `${BASE}/` : path;
+    assert.equal(isEnglish(path) ? en : kr, current, `${path}: the current language links to this page`);
     assert.equal($('.topmenu .langbut li.active a').text().trim(), isEnglish(path) ? 'EN' : 'KR', path);
   }
 });

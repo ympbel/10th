@@ -12,9 +12,11 @@ interface Props {
   title?: string;
   locale: Locale;
   bodyClass?: string;
+  /** The KR/EN hrefs when the page has no address of its own (404); see Header. */
+  languageHrefs?: Record<Locale, string>;
 }
 
-const { title, locale, bodyClass } = Astro.props;
+const { title, locale, bodyClass, languageHrefs } = Astro.props;
 const s = t(locale);
 ---
 
@@ -31,7 +33,7 @@ const s = t(locale);
   </head>
   <body class={bodyClass}>
     <a class="skip" href="#main">{s.skipToContent}</a>
-    <Header locale={locale} />
+    <Header locale={locale} languageHrefs={languageHrefs} />
     <main id="main">
       <slot />
     </main>

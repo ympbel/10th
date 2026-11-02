@@ -218,6 +218,11 @@ export const en: typeof ko = {
     partCounts: { papers: '{n}', presentations: '{n}', awards: '{n}' },
     papersNote: 'Papers are listed only where this person is first, co-first or corresponding author.',
   },
+  notFound: {
+    title: 'Page not found',
+    lead: 'The address may have changed, or the page does not exist.',
+    home: 'Go to the home page',
+  },
   footer: {
     name: 'Yonsei Medical Physics and Biomedical Engineering Lab.',
     address: 'Yonsei University, 50 Yonsei-ro, Seodaemun-gu, Seoul 03722, Korea',

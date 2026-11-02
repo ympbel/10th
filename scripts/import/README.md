@@ -61,6 +61,10 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
   python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/content --out src/content --force --only papers,presentations,awards --check
   ```
 - `report.md`는 돌릴 때마다 새로 씁니다. `--only`로 돌리면 그 컬렉션과 연결에 쓴 컬렉션의 내용만 담깁니다.
+- `--force`는 파일을 지우지 않습니다. 시트에서 나오지 않는 파일(운영자가 새로 쓴 항목, 이름을 바꾼 구성원 파일)은 그대로 남고, 연결도 다시 정해지지 않습니다. 그런 파일의 `members`는 손으로 고칩니다.
+- 구성원을 시트에서 다시 만들면(`--only`에 `members`, 또는 `--only` 없이 `--force`) 이어 받는 것은 `aliases`뿐입니다. 지도교수의 `link`, 졸업 처리(`role`, `degree`), 채운 `*_en` 같은 손으로 고친 값은 시트 값으로 돌아가고, 이름을 바꾼 구성원은 시트의 파일 이름(`member-24` 등)으로 다시 생깁니다.
+- 구성원 파일을 읽는 부분(`mpbel.py`)은 YAML의 일부만 읽습니다. 목록은 줄마다 `- 값`(한 줄 목록은 빈 `[]`만), 여러 줄 값은 `|-`만 됩니다. `[a, b]`, `>`, 들여 쓴 이어지는 줄을 만나면 그 파일 경로와 함께 `ValueError`로 멈춥니다.
+- `--force` 없이 돌리면 있는 파일은 그대로 두고 건수만 셉니다. 이때도 `report.md`는 새로 쓰이며 표의 "새로 씀"이 0, "그대로 둠"이 건수가 됩니다. 마지막 변환의 보고서를 남겨 두려면 `--report`로 다른 곳에 씁니다.
 
 ## 파일
 

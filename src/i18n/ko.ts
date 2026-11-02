@@ -261,6 +261,12 @@ export const ko = {
     partCounts: { papers: '{n}편', presentations: '{n}건', awards: '{n}건' },
     papersNote: '논문은 1저자·공동 1저자·교신저자인 것만 모았습니다.',
   },
+  /** The 404 page, which shows the Korean and the English lines together. */
+  notFound: {
+    title: '페이지를 찾을 수 없습니다',
+    lead: '주소가 바뀌었거나 없는 페이지입니다.',
+    home: '홈으로 가기',
+  },
   footer: {
     name: 'Yonsei Medical Physics and Biomedical Engineering Lab.',
     address: '03722 서울특별시 서대문구 연세로 50 연세대학교',

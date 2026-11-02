@@ -9,15 +9,18 @@ import { t } from '../i18n/index.ts';
 
 interface Props {
   locale: Locale;
+  /** The KR/EN hrefs, for a page that has no address of its own (404). Without it, the toggle links this page's
+   * address in each language. */
+  languageHrefs?: Record<Locale, string>;
 }
 
-const { locale } = Astro.props;
+const { locale, languageHrefs } = Astro.props;
 const s = t(locale);
 // The toggle links to the same page in each language: this page for the current one, its counterpart for the other.
 const here = Astro.url.pathname;
 const languages: Array<{ locale: Locale; label: string; href: string }> = [
-  { locale: 'ko', label: 'KR', href: locale === 'ko' ? here : otherLocaleHref(here) },
-  { locale: 'en', label: 'EN', href: locale === 'en' ? here : otherLocaleHref(here) },
+  { locale: 'ko', label: 'KR', href: languageHrefs?.ko ?? (locale === 'ko' ? here : otherLocaleHref(here)) },
+  { locale: 'en', label: 'EN', href: languageHrefs?.en ?? (locale === 'en' ? here : otherLocaleHref(here)) },
 ];
 ---
 
