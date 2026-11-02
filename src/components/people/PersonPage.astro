@@ -29,11 +29,14 @@ const d = member.data;
 if (d.role === 'professor') throw new Error(`${member.id}: professors have no person page`);
 const role = d.role;
 
-const [papers, presentations, awards] = await Promise.all([
+const [members, papers, presentations, awards] = await Promise.all([
+  getCollection('members'),
   getCollection('papers'),
   getCollection('presentations'),
   getCollection('awards'),
 ]);
+/** Every member by slug, so member names in the paper author lines link to their person pages. */
+const people = new Map(members.map((m) => [m.id, m]));
 const items = itemsOf(member.id, { papers: papers.filter((x) => isLabEra(x.data.year)), presentations, awards });
 
 const name = displayName(d, locale);
@@ -72,7 +75,7 @@ const count = (part: keyof typeof p.partCounts, n: number) => fill(p.partCounts[
           <h3>{yearHref(year) ? <a href={yearHref(year)}>{year}</a> : year}</h3>
           <ol class="yr-list yr-papers">
             {list.map((x) => (
-              <PaperItem paper={x.data} locale={locale} />
+              <PaperItem paper={x.data} people={people} locale={locale} />
             ))}
           </ol>
         </div>

@@ -1,8 +1,8 @@
 /* Publication boards (imported by the components in components/pub/, after the global bundle and years.css): the
    main site's publication list form from DESIGN.md. The year links row is .year-tabs (base.css); each year is a
    section with its heading (24px 700) over a 3px Graphite rule, then rows divided by 1px Hairline with the number in
-   Ash on the left. The row text (.yr-title, .yr-sub, .yr-meta, .yr-type) and the conference headings (.yr-conf)
-   come from years.css. Colors and spacing come from tokens.css. */
+   Ash on the left. The row text (.yr-title, .yr-sub with its member links, .yr-meta, .yr-type) and the conference
+   headings (.yr-conf) come from years.css. Colors and spacing come from tokens.css. */
 
 .pub-note {
   margin-bottom: var(--s-md);
@@ -27,17 +27,6 @@
 /* Rows: 1px Hairline under each (the year pages use the softer line). */
 .pub-list > li {
   border-bottom-color: var(--c-hairline);
-}
-/* Member names in an author line link to their person pages. */
-.yr-sub a[data-member] {
-  color: var(--c-graphite);
-  text-decoration: underline;
-  text-decoration-color: var(--c-hairline);
-  text-underline-offset: 3px;
-}
-.yr-sub a[data-member]:hover {
-  color: var(--c-cobalt);
-  text-decoration-color: currentColor;
 }
 
 /* ---------- Papers: the 연구실 이전 section after the lab's years ---------- */

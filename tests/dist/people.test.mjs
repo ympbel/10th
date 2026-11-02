@@ -219,13 +219,26 @@ for (const [lang, prefix] of [
     }
   });
 
+  test(`${lang}: on a person page each paper's author line links the member's own page`, () => {
+    const m = persons.find((x) => countsOf(x.id).papers > 0);
+    const $ = page(at('people', m.id));
+    const rows = $('section[data-part="papers"] .yr-item');
+    assert.equal(rows.length, countsOf(m.id).papers);
+    rows.each((_, row) => {
+      const links = $(row).find('.yr-sub a[href*="/people/"]');
+      assert.ok(links.length >= 1, m.id);
+      assert.ok(links.is(`[href="${href(m.id)}"]`), m.id);
+    });
+  });
+
   test(`${lang}: names on the year pages link to the person pages`, () => {
     for (const y of YEARS) {
       const $ = page(at('years', String(y)));
       $('[data-member]').each((_, el) => {
         const id = $(el).attr('data-member');
         assert.equal(el.tagName, 'a', `${y} ${id}`);
-        assert.ok($(el).hasClass('name'), `${y} ${id}`);
+        // A name link, or a member's name in a paper's author line.
+        assert.ok($(el).hasClass('name') || $(el).closest('.yr-sub').length === 1, `${y} ${id}`);
         assert.equal($(el).attr('href'), href(id), `${y} ${id}`);
         assert.ok(personIds.has(id), `${y} ${id}`);
       });

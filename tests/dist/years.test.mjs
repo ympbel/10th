@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { BASE, DIST, entries, exists, nested, page, scalar } from './helpers.mjs';
+import { BASE, DIST, entries, exists, list, nested, page, scalar } from './helpers.mjs';
 
 // The year pages (plan Task 9): /years/2016/ … /years/2026/ in both languages, the year tab rail, the summary line
 // and the seven parts. Expected numbers are counted here from the content files, not through src/lib.
@@ -147,6 +147,16 @@ for (const [lang, prefix] of [
       $('section[data-part="seminars"] a').attr('href'),
       `${BASE}${prefix}/activity/seminars/`,
     );
+  });
+
+  test(`${lang}: 2022 paper bylines link the paper's members to their person pages`, () => {
+    const $ = page(path(2022));
+    const rows = $('section[data-part="papers"] .yr-item');
+    const papers = expected(2022).papers.sort((a, b) => Number(scalar(a.fm, 'order')) - Number(scalar(b.fm, 'order')));
+    const professors = new Set(members.filter((m) => scalar(m.fm, 'role') === 'professor').map((m) => m.id));
+    const i = papers.findIndex((p) => list(p.fm, 'members').some((slug) => !professors.has(slug)));
+    assert.ok(i >= 0, 'a 2022 paper with a member');
+    assert.ok(rows.eq(i).find('.yr-sub a[href*="/people/"]').length >= 1, papers[i].id);
   });
 
   test(`${lang}: 2025 presentations are grouped under one h3 per conference`, () => {

@@ -71,6 +71,17 @@
 .yr-sub b {
   color: var(--c-graphite);
 }
+/* Member names in an author line (papers, and presentations on the publication board) link to their person pages. */
+.yr-sub a[data-member] {
+  color: var(--c-graphite);
+  text-decoration: underline;
+  text-decoration-color: var(--c-hairline);
+  text-underline-offset: 3px;
+}
+.yr-sub a[data-member]:hover {
+  color: var(--c-cobalt);
+  text-decoration-color: currentColor;
+}
 /* Journal on the left, the impact factor at the right end. */
 .yr-meta {
   display: flex;

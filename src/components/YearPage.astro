@@ -171,7 +171,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
   <YearPart part="papers" empty={yearPapers.length === 0} locale={locale}>
     <ol class="yr-list yr-papers">
       {
-        yearPapers.map((p) => <PaperItem paper={p.data} locale={locale} />)
+        yearPapers.map((p) => <PaperItem paper={p.data} people={memberBySlug} locale={locale} />)
       }
     </ol>
   </YearPart>
