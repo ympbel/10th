@@ -1,18 +1,14 @@
 ---
-// Temporary English year pages so the home timeline links resolve; plan Task 9 replaces them with the year pages.
+// English year pages /en/years/2016/ … /en/years/2026/.
 import '../../../styles/global.css';
-import SubLayout from '../../../layouts/SubLayout.astro';
+import YearPage from '../../../components/YearPage.astro';
 import { YEARS } from '../../../lib/years.ts';
-import { t } from '../../../i18n/index.ts';
 
 export function getStaticPaths() {
-  return YEARS.map((year) => ({ params: { year: String(year) } }));
+  return YEARS.map((year) => ({ params: { year: String(year) }, props: { year } }));
 }
 
-const { year } = Astro.params;
-const s = t('en');
+const { year } = Astro.props;
 ---
 
-<SubLayout title={year} currentHref={`/years/${year}/`} locale="en" side="years">
-  <p>{s.preparing}</p>
-</SubLayout>
+<YearPage year={year} locale="en" />

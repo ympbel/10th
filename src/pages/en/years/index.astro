@@ -1,0 +1,8 @@
+---
+// /en/years/ sends the browser to the latest English year page (see src/pages/years/index.astro).
+import { YEARS } from '../../../lib/years.ts';
+import { localePath } from '../../../lib/locale.ts';
+import { url } from '../../../lib/url.ts';
+
+return Astro.redirect(url(localePath(`/years/${YEARS[YEARS.length - 1]}/`, 'en')), 301);
+---

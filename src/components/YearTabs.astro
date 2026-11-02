@@ -1,0 +1,34 @@
+---
+// The year tab rail of a year page: the eleven years, oldest first, each linking to its year page, the current year
+// filled Cobalt. In the side area it is a column; at ≤1024px it becomes a wrapping row of 90px cells above the
+// content (.side .year-tabs in base.css and responsive.css).
+import { YEARS } from '../lib/years.ts';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  current: number;
+  locale: Locale;
+}
+
+const { current, locale } = Astro.props;
+---
+
+<nav class="year-tabs" aria-label={t(locale).yearPage.tabs}>
+  <ul>
+    {
+      YEARS.map((year) => (
+        <li>
+          <a
+            href={url(localePath(`/years/${year}/`, locale))}
+            class={year === current ? 'on' : undefined}
+            aria-current={year === current ? 'page' : undefined}
+          >
+            {year}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

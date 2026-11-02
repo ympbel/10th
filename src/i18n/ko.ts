@@ -89,6 +89,38 @@ export const ko = {
     /** The board link grid. */
     boardLinks: '게시판 바로가기',
   },
+  /** Year pages (/years/<yyyy>/). */
+  yearPage: {
+    /** Accessible name of the year tab rail. */
+    tabs: '연도',
+    /** The summary line under the heading, one item per part; `{n}` is the count. */
+    summary: {
+      joined: '합류 {n}명',
+      degrees: '학위 {n}명',
+      papers: '논문 {n}편',
+      presentations: '발표 {n}건',
+      awards: '수상 {n}건',
+      projects: '과제 {n}건',
+    },
+    /** Part headings, in page order. */
+    parts: {
+      joined: '합류',
+      degrees: '학위 취득',
+      papers: '논문',
+      presentations: '학회 발표',
+      awards: '수상',
+      projects: '진행 중 과제',
+      seminars: '세미나',
+      photos: '사진',
+    },
+    /** The count beside a conference heading. */
+    conferenceCount: '{n}건',
+    /** Before the corresponding authors in a paper's author line. */
+    corresponding: '교신',
+    impactFactor: 'IF {n}',
+    seminarsCount: '세미나 {n}건',
+    seminarsLink: '세미나 게시판에서 보기',
+  },
   footer: {
     name: 'Yonsei Medical Physics and Biomedical Engineering Lab.',
     address: '03722 서울특별시 서대문구 연세로 50 연세대학교',

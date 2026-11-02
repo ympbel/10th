@@ -1,35 +1,15 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BASE, page } from './helpers.mjs';
+import { BASE, frontmatters, nested, page, scalar } from './helpers.mjs';
 
 // The home page DOM contract (plan Task 8), in both languages. Expected numbers are counted here from the content
 // files themselves, not through the site's helpers, so a counting bug in src/lib shows up as a mismatch.
 
 const CONTENT = fileURLToPath(new URL('../../src/content/', import.meta.url));
 const YEARS = Array.from({ length: 11 }, (_, i) => 2016 + i);
-
-/** The frontmatter text of every entry in a collection (templates `_*.md` excluded). */
-function frontmatters(collection) {
-  const dir = join(CONTENT, collection);
-  return readdirSync(dir, { recursive: true })
-    .filter((f) => f.endsWith('.md') && !basename(f).startsWith('_'))
-    .map((f) => readFileSync(join(dir, f), 'utf8').split(/^---$/m)[1]);
-}
-
-/** A top-level scalar from frontmatter text, unquoted (`role: "student"` → `student`). */
-function scalar(fm, key) {
-  const m = new RegExp(`^${key}:\\s*(.+)$`, 'm').exec(fm);
-  return m ? m[1].trim().replace(/^"(.*)"$/, '$1') : undefined;
-}
-
-/** Whether the frontmatter has `degree:` with an indented `date:` under it. */
-function hasDegreeDate(fm) {
-  const m = /^degree:\s*\n((?:[ \t]+.*(?:\n|$))*)/m.exec(fm);
-  return Boolean(m && /^[ \t]+date:/m.test(m[1]));
-}
 
 const members = frontmatters('members');
 const roles = members.map((fm) => scalar(fm, 'role'));
@@ -40,7 +20,7 @@ const count = (collection) => frontmatters(collection).length;
  * awards, projects. */
 const FIGURES = [
   roles.filter((r) => r !== 'professor').length,
-  members.filter(hasDegreeDate).length,
+  members.filter((fm) => nested(fm, 'degree', 'date')).length,
   papers.filter((fm) => Number(scalar(fm, 'year')) >= 2016).length,
   count('presentations'),
   count('awards'),

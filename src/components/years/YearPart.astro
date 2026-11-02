@@ -1,0 +1,22 @@
+---
+// One part of a year page: a section with its heading, then its content, or the "no records" line when the year has
+// nothing for it. The section stays either way, so every year page has the same parts in the same order. The id is
+// the target of the summary line's link to the part.
+import type { Locale } from '../../lib/locale.ts';
+import { t, type Strings } from '../../i18n/index.ts';
+
+interface Props {
+  /** `joined`, `degrees`, `papers`, … : the section's `data-part` and the key of its heading in src/i18n. */
+  part: keyof Strings['yearPage']['parts'];
+  empty: boolean;
+  locale: Locale;
+}
+
+const { part, empty, locale } = Astro.props;
+const s = t(locale);
+---
+
+<section class="yr-part" data-part={part} id={`part-${part}`} aria-labelledby={`part-${part}-title`}>
+  <h2 id={`part-${part}-title`}>{s.yearPage.parts[part]}</h2>
+  {empty ? <p class="empty">{s.noRecords}</p> : <slot />}
+</section>

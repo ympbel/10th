@@ -1,0 +1,8 @@
+---
+// /years/ sends the browser to the latest year. In the static build Astro writes this as a redirect page (meta refresh
+// with no delay for a 301). The archive ends at its tenth year, so the target does not move.
+import { YEARS } from '../../lib/years.ts';
+import { url } from '../../lib/url.ts';
+
+return Astro.redirect(url(`/years/${YEARS[YEARS.length - 1]}/`), 301);
+---

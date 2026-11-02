@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { load } from 'cheerio';
-import { BASE, DIST, allHtmlFiles, page } from './helpers.mjs';
+import { BASE, DIST, allHtmlFiles, isRedirect, page } from './helpers.mjs';
 
 const SECTIONS = ['PEOPLE', 'PUBLICATION', 'AWARD', 'PROJECT', 'ACTIVITY', 'ARCHIVE'];
 
@@ -20,7 +20,10 @@ const isEnglish = (path) => path === `${BASE}/en/` || path.startsWith(`${BASE}/e
 /** `path` with `/en` inserted after the base: the English counterpart of a Korean page path. */
 const englishOf = (path) => `${BASE}/en${path.slice(BASE.length)}`;
 
-const pages = allHtmlFiles().map((file) => ({ file, path: servedPath(file), $: load(readFileSync(file, 'utf8')) }));
+// Every built page with the site's chrome; Astro's redirect pages (`/years/` → the latest year) have none.
+const pages = allHtmlFiles()
+  .map((file) => ({ file, path: servedPath(file), $: load(readFileSync(file, 'utf8')) }))
+  .filter(({ $ }) => !isRedirect($));
 
 test('every page has the top bar: logo with alt, the six menu sections and the KR/EN toggle', () => {
   assert.ok(pages.length > 0);

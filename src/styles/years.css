@@ -1,0 +1,233 @@
+/* Year pages only (imported by components/YearPage.astro, after the global bundle): the summary line, the parts with
+   their headings, and the rows inside them. The year tab rail in the side area is in base.css and responsive.css
+   (.side .year-tabs). Parts follow the publication list form of DESIGN.md: a heading over a 3px Graphite rule, then
+   rows divided by Hairline Soft lines. Colors and spacing come from tokens.css. */
+
+.year-summary {
+  padding: var(--s-sm) var(--s-md);
+  background: var(--c-mist);
+  color: var(--c-graphite);
+  line-height: 1.8;
+}
+.year-summary a {
+  color: var(--c-graphite);
+  white-space: nowrap;
+}
+.year-summary b {
+  color: var(--c-yonsei-navy);
+  font-size: var(--fs-body-lead);
+}
+.year-summary a:hover,
+.year-summary a:hover b {
+  color: var(--c-cobalt);
+}
+.year-summary .sep {
+  color: var(--c-ash);
+}
+
+/* ---------- Parts ---------- */
+.yr-part {
+  margin-top: var(--s-xl);
+}
+.yr-part > h2 {
+  padding-bottom: var(--s-xs);
+  border-bottom: 3px solid var(--c-graphite);
+  color: var(--c-graphite);
+  font-size: var(--fs-subtitle);
+  line-height: 1.4;
+}
+.yr-part > .empty {
+  padding: var(--pad-cell) 0;
+  border-bottom: 1px solid var(--c-hairline-soft);
+  color: var(--c-slate);
+  font-size: var(--fs-ui-sm);
+}
+
+/* Rows: papers, presentations, degrees, awards, projects. */
+.yr-list > li {
+  padding: var(--pad-cell) 0;
+  border-bottom: 1px solid var(--c-hairline-soft);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui-sm);
+  line-height: 1.6;
+}
+.yr-title {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+}
+.yr-title a {
+  color: var(--c-graphite);
+}
+.yr-title a:hover {
+  color: var(--c-cobalt);
+}
+.yr-sub,
+.yr-meta {
+  margin-top: 2px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+.yr-sub b {
+  color: var(--c-graphite);
+}
+/* Journal on the left, the impact factor at the right end. */
+.yr-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-md);
+}
+.yr-if {
+  color: var(--c-graphite);
+  white-space: nowrap;
+}
+
+/* Papers: numbered in Ash like the publication list. */
+.yr-papers {
+  counter-reset: paper;
+}
+.yr-papers > li {
+  position: relative;
+  padding-left: 40px;
+  counter-increment: paper;
+}
+.yr-papers > li::before {
+  content: counter(paper);
+  position: absolute;
+  top: var(--pad-cell);
+  left: 0;
+  width: 28px;
+  color: var(--c-ash);
+  font-size: var(--fs-body-sm);
+  line-height: calc(var(--fs-body) * 1.6);
+  text-align: right;
+}
+
+/* Degrees, awards, projects: a key column (name or period) beside the details. */
+.yr-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  column-gap: var(--s-md);
+}
+.yr-row > .name {
+  font-weight: var(--fw-bold);
+}
+.yr-period {
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+  line-height: calc(var(--fs-body) * 1.6);
+  white-space: nowrap;
+}
+
+/* Who joined: name chips. */
+.yr-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-xs);
+  padding: var(--s-sm) 0;
+  border-bottom: 1px solid var(--c-hairline-soft);
+}
+.yr-names .name {
+  display: block;
+  padding: 4px 12px;
+  border: 1px solid var(--c-hairline);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui-sm);
+  line-height: 1.6;
+}
+.yr-names a.name:hover {
+  border-color: var(--c-cobalt);
+  color: var(--c-cobalt);
+}
+
+/* Presentations: one heading per conference, then its rows with a type chip in the year tab's form. */
+.yr-conf {
+  margin-top: 25px;
+}
+.yr-conf:first-child {
+  margin-top: var(--s-sm);
+}
+.yr-conf h3 {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--c-hairline);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui);
+  line-height: 1.6;
+}
+.yr-conf h3 small {
+  margin-left: 4px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-regular);
+}
+.yr-type {
+  display: inline-block;
+  padding: 0 6px;
+  border: 1px solid var(--c-hairline);
+  background: var(--c-ledger);
+  color: var(--c-slate);
+  font-size: var(--fs-label);
+  line-height: 18px;
+  white-space: nowrap;
+}
+.yr-sub span + .yr-type {
+  margin-left: 8px;
+}
+
+/* Seminars: the count and the link to the board. */
+.yr-seminars {
+  padding: var(--pad-cell) 0;
+  border-bottom: 1px solid var(--c-hairline-soft);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui-sm);
+}
+.yr-seminars .more {
+  margin-left: var(--s-xs);
+  color: var(--c-graphite);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-bold);
+}
+.yr-seminars .more:hover {
+  color: var(--c-cobalt);
+}
+
+/* Photos, when the year has any: four columns. */
+.yr-photos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-sm);
+  padding-top: var(--s-sm);
+}
+.yr-photos img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.yr-photos figcaption {
+  margin-top: var(--s-2xs);
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+
+@media (max-width: 1024px) {
+  .yr-photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .year-summary {
+    padding: var(--pad-cell) var(--s-sm);
+  }
+  /* The key column goes above the details. */
+  .yr-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .yr-meta {
+    flex-wrap: wrap;
+    gap: 0 var(--s-xs);
+  }
+  .yr-photos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

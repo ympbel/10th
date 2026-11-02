@@ -3,7 +3,7 @@
 // timeline script shows another. Three columns: the year's first papers, the degrees taken, the first awards; each
 // ends with a link to the year page, which lists everything.
 import type { Locale } from '../../lib/locale.ts';
-import { t } from '../../i18n/index.ts';
+import { fill, t } from '../../i18n/index.ts';
 
 /** `lang` marks a Korean name, `metaLang` a Korean category, on an English page. */
 type Item = { name: string; lang?: string; meta: string; metaLang?: string };
@@ -23,9 +23,6 @@ interface Props {
 const { panels, selected, locale } = Astro.props;
 const s = t(locale);
 const h = s.home;
-/** A string from src/i18n with its `{n}` and `{year}` filled in. */
-const fill = (template: string, values: { n?: number; year?: number }) =>
-  template.replace(/\{(n|year)\}/g, (_, key: 'n' | 'year') => String(values[key]));
 ---
 
 <div class="year-panels">

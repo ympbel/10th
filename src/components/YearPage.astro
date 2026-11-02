@@ -1,0 +1,317 @@
+---
+// A year page in one language: the sub page frame with the year tab rail in the side area, the summary line, then
+// one part each for who joined, who took a degree, papers, presentations (one heading per conference), awards,
+// projects running that year, the year's seminars, and photos when there are any. This component loads the
+// collections once and turns them into the plain values the markup shows.
+import { getCollection } from 'astro:content';
+import '../styles/years.css';
+import SubLayout from '../layouts/SubLayout.astro';
+import YearTabs from './YearTabs.astro';
+import YearPart from './years/YearPart.astro';
+import { yearStats } from '../lib/years.ts';
+import { groupBy, sortByYearDesc, sortMembersByJoined } from '../lib/content.ts';
+import { displayName, field } from '../lib/people.ts';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { fill, t } from '../i18n/index.ts';
+
+interface Props {
+  year: number;
+  locale: Locale;
+}
+
+const { year, locale } = Astro.props;
+const s = t(locale);
+const yp = s.yearPage;
+
+const [members, papers, presentations, awards, projects, seminars, photos] = await Promise.all([
+  getCollection('members'),
+  getCollection('papers'),
+  getCollection('presentations'),
+  getCollection('awards'),
+  getCollection('projects'),
+  getCollection('seminars'),
+  getCollection('photos'),
+]);
+const stats = yearStats(year, { members, papers, presentations, awards, projects });
+const memberBySlug = new Map(members.map((m) => [m.id, m]));
+
+/** This year's records in sheet order. */
+const ofYear = <T extends { id: string; data: { year: number; order?: number } }>(items: T[]) =>
+  sortByYearDesc(items.filter((item) => item.data.year === year));
+
+const HANGUL = /[\u1100-\u11ff\u3130-\u318f\uac00-\ud7a3]/;
+/** `ko` for Korean text on an English page, so screen readers read it in Korean. */
+const langOf = (text: string | undefined) => (locale === 'en' && text && HANGUL.test(text) ? 'ko' : undefined);
+/** `YYYY-MM[-DD]` → `YYYY.MM`. */
+const month = (date: string) => date.slice(0, 7).replace('-', '.');
+
+type Member = (typeof members)[number];
+/** A member's name in this language, with the slug the person page link will use. */
+const person = (m: Member) => {
+  const name = displayName(m.data, locale);
+  return { slug: m.id, name, lang: langOf(name) };
+};
+
+const joined = sortMembersByJoined(stats.joined, 'asc').map(person);
+
+const byDegreeDate = (a: Member, b: Member) =>
+  (a.data.degree?.date ?? '').localeCompare(b.data.degree?.date ?? '') || a.id.localeCompare(b.id);
+const degrees = [...stats.degrees].sort(byDegreeDate).map((m) => {
+  const degree = m.data.degree;
+  const type = degree?.type ? field(degree, 'type', locale) : undefined;
+  const affiliation = [
+    m.data.affiliation && field(m.data, 'affiliation', locale),
+    m.data.position && field(m.data, 'position', locale),
+  ]
+    .filter(Boolean)
+    .join(', ');
+  return {
+    ...person(m),
+    detail: [type, degree?.date && month(degree.date)].filter(Boolean).join(' · '),
+    detailLang: langOf(type),
+    affiliation,
+    affiliationLang: langOf(affiliation),
+  };
+});
+
+const yearPapers = ofYear(papers).map((p) => {
+  const authors = [
+    p.data.co_first.length > 0 ? `(${p.data.co_first.join(', ')})` : '',
+    p.data.corresponding.length > 0 ? `${yp.corresponding}: ${p.data.corresponding.join(', ')}` : '',
+  ].filter(Boolean);
+  return {
+    title: p.data.title,
+    link: p.data.link,
+    first: p.data.first_author,
+    /** Co-first and corresponding authors after the bold first author. */
+    rest: authors.join(', '),
+    authorsLang: langOf([p.data.first_author, ...p.data.co_first, ...p.data.corresponding].join(' ')),
+    journal: p.data.journal,
+    impactFactor: p.data.impact_factor,
+  };
+});
+
+const conferences = [...groupBy(ofYear(presentations), 'conference')].map(([conference, items]) => ({
+  conference,
+  items: items.map((p) => ({ title: p.data.title, firstAuthor: p.data.first_author, type: p.data.type })),
+}));
+const presentationCount = conferences.reduce((n, c) => n + c.items.length, 0);
+
+const yearAwards = ofYear(awards).map((a) => {
+  const m = a.data.member ? memberBySlug.get(a.data.member) : undefined;
+  const category = field(a.data, 'category', locale);
+  const where = `${a.data.conference} · ${category}`;
+  return {
+    ...(m ? person(m) : { slug: undefined, name: a.data.recipient, lang: langOf(a.data.recipient) }),
+    where,
+    whereLang: langOf(where),
+    title: a.data.title,
+  };
+});
+
+const running = [...stats.projectsRunning]
+  .sort((a, b) => b.data.start.localeCompare(a.data.start) || a.id.localeCompare(b.id))
+  .map((p) => {
+    const title = field(p.data, 'title', locale);
+    return {
+      title,
+      titleLang: langOf(title),
+      agency: p.data.agency,
+      agencyLang: langOf(p.data.agency),
+      period: `${month(p.data.start)} – ${month(p.data.end)}`,
+    };
+  });
+
+const seminarCount = seminars.filter((sem) => sem.data.date.startsWith(`${year}-`)).length;
+const yearPhotos = ofYear(photos);
+
+/** The summary line: one count per part, each linking to its part below. */
+const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'projects'] as const).map((part) => {
+  const n = {
+    joined: joined.length,
+    degrees: degrees.length,
+    papers: yearPapers.length,
+    presentations: presentationCount,
+    awards: yearAwards.length,
+    projects: running.length,
+  }[part];
+  const [before, after] = yp.summary[part].split('{n}');
+  return { part, n, before, after };
+});
+---
+
+<SubLayout title={String(year)} currentHref={`/years/${year}/`} locale={locale} side="years">
+  <YearTabs slot="side" current={year} locale={locale} />
+
+  <p class="year-summary">
+    {
+      summary.map((item, i) => (
+        <>
+          {i > 0 && <span class="sep"> · </span>}
+          <a href={`#part-${item.part}`}>{item.before}<b>{item.n}</b>{item.after}</a>
+        </>
+      ))
+    }
+  </p>
+
+  <YearPart part="joined" empty={joined.length === 0} locale={locale}>
+    <ul class="yr-names">
+      {
+        joined.map((m) => (
+          <li>
+            <span class="name" data-member={m.slug} lang={m.lang}>
+              {m.name}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </YearPart>
+
+  <YearPart part="degrees" empty={degrees.length === 0} locale={locale}>
+    <ul class="yr-list">
+      {
+        degrees.map((m) => (
+          <li class="yr-row yr-item">
+            <span class="name" data-member={m.slug} lang={m.lang}>
+              {m.name}
+            </span>
+            <div>
+              <p lang={m.detailLang}>{m.detail}</p>
+              {m.affiliation && (
+                <p class="yr-sub" lang={m.affiliationLang}>
+                  {m.affiliation}
+                </p>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </YearPart>
+
+  <YearPart part="papers" empty={yearPapers.length === 0} locale={locale}>
+    <ol class="yr-list yr-papers">
+      {
+        yearPapers.map((p) => (
+          <li class="yr-item">
+            <p class="yr-title" lang={langOf(p.title)}>
+              {p.link ? (
+                <a href={p.link} target="_blank" rel="noopener">
+                  {p.title}
+                </a>
+              ) : (
+                p.title
+              )}
+            </p>
+            {(p.first || p.rest) && (
+              <p class="yr-sub" lang={p.authorsLang}>
+                {p.first && <b>{p.first}</b>}
+                {p.first && p.rest && ', '}
+                {p.rest}
+              </p>
+            )}
+            <p class="yr-meta">
+              <span>{p.journal}</span>
+              {p.impactFactor !== undefined && (
+                <span class="yr-if">{fill(yp.impactFactor, { n: p.impactFactor })}</span>
+              )}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </YearPart>
+
+  <YearPart part="presentations" empty={presentationCount === 0} locale={locale}>
+    {
+      conferences.map((c) => (
+        <div class="yr-conf">
+          <h3>
+            {c.conference} <small>{fill(yp.conferenceCount, { n: c.items.length })}</small>
+          </h3>
+          <ul class="yr-list">
+            {c.items.map((p) => (
+              <li class="yr-item">
+                <p lang={langOf(p.title)}>{p.title}</p>
+                <p class="yr-sub">
+                  {p.firstAuthor && <span lang={langOf(p.firstAuthor)}>{p.firstAuthor}</span>}
+                  <span class="yr-type">{p.type}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </YearPart>
+
+  <YearPart part="awards" empty={yearAwards.length === 0} locale={locale}>
+    <ul class="yr-list">
+      {
+        yearAwards.map((a) => (
+          <li class="yr-row yr-item">
+            <span class="name" data-member={a.slug} lang={a.lang}>
+              {a.name}
+            </span>
+            <div>
+              <p lang={a.whereLang}>{a.where}</p>
+              {a.title && (
+                <p class="yr-sub" lang={langOf(a.title)}>
+                  {a.title}
+                </p>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </YearPart>
+
+  <YearPart part="projects" empty={running.length === 0} locale={locale}>
+    <ul class="yr-list">
+      {
+        running.map((p) => (
+          <li class="yr-row yr-item">
+            <span class="yr-period">{p.period}</span>
+            <div>
+              <p class="yr-title" lang={p.titleLang}>
+                {p.title}
+              </p>
+              <p class="yr-sub" lang={p.agencyLang}>
+                {p.agency}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </YearPart>
+
+  <YearPart part="seminars" empty={seminarCount === 0} locale={locale}>
+    <p class="yr-seminars">
+      {fill(yp.seminarsCount, { n: seminarCount })}
+      <a class="more" href={url(localePath('/activity/seminars/', locale))}>
+        {yp.seminarsLink} <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </YearPart>
+
+  {
+    yearPhotos.length > 0 && (
+      <YearPart part="photos" empty={false} locale={locale}>
+        <ul class="yr-photos">
+          {yearPhotos.map((p) => (
+            <li>
+              <figure>
+                <img src={url(p.data.image)} alt="" loading="lazy" />
+                {p.data.caption && <figcaption lang={langOf(p.data.caption)}>{p.data.caption}</figcaption>}
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </YearPart>
+    )
+  }
+</SubLayout>
