@@ -1,0 +1,640 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-02T09:03:57+00:00",
+  "title": "Design System: MPBEL",
+  "extensions": {
+    "colorMeta": {
+      "yonsei-navy": {
+        "role": "primary",
+        "displayName": "Yonsei Navy",
+        "canonical": "#0a347f",
+        "oklch": "oklch(35.0% 0.135 261.2)",
+        "tonalRamp": [
+          "#000924",
+          "#0c234c",
+          "#204078",
+          "#375fa7",
+          "#5781cc",
+          "#80a5e6",
+          "#adcafc",
+          "#e7effd"
+        ]
+      },
+      "midnight-field": {
+        "role": "primary",
+        "displayName": "Midnight Field",
+        "canonical": "#001429",
+        "oklch": "oklch(18.8% 0.052 249.0)",
+        "tonalRamp": [
+          "#040c15",
+          "#192634",
+          "#314456",
+          "#4c647c",
+          "#6c859e",
+          "#92a8bd",
+          "#bacbdd",
+          "#e3f0fe"
+        ]
+      },
+      "deep-navy": {
+        "role": "primary",
+        "displayName": "Deep Navy",
+        "canonical": "#033163",
+        "oklch": "oklch(31.7% 0.100 254.9)",
+        "tonalRamp": [
+          "#010b1e",
+          "#0e2542",
+          "#24436a",
+          "#3b6395",
+          "#5c85b9",
+          "#85a8d5",
+          "#afccf1",
+          "#e6f0fc"
+        ]
+      },
+      "cobalt": {
+        "role": "primary",
+        "displayName": "Cobalt",
+        "canonical": "#1563b4",
+        "oklch": "oklch(50.0% 0.147 254.0)",
+        "tonalRamp": [
+          "#000926",
+          "#00244f",
+          "#09427c",
+          "#1e61ab",
+          "#4384d1",
+          "#72a8ea",
+          "#a6cdfd",
+          "#e5f0fd"
+        ]
+      },
+      "cerulean": {
+        "role": "primary",
+        "displayName": "Cerulean",
+        "canonical": "#34a1d4",
+        "oklch": "oklch(67.1% 0.122 233.5)",
+        "tonalRamp": [
+          "#000d19",
+          "#01293b",
+          "#014865",
+          "#016a92",
+          "#298dbb",
+          "#66afd6",
+          "#99d2f2",
+          "#dff2fd"
+        ]
+      },
+      "signal-mint": {
+        "role": "secondary",
+        "displayName": "Signal Mint",
+        "canonical": "#59ffce",
+        "oklch": "oklch(90.2% 0.154 169.5)",
+        "tonalRamp": [
+          "#001009",
+          "#002d21",
+          "#064e3c",
+          "#057258",
+          "#149877",
+          "#48bd99",
+          "#88ddbf",
+          "#c0fee7"
+        ]
+      },
+      "harbor-steel": {
+        "role": "secondary",
+        "displayName": "Harbor Steel",
+        "canonical": "#195275",
+        "oklch": "oklch(42.0% 0.082 240.2)",
+        "tonalRamp": [
+          "#000d19",
+          "#09283b",
+          "#1f4660",
+          "#356788",
+          "#5788ab",
+          "#81abc9",
+          "#adcee7",
+          "#e2f1fc"
+        ]
+      },
+      "harbor-steel-hover": {
+        "role": "secondary",
+        "displayName": "Harbor Steel Hover",
+        "canonical": "#7895a7",
+        "oklch": "oklch(65.4% 0.042 235.5)",
+        "tonalRamp": [
+          "#040c12",
+          "#192730",
+          "#314551",
+          "#4c6575",
+          "#6c8797",
+          "#92a9b7",
+          "#baccd8",
+          "#e3f1fa"
+        ]
+      },
+      "petrol": {
+        "role": "tertiary",
+        "displayName": "Petrol",
+        "canonical": "#046d8b",
+        "oklch": "oklch(49.8% 0.094 225.6)",
+        "tonalRamp": [
+          "#000e17",
+          "#002a38",
+          "#00495f",
+          "#176b86",
+          "#418daa",
+          "#72afc7",
+          "#a2d2e6",
+          "#dcf3fd"
+        ]
+      },
+      "mustard": {
+        "role": "tertiary",
+        "displayName": "Mustard",
+        "canonical": "#ecbe13",
+        "oklch": "oklch(81.9% 0.165 90.7)",
+        "tonalRamp": [
+          "#120a00",
+          "#2f2300",
+          "#514002",
+          "#775e00",
+          "#9e7e0a",
+          "#c3a139",
+          "#e2c77b",
+          "#ffeebd"
+        ]
+      },
+      "sea-green": {
+        "role": "tertiary",
+        "displayName": "Sea Green",
+        "canonical": "#2fb8ac",
+        "oklch": "oklch(70.9% 0.114 186.1)",
+        "tonalRamp": [
+          "#000f0d",
+          "#022c28",
+          "#004d47",
+          "#067168",
+          "#09968c",
+          "#5eb7ad",
+          "#94d8d0",
+          "#c8faf4"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#000000",
+        "oklch": "oklch(0.0% 0.000 0.0)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#333333",
+        "oklch": "oklch(32.1% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "#666666",
+        "oklch": "oklch(51.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "ash": {
+        "role": "neutral",
+        "displayName": "Ash",
+        "canonical": "#999999",
+        "oklch": "oklch(68.3% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#dddddd",
+        "oklch": "oklch(89.8% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "hairline-soft": {
+        "role": "neutral",
+        "displayName": "Hairline Soft",
+        "canonical": "#e7e7e7",
+        "oklch": "oklch(92.8% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "panel-gray": {
+        "role": "neutral",
+        "displayName": "Panel Gray",
+        "canonical": "#e1e1e1",
+        "oklch": "oklch(91.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "band-gray": {
+        "role": "neutral",
+        "displayName": "Band Gray",
+        "canonical": "#ebebeb",
+        "oklch": "oklch(94.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Mist",
+        "canonical": "#f5f5f5",
+        "oklch": "oklch(97.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "ledger": {
+        "role": "neutral",
+        "displayName": "Ledger",
+        "canonical": "#f8f8f8",
+        "oklch": "oklch(97.9% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "notice-tint": {
+        "role": "neutral",
+        "displayName": "Notice Tint",
+        "canonical": "#e6f8ff",
+        "oklch": "oklch(96.8% 0.021 223.0)",
+        "tonalRamp": [
+          "#070c0e",
+          "#1e272a",
+          "#394448",
+          "#566469",
+          "#76858b",
+          "#9ba8ac",
+          "#c1cbcf",
+          "#e8f0f3"
+        ]
+      },
+      "footer-charcoal": {
+        "role": "neutral",
+        "displayName": "Footer Charcoal",
+        "canonical": "#363636",
+        "oklch": "oklch(33.3% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "footer-ash": {
+        "role": "neutral",
+        "displayName": "Footer Ash",
+        "canonical": "#9f9f9f",
+        "oklch": "oklch(70.3% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "footer-dim": {
+        "role": "neutral",
+        "displayName": "Footer Dim",
+        "canonical": "#6e6e6e",
+        "oklch": "oklch(53.8% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Welcome 페이지 헤드라인 한 곳. 강조어만 Cerulean."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "연구 분야 타일 제목, 홈 소개 블록의 MPBEL."
+      },
+      "title-lg": {
+        "displayName": "Title Large",
+        "purpose": "홈 News/Seminar 패널 제목, 사이드 내비 머리, 출판물 연도 제목, 게시글 제목."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "서브 페이지 제목, 연구 페이지 소제목."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "구성원 이름, 교수 페이지 소제목."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "상단 메뉴, 대문자 영문."
+      },
+      "eyebrow": {
+        "displayName": "Eyebrow",
+        "purpose": "연구 타일의 RESEARCH 01 라벨, Signal Mint 1px 밑줄과 짝."
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "홈 소개 단락."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "연구 페이지 본문."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "구성원 정보, 출판물 저자·학술지, 경로 표시."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "KR/EN 언어 토글, LINK 버튼(11px)."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "lang-toggle",
+        "value": "all 0.6s ease",
+        "purpose": "KR/EN 언어 토글의 채움 전환. 사이트에서 전환 효과가 걸린 유일한 요소."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "1024px",
+        "purpose": "이하에서 고정 1200px이 풀리고 16px 여백, 햄버거 메뉴, 사이드 내비가 가로 탭으로."
+      },
+      {
+        "name": "phone",
+        "value": "600px",
+        "purpose": "이하에서 바로가기와 구성원 목록이 한 줄 하나, 게시판 글쓴이 열 숨김."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Top Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "100px 상단 바: 로고, 18px 700 대문자 메뉴(hover Cobalt), KR/EN 언어 토글.",
+      "html": "<header class=\"ds-topnav\"><a class=\"ds-logo\" href=\"#\">MPBEL</a><nav class=\"ds-gnb\"><a href=\"#\">INTRODUCTION</a><a href=\"#\">MEMBER</a><a href=\"#\">RESEARCH</a><a href=\"#\">PUBLICATION</a></nav><div class=\"ds-lang\"><a class=\"is-active\" href=\"#\">KR</a><a href=\"#\">EN</a></div></header>",
+      "css": ".ds-topnav{display:flex;align-items:center;gap:16px;height:100px;padding:0 24px;background:#fff;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-logo{margin-right:auto;font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#0a347f;text-decoration:none} .ds-gnb a{display:inline-block;padding:0 20px;line-height:90px;font-size:18px;font-weight:700;color:#000;text-decoration:none} .ds-gnb a:hover,.ds-gnb a:focus-visible{color:#1563b4;outline:none} .ds-lang{display:flex} .ds-lang a{display:block;width:44px;height:30px;line-height:28px;text-align:center;font-size:12px;font-weight:700;color:#0a347f;border:1px solid #0a347f;text-decoration:none;transition:all .6s} .ds-lang a:hover,.ds-lang a.is-active{color:#fff;background:#0a347f} .ds-lang a:focus-visible{outline:2px solid #1563b4;outline-offset:2px}"
+    },
+    {
+      "name": "Menu Dropdown",
+      "kind": "nav",
+      "refersTo": "nav-dropdown-item",
+      "description": "상단 메뉴에 마우스를 올리면 열리는 205px 하위 메뉴. Harbor Steel 바탕, hover 시 Harbor Steel Hover.",
+      "html": "<ul class=\"ds-dropdown\"><li><a href=\"#\">Professor</a></li><li><a href=\"#\">Researchers</a></li><li><a href=\"#\">Alumni</a></li></ul>",
+      "css": ".ds-dropdown{list-style:none;margin:0;padding:0;width:205px;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-dropdown a{display:block;padding:15px 5px;background:#195275;color:#fff;font-size:14px;text-align:center;text-decoration:none} .ds-dropdown a:hover,.ds-dropdown a:focus-visible{background:#7895a7;outline:none}"
+    },
+    {
+      "name": "Side Navigation",
+      "kind": "nav",
+      "refersTo": "snb-title",
+      "description": "서브 페이지 왼쪽 240px 내비. 블루 머리(실제는 bgSnbTit.jpg 이미지, 여기서는 그라데이션으로 근사) + Mint 막대, Mist 목록, 현재 항목 Cobalt.",
+      "html": "<aside class=\"ds-snb\"><p class=\"ds-snb-tit\">MEMBER</p><ul><li><a href=\"#\">Professor</a></li><li class=\"is-active\"><a href=\"#\" aria-current=\"page\">Researchers</a></li><li><a href=\"#\">Alumni</a></li></ul></aside>",
+      "css": ".ds-snb{width:240px;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-snb-tit{position:relative;box-sizing:border-box;margin:0;height:149px;padding:75px 0 0 30px;background:linear-gradient(135deg,#1563b4 0%,#0848a0 100%);color:#fff;font-size:24px;font-weight:800} .ds-snb-tit::before{content:'';position:absolute;top:64px;left:30px;width:30px;height:2px;background:#59ffce} .ds-snb ul{list-style:none;margin:0;padding:27px 0;background:#f5f5f5;border-bottom:1px solid #333} .ds-snb li+li{margin-top:15px} .ds-snb a{position:relative;display:block;padding-left:30px;font-size:15.5px;color:#333;text-decoration:none} .ds-snb a::before{content:'';position:absolute;top:10px;left:15px;width:5px;height:5px;background:#333} .ds-snb .is-active a{color:#1563b4} .ds-snb .is-active a::before{background:#1563b4} .ds-snb a:focus-visible{outline:2px solid #1563b4;outline-offset:2px}"
+    },
+    {
+      "name": "Research Tiles",
+      "kind": "custom",
+      "refersTo": "research-tile-01",
+      "description": "홈 연구 분야 줄. 스펙트럼 네 색을 어두운 쪽부터, 사진(여기서는 빈 블록)과 글의 위치가 번갈아 바뀜.",
+      "html": "<div class=\"ds-rtiles\"><a class=\"ds-rtile\" href=\"#\" style=\"background:#001429\"><span class=\"ds-rtile-txt\"><span class=\"ds-rtile-eyebrow\">RESEARCH 01</span><span class=\"ds-rtile-title\">Advanced CT<br>Reconstruction</span></span><span class=\"ds-rtile-img\"></span></a><a class=\"ds-rtile\" href=\"#\" style=\"background:#033163\"><span class=\"ds-rtile-txt\"><span class=\"ds-rtile-eyebrow\">RESEARCH 02</span><span class=\"ds-rtile-title\">Medical Artificial<br>Intelligence</span></span><span class=\"ds-rtile-img\"></span></a><a class=\"ds-rtile\" href=\"#\" style=\"background:#1563b4\"><span class=\"ds-rtile-txt\"><span class=\"ds-rtile-eyebrow\">RESEARCH 03</span><span class=\"ds-rtile-title\">Radiation<br>Therapy</span></span><span class=\"ds-rtile-img\"></span></a><a class=\"ds-rtile\" href=\"#\" style=\"background:#34a1d4\"><span class=\"ds-rtile-txt\"><span class=\"ds-rtile-eyebrow\">RESEARCH 04</span><span class=\"ds-rtile-title\">Particle<br>Therapy</span></span><span class=\"ds-rtile-img\"></span></a></div>",
+      "css": ".ds-rtiles{display:flex;width:100%;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-rtile{flex:1;min-width:0;display:flex;flex-direction:column;min-height:300px;color:#fff;text-decoration:none} .ds-rtile:nth-child(even) .ds-rtile-img{order:-1} .ds-rtile-txt{display:block;flex:1;padding:30px} .ds-rtile-img{display:block;flex:none;height:140px;background:rgba(255,255,255,0.12)} .ds-rtile-eyebrow{display:inline-block;padding:0 3px 5px;border-bottom:1px solid #59ffce;font-size:18px;font-weight:700} .ds-rtile-title{display:block;margin-top:15px;font-size:28px;font-weight:700;line-height:1.4;letter-spacing:1px} .ds-rtile:focus-visible{outline:2px solid #59ffce;outline-offset:-4px}"
+    },
+    {
+      "name": "Latest List Panel",
+      "kind": "card",
+      "refersTo": "latest-panel",
+      "description": "홈 News/Seminar 패널. Panel Gray 면, 24px 제목과 Yonsei Navy 짧은 밑줄, 한 줄 말줄임 목록, 사각 + 더보기.",
+      "html": "<section class=\"ds-latest\"><h3 class=\"ds-latest-tit\"><a href=\"#\">News</a></h3><hr class=\"ds-latest-rule\"><ul><li><a href=\"#\">2025 KOSRO Autumn Conference Award !!</a><span>10-22</span></li><li><a href=\"#\">2025 KOSRT Spring Conference Award !!</a><span>09-09</span></li><li><a href=\"#\">MPBEL Presentations in 2024 AAPM annual meeting</a><span>08-01</span></li></ul><a class=\"ds-latest-more\" href=\"#\" aria-label=\"News 더보기\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"#0a347f\" stroke-width=\"1.2\"><rect x=\"0.6\" y=\"0.6\" width=\"26.8\" height=\"26.8\"/><path d=\"M14 7v14M7 14h14\"/></svg></a></section>",
+      "css": ".ds-latest{position:relative;box-sizing:border-box;height:283px;overflow:hidden;background:#e1e1e1;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-latest-tit{margin:0;line-height:45px} .ds-latest-tit a{position:relative;display:inline-block;margin:30px 0 0 30px;padding-bottom:20px;font-size:24px;font-weight:700;letter-spacing:1px;color:#272727;text-decoration:none} .ds-latest-tit a::after{content:'';position:absolute;left:0;bottom:0;width:130%;height:1px;background:#0a347f} .ds-latest-rule{width:90%;margin:-2px 0 0;border:0;border-top:1px solid #c4c4c4} .ds-latest ul{list-style:none;margin:0;padding:25px 30px} .ds-latest li{display:flex;justify-content:space-between;gap:16px;margin:2px 0;font-size:16px;font-weight:700;line-height:26px} .ds-latest li a{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#000;text-decoration:none} .ds-latest li a:hover,.ds-latest li a:focus-visible{color:#1563b4;outline:none} .ds-latest-more{position:absolute;top:33px;right:30px;display:block;line-height:0} .ds-latest-more:focus-visible{outline:2px solid #1563b4;outline-offset:2px}"
+    },
+    {
+      "name": "Member Card",
+      "kind": "card",
+      "refersTo": "hairline",
+      "description": "구성원 목록의 한 행. 202×150 사진, 20px 이름, 4px 회색 사각 불릿의 정의 목록, 위아래 Hairline.",
+      "html": "<article class=\"ds-member\"><div class=\"ds-member-img\"></div><div class=\"ds-member-cnt\"><h3>윤용도 Yongdo Yun</h3><dl><dt>Grade</dt><dd>Integrated Ph.D. Student</dd><dt>E-mail</dt><dd>name@example.com</dd><dt>Research Interest</dt><dd>Monte Carlo simulation, Carbon-ion radiotherapy</dd></dl></div></article>",
+      "css": ".ds-member{display:flex;gap:25px;padding:20px 0;border-top:1px solid #ddd;border-bottom:1px solid #ddd;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-member-img{flex:none;width:202px;height:150px;background:#e1e1e1} .ds-member h3{margin:0 0 15px;font-size:20px;font-weight:700;line-height:28px;color:#000} .ds-member dl{display:grid;grid-template-columns:auto 1fr;gap:0 10px;margin:0;font-size:13px} .ds-member dt{position:relative;padding-left:10px;margin-bottom:8px;font-weight:700} .ds-member dt::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;background:#686868} .ds-member dd{margin:0 0 8px;color:#262626}"
+    },
+    {
+      "name": "Category Tabs",
+      "kind": "chip",
+      "refersTo": "category-tab-active",
+      "description": "구성원 분류 탭. 16px Slate 글자, 선택된 탭은 Cobalt 채움 + 흰 굵은 글자(현재 코드는 #0099dc).",
+      "html": "<nav class=\"ds-tabs\"><a class=\"is-active\" href=\"#\" aria-current=\"page\">전체</a><a href=\"#\">MPBEL</a><a href=\"#\">Affiliate</a></nav>",
+      "css": ".ds-tabs{display:flex;align-items:center;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-tabs a{position:relative;padding:0 15px;font-size:16px;line-height:1.2em;color:#555;text-decoration:none;border:1px solid transparent} .ds-tabs a+a:not(.is-active)::before{content:'';position:absolute;left:0;top:3px;width:1px;height:15px;background:#888} .ds-tabs a:first-child+a::before{display:none} .ds-tabs a:hover{color:#1563b4} .ds-tabs a.is-active{background:#1563b4;border-color:#1563b4;color:#fff;font-weight:700} .ds-tabs a:focus-visible{outline:2px solid #1563b4;outline-offset:2px}"
+    },
+    {
+      "name": "Year Tabs",
+      "kind": "chip",
+      "refersTo": "year-tab",
+      "description": "출판물 연도 탭 격자. 90px 칸, Ledger 바탕, 1px Hairline 테두리, 각진 모서리.",
+      "html": "<ul class=\"ds-years\"><li><a href=\"#\" aria-current=\"page\">2025</a></li><li><a href=\"#\">2024</a></li><li><a href=\"#\">2023</a></li><li><a href=\"#\">2022</a></li><li><a href=\"#\">2021</a></li></ul>",
+      "css": ".ds-years{display:flex;flex-wrap:wrap;list-style:none;margin:0;padding-left:1px;font-family:Lato, 'Nanum Gothic', sans-serif} .ds-years a{display:block;width:90px;margin-left:-1px;padding:12px 0 11px;border:1px solid #ddd;background:#f8f8f8;color:#555;font-size:13px;line-height:1.2em;text-align:center;text-decoration:none} .ds-years a:hover{color:#1563b4} .ds-years a[aria-current]{color:#1563b4;font-weight:700} .ds-years a:focus-visible{outline:2px solid #1563b4;outline-offset:-2px}"
+    },
+    {
+      "name": "LINK Button",
+      "kind": "button",
+      "refersTo": "button-link",
+      "description": "출판물 행 오른쪽 아래의 작은 사각 버튼. Graphite 바탕, 11px 700 대문자 흰 글자.",
+      "html": "<a class=\"ds-btn-link\" href=\"#\">LINK</a>",
+      "css": ".ds-btn-link{display:inline-block;padding:4px 8px;background:#333;color:#fff;font-family:Lato, 'Nanum Gothic', sans-serif;font-size:11px;font-weight:700;line-height:16px;text-decoration:none;border-radius:0} .ds-btn-link:hover{background:#444} .ds-btn-link:focus-visible{outline:2px solid #1563b4;outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "게시글 보기의 목록 버튼. 흰 바탕, 1px #e0e0e0 테두리, 각진 모서리.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">목록</a>",
+      "css": ".ds-btn-outline{display:inline-block;padding:7px 15px;border:1px solid #e0e0e0;background:#fff;color:#000;font-family:Lato, 'Nanum Gothic', sans-serif;font-size:12px;text-decoration:none;border-radius:0} .ds-btn-outline:hover{color:#666} .ds-btn-outline:focus-visible{outline:2px solid #1563b4;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Blue Spectrum",
+    "overview": "MPBEL 사이트는 거의 검정에 가까운 네이비에서 맑은 하늘색까지 이어지는 하나의 블루 스펙트럼 위에 서 있습니다. 홈의 연구 분야 타일 네 개(Midnight Field → Deep Navy → Cobalt → Cerulean)는 OKLCH 밝기가 약 19% → 32% → 50% → 67%로 고르게 오르는 사다리이고, 로고의 Yonsei Navy가 그 위에 기관의 서명을 얹습니다. 이 시스템에서 색은 장식이 아니라 소속과 현재 위치를 알려 주는 신호입니다.\n\n분위기는 임상적이고 학술적입니다. 흰 바탕, 연한 회색 면, 1px 선이 논문·뉴스·구성원 목록을 정돈하고, 차가운 청백색 의료영상(엑스레이 두부, 방사선치료 장비, CT 재구성 도식)이 첨단성을 맡습니다. 컴포넌트는 절제되어 있습니다. 기본은 회색 패널과 얇은 선이고, 진한 블루 면은 연구 분야 타일과 사이드 내비게이션 머리처럼 정해진 몇 곳에만 나옵니다. 정보 밀도는 높은 편이며(본문 13–15px), 장식은 Signal Mint 밑줄 하나 정도로 아낍니다.\n\n이 사이트는 옛 그누보드5 사이트(© 2018)를 Astro 정적 사이트로 옮긴 데스크톱 우선 시스템입니다. 1200px 고정 폭 레이아웃이 1024px 이하에서 좌우 16px 여백의 유동 레이아웃으로 바뀝니다. 디자인 값은 CSS 변수 없이 `src/styles/legacy/`와 `src/styles/responsive.css`에 리터럴로 흩어져 있고, 이 문서의 토큰은 그 값들을 대표값 하나씩으로 정리한 것입니다. 코드에 남은 다른 값들은 Do's and Don'ts에 \"새 화면에 퍼뜨리지 않을 값\"으로 적었습니다.",
+    "keyCharacteristics": [
+      "어두운 쪽에서 밝은 쪽으로 이어지는 4단 블루 스펙트럼과 Yonsei Navy가 정체성의 중심",
+      "흰 바탕 + 회색 면 + 1px 선의 평면 구조, 모서리는 각짐(0px)",
+      "Lato(라틴)와 Nanum Gothic(한글) 두 서체, 굵기는 사실상 400과 700 두 단계",
+      "차가운 청백색 의료영상 사진이 히어로와 연구 타일을 채움",
+      "진한 블루 위의 짧은 Signal Mint 선이 유일한 장식 악센트",
+      "1200px 고정 그리드, 서브 페이지는 240px 사이드 내비 + 900px 본문"
+    ],
+    "rules": [
+      {
+        "name": "The Spectrum Order Rule",
+        "body": "블루 네 색을 한 세트로 쓸 때는 항상 어두운 쪽에서 밝은 쪽 순서(Midnight Field → Deep Navy → Cobalt → Cerulean)로 놓습니다. 홈 연구 타일 01→04가 이 순서이고, 순서 자체가 시스템의 서명입니다.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Interactive Blue Rule",
+        "body": "hover, 현재 위치, 선택 상태는 Cobalt 하나로 표시합니다. 레거시 코드에는 같은 역할의 블루가 여러 개 남아 있지만 새 화면은 Cobalt만 씁니다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mint Hairline Rule",
+        "body": "Signal Mint는 글자나 면에 쓰지 않습니다. 진한 블루 위의 1–2px 짧은 선으로만 나옵니다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Family Rule",
+        "body": "글자는 Lato와 Nanum Gothic 두 가족으로만 짭니다. 영문이 앞에서 받고 한글이 뒤에서 받는 순서도 유지합니다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Loaded-Weights Rule",
+        "body": "불러온 굵기만 씁니다. 새 코드에서는 400과 700 두 단계로 쓰고, 600을 쓰지 않습니다(어차피 700으로 그려집니다).",
+        "section": "typography"
+      },
+      {
+        "name": "The 240 + 900 Rule",
+        "body": "서브 페이지는 1200px 안에서 240px 사이드 내비와 900px 본문으로 나눕니다. 새 서브 페이지도 이 틀에 들어갑니다.",
+        "section": "layout"
+      },
+      {
+        "name": "The Square Corner Rule",
+        "body": "새 컴포넌트의 모서리는 0px입니다. 불릿이 필요하면 원이 아니라 작은 정사각형을 씁니다.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** 블루 네 색을 세트로 쓸 때 Midnight Field (#001429) → Deep Navy (#033163) → Cobalt (#1563b4) → Cerulean (#34a1d4) 순서를 지킵니다.",
+      "**Do** hover, 현재 위치, 선택 상태를 Cobalt (#1563b4) 하나로 표시합니다.",
+      "**Do** Signal Mint (#59ffce)는 진한 블루 위의 1–2px 짧은 선으로만 씁니다.",
+      "**Do** 서브 페이지는 1200px 안에 240px 사이드 내비 + 900px 본문 틀을 따르고, 1024px 이하에서는 좌우 16px 여백으로 풀어 줍니다.",
+      "**Do** 굵기는 400과 700만 씁니다(불러온 굵기 기준).",
+      "**Do** 새 화면의 한국어 단락에는 연구 페이지처럼 `word-break: keep-all`을 씁니다. 레거시 기본값 `p { word-break: break-all }`은 데스크톱에서 \"물리학 / 의\", \"CT/MR/PE / T\"처럼 단어 중간을 끊습니다.",
+      "**Do** 새 화면의 제목과 문구는 이미지가 아니라 실제 텍스트로 넣습니다. 기존 슬로건 이미지는 글자가 그림 안에 있어 화면 낭독기가 읽지 못합니다.",
+      "**Do** Cerulean (#34a1d4)과 Ash (#999999)는 큰 글자나 면, 보조 정보에만 씁니다. 흰 바탕 대비가 각각 2.9:1이라 본문 크기 글자에는 부족합니다."
+    ],
+    "donts": [
+      "**Don't** 레거시 코드에 남은 다른 블루를 새 화면에 쓰지 않습니다: #1e8ad3, #3378c1(메뉴 hover), #0099dc(구성원 탭), #3497d9(게시판 분류 글자), #1061b2(분류 탭 hover), #253dbe(최신글 밑줄), #4567b5(이전·다음 글), #4158d1(공지 아이콘), #05367b(교수 소제목), #4c4f6f(페이지네이션). 각각 Cobalt 또는 Yonsei Navy로 대신합니다.",
+      "**Don't** 최신글 hover의 빨간색 #a22121처럼 블루 스펙트럼과 무관한 상태 색을 만들지 않습니다.",
+      "**Don't** Petrol·Mustard·Sea Green을 출판물 바로가기 밖으로 가져가지 않습니다. 흰 글자를 Mustard (#ecbe13, 1.8:1)나 Sea Green (#2fb8ac, 2.5:1) 위에 새로 올리지도 않습니다.",
+      "**Don't** Signal Mint를 글자색이나 넓은 면으로 쓰지 않습니다.",
+      "**Don't** 둥근 모서리 카드나 원형 불릿을 들이지 않습니다. 모서리는 0px, 불릿은 작은 정사각형입니다.",
+      "**Don't** Lato와 Nanum Gothic 외의 서체를 본문이나 UI에 섞지 않습니다."
+    ]
+  }
+}
