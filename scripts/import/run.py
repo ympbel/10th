@@ -5,8 +5,10 @@
 
 Each record becomes <out>/<collection>/<file>.md. A file that already exists is kept unless --force is given:
 after the first run the files are edited by hand. --only limits the collections that are written, counted and
-checked; the collections they link to (members, projects) are still read. The count table is printed and put at
-the top of report.md; with --check the exit code is 1 when a count differs from EXPECTED.
+checked; the collections they link to are still read. Without members in --only, authors are linked against the
+existing <out>/members/*.md files, so aliases added there by hand are used; when members are rebuilt from the
+sheets, each keeps the aliases its existing file has. The count table is printed and put at the top of
+report.md; with --check the exit code is 1 when a count differs from EXPECTED.
 """
 import argparse
 import json
@@ -59,10 +61,15 @@ def _load_json(name):
 
 
 class Sources:
-    """Builds a collection's records on first use, once, so --only reads only the inputs it needs."""
+    """Builds a collection's records on first use, once, so --only reads only the inputs it needs.
 
-    def __init__(self, data, mpbel_content, report):
-        self.data, self.mpbel, self.report, self._built = Path(data), Path(mpbel_content), report, {}
+    Members are rebuilt from the sheets only when rebuild_members is set; otherwise they are read from the member
+    files in out.
+    """
+
+    def __init__(self, data, mpbel_content, out, report, rebuild_members):
+        self.data, self.mpbel, self.out = Path(data), Path(mpbel_content), Path(out)
+        self.report, self.rebuild_members, self._built = report, rebuild_members, {}
 
     def get(self, collection):
         if collection not in self._built:
@@ -73,9 +80,18 @@ class Sources:
         return sheets.read_sheet(self.data / SHEETS[key])
 
     def _members(self):
-        records = members.build_members(self._sheet('status'), self._sheet('alumni'))
+        directory = self.out / 'members'
+        existing = members.from_files(mpbel.read_entries(directory))
+        if self.rebuild_members:
+            records = members.build_members(self._sheet('status'), self._sheet('alumni'))
+            members.keep_aliases(records, existing)
+            source = ''
+        elif existing:
+            records, source = existing, f' ({directory}에서 읽음)'
+        else:
+            raise SystemExit(f'{directory} has no member files to link against: run with members in --only first')
         (_, people), (_, professors) = rows('members', records)
-        self.report.add(rp.COUNTS, f'구성원 {len(people)}명, 교수 {len(professors)}명')
+        self.report.add(rp.COUNTS, f'구성원 {len(people)}명, 교수 {len(professors)}명{source}')
         return records
 
     def _projects(self):
@@ -156,7 +172,7 @@ def parse_args(argv):
 def main(argv=None):
     args = parse_args(argv)
     report = rp.Report()
-    sources = Sources(args.data, args.mpbel, report)
+    sources = Sources(args.data, args.mpbel, args.out, report, rebuild_members='members' in args.only)
     counted = []
     for collection in args.only:
         for row, records in rows(collection, sources.get(collection)):

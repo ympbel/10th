@@ -1,10 +1,14 @@
 import contextlib
+import html
 import io
 import os
 import tempfile
 import unittest
 
+import mpbel
 import run
+from tests.test_members import alumni_rows, status_rows
+from tests.test_records import PAPER_HEADER, paper_row, project_rows
 
 INVENTED_EXPECTED = {'members': 3, 'professors': 1, 'papers': 2}
 
@@ -123,6 +127,80 @@ class MainTest(unittest.TestCase):
         self.main()
         code, printed = self.main()
         self.assertIn('| patents | 1 | 7 | 0 | 1 | 다름 |', printed)
+
+
+
+def write_sheet(path, rows):
+    """rows as a minimal sheet export that sheets.read_sheet reads back."""
+    body = ''.join('<tr>' + ''.join(f'<td>{html.escape(c)}</td>' for c in row) + '</tr>' for row in rows)
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(f'<table><tbody>{body}</tbody></table>')
+
+
+# An existing member file (invented person) with a spelling added by hand after the first run.
+HAND_EDITED_MEMBER = ('---\nrole: "student"\nname: "김하늘"\nname_en: "Haneul Kim"\naliases:\n  - "Haneul Kim"\n'
+                      '  - "H. N. Kim"\nprogram: "석사"\ndegree:\n  start: "2021-03-01"\n---\n')
+PROFESSOR = '---\nrole: "professor"\nname: "한가람"\nname_en: "Garam Han"\naliases:\n  - "Garam Han"\norder: 1\n---\n'
+
+
+class LinkFromContentTest(unittest.TestCase):
+    """Members come from the existing member files when --only leaves members out, and hand-added aliases survive a
+    rebuild of members from the sheets."""
+
+    def setUp(self):
+        self.dir = tempfile.TemporaryDirectory()
+        d = self.dir.name
+        self.data, self.out = os.path.join(d, 'data'), os.path.join(d, 'out')
+        os.makedirs(self.data)
+        os.makedirs(os.path.join(self.out, 'members'))
+        self.write(os.path.join(self.out, 'members', 'haneul-kim.md'), HAND_EDITED_MEMBER)
+        self.write(os.path.join(self.out, 'members', 'garam-han.md'), PROFESSOR)
+
+    def tearDown(self):
+        self.dir.cleanup()
+
+    @staticmethod
+    def write(path, text):
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(text)
+
+    def main(self, *args):
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            return run.main(['--data', self.data, '--mpbel', os.path.join(self.dir.name, 'mpbel'), '--out', self.out,
+                             '--report', os.path.join(self.dir.name, 'r.md'), *args])
+
+    def read(self, *path):
+        with open(os.path.join(self.out, *path), encoding='utf-8') as f:
+            return mpbel.parse_frontmatter(f.read())
+
+    def test_only_papers_links_through_an_alias_in_the_member_file(self):
+        # No 현황 or Alumni sheet in data/: the members must come from out/members/.
+        write_sheet(os.path.join(self.data, run.SHEETS['papers']), [
+            PAPER_HEADER,
+            paper_row('2021', 'H. N. Kim', '', 'Garam Han', '', 'Alias linked phantom study', 'Journal of Tests'),
+        ])
+        write_sheet(os.path.join(self.data, run.SHEETS['projects']), project_rows())
+        self.assertEqual(self.main('--only', 'papers'), 0)
+        paper = self.read('papers', '2021-h-n-kim-alias-linked-phantom.md')
+        self.assertEqual(paper['members'], ['haneul-kim'])
+        self.assertEqual(self.read('members', 'haneul-kim.md')['aliases'], ['Haneul Kim', 'H. N. Kim'])
+
+    def test_rebuilding_members_with_force_keeps_hand_added_aliases(self):
+        write_sheet(os.path.join(self.data, run.SHEETS['status']), status_rows())
+        write_sheet(os.path.join(self.data, run.SHEETS['alumni']), alumni_rows())
+        self.main('--force', '--only', 'members')
+        member = self.read('members', 'haneul-kim.md')
+        self.assertEqual(member['aliases'], ['Haneul Kim', 'H. N. Kim'])
+        self.assertEqual(member['joined'], '2021-03-01')  # rewritten from the sheet
+        self.assertEqual(self.read('members', 'bada-lee.md')['aliases'], ['Bada Lee'])
+
+    def test_without_member_files_linking_needs_members(self):
+        for name in os.listdir(os.path.join(self.out, 'members')):
+            os.remove(os.path.join(self.out, 'members', name))
+        write_sheet(os.path.join(self.data, run.SHEETS['awards']), [['', '연도', '수상자', '학회', '구분', '발표명']])
+        with self.assertRaises(SystemExit) as caught:
+            self.main('--only', 'awards')
+        self.assertIn('members', str(caught.exception.code))
 
 
 if __name__ == '__main__':

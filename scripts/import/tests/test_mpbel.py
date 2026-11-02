@@ -127,6 +127,13 @@ class ParseFrontmatterTest(unittest.TestCase):
         self.assertEqual(fm['venue'], 'line one\nline: two\n\n  indented')
         self.assertEqual(fm['next'], 'x')
 
+    def test_nested_mapping(self):
+        # The shape writer.write_md gives a member file's degree.
+        fm = mpbel.parse_frontmatter('---\nrole: "alumni"\ndegree:\n  start: "2020-03"\n  type: "공학석사"\n'
+                                     'aliases:\n  - "Gildong Hong"\n---\n')
+        self.assertEqual(fm, {'role': 'alumni', 'degree': {'start': '2020-03', 'type': '공학석사'},
+                              'aliases': ['Gildong Hong']})
+
     def test_lists(self):
         fm = mpbel.parse_frontmatter(
             "---\n"

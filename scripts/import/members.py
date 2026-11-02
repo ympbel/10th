@@ -209,3 +209,30 @@ def build_members(status_rows, alumni_rows):
     for n, record in enumerate(records, 1):
         record['_file'] = writer.unique_slug(writer.slugify(record['name_en'], f'member-{n}'), taken)
     return records
+
+
+# What linking (link.py) needs from a member: run.py reads these from the existing member files when members are
+# not rebuilt from the sheets.
+LINK_FIELDS = ('role', 'name', 'name_en', 'aliases')
+
+
+def from_files(entries):
+    """Member records for linking from (file name, frontmatter) pairs of existing members/*.md files: the
+    LINK_FIELDS present (aliases [] when absent) plus '_file' = the file name."""
+    records = []
+    for file, fm in entries:
+        record = {key: fm[key] for key in LINK_FIELDS if key in fm}
+        record.setdefault('aliases', [])
+        record['_file'] = file
+        records.append(record)
+    return records
+
+
+def keep_aliases(records, existing):
+    """Add to each record's aliases, in place, the spellings that the existing record with the same '_file' has and
+    it lacks, so aliases added by hand to a member file survive a rebuild from the sheets."""
+    old = {r['_file']: r.get('aliases', []) for r in existing}
+    for record in records:
+        extra = old.get(record['_file'], [])
+        extra = [extra] if isinstance(extra, str) else extra
+        record['aliases'] = list(dict.fromkeys(list(record['aliases']) + list(extra)))

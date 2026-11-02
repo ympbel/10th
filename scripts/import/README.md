@@ -16,7 +16,7 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
 | `--mpbel` | MPBEL 사이트의 `src/content` 폴더. `patents/ko/`, `seminars/ko/`를 읽습니다. |
 | `--out` | 쓸 곳(`src/content`). 항목마다 `<out>/<컬렉션>/<파일 이름>.md`를 씁니다. |
 | `--force` | 이미 있는 파일도 덮어씁니다. 주지 않으면 있는 파일은 그대로 두고 표의 "그대로 둠"에 셉니다. |
-| `--only members,papers` | 이 컬렉션만 쓰고, 세고, 대조합니다. 연결에 필요한 구성원과 과제는 쓰지 않아도 읽습니다. 이름: `members`, `papers`, `presentations`, `awards`, `challenges`, `projects`, `patents`, `seminars`. |
+| `--only members,papers` | 이 컬렉션만 쓰고, 세고, 대조합니다. 연결에 필요한 과제는 쓰지 않아도 시트에서 읽습니다. `members`가 빠지면 구성원은 시트가 아니라 이미 있는 `src/content/members/*.md` 파일에서 읽습니다(아래 "다시 돌릴 때"). 이름: `members`, `papers`, `presentations`, `awards`, `challenges`, `projects`, `patents`, `seminars`. |
 | `--check` | 건수가 기대값과 다르면 종료 코드 1로 끝납니다. |
 | `--report` | 보고서를 쓸 곳. 기본은 `scripts/import/report.md`. |
 
@@ -54,7 +54,12 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
 ## 다시 돌릴 때
 
 - `--force` 없이 돌리면 새 파일만 생기고 있는 파일은 바뀌지 않습니다.
-- `--force`로 다시 쓰면 그 컬렉션의 파일이 시트 값으로 돌아갑니다. 손으로 고친 내용은 사라지므로, 고친 파일이 있는 컬렉션은 `--only`에서 빼거나 다시 쓴 뒤 고친 내용을 옮깁니다. 구성원 파일의 `aliases`도 시트의 영문 이름으로 돌아갑니다.
+- `--force`로 다시 쓰면 그 컬렉션의 파일이 시트 값으로 돌아갑니다. 손으로 고친 내용은 사라지므로, 고친 파일이 있는 컬렉션은 `--only`에서 빼거나 다시 쓴 뒤 고친 내용을 옮깁니다. 예외는 구성원의 `aliases`입니다. 구성원을 시트에서 다시 만들 때 같은 이름의 원래 파일에 있던 표기를 모두 이어 받습니다.
+- **저자 연결만 다시 하기.** 구성원 파일의 `aliases`에 표기를 더하거나 `projects.json`을 채운 뒤에는 구성원을 빼고 돌립니다. 구성원은 지금 있는 파일(손으로 더한 `aliases` 포함)에서 읽고, 논문·발표·수상의 연결 필드(`members`, `projects`, `member`)가 새로 정해집니다. 이 세 컬렉션의 파일은 시트 값으로 다시 쓰이므로, 손으로 고친 파일이 있으면 그 컬렉션은 빼고 그 파일은 직접 고칩니다.
+
+  ```sh
+  python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/content --out src/content --force --only papers,presentations,awards --check
+  ```
 - `report.md`는 돌릴 때마다 새로 씁니다. `--only`로 돌리면 그 컬렉션과 연결에 쓴 컬렉션의 내용만 담깁니다.
 
 ## 파일
@@ -64,7 +69,7 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
 | `run.py` | 실행기. 입력을 읽고 아래 모듈을 불러 파일을 쓰고 건수를 셉니다. |
 | `sheets.py` | 시트 HTML을 행 목록으로 읽고 허용된 열만 고릅니다. |
 | `members.py`, `papers.py`, `presentations.py`, `awards.py`, `challenges.py`, `projects.py` | 시트별 항목 만들기 |
-| `mpbel.py` | MPBEL 마크다운의 frontmatter를 읽어 특허와 세미나 항목을 만듭니다. |
+| `mpbel.py` | MPBEL 마크다운의 frontmatter를 읽어 특허와 세미나 항목을 만듭니다. 이 사이트의 구성원 파일도 같은 방법으로 읽습니다. |
 | `link.py`, `names.py` | 저자 표기를 구성원과 연결 |
 | `dates.py` | 날짜 표기 통일(`YYYY-MM-DD`, `YYYY-MM`) |
 | `writer.py` | 파일 이름 slug와 마크다운 쓰기 |

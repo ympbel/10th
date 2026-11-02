@@ -2,6 +2,7 @@
 
 Only frontmatter is read. Bodies, images and the pinned/category/legacy_* keys are not carried over: a seminar
 links back to its post on the main site instead (source_url). Files whose name starts with '_' are templates.
+The same reader (read_entries) also reads this site's own member files, which run.py links against.
 """
 import json
 import re
@@ -80,12 +81,20 @@ def _list(lines):
     return items
 
 
-def parse_frontmatter(text):
-    """The frontmatter between the first two '---' lines as {key: value}, for the YAML the MPBEL files use.
+def _dedent(lines):
+    filled = [line for line in lines if line.strip()]
+    indent = len(filled[0]) - len(filled[0].lstrip())
+    return [line[indent:] for line in lines]
 
-    Values are strings ('2009', 'false'), lists of strings for block sequences and '[]', and joined text for '|-'
-    block scalars. Anything else (a missing or unclosed frontmatter, an unclosed quote, a scalar continued on
-    indented lines, flow collections) is a ValueError rather than a guess.
+
+def parse_frontmatter(text):
+    """The frontmatter between the first two '---' lines as {key: value}, for the YAML the MPBEL files and
+    writer.write_md use.
+
+    Values are strings ('2009', 'false'), lists of strings for block sequences and '[]', joined text for '|-'
+    block scalars, and dicts for keys followed by indented 'key: value' lines. Anything else (a missing or unclosed
+    frontmatter, an unclosed quote, a scalar continued on indented lines, flow collections) is a ValueError rather
+    than a guess.
     """
     lines = text.split('\n')
     if lines[0].rstrip() != '---':
@@ -93,7 +102,12 @@ def parse_frontmatter(text):
     end = next((i for i in range(1, len(lines)) if lines[i].rstrip() == '---'), None)
     if end is None:
         raise ValueError('frontmatter is not closed')
-    lines, data, i = lines[1:end], {}, 0
+    return _mapping(lines[1:end])
+
+
+def _mapping(lines):
+    """{key: value} for 'key: value' lines at column 0, each followed by the indented lines that belong to it."""
+    data, i = {}, 0
     while i < len(lines):
         line = lines[i]
         i += 1
@@ -111,14 +125,16 @@ def parse_frontmatter(text):
             data[key] = _block(value, nested)
         elif not any(line.strip() for line in nested):
             data[key] = _scalar(value)
-        elif not value or value.startswith('#'):
+        elif value and not value.startswith('#'):
+            raise ValueError(f'{key}: a value continued on indented lines is not supported')
+        elif next(line for line in nested if line.strip()).lstrip().startswith('-'):
             data[key] = _list(nested)
         else:
-            raise ValueError(f'{key}: a value continued on indented lines is not supported')
+            data[key] = _mapping(_dedent(nested))
     return data
 
 
-def _entries(directory):
+def read_entries(directory):
     """(file name without .md, frontmatter) for each *.md in directory not starting with '_', by file name."""
     for path in sorted(Path(directory).glob('*.md')):
         if path.name.startswith('_'):
@@ -157,7 +173,7 @@ def read_patents(directory, report=None):
     main site's within-year order, when the file has it. A missing link or authors is left out.
     """
     records = []
-    for file, fm in _entries(directory):
+    for file, fm in read_entries(directory):
         where = f'patents/{file}'
         record = _compact({
             'year': _integer(fm, 'year', where, required=True),
@@ -182,7 +198,7 @@ def read_seminars(directory, report=None):
     a presenter or event_date is noted in report.
     """
     records = []
-    for file, fm in _entries(directory):
+    for file, fm in read_entries(directory):
         where = f'seminars/{file}'
         record = _compact({
             'title': _required(fm, 'title', where),
