@@ -1,0 +1,171 @@
+/* Responsive layer, imported last by global.css. Every rule sits inside a media query, so above 1024px the desktop
+   layout in base.css is untouched. DESIGN.md: at ≤1024px the fixed 1200px grid becomes fluid with 16px gutters, the
+   menu becomes a drawer behind a 40×40 toggle, and the side navigation becomes a row of tabs above the content; at
+   ≤600px everything runs in one column. */
+
+@media (max-width: 1024px) {
+  body {
+    min-width: 0;
+  }
+  .wrap,
+  .topmenu-inner {
+    width: auto;
+    max-width: var(--w-page);
+    padding: 0 var(--s-gutter);
+  }
+
+  /* Top bar: logo, KR/EN and the toggle on one row; the menu is a drawer under them, sub menus expanded. */
+  .topmenu-inner {
+    flex-wrap: wrap;
+    height: auto;
+  }
+  .logo {
+    min-height: var(--h-topbar);
+  }
+  .nav-toggle {
+    display: flex;
+  }
+  .nav-toggle {
+    align-items: center;
+    justify-content: center;
+    width: var(--sz-toggle);
+    height: var(--sz-toggle);
+    margin-left: var(--s-xs);
+    padding: 0;
+    border: 1px solid var(--c-yonsei-navy);
+    border-radius: 0;
+    background: var(--c-paper);
+    color: var(--c-yonsei-navy);
+    cursor: pointer;
+  }
+  .nav {
+    display: none;
+  }
+  .nav.open {
+    display: block;
+  }
+  .nav {
+    order: 4;
+    flex: 0 0 100%;
+    align-self: auto;
+    padding-bottom: var(--s-gutter);
+  }
+  #nav {
+    display: block;
+  }
+  #nav > li > a {
+    height: auto;
+    padding: var(--s-xs);
+    border-top: 1px solid var(--c-hairline);
+    font-size: var(--fs-ui);
+  }
+  #nav .sub {
+    display: block;
+    position: static;
+    width: auto;
+    margin: 0;
+  }
+  #nav .sub a {
+    padding: var(--s-xs) var(--s-xs) var(--s-xs) var(--s-lg);
+    text-align: left;
+  }
+
+  /* Sub pages */
+  .sub_visual {
+    height: var(--h-sub-visual-tablet);
+  }
+  .sub_visual .wrap {
+    padding-left: var(--s-gutter);
+  }
+  #sub_contents {
+    display: block;
+  }
+  .side {
+    width: auto;
+    margin-top: var(--s-md);
+    padding-bottom: 0;
+  }
+  .contentBox {
+    width: auto;
+  }
+  .cnt_head {
+    margin-top: var(--s-lg);
+  }
+  .contents {
+    margin: var(--s-lg) 0 var(--s-xl);
+  }
+
+  /* Side navigation as a row of tabs: a compact section block, then the boards side by side. */
+  .snb .tit {
+    height: auto;
+    padding: calc(var(--s-md) + var(--s-sm)) var(--s-md) var(--s-sm);
+    font-size: var(--fs-subtitle);
+  }
+  .snb .tit::before {
+    top: var(--s-md);
+    left: var(--s-md);
+  }
+  .vNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2xs) var(--s-lg);
+    padding: var(--s-sm) var(--s-md);
+  }
+  .vNav li + li {
+    margin-top: 0;
+  }
+  .vNav a {
+    padding-left: var(--s-sm);
+  }
+  .vNav a::before {
+    left: 0;
+  }
+
+  /* Year tabs of a year page: the side column becomes a wrapping row of 90px cells. */
+  .side .year-tabs ul {
+    flex-direction: row;
+    padding-left: 1px;
+  }
+  .side .year-tabs li {
+    margin: 0 0 -1px -1px;
+  }
+  .side .year-tabs a {
+    width: var(--w-year-tab);
+    padding-left: 0;
+    text-align: center;
+  }
+
+  #footer {
+    padding: var(--s-lg) var(--s-gutter);
+  }
+}
+
+@media (max-width: 600px) {
+  /* The archive label goes under the logo so the row keeps room for KR/EN and the toggle. */
+  .logo {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .logo-label {
+    max-width: none;
+    margin: var(--s-2xs) 0 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .sub_visual {
+    height: var(--h-sub-visual-phone);
+  }
+  .sub_visual-label {
+    font-size: var(--fs-subtitle);
+  }
+  .ft_archive span,
+  .ft_archive a {
+    display: block;
+  }
+  .ft_archive a {
+    margin: var(--s-2xs) 0 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+}

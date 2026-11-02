@@ -1,0 +1,12 @@
+---
+// Temporary page so the menu link resolves; plan Task 10 replaces it with the board.
+import '../../styles/global.css';
+import SubLayout from '../../layouts/SubLayout.astro';
+import { t } from '../../i18n/index.ts';
+
+const s = t('ko');
+---
+
+<SubLayout title={s.boards.alumni} sectionKey="people" currentHref="/people/alumni/" locale="ko">
+  <p>{s.preparing}</p>
+</SubLayout>

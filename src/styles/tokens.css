@@ -1,0 +1,85 @@
+/* Design tokens from DESIGN.md (the only visual authority). New CSS uses these variables for every color and
+   spacing value; the component sizes below are the fixed dimensions DESIGN.md gives for its components. */
+:root {
+  /* Blue spectrum and accents */
+  --c-yonsei-navy: #0a347f;
+  --c-midnight-field: #001429;
+  --c-deep-navy: #033163;
+  --c-cobalt: #1563b4; /* the one interaction color: hover, current, selected */
+  --c-cerulean: #34a1d4; /* large text and fills only (2.9:1 on white) */
+  --c-signal-mint: #59ffce; /* 1–2px lines on dark blue only */
+  --c-harbor-steel: #195275;
+  --c-harbor-steel-hover: #7895a7;
+
+  /* Neutrals */
+  --c-paper: #ffffff;
+  --c-ink: #000000;
+  --c-graphite: #333333;
+  --c-slate: #666666;
+  --c-ash: #999999; /* secondary info only (2.9:1 on white) */
+  --c-hairline: #dddddd;
+  --c-hairline-soft: #e7e7e7;
+  --c-panel-gray: #e1e1e1;
+  --c-band-gray: #ebebeb;
+  --c-mist: #f5f5f5;
+  --c-ledger: #f8f8f8;
+  --c-notice-tint: #e6f8ff;
+
+  /* Footer */
+  --c-footer-charcoal: #363636;
+  --c-footer-ash: #9f9f9f;
+  --c-footer-dim: #6e6e6e;
+
+  /* Spacing rhythm */
+  --s-2xs: 5px;
+  --s-xs: 10px;
+  --s-sm: 15px;
+  --s-md: 20px;
+  --s-lg: 30px;
+  --s-xl: 50px;
+  --s-2xl: 70px;
+  --s-gutter: 16px; /* side gutter at ≤1024px */
+
+  /* Type: two families, weights 400 and 700 */
+  --f-sans: Lato, 'Nanum Gothic', sans-serif;
+  --fs-display: 36px;
+  --fs-headline: 28px;
+  --fs-title-lg: 24px;
+  --fs-title: 22px;
+  --fs-subtitle: 20px;
+  --fs-nav: 18px;
+  --fs-body-lead: 18px;
+  --fs-ui: 16px; /* footer lab name, drawer links */
+  --fs-body: 15px;
+  --fs-ui-sm: 14px; /* dropdown items, footer address and copyright */
+  --fs-body-sm: 13px;
+  --fs-label: 12px;
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  /* Layout */
+  --w-page: 1200px;
+  --w-side: 240px;
+  --w-gap: 60px;
+  --w-main: 900px;
+  --h-topbar: 100px;
+  --h-sub-visual: 250px;
+  --h-sub-visual-tablet: 150px; /* ≤1024px */
+  --h-sub-visual-phone: 120px; /* ≤600px */
+
+  /* Component sizes */
+  --h-nav-link: 90px;
+  --w-dropdown: 205px;
+  --w-lang: 44px;
+  --h-lang: 30px;
+  --h-snb-title: 149px;
+  --pad-snb-list: 27px;
+  --pad-cell: 12px; /* table head and year tab vertical padding */
+  --w-year-tab: 90px;
+  --sz-toggle: 40px;
+  --sz-bullet: 5px; /* square bullets */
+  --pad-snb-title-top: 75px;
+  --pad-btn-link: 4px 8px;
+  --pad-btn-outline: 7px 15px;
+  --fs-btn-link: 11px;
+}

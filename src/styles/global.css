@@ -1,3 +1,5 @@
-/* Site-wide styles. Every page imports this file as its first import, so its bundle is linked before any page CSS.
-   It is empty until the design tokens and base styles exist; they are imported here in order: tokens, base,
-   responsive. */
+/* Site-wide styles. Every page file imports this as its first import, so its bundle is linked before any page CSS
+   (tests/dist/css-order.test.mjs checks it). Order: tokens, then the base chrome, then the responsive layer. */
+@import './tokens.css';
+@import './base.css';
+@import './responsive.css';

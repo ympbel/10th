@@ -1,18 +1,17 @@
 ---
-// Placeholder home until the shared layout exists: one internal link and one image, both through `url()`, so the
-// build-output link test has something to check.
+// Temporary home until the home page is built (plan Task 8): the shared frame with the site title.
 import '../styles/global.css';
-import { url } from '../lib/url.ts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../i18n/index.ts';
+
+const s = t('ko');
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MPBEL 10주년 아카이브</title>
-  </head>
-  <body>
-    <a href={url('/')}><img src={url('/images/site/logo.png')} alt="MPBEL" /></a>
-  </body>
-</html>
+<BaseLayout locale="ko">
+  <div class="wrap">
+    <div class="contents">
+      <h1 class="cnt_title">{s.siteTitle}</h1>
+      <p>{s.preparing}</p>
+    </div>
+  </div>
+</BaseLayout>

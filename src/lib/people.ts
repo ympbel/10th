@@ -1,7 +1,7 @@
 import type { Entry } from './content.ts';
+import type { Locale } from './locale.ts';
 
-/** The site's two languages. */
-export type Locale = 'ko' | 'en';
+export type { Locale };
 
 /** A paper or presentation: `members` holds the slugs of the lab members among its authors. */
 type Authored = Entry<{ members: string[] }>;

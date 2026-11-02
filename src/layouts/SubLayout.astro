@@ -1,0 +1,51 @@
+---
+// Sub page frame: the 250px visual band with the archive label, then inside the 1200px grid a 240px side area
+// (the section's side navigation, or the year tab rail on year pages) and the 900px main column with the page
+// heading, the breadcrumb and the page content.
+import BaseLayout from './BaseLayout.astro';
+import Snb from '../components/Snb.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import type { SectionKey } from '../lib/menu.ts';
+import type { Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  title: string;
+  /** Menu section of the page. Required for the side navigation (`side: 'menu'`); year pages have none. */
+  sectionKey?: SectionKey;
+  /** Site-root path of the current board (`/people/students/`), without the base or `/en`. */
+  currentHref: string;
+  locale: Locale;
+  /** `menu` (default): the section's side navigation. `years`: the side area holds the `side` slot (year tabs). */
+  side?: 'menu' | 'years';
+  /** The year a year page shows, for its year tab rail. */
+  currentYear?: number;
+}
+
+const { title, sectionKey, currentHref, locale, side = 'menu' } = Astro.props;
+if (side === 'menu' && !sectionKey) throw new Error(`SubLayout "${title}": side navigation needs a sectionKey`);
+const s = t(locale);
+---
+
+<BaseLayout title={title} locale={locale}>
+  <div class="sub_visual" style={`background-image:url(${url('/images/site/sub_visual.jpg')})`}>
+    <div class="wrap">
+      <p class="sub_visual-label">{s.archiveLabel}</p>
+    </div>
+  </div>
+  <div id="sub_contents" class="wrap">
+    <div class="side">
+      {side === 'menu' && sectionKey ? <Snb sectionKey={sectionKey} currentHref={currentHref} locale={locale} /> : <slot name="side" />}
+    </div>
+    <div class="contentBox">
+      <div class="cnt_head">
+        <h1 class="cnt_title">{title}</h1>
+        <Breadcrumb sectionKey={sectionKey} title={title} locale={locale} />
+      </div>
+      <div class="contents">
+        <slot />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

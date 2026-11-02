@@ -1,0 +1,40 @@
+---
+// The page frame every page shares: <html lang>, head with the fonts, top bar, main, footer.
+// The site-wide CSS (styles/global.css) is imported by every page file as its first import, not here: Astro links a
+// page's stylesheets in the order it meets their imports, so an import here would come after a page's own CSS.
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import type { Locale } from '../lib/locale.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  /** Page title; the document title is `<title> | MPBEL 10th`. Omitted on the home page (site title only). */
+  title?: string;
+  locale: Locale;
+  bodyClass?: string;
+}
+
+const { title, locale, bodyClass } = Astro.props;
+const s = t(locale);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title ? `${title} | MPBEL 10th` : s.siteTitle}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap" rel="stylesheet" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip" href="#main">{s.skipToContent}</a>
+    <Header locale={locale} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

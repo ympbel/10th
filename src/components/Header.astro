@@ -1,0 +1,77 @@
+---
+// Top bar: logo and archive label (home link), the six menu sections with their dropdowns, the KR/EN toggle. At
+// ≤1024px the menu becomes a drawer opened by the toggle button (responsive.css, script below).
+import { MENU } from '../lib/menu.ts';
+import { localePath, otherLocaleHref, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+// The toggle links to the same page in each language: this page for the current one, its counterpart for the other.
+const here = Astro.url.pathname;
+const languages: Array<{ locale: Locale; label: string; href: string }> = [
+  { locale: 'ko', label: 'KR', href: locale === 'ko' ? here : otherLocaleHref(here) },
+  { locale: 'en', label: 'EN', href: locale === 'en' ? here : otherLocaleHref(here) },
+];
+---
+
+<header class="topmenu">
+  <div class="topmenu-inner">
+    <a class="logo" href={url(localePath('/', locale))}>
+      <img src={url('/images/site/logo.png')} alt={s.logoAlt} width="142" height="50" />
+      <span class="logo-label">{s.archiveLabel}</span>
+    </a>
+    <nav id="navi" class="nav" aria-label={s.mainNav}>
+      <ul id="nav">
+        {
+          MENU.map((section) => (
+            <li>
+              <a href={url(localePath(section.items[0].href, locale))}>{section.label}</a>
+              <ul class="sub">
+                {section.items.map((item) => (
+                  <li>
+                    <a href={url(localePath(item.href, locale))}>{item.label[locale]}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="langbut" role="group" aria-label={s.language}>
+      <ul>
+        {
+          languages.map((l) => (
+            <li class={l.locale === locale ? 'active' : undefined}>
+              <a href={l.href} hreflang={l.locale} aria-current={l.locale === locale ? 'true' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <button type="button" class="nav-toggle" aria-label={s.menuToggle} aria-expanded="false" aria-controls="navi">
+      <svg width="20" height="13" viewBox="0 0 20 13" aria-hidden="true">
+        <path d="M0 .5h20M0 6.5h20M0 12.5h20" fill="none" stroke="currentColor" stroke-width="1"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+<script is:inline>
+  (function () {
+    var toggle = document.querySelector('.nav-toggle');
+    var navi = document.getElementById('navi');
+    if (!toggle || !navi) return;
+    toggle.addEventListener('click', function () {
+      var open = navi.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+</script>

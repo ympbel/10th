@@ -1,0 +1,22 @@
+---
+// Footer band: lab name, address and phone (the main site's values), the archive line with a link to the main site,
+// copyright.
+import type { Locale } from '../lib/locale.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { footer } = t(Astro.props.locale);
+---
+
+<footer id="footer">
+  <p class="ft_name">{footer.name}</p>
+  <p class="ft_address">{footer.address}<br />{footer.tel}</p>
+  <p class="ft_archive">
+    <span>{footer.archive}</span>
+    <a href={footer.mainSiteHref}>{footer.mainSite}</a>
+  </p>
+  <p class="ft_copy">{footer.copyright} <span>{footer.copyrightName}</span> {footer.copyrightTail}</p>
+</footer>

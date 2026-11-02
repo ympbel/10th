@@ -1,0 +1,38 @@
+---
+// Breadcrumb beside the page heading: home icon (a link home) → section → current page.
+import { MENU, type SectionKey } from '../lib/menu.ts';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  /** Omitted on pages outside the menu (year pages): the trail is then home → current page. */
+  sectionKey?: SectionKey;
+  title: string;
+  locale: Locale;
+}
+
+const { sectionKey, title, locale } = Astro.props;
+const section = sectionKey && MENU.find((s) => s.key === sectionKey);
+if (sectionKey && !section) throw new Error(`No menu section "${sectionKey}"`);
+const s = t(locale);
+const crumbs = [section && section.label, title].filter((c): c is string => Boolean(c));
+---
+
+<nav class="loca" aria-label={s.breadcrumb}>
+  <ol>
+    <li>
+      <a href={url(localePath('/', locale))}><img src={url('/images/site/home.png')} alt={s.home} width="13" height="12" /></a>
+    </li>
+    {
+      crumbs.map((crumb, i) => (
+        <li aria-current={i === crumbs.length - 1 ? 'page' : undefined}>
+          <svg class="sep" width="6" height="10" viewBox="0 0 6 10" aria-hidden="true">
+            <path d="M1 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1" />
+          </svg>
+          {crumb}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

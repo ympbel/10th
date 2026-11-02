@@ -1,0 +1,502 @@
+/* Site chrome and shared pieces, from DESIGN.md's component values: page reset, top bar with dropdowns and the
+   KR/EN toggle, sub page frame (visual band, side navigation, heading and breadcrumb), footer, and the common
+   table, year tabs, buttons and square bullets. Colors and spacing come from tokens.css only. No image paths here:
+   CSS files cannot see the base, so background images are set from the components. */
+
+/* ---------- Reset and page ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  overflow-y: scroll;
+}
+/* A column so the footer sits at the bottom of the window on short pages (main takes the free height). */
+body {
+  display: flex;
+  flex-direction: column;
+  min-width: var(--w-page);
+  min-height: 100vh;
+  margin: 0;
+  background: var(--c-paper);
+  color: var(--c-ink);
+  font-family: var(--f-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: 1.6;
+  /* Korean breaks between words, not inside them; long Latin strings may still break to fit. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure {
+  margin: 0;
+  padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: var(--fw-bold);
+}
+ul, ol {
+  list-style: none;
+}
+img {
+  border: 0;
+  vertical-align: middle;
+}
+a {
+  color: var(--c-ink);
+  text-decoration: none;
+}
+button {
+  font: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--c-cobalt);
+  outline-offset: 2px;
+}
+::selection {
+  background: var(--c-yonsei-navy);
+  color: var(--c-paper);
+}
+main {
+  flex: 1 0 auto;
+}
+.wrap {
+  width: var(--w-page);
+  margin: 0 auto;
+}
+.skip {
+  position: absolute;
+  top: var(--s-xs);
+  left: -9999px;
+  z-index: 100;
+  padding: var(--s-xs) var(--s-sm);
+  background: var(--c-paper);
+  color: var(--c-cobalt);
+  font-weight: var(--fw-bold);
+}
+.skip:focus {
+  left: var(--s-md);
+}
+
+/* ---------- Top bar ---------- */
+.topmenu {
+  position: relative;
+  z-index: 50;
+  background: var(--c-paper);
+}
+.topmenu-inner {
+  display: flex;
+  align-items: center;
+  width: var(--w-page);
+  height: var(--h-topbar);
+  margin: 0 auto;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+.logo img {
+  display: block;
+  width: 142px;
+  height: 50px;
+}
+/* Two lines beside the logo ("10th Anniversary" / "Archive"), never broken inside a word. */
+.logo-label {
+  max-width: 14em;
+  overflow-wrap: normal;
+  margin-left: var(--s-sm);
+  padding-left: var(--s-sm);
+  border-left: 1px solid var(--c-hairline);
+  color: var(--c-ash);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Menu: the links sit on the bar's bottom 90px so each dropdown opens right under the bar. */
+.nav {
+  align-self: flex-end;
+}
+#nav {
+  display: flex;
+}
+#nav > li {
+  position: relative;
+}
+#nav > li > a {
+  display: flex;
+  align-items: center;
+  height: var(--h-nav-link);
+  padding: 0 var(--s-md);
+  color: var(--c-ink);
+  font-size: var(--fs-nav);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+}
+#nav > li:hover > a,
+#nav > li:focus-within > a {
+  color: var(--c-cobalt);
+}
+#nav .sub {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: var(--w-dropdown);
+  margin-left: calc(var(--w-dropdown) / -2);
+  background: var(--c-harbor-steel);
+}
+#nav > li:hover > .sub,
+#nav > li:focus-within > .sub {
+  display: block;
+}
+#nav .sub a {
+  display: block;
+  padding: var(--s-sm) var(--s-2xs);
+  color: var(--c-paper);
+  font-size: var(--fs-ui-sm);
+  text-align: center;
+}
+#nav .sub a:hover {
+  background: var(--c-harbor-steel-hover);
+}
+/* Cobalt would vanish on Harbor Steel: the focus ring turns white and sits inside the item. */
+#nav .sub a:focus-visible {
+  outline-color: var(--c-paper);
+  outline-offset: -2px;
+}
+
+/* KR/EN: the current language filled. */
+.langbut {
+  margin-left: var(--s-md);
+}
+.langbut ul {
+  display: flex;
+}
+.langbut li + li {
+  margin-left: -1px;
+}
+.langbut a {
+  display: block;
+  width: var(--w-lang);
+  height: var(--h-lang);
+  border: 1px solid var(--c-yonsei-navy);
+  color: var(--c-yonsei-navy);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  line-height: calc(var(--h-lang) - 2px);
+  text-align: center;
+  transition: background-color 0.6s, color 0.6s;
+}
+.langbut a:hover,
+.langbut .active a {
+  background: var(--c-yonsei-navy);
+  color: var(--c-paper);
+}
+
+/* The drawer toggle shows only at ≤1024px (responsive.css). */
+.nav-toggle {
+  display: none;
+}
+
+/* ---------- Sub page frame ---------- */
+.sub_visual {
+  height: var(--h-sub-visual);
+  background-color: var(--c-mist);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+.sub_visual .wrap {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-left: var(--s-2xl);
+}
+/* Yonsei Navy, not white: the band's photo is light where the label sits (≥ 4:1 against it). */
+.sub_visual-label {
+  color: var(--c-yonsei-navy);
+  font-size: var(--fs-headline);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+#sub_contents {
+  display: flex;
+  gap: var(--w-gap);
+}
+.side {
+  flex: 0 0 var(--w-side);
+  width: var(--w-side);
+  padding-bottom: var(--s-xl);
+}
+.contentBox {
+  flex: 0 0 var(--w-main);
+  width: var(--w-main);
+  min-width: 0;
+}
+.cnt_head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-xs) var(--s-md);
+  margin-top: var(--s-2xl);
+}
+.cnt_title {
+  color: var(--c-graphite);
+  font-size: var(--fs-title);
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+}
+.contents {
+  margin: var(--s-xl) 0;
+}
+
+/* Side navigation: section name on the blue block with the mint line, then the boards on Mist. */
+.snb .tit {
+  position: relative;
+  height: var(--h-snb-title);
+  padding: var(--pad-snb-title-top) 0 0 var(--s-lg);
+  background-color: var(--c-cobalt);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: var(--c-paper);
+  font-size: var(--fs-title-lg);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.snb .tit::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--pad-snb-title-top) - var(--s-xs));
+  left: var(--s-lg);
+  width: var(--s-lg);
+  height: 2px;
+  background: var(--c-signal-mint);
+}
+.vNav {
+  padding: var(--pad-snb-list) 0;
+  border-bottom: 1px solid var(--c-graphite);
+  background: var(--c-mist);
+}
+.vNav li + li {
+  margin-top: var(--s-sm);
+}
+.vNav a {
+  position: relative;
+  display: block;
+  padding-left: var(--s-lg);
+  color: var(--c-graphite);
+}
+.vNav a::before {
+  content: '';
+  position: absolute;
+  top: calc(0.8em - 2px);
+  left: var(--s-sm);
+  width: var(--sz-bullet);
+  height: var(--sz-bullet);
+  background: var(--c-graphite);
+}
+.vNav a:hover,
+.vNav .active a {
+  color: var(--c-cobalt);
+}
+.vNav a:hover::before,
+.vNav .active a::before {
+  background: var(--c-cobalt);
+}
+
+/* Breadcrumb: secondary information, so Ash. */
+.loca ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--c-ash);
+  font-size: var(--fs-body-sm);
+}
+.loca li {
+  display: flex;
+  align-items: center;
+}
+.loca .sep {
+  margin: 0 var(--s-xs);
+}
+.loca a {
+  display: flex;
+}
+.loca img {
+  display: block;
+}
+
+/* ---------- Footer ---------- */
+#footer {
+  padding: var(--s-lg) 0;
+  background: var(--c-footer-charcoal);
+  text-align: center;
+}
+#footer p {
+  text-wrap: balance;
+}
+#footer p + p {
+  margin-top: var(--s-2xs);
+}
+.ft_name {
+  color: var(--c-paper);
+  font-size: var(--fs-ui);
+}
+.ft_address,
+.ft_archive {
+  color: var(--c-footer-ash);
+  font-size: var(--fs-ui-sm);
+}
+/* Two groups: the lab (name, address) and the archive (link, copyright); more space between than within. */
+#footer .ft_archive {
+  margin-top: var(--s-sm);
+}
+.ft_archive a {
+  margin-left: var(--s-xs);
+  padding-left: var(--s-xs);
+  border-left: 1px solid var(--c-footer-dim);
+  color: var(--c-paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ft_archive a:hover {
+  text-decoration: none;
+}
+#footer a:focus-visible {
+  outline-color: var(--c-paper);
+}
+.ft_copy {
+  color: var(--c-footer-dim);
+  font-size: var(--fs-ui-sm);
+}
+.ft_copy span {
+  color: var(--c-cerulean);
+}
+
+/* ---------- Common table ---------- */
+.tbl-wrap {
+  overflow-x: auto;
+}
+.tbl {
+  width: 100%;
+  border-top: 1px solid var(--c-graphite);
+  border-collapse: collapse;
+  color: var(--c-graphite);
+  font-size: var(--fs-body-sm);
+}
+.tbl th,
+.tbl td {
+  padding: var(--pad-cell) var(--s-xs);
+  text-align: left;
+  vertical-align: top;
+}
+.tbl thead th {
+  border-bottom: 1px solid var(--c-hairline);
+  background: var(--c-ledger);
+  font-weight: var(--fw-bold);
+}
+.tbl td {
+  border-bottom: 1px solid var(--c-hairline-soft);
+}
+.tbl a {
+  color: var(--c-graphite);
+}
+.tbl a:hover {
+  color: var(--c-cobalt);
+}
+
+/* ---------- Year tabs ---------- */
+/* A row of 90px cells (board pages); in the side area of a year page, a column (`.side .year-tabs`). The current
+   year is `a.on` or `a[aria-current]`. */
+.year-tabs ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 1px;
+}
+.year-tabs li {
+  margin: 0 0 -1px -1px;
+}
+.year-tabs a {
+  position: relative;
+  display: block;
+  width: var(--w-year-tab);
+  padding: var(--pad-cell) 0 calc(var(--pad-cell) - 1px);
+  border: 1px solid var(--c-hairline);
+  background: var(--c-ledger);
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+  line-height: 1.2;
+  text-align: center;
+}
+.year-tabs a:hover {
+  color: var(--c-cobalt);
+}
+.year-tabs a.on,
+.year-tabs a[aria-current] {
+  z-index: 1;
+  border-color: var(--c-cobalt);
+  background: var(--c-cobalt);
+  color: var(--c-paper);
+  font-weight: var(--fw-bold);
+}
+.side .year-tabs ul {
+  flex-direction: column;
+  padding: 0;
+}
+.side .year-tabs li {
+  margin: 0 0 -1px;
+}
+.side .year-tabs a {
+  width: auto;
+  padding-left: var(--s-lg);
+  text-align: left;
+}
+
+/* ---------- Buttons ---------- */
+.btn-link {
+  display: inline-block;
+  padding: var(--pad-btn-link);
+  background: var(--c-graphite);
+  color: var(--c-paper);
+  font-size: var(--fs-btn-link);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.btn-link:hover {
+  background: var(--c-cobalt);
+}
+.btn-outline {
+  display: inline-block;
+  padding: var(--pad-btn-outline);
+  border: 1px solid var(--c-hairline);
+  background: var(--c-paper);
+  color: var(--c-ink);
+}
+.btn-outline:hover {
+  border-color: var(--c-cobalt);
+  color: var(--c-cobalt);
+}
+
+/* ---------- Square bullets ---------- */
+.sq-list li {
+  position: relative;
+  padding-left: var(--s-sm);
+}
+.sq-list li::before {
+  content: '';
+  position: absolute;
+  top: calc(0.8em - 2px);
+  left: 0;
+  width: var(--sz-bullet);
+  height: var(--sz-bullet);
+  background: var(--c-graphite);
+}

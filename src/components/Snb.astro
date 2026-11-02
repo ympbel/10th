@@ -1,0 +1,33 @@
+---
+// Side navigation of a sub page: the section name on the blue title block, then the section's boards with the current
+// one marked. The title block's background image is set here because CSS files cannot see the base.
+import { MENU, type SectionKey } from '../lib/menu.ts';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+
+interface Props {
+  sectionKey: SectionKey;
+  /** Site-root path of the current board (`/people/students/`), without the base or `/en`. */
+  currentHref: string;
+  locale: Locale;
+}
+
+const { sectionKey, currentHref, locale } = Astro.props;
+const section = MENU.find((s) => s.key === sectionKey);
+if (!section) throw new Error(`No menu section "${sectionKey}"`);
+---
+
+<nav class="snb" aria-labelledby="snb-title">
+  <p class="tit" id="snb-title" style={`background-image:url(${url('/images/site/bgSnbTit.jpg')})`}>{section.label}</p>
+  <ul class="vNav">
+    {
+      section.items.map((item) => (
+        <li class={item.href === currentHref ? 'active' : undefined}>
+          <a href={url(localePath(item.href, locale))} aria-current={item.href === currentHref ? 'page' : undefined}>
+            {item.label[locale]}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
