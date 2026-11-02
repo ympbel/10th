@@ -1,0 +1,613 @@
+# 변환 보고서
+
+| 항목 | 건수 | 기대값 | 새로 씀 | 그대로 둠 | 대조 |
+|---|---:|---:|---:|---:|---|
+| members | 61 | 61 | 61 | 0 | 맞음 |
+| professors | 8 | 8 | 8 | 0 | 맞음 |
+| papers | 217 | 217 | 217 | 0 | 맞음 |
+| presentations | 379 | 379 | 379 | 0 | 맞음 |
+| awards | 41 | 41 | 41 | 0 | 맞음 |
+| challenges | 4 | 4 | 4 | 0 | 맞음 |
+| projects | 15 | 15 | 15 | 0 | 맞음 |
+| patents | 7 | 7 | 7 | 0 | 맞음 |
+| seminars | 431 | 431 | 431 | 0 | 맞음 |
+
+## 건수
+
+- 구성원 61명, 교수 8명
+- 과제 15건
+- 논문 217건
+- 학회 발표 379건
+- 수상 41건
+- 챌린지 4건
+- 특허 7건
+- 세미나 431건
+
+## 별칭 후보
+
+- Byoung Su Choi → byong-su-choi
+- Jooyoung lee → juyoung-lee
+- Jong Hoon Kim → jeongheon-kim
+- Jae Young Lee → juyoung-lee
+- Yondo Yun → yongdo-yun
+- Byoungsu Choi → byong-su-choi
+- Min-Seok Cho → min-seo-choi
+- Yu Jin Park → ye-in-park
+- Inkyoung Park → inkyung-park
+- Jea Hyun Seok → jae-hyun-seok
+- Kang houn Lee → lee-kang-houn
+- Kang Houn Lee → lee-kang-houn
+- DO Shin → bi-shin
+- DH Shin → bi-shin
+- Byeong Su Choi → byong-su-choi
+- Choi Sungwoon → sungwoon-choi
+
+## 미연결 저자
+
+- Sangjoon Park
+- Seungryong Cho
+- Sridhar Yaddanapudi
+- James J. Sohn
+- So Hyun Ahn
+- Sang Hyoun Choi
+- Chae-Seon Hong
+- Jihun Kim
+- Paulo Fonte
+- Ji Won Choi
+- Min Cheol Han
+- Yeon Soo Yeom
+- Sung Uk Lee
+- Jaeho Cho
+- Jeong Eun Park
+- Sunghyun Kim
+- Yong Wook Baek
+- Jee Suk Chang
+- Kyung Ho Lim
+- Kwanyoung Kim
+- Su Chul Han
+- Kwangwoo Park
+- Dohyeon Yoo
+- Byung-Hee Kang
+- Eungman Lee
+- Sang Min Lee
+- Sung Ae Jung
+- Hai-Jeon Yoon
+- Jee Hyang Jeong
+- Seo Yi Choi
+- Eo Yun
+- Min Suk Kim
+- Seo Hee Choi
+- Gašper Podobnik
+- Jae Sung Lee
+- Woo Sang Ahn
+- Kwang Woo Park
+- Seungryoung Cho
+- Jue Jiang
+- Harini Veeraraghavan
+- Maria Thor
+- Yeona Cho
+- Kyun Hwan Kim
+- Jae Myoung Noh
+- Hong In Yoon
+- Sunmi Kim
+- Tae Suk Suh
+- Byoung Su Choi
+- Sven Olberg
+- Sohyun Ahn
+- Wloo Sang Ahn
+- Woong Sub Koom
+- A Reum Choe
+- Jung-in Kim
+- Jooyoung lee
+- Sung yong park
+- Justin Park
+- Joongyo Lee
+- Yong Bae Kim
+- Kyubo Kim
+- Benjamin C. Lewis
+- Changhwan Kim
+- Jina Kim
+- jee Suk Chang
+- Tae Hyung Kim
+- Kum Bae Kim
+- Hongin Yoon
+- Benjamin Lewis
+- Kidong Eom
+- Young Kyung Lim
+- Hyun Ju Kim
+- Koom WS
+- Seong Yong Park
+- Snaghyoun Choi
+- Sanghyoun Choi
+- Seung Yeun Chung
+- Dongho Shin
+- E. Lee
+- J.S. Kim
+- K. Park
+- Jonghyun Kim
+- Wonhee Lee
+- Kyung Hwan Chang
+- Yoonsun Chung
+- Chang Geol Lee
+- Sang Hoon Jung
+- Won Park
+- Wonjoong Cheon
+- 이호
+- Do Hoon Lim
+- Hyothaek Lee
+- Sang-wook Lee
+- Jaehyeon Seo
+- Myonggeun Yoon
+- Jeongmin Yoon
+- Ho Lee
+- Kihong Son
+- Shinkook Choi
+- Jongduk Baek
+- So Hyun Park
+- Chaeyeong LEE
+- Heui Chang Lee
+- Hosang Jeon
+- Jiho Nam
+- Sangmin Lee
+- C.Y Lee
+- Y.H. Chung
+- Chaeyeong Lee
+- Hong CS
+- Suh TS
+- Kim H
+- Park YS
+- Lee B
+- Yoon M
+- Noh JM
+- Lee E
+- Chung K
+- Y Han
+- H Jung
+- K Chung
+- Y. Han
+- K. Chung
+- M Kim
+- S Ju
+- Jiseoc Lee
+- Justin C
+- Sang Gyu Ju
+- Cho BC
+- Jeong Il Yu
+- Hee Chul Park
+- Ju SG
+- Huh SJ
+- Justin C. Park
+- Bongyong Song
+- Youngyih Han
+- Shin E
+- Han Y
+- Yong Hyun Chung
+- Jungmin Seo
+- Jung Kyoon Choi
+- William Y. Song
+- Kim YI
+- Park HC
+- Song C
+- Pyo H
+- Eunhyuk Shin
+- Jun Suk Shin
+- Jong Hoon Kim
+- Sung Ho Park
+- Seonkyu Kim
+- Hae Sun Jeong
+- Hanbean Youn
+- Sung Yong Park
+- Jungwon Kwak
+- Se Byeong Lee
+- Min Tae Kim
+- Kwang Gi Kim
+- Park
+- Hee Chul
+- Yoon MG
+- Min Ho Cheong
+- June-Sik Cho
+- Park SY
+- Dae Yong Kim
+- Bae KT
+- JH Kim
+- Taeho Kim
+- Sangmin lee
+- Ho Jae Kim
+- Tae-Ho Kim
+- Chan Hyeong Kim
+- Kyunghoon Yoon
+- Kang Heo
+- Youngjun Han
+- Dooho Kim
+- Jeyong Jeon
+- Hyeon Jae Yu
+- Jung Ju Jo
+- Sangrok Kim
+- Geon Oh
+- Jaeman Son
+- Dong-Seok Shin
+- Jongeun Kim
+- Inhwan Yeo
+- Hoyeon Lee
+- Jae Young Lee
+- Dongryul Oh
+- Soorim Han
+- Yeong-bi Kim
+- Eunkyu Kim
+- Sewuk Chang
+- Heejeong Lee
+- Kyung Hwan Kim
+- Yondo Yun
+- Xiaoying Liang
+- Bo Lu
+- Jun Tan
+- Keith M. Furutani
+- Chris J. Beltran
+- Justin C Park
+- Sang Min lee
+- Chang Hwan Kim
+- Xiao Liang
+- Andrew Godley
+- Mu-Han Lin
+- Jie Deng
+- Min Cheol Han†
+- Hojae Kim
+- Junyoung Son
+- Se Young Kim
+- Sang Hee Ahn
+- Hara Kang
+- Ryeung Hwang Park
+- Jong Geol Baek
+- Christina Vallgren
+- Marcus Palm
+- Benjamin Brunt
+- Michael Betz
+- Robin Chappuis
+- withdraw
+- Deepak Shrestha
+- Albert Attia
+- Brad Stish
+- James Leenstra
+- Jean Rwigema
+- Jiansen Ma
+- Jong Jeong hwi
+- Chris Beltran
+- Ethan Stolen
+- Siddhant Sen
+- Keith Furutani
+- x
+- Dong Ryul Oh
+- 김찬형
+- 안상희
+- 김창환
+- Yeong-Bi Kim
+- Jonggeol Baek
+- Min Sub Kim
+- Jae Wan Park
+- Younghee Park
+- Seungryong Cho*
+- Soo Rim Han
+- Yong Tae Kim
+- Jihun Pyo
+- Jun Won Kim
+- Jiwon Sung
+- Jihun Kim*
+- Eunho Lee
+- Jeongwoo Kim
+- Yu Jin Jung Jin
+- Sung Kim
+- Chae-Seon Hong1*
+- Ph.D.†
+- Paulo Jorge Ribeiro Da Fonte
+- Byoungsu Choi
+- Shanti Marasini
+- Alex Macintyre
+- Eunsu Kim
+- Jin Sook Kim
+- Do Won Kim
+- Chan Hyeon Kim
+- Min-Seok Cho
+- Joseph Deasy
+- Andreas Rimner
+- Austen N. Curcuru
+- H Michael Gach
+- Jianing Pang
+- Xinzhou Li
+- Xin Miao
+- Yonghee Park
+- Joseph O. Deasy
+- Chloe Min Seo Choi
+- Jong Won Park
+- Jinsil Seong
+- Thomas J. Whitaker
+- Archana S. Gautam
+- Janet Denbeigh
+- Min Cheol Han1
+- Ben Brunt
+- Yeonal Cho
+- Wooshik Kim
+- Han-Back Shin
+- H. Michael Gach
+- Ji Hoon Pyo
+- Hyounggun Lee
+- Yu Jin Park
+- H. Kendall Kiser
+- Austen Curcuru
+- Michael Gach
+- Yoon Hai Jeon
+- Tae Ho Kim
+- Sang Yul Kim
+- Young Jae Jang
+- CHae-Seon Hong
+- Seung Ho Han
+- Ik Jae Lee
+- Jun Sung Kim
+- Sam Ju Cho
+- Jo Sam Ju
+- Hikaru Souda
+- Sung Hyun Lee
+- Yuya Miyasaka
+- Takeo Iwai
+- Nikhil Mankuzhy
+- Sharif Elguindi
+- Sang Rok Kim
+- Hwa Kyung Byun
+- Se Hyung Lee
+- So Hyeon Ahn
+- Ryeong Hwang Park
+- Minsoo Chun
+- Kyung Hwan Shin
+- Jang-Hwan Choi
+- Inkyoung Park
+- Deepak K. Shrestha
+- Vijayalakshmi Shridhar
+- Michael Dohopolski
+- Tingliang Zhuang
+- Vladimir Avkshtol
+- Dominic Moon
+- David Sher
+- Sean All
+- Xinran Zhong
+- Takayuki Kanai
+- Kyo-Tae Kim
+- Sang Hyun Choi
+- Gyu seok cho
+- Zhen Ji
+- Shanti  Marasini
+- Taeho  Kim
+- H. Michael  Gach
+- Eric  Laugeman
+- Taeho Kimqqaaaaàà
+- Yongjea Jang
+- Jea Hyun Seok
+- Jeesuk Chang
+- Ryeonghwang Park
+- Soon Sung Lee
+- 최상현
+- 박소현
+- 안우상
+- Woosang Ahn
+- Seongsoo Shin
+- Wonsik Choi
+- Inhye Jung
+- Kang Pyo Kim
+- Byung Min Lee
+- Vivian Youngjean Park
+- 장영재
+- 김금배
+- Ha Eun Kim
+- Dong Oh Shin
+- Jaeryong Yoo
+- 최요나
+- 박민석
+- 유재룡
+- 이한진
+- 백금문
+- Chang Heon Cho
+- Jong Min Park
+- Ju Hye Kim
+- Jeongsu Park
+- Jaeeun Ko
+- Jinyoung Moon
+- Stephen Baek
+- Yusung Kim
+- Jaewon Oh
+- Wonguen Jung
+- Jin Young Moon
+- Yong Jae Kwon
+- Byungsoo Choi
+- Bin Cai
+- Arnold Pompos
+- Paul Medin
+- Steve Jiang
+- Yi Huang
+- Lewis Benjamin
+- Anamaria Guta
+- Seungjong Oh
+- Sejung Yang
+- Byongsu Choi Inkyung Park Jaehee Chun Sven Olberg
+- Yang Kyun Park
+- Mu-han Lin
+- Sven Olberg Jin Sung Kim
+- Kang houn Lee
+- B Choi
+- Mu han Lim
+- Kang Houn Lee
+- Dan Nguyen
+- You Zhang
+- Jing Wang
+- Ibrahim Chamseddine
+- Anurag Saraf
+- Florence Keane
+- Wonmo Sung
+- Harald Paganetti
+- Clemens Grassberger
+- J Kim
+- H Kim
+- J. Chang
+- R. H. PARK
+- Y. Kwon
+- J. Y. Moon
+- G. Yang
+- Y. B. Kim
+- J. Kim
+- David McClatchy
+- Justin Gainor
+- Melin Kh
+- ekar
+- So Hyun Ann
+- Won Hee Lee
+- Chirag Shah
+- Jin Sup (Andy) Shim
+- Harold H Li
+- Sasa Mutic
+- NH Kwon
+- KP Kim
+- HT Kyeong
+- DW Kim
+- WK Chung
+- EJ Heo
+- DO Shin
+- DH Shin
+- JS Kim
+- S Olberg
+- B Cai
+- G Hugo
+- C G Robinson
+- S Mutic
+- J Park
+- GH Jahng
+- SH Choi
+- Thomas Mazur
+- Byeong Su Choi
+- MS
+- Hokin Kim
+- Sanchit Hira
+- Hao Zhang
+- Jae Ryong Yoo
+- Min Seok Park
+- Dong Wook
+- MinSeok Park
+- Deshan Yang
+- Michael Roach
+- Hyun Kim
+- Olga L. Green
+- Billy Kennedy
+- Areti Marko
+- Vivian Rodriguez
+- Imran Zoberi
+- Maria A. Thomas
+- Jiyeon Park
+- H.Michael Gach
+- Olga Green
+- Tianyu Zhao
+- Harold H. Li
+- Yeong Geol Bae
+- Hyeon Tae Kyeong
+- Dae Woon Kim
+- Weon Kuu Chung
+- Eun Jeong Heo
+- Dong Ho Shin
+- Seungyong Cho
+- SeJung Yang
+- Hong in Yoon
+- SasaMutic
+- Geoffrey Hugo
+- Clifford G. Robinson
+- Kwangpyo Kim
+- Juhye Kim
+- Shanghyun Choi
+- S. OLBERG
+- J. CHUN
+- W.R. KENNEDY
+- J. PARK
+- B.S. CHOI
+- V. RODRIGUEZ
+- I. ZOBERI
+- M.A. THOMAS
+- J.S. KIM
+- S. MUTIC
+- O. GREEN
+- J.C. PARK
+- Hyo Thaek Lee
+- Min-yu Tsai
+- Xun Jia
+- Justin Chunjoo Park
+- Hua Li
+- Harold Li
+- Min yu Tsai
+- H Zhang
+- J Jung
+- H Li
+- R Khan
+- Choi Sungwoon
+- Kim Dong Wook
+
+## 과제 미해결 값
+
+- 마이데이터 (papers/2026-younghun-yoon-respiratory-motion-augmentation)
+- (강남)창의도전 (papers/2026-younghun-yoon-respiratory-motion-augmentation)
+- (강남)AI혁신연구원 (papers/2026-younghun-yoon-respiratory-motion-augmentation)
+- grant from Yonsei University College of Medicine (papers/2025-gahee-son-bibliometric-analysis-of)
+- 한스위스 (papers/2025-younghun-yoon-anatomical-position-guided-auto-segmentation)
+- 중견 (papers/2025-younghun-yoon-anatomical-position-guided-auto-segmentation)
+- 중견 (papers/2025-chanwoong-lee-abdominal-synthetic-ct)
+- 보산진 (papers/2025-chanwoong-lee-abdominal-synthetic-ct)
+- 스위스 (papers/2025-chanwoong-lee-abdominal-synthetic-ct)
+- 스위스 (papers/2024-byong-su-choi-intervision-framework-an)
+- 스위스 (papers/2024-sunmi-kim-generation-of-tissues)
+- 스위스 (papers/2024-younghun-yoon-inter-scanner-super-resolution-of)
+- 중견 (papers/2024-younghun-yoon-inter-scanner-super-resolution-of)
+- 중견 (papers/2023-byoung-su-choi-progressive-deep-learning)
+- 중견 (papers/2023-jeong-heon-kim-development-of-inclined)
+- 스위스 (papers/2023-jooyoung-lee-development-and-evaluation)
+- 중견 (papers/2023-justin-park-a-high-resolution-cone)
+- 중견 (papers/2023-min-seo-choi-assessment-of-deep)
+- 2 (papers/2023-na-hye-kwon-activity-evaluation-methodology)
+- 1 (papers/2023-ye-in-park-development-and-validation)
+- 중견 (papers/2023-younghun-yoon-development-of-automated)
+- 스위스 (papers/2023-younghun-yoon-development-of-automated)
+
+## 날짜 누락
+
+- seminars/2020-03-30-1: event_date
+- seminars/2022-10-26-184: event_date
+
+## 건너뛴 행
+
+- 과제정보 10행: 시작일 없음
+- 과제정보 11행: 시작일 없음
+- 과제정보 12행: 시작일 없음
+- 과제정보 31행: 시작일 없음
+- 과제정보: 빈 행 21개
+- MPBEL 논문 223행: 연도 없음
+- MPBEL 논문 1133행: 제목 없음
+- MPBEL 논문: 빈 행 913개
+- 학회 초록: 빈 행 7개
+
+## 새 표기
+
+- 학회 이름: FPRT
+- 학회 이름: FRPT
+
+## 확인할 값
+
+- papers/2024-joonil-hwang-improving-cone-beam-ct: Journal Name 비어 있음
+- papers/2024-anon-llm-driven-multimodal-target: 1st author 비어 있음
+- presentations/2026-donghan-bae-automated-beam-angle: 전체저자와 머리글 없는 저자 열이 다름 (전체저자 사용)
+- presentations/2025-min-seo-choi-multimodal-framework-for: 전체저자와 머리글 없는 저자 열이 다름 (전체저자 사용)
+- presentations/2024-jeong-heon-kim-development-of-an: 전체저자와 머리글 없는 저자 열이 다름 (전체저자 사용)
+- presentations/2024-anon-prediction-of-patient: 1st author 비어 있음
+- presentations/2022-sang-kyun-yoo-deep-learning-based-automatic: 전체저자 비어 있음
+- presentations/2021-min-cheol-han-validation-of-geant4: 전체저자 비어 있음
+- presentations/2021-seung-hyeop-baek-a-study-on: 전체저자 비어 있음
+- 학회 초록: 2023 "Synthetic CT Generation using Transformer-based Cycle-GAN and Geometric Conserving Loss for MR-only Radiotherapy" (KSMP Spring) 2건 — 중복 행인지 확인: presentations/2023-chan-woong-lee-synthetic-ct-generation, presentations/2023-chan-woong-lee-synthetic-ct-generation-2
+- 학회 초록: 2022 "환자 데이터를 활용한 선형가속기 사용 시설의 자동 차폐 평가 프로그램 개발" (KSMP Spring) 2건 — 중복 행인지 확인: presentations/2022-dong-hyeok-choi-untitled, presentations/2022-dong-hyeok-choi-untitled-2
+- 학회 초록: 2021 "Validation of Geant4 Electromagnetic Physical Models Based on Theoretical Data for Biological Effectiveness in Particle Therapy" (KJMP) 2건 — 중복 행인지 확인: presentations/2021-hyo-kyeong-kang-validation-of-geant4, presentations/2021-min-cheol-han-validation-of-geant4
+- seminars/2022-10-26-184: presenter 비어 있음
+- seminars/2025-02-20-389: presenter 비어 있음
+- seminars/2025-04-02-392: presenter 비어 있음
+- seminars/2025-04-02-393: presenter 비어 있음
+- seminars/2025-04-02-395: presenter 비어 있음
+- seminars/2025-04-02-397: presenter 비어 있음
+- seminars/2025-12-31-464: presenter 비어 있음
