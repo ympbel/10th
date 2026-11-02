@@ -25,7 +25,13 @@
   .nav-toggle {
     display: flex;
   }
+  /* On screen: logo, KR/EN, toggle, then the drawer on its own row. In the DOM the toggle precedes the drawer and
+     KR/EN follows it, so keyboard focus goes from the toggle straight into the opened menu. */
+  .langbut {
+    order: 2;
+  }
   .nav-toggle {
+    order: 3;
     align-items: center;
     justify-content: center;
     width: var(--sz-toggle);

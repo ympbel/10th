@@ -44,6 +44,19 @@ test('every page has the top bar: logo with alt, the six menu sections and the K
   }
 });
 
+test('the drawer toggle comes before the menu it controls, so Tab moves from it into the opened menu', () => {
+  for (const { path, $ } of pages) {
+    const toggle = $('.topmenu button.nav-toggle');
+    assert.equal(toggle.length, 1, path);
+    assert.equal(toggle.attr('aria-controls'), 'navi', path);
+    assert.equal(toggle.attr('aria-expanded'), 'false', path);
+    const order = $('.topmenu *').toArray();
+    const toggleAt = order.indexOf(toggle[0]);
+    const navAt = order.indexOf($('.topmenu nav#navi')[0]);
+    assert.ok(navAt !== -1 && toggleAt < navAt, `${path}: toggle at ${toggleAt}, nav at ${navAt}`);
+  }
+});
+
 test('the KR/EN toggle links the same page in both languages and marks the current one', () => {
   for (const { path, $ } of pages) {
     const [kr, en] = $('.topmenu .langbut a').map((_, a) => $(a).attr('href')).get();
