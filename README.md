@@ -3,7 +3,7 @@
 연세 의학물리 및 의공학 연구실(MPBEL)의 10년(2016–2026)을 연도와 사람으로 엮은 기록 사이트의 소스입니다. 이 문서는 사이트를 운영하는 사람을 위한 안내서입니다. 항목 추가, 구성원 관리, 사람 연결, 영문 값, 배포, 도메인 전환을 다룹니다.
 
 - 주소: https://ympbel.github.io/10th/ (메인 사이트가 `mpbel.yonsei.ac.kr`로 옮겨 가면 https://mpbel.yonsei.ac.kr/10th/ , 11장)
-- 저장소: https://github.com/ympbel/10th (브랜치 `main`)
+- 저장소: https://github.com/ympbel/10th (브랜치 `main`, 10장에서 만든 뒤)
 - 메인 사이트: https://ympbel.github.io/ (별도 저장소. 이 사이트는 메인 사이트를 보완할 뿐 대체하지 않습니다)
 - 사이트의 목적, 독자, 공개 범위: [`PRODUCT.md`](PRODUCT.md). 시각 규칙: [`DESIGN.md`](DESIGN.md). 설계: [`docs/superpowers/specs/2026-11-02-mpbel-10th-design.md`](docs/superpowers/specs/2026-11-02-mpbel-10th-design.md)
 - 변환 스크립트: [`scripts/import/README.md`](scripts/import/README.md)
@@ -19,7 +19,7 @@
 ├── package.json                   npm 명령 (dev, build, test)
 ├── PRODUCT.md  DESIGN.md          사이트의 목적·공개 범위, 디자인 규칙
 ├── docs/                          설계(specs/), 구현 계획(plans/), build-guide.md
-├── data/                          (git에 올리지 않음) 구글 시트 내보내기 원본. 9장
+├── data/                          (git에 올리지 않음) 구글 시트 내보내기 원본 (9장)
 ├── public/images/site/            로고, 비주얼 띠 사진, 아이콘 (메인 사이트에서 복사)
 ├── public/images/photos/<연도>/   사진 게시판의 사진 (첫 사진을 넣을 때 만드는 폴더)
 ├── reference/mpbel/               메인 사이트에서 복사한 참고용 설정. 빌드에 쓰이지 않음
