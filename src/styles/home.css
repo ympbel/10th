@@ -247,7 +247,7 @@
 .tl-nums {
   display: block;
   margin-top: 6px;
-  color: var(--c-ash);
+  color: var(--c-slate);
   font-size: var(--fs-tl-small);
   font-variant-numeric: tabular-nums;
   line-height: 1.5;
@@ -268,7 +268,7 @@
 }
 .tl-label {
   display: block;
-  color: var(--c-ash);
+  color: var(--c-slate);
   font-size: var(--fs-tl-small);
   font-weight: var(--fw-bold);
 }

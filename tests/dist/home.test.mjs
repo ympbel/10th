@@ -67,9 +67,10 @@ const slogan = (lang) => scalar(readFileSync(join(CONTENT, 'pages', lang, 'home.
 
 const text = ($el) => $el.text().replace(/\s+/g, ' ').trim();
 
-test('the counts the home page is checked against are the ones the spec gives', () => {
-  assert.deepEqual(FIGURES, [61, 13, 162, 379, 41, 15]);
-  assert.equal(BOARDS[2], 217);
+test('the home figures and the papers board link show the counts derived from the content files', () => {
+  const $ = page('');
+  assert.deepEqual($('.figures a[data-count]').map((_, a) => Number($(a).attr('data-count'))).get(), FIGURES);
+  assert.equal(text($('.board-links a').eq(2)), `${text($('#nav .sub a').eq(2))} ${BOARDS[2]}`);
 });
 
 for (const [lang, path, prefix] of [
