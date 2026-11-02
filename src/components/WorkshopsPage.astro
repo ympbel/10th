@@ -1,0 +1,79 @@
+---
+// The workshops board in one language: the workshops newest first, in the projects board's row form, with the date
+// in the key column on the left and on the right the title, the place, the members who took part (person page links)
+// and the write-up (the markdown body). Without any, the empty state.
+import { getCollection, render } from 'astro:content';
+import '../styles/years.css';
+import '../styles/boards.css';
+import SubLayout from '../layouts/SubLayout.astro';
+import EmptyState from './EmptyState.astro';
+import MemberChips from './people/MemberChips.astro';
+import { field } from '../lib/people.ts';
+import { langOf, type Locale } from '../lib/locale.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+const lang = (text: string | undefined) => langOf(text, locale);
+
+const [workshops, members] = await Promise.all([getCollection('workshops'), getCollection('members')]);
+const memberBySlug = new Map(members.map((m) => [m.id, m]));
+
+const rows = await Promise.all(
+  [...workshops]
+    .sort((a, b) => b.data.date.localeCompare(a.data.date) || a.id.localeCompare(b.id))
+    .map(async (w) => ({
+      id: w.id,
+      data: w.data,
+      title: field(w.data, 'title', locale),
+      body: w.body?.trim() ?? '',
+      Content: (await render(w)).Content,
+    })),
+);
+---
+
+<SubLayout title={s.boards.workshops} sectionKey="activity" currentHref="/activity/workshops/" locale={locale}>
+  {
+    rows.length === 0 ? (
+      <EmptyState collection="workshops" locale={locale} />
+    ) : (
+      <ol class="workshops">
+        {rows.map(({ id, data, title, body, Content }) => (
+          <li>
+            <article class="workshop" id={`workshop-${id}`}>
+              <h2 class="workshop-title" lang={lang(title)}>
+                {title}
+              </h2>
+              <p class="workshop-date">
+                <time datetime={data.date}>{data.date.replaceAll('-', '.')}</time>
+              </p>
+              <div class="workshop-body">
+                {data.place && (
+                  <p class="workshop-place" lang={lang(data.place)}>
+                    {data.place}
+                  </p>
+                )}
+                <MemberChips
+                  slugs={data.members}
+                  members={memberBySlug}
+                  locale={locale}
+                  source={`workshops/${id}`}
+                  label={s.workshops.members}
+                />
+                {body && (
+                  <div class="md-body" lang={lang(body)}>
+                    <Content />
+                  </div>
+                )}
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+</SubLayout>

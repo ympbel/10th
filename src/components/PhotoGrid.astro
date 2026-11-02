@@ -1,0 +1,63 @@
+---
+// Photos as a grid, newest first (sortPhotos): four columns, two at ≤1024px and one at ≤600px, of square-cornered
+// cells in a 1px Hairline frame. Each photo stands over its caption, its date (the year when it has none) with its
+// kind, and the members in it linking to their person pages. A photo without a caption takes its kind and year as
+// alt text. Used by the photo board and by the photos part of a year page. Styles: .photo-grid in years.css.
+import type { CollectionEntry } from 'astro:content';
+import MemberChips from './people/MemberChips.astro';
+import { sortPhotos } from '../lib/photos.ts';
+import { langOf, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { fill, t } from '../i18n/index.ts';
+
+interface Props {
+  photos: CollectionEntry<'photos'>[];
+  /** Every member entry by slug. */
+  members: Map<string, CollectionEntry<'members'>>;
+  locale: Locale;
+}
+
+const { photos, members, locale } = Astro.props;
+const s = t(locale).photos;
+const cells = sortPhotos(photos).map(({ id, data }) => {
+  const kind = s.kinds[data.kind];
+  return {
+    id,
+    data,
+    kind,
+    alt: data.caption ?? fill(s.alt, { kind, year: data.year }),
+    when: data.date ? data.date.replaceAll('-', '.') : String(data.year),
+  };
+});
+---
+
+<ul class="photo-grid">
+  {
+    cells.map((c) => (
+      <li>
+        <figure>
+          <img src={url(c.data.image)} alt={c.alt} lang={langOf(c.alt, locale)} loading="lazy" />
+          <figcaption>
+            {c.data.caption && (
+              <p class="photo-caption" lang={langOf(c.data.caption, locale)}>
+                {c.data.caption}
+              </p>
+            )}
+            <p class="photo-meta">
+              {c.data.date ? <time datetime={c.data.date}>{c.when}</time> : c.when}
+              <span class="sep"> · </span>
+              {c.kind}
+            </p>
+            <MemberChips
+              slugs={c.data.people}
+              members={members}
+              locale={locale}
+              source={`photos/${c.id}`}
+              label={s.people}
+            />
+          </figcaption>
+        </figure>
+      </li>
+    ))
+  }
+</ul>

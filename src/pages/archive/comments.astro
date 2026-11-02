@@ -1,12 +1,7 @@
 ---
-// Temporary page so the menu link resolves; plan Task 13 replaces it with the board.
+// Comments board: /archive/comments/.
 import '../../styles/global.css';
-import SubLayout from '../../layouts/SubLayout.astro';
-import { t } from '../../i18n/index.ts';
-
-const s = t('ko');
+import CommentsPage from '../../components/CommentsPage.astro';
 ---
 
-<SubLayout title={s.boards.comments} sectionKey="archive" currentHref="/archive/comments/" locale="ko">
-  <p>{s.preparing}</p>
-</SubLayout>
+<CommentsPage locale="ko" />

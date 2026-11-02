@@ -1,0 +1,16 @@
+---
+// English 사진 board, one kind: /en/archive/photos/k/conference/ for each kind that has photos (none while there are
+// none).
+import '../../../../../styles/global.css';
+import { getCollection } from 'astro:content';
+import PhotosPage from '../../../../../components/PhotosPage.astro';
+import { photoKinds } from '../../../../../lib/photos.ts';
+
+export async function getStaticPaths() {
+  return photoKinds(await getCollection('photos')).map((kind) => ({ params: { kind }, props: { kind } }));
+}
+
+const { kind } = Astro.props;
+---
+
+<PhotosPage locale="en" kind={kind} />

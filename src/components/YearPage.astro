@@ -10,6 +10,7 @@ import YearTabs from './YearTabs.astro';
 import YearPart from './years/YearPart.astro';
 import PaperItem from './PaperItem.astro';
 import MemberLink from './people/MemberLink.astro';
+import PhotoGrid from './PhotoGrid.astro';
 import { yearStats } from '../lib/years.ts';
 import { groupBy, sortByYearDesc, sortMembersByJoined, yearMonth } from '../lib/content.ts';
 import { awardRecipient, displayName, field } from '../lib/people.ts';
@@ -257,16 +258,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
   {
     yearPhotos.length > 0 && (
       <YearPart part="photos" empty={false} locale={locale}>
-        <ul class="yr-photos">
-          {yearPhotos.map((p) => (
-            <li>
-              <figure>
-                <img src={url(p.data.image)} alt="" loading="lazy" />
-                {p.data.caption && <figcaption lang={lang(p.data.caption)}>{p.data.caption}</figcaption>}
-              </figure>
-            </li>
-          ))}
-        </ul>
+        <PhotoGrid photos={yearPhotos} members={memberBySlug} locale={locale} />
       </YearPart>
     )
   }

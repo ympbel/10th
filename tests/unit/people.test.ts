@@ -6,6 +6,7 @@ import {
   displayName,
   field,
   itemsOf,
+  namedMember,
   otherName,
   personPath,
 } from '../../src/lib/people.ts';
@@ -112,6 +113,21 @@ test('awardRecipient() keeps the sheet string when no member matches', () => {
   assert.deepEqual(awardRecipient({ recipient: '이름', member: 'no-such-file' }, recipients, 'en'), {
     slug: undefined,
     name: '이름',
+  });
+});
+
+test('namedMember() gives a workshop or photo member in the page language, linked unless a professor', () => {
+  assert.deepEqual(namedMember('gildong-hong', recipients, 'ko'), { slug: 'gildong-hong', name: '홍길동' });
+  assert.deepEqual(namedMember('gildong-hong', recipients, 'en'), { slug: 'gildong-hong', name: 'Gildong Hong' });
+  assert.deepEqual(namedMember('jin-sung-kim', recipients, 'en'), { slug: undefined, name: 'Jin Sung Kim' });
+});
+
+test('namedMember() fails on a slug that names no member file, naming the slug and the record', () => {
+  assert.throws(() => namedMember('no-such-file', recipients, 'ko', 'photos/2026-x'), (err: Error) => {
+    assert.match(err.message, /photos\/2026-x/);
+    assert.match(err.message, /"no-such-file"/);
+    assert.match(err.message, /src\/content\/members\//);
+    return true;
   });
 });
 

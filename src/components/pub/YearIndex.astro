@@ -1,28 +1,46 @@
 ---
-// The row of year links above a publication board, in the main site's year tab form (90px cells, Hairline,
-// Ledger, 13px Slate; .year-tabs in base.css). Each cell jumps to that year's section on the same page (`#y2024`);
-// `extra` adds one more cell after the years (the papers board's 연구실 이전 section).
+// The row of year links above a board, in the main site's year tab form (90px cells, Hairline, Ledger, 13px Slate;
+// .year-tabs in base.css). By default each cell jumps to that year's section on the same page (`#y2024`); `extra`
+// adds one more cell after the years (the papers board's 연구실 이전 section). The photo board links each year to its
+// own page instead (`href`), puts an 전체 cell first (`first`) and marks the page being shown (`current`).
 import { yearAnchor } from '../../lib/years.ts';
 import type { Locale } from '../../lib/locale.ts';
 import { t } from '../../i18n/index.ts';
 
+type Cell = { href: string; label: string };
+
 interface Props {
-  /** The years with a section on the page, in page order. */
+  /** The years with a section (or a page), in row order. */
   years: number[];
-  extra?: { href: string; label: string };
+  extra?: Cell;
+  /** One cell before the years. */
+  first?: Cell;
+  /** Where a year's cell links; by default that year's section on this page. */
+  href?: (year: number) => string;
+  /** The href of the cell for the page being shown, marked `aria-current="page"`. */
+  current?: string;
+  /** The row's accessible name; by default the year index's (연도 바로가기). */
+  label?: string;
+  class?: string;
   locale: Locale;
 }
 
-const { years, extra, locale } = Astro.props;
-const links = [...years.map((y) => ({ href: `#${yearAnchor(y)}`, label: String(y) })), ...(extra ? [extra] : [])];
+const { years, extra, first, href = (y) => `#${yearAnchor(y)}`, current, label, class: className, locale } = Astro.props;
+const links: Cell[] = [
+  ...(first ? [first] : []),
+  ...years.map((y) => ({ href: href(y), label: String(y) })),
+  ...(extra ? [extra] : []),
+];
 ---
 
-<nav class="year-tabs pub-index" aria-label={t(locale).publication.index}>
+<nav class:list={['year-tabs pub-index', className]} aria-label={label ?? t(locale).publication.index}>
   <ul>
     {
       links.map((link) => (
         <li>
-          <a href={link.href}>{link.label}</a>
+          <a href={link.href} aria-current={link.href === current ? 'page' : undefined}>
+            {link.label}
+          </a>
         </li>
       ))
     }

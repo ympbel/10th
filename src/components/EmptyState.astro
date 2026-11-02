@@ -1,0 +1,39 @@
+---
+// A board with no records yet (워크샵, 사진 and Comments until their first files): the i18n sentence, then the record
+// format, that is the template's path to copy and every template key with what it holds (`body` is the markdown
+// after the frontmatter). The sentence points to the README; the page cannot link it before the repository exists,
+// so it names the template file as text. Styles: .empty-state in boards.css.
+import type { Locale } from '../lib/locale.ts';
+import { fill, t } from '../i18n/index.ts';
+
+interface Props {
+  /** The board's collection, whose folder holds the template. */
+  collection: 'workshops' | 'photos' | 'comments';
+  locale: Locale;
+  /** Values for `{name}` placeholders in the field descriptions (the photo kinds). */
+  values?: Record<string, string>;
+}
+
+const { collection, locale, values = {} } = Astro.props;
+const s = t(locale);
+const format = s.entryFormat;
+const fields: [string, string][] = Object.entries(format.fields[collection]);
+const template = `src/content/${collection}/_template.md`;
+---
+
+<div class="empty-state">
+  <p class="empty-lead">{s.empty}</p>
+  <h2>{format.title}</h2>
+  <p class="empty-note">{format.note}</p>
+  <p class="empty-template"><code>{template}</code></p>
+  <dl class="empty-format">
+    {
+      fields.map(([key, desc]) => (
+        <div>
+          <dt>{key === 'body' ? format.body : <code>{key}</code>}</dt>
+          <dd>{fill(desc, values)}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>

@@ -1,12 +1,7 @@
 ---
-// Temporary page so the menu link resolves; plan Task 13 replaces it with the board.
+// 워크샵 board: /activity/workshops/.
 import '../../styles/global.css';
-import SubLayout from '../../layouts/SubLayout.astro';
-import { t } from '../../i18n/index.ts';
-
-const s = t('ko');
+import WorkshopsPage from '../../components/WorkshopsPage.astro';
 ---
 
-<SubLayout title={s.boards.workshops} sectionKey="activity" currentHref="/activity/workshops/" locale="ko">
-  <p>{s.preparing}</p>
-</SubLayout>
+<WorkshopsPage locale="ko" />

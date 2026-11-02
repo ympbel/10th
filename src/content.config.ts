@@ -14,10 +14,11 @@ import {
   seminarSchema,
   workshopSchema,
 } from './content/schemas.ts';
+import { CONTENT_GLOB } from './lib/content-glob.ts';
 
-// Files whose basename starts with `_` (templates) are excluded from every collection.
-const markdownIn = (name: string) =>
-  glob({ pattern: ['**/*.md', '!**/_*.md'], base: `./src/content/${name}` });
+// Every collection loads its folder's markdown files except templates (`_template.md`), so a folder holding only its
+// template gives an empty collection.
+const markdownIn = (name: string) => glob({ pattern: CONTENT_GLOB, base: `./src/content/${name}` });
 
 export const collections = {
   // ko/home.md and en/home.md: ids `ko/home`, `en/home`.

@@ -1,0 +1,83 @@
+---
+// The photo board in one language. With photos: two tab rows, 전체 and the years that have photos, then the kinds
+// that have photos, each a page of its own; then the grid. Without any: the empty state. Given `year` or `kind` it is
+// that year's page (/archive/photos/2024/) or that kind's (/archive/photos/k/conference/), with the same tabs and
+// its own tab marked. Tabs and pages exist only for values the photos hold (photoYears, photoKinds), so with no
+// photos there are none.
+import { getCollection } from 'astro:content';
+import '../styles/years.css';
+import '../styles/boards.css';
+import SubLayout from '../layouts/SubLayout.astro';
+import YearIndex from './pub/YearIndex.astro';
+import EmptyState from './EmptyState.astro';
+import PhotoGrid from './PhotoGrid.astro';
+import { PHOTO_KINDS, photoKinds, photoYears, type PhotoKind } from '../lib/photos.ts';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { fill, t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+  /** The year page's year. */
+  year?: number;
+  /** The kind page's kind. */
+  kind?: PhotoKind;
+}
+
+const { locale, year, kind } = Astro.props;
+const s = t(locale);
+const p = s.photos;
+
+const [photos, members] = await Promise.all([getCollection('photos'), getCollection('members')]);
+const memberBySlug = new Map(members.map((m) => [m.id, m]));
+
+const BOARD = '/archive/photos/';
+const href = (path: string) => url(localePath(path, locale));
+const yearHref = (y: number) => href(`${BOARD}${y}/`);
+const kindHref = (k: PhotoKind) => href(`${BOARD}k/${k}/`);
+const current = year !== undefined ? yearHref(year) : kind !== undefined ? kindHref(kind) : href(BOARD);
+
+const shown = photos.filter(
+  (photo) => (year === undefined || photo.data.year === year) && (kind === undefined || photo.data.kind === kind),
+);
+const title =
+  year !== undefined
+    ? fill(p.yearTitle, { year })
+    : kind !== undefined
+      ? fill(p.kindTitle, { kind: p.kinds[kind] })
+      : s.boards.photos;
+/** The kinds as the empty state's record format lists them: `lab-meeting (랩미팅), …`. */
+const kindList = PHOTO_KINDS.map((k) => `${k} (${p.kinds[k]})`).join(', ');
+---
+
+<SubLayout title={title} sectionKey="archive" currentHref={BOARD} locale={locale}>
+  {
+    photos.length === 0 ? (
+      <EmptyState collection="photos" locale={locale} values={{ kinds: kindList }} />
+    ) : (
+      <>
+        <YearIndex
+          years={photoYears(photos)}
+          first={{ href: href(BOARD), label: p.all }}
+          href={yearHref}
+          current={current}
+          label={p.byYear}
+          class="photo-tabs"
+          locale={locale}
+        />
+        <nav class="year-tabs photo-tabs photo-kinds" aria-label={p.byKind}>
+          <ul>
+            {photoKinds(photos).map((k) => (
+              <li>
+                <a href={kindHref(k)} aria-current={kindHref(k) === current ? 'page' : undefined}>
+                  {p.kinds[k]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <PhotoGrid photos={shown} members={memberBySlug} locale={locale} />
+      </>
+    )
+  }
+</SubLayout>

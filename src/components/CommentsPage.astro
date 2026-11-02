@@ -1,0 +1,56 @@
+---
+// The comments board in one language: the comments newest first, each with the writer's name, the date and the
+// message (the markdown body); without any, the empty state. The section on how to leave a comment always ends the
+// board; the way (a form, a comment widget) is not decided yet, and the section says so.
+import { getCollection, render } from 'astro:content';
+import '../styles/years.css';
+import '../styles/boards.css';
+import SubLayout from '../layouts/SubLayout.astro';
+import EmptyState from './EmptyState.astro';
+import { langOf, type Locale } from '../lib/locale.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+const lang = (text: string | undefined) => langOf(text, locale);
+
+const rows = await Promise.all(
+  (await getCollection('comments'))
+    .sort((a, b) => b.data.date.localeCompare(a.data.date) || a.id.localeCompare(b.id))
+    .map(async (c) => ({ id: c.id, data: c.data, body: c.body ?? '', Content: (await render(c)).Content })),
+);
+---
+
+<SubLayout title={s.boards.comments} sectionKey="archive" currentHref="/archive/comments/" locale={locale}>
+  {
+    rows.length === 0 ? (
+      <EmptyState collection="comments" locale={locale} />
+    ) : (
+      <ol class="comments">
+        {rows.map(({ id, data, body, Content }) => (
+          <li>
+            <article class="comment" id={`comment-${id}`}>
+              <h2 class="comment-name" lang={lang(data.name)}>
+                {data.name}
+              </h2>
+              <p class="comment-date">
+                <time datetime={data.date}>{data.date.replaceAll('-', '.')}</time>
+              </p>
+              <div class="md-body" lang={lang(body)}>
+                <Content />
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+  <section id="how-to-leave" class="how-to-leave">
+    <h2>{s.comments.howToLeave}</h2>
+    <p>{s.comments.undecided}</p>
+  </section>
+</SubLayout>

@@ -172,6 +172,65 @@ export const ko = {
     board: 'MPBEL 사이트 세미나 게시판',
     boardHref: 'https://ympbel.github.io/notice/seminar/',
   },
+  /** The workshops board (워크샵): the accessible name of a workshop's member list. */
+  workshops: {
+    members: '참여 구성원',
+  },
+  /** The photo board (사진): kind labels (photoSchema.kind), the tab rows, the titles of the year and kind pages, the
+   * alt text of a photo without a caption, and the accessible name of a photo's member list. */
+  photos: {
+    kinds: {
+      'lab-meeting': '랩미팅',
+      conference: '학회',
+      retreat: 'MT',
+      graduation: '졸업식',
+      equipment: '장비',
+      other: '기타',
+    },
+    all: '전체',
+    byYear: '연도별 사진',
+    byKind: '종류별 사진',
+    yearTitle: '사진 {year}',
+    kindTitle: '사진 · {kind}',
+    alt: '{year}년 {kind}',
+    people: '사진 속 구성원',
+  },
+  /** The comments board: the section at its foot on how to leave a comment (the way is not decided yet). */
+  comments: {
+    howToLeave: '남기는 법',
+    undecided: '댓글을 남기는 방법은 아직 정해지지 않았습니다.',
+  },
+  /** The boards that start empty (워크샵, 사진, Comments): the format of one record, shown under `empty` until a board
+   * has records. `fields` describes each template key in the template's order; `body` is the markdown after the
+   * frontmatter. `{kinds}` is filled with the photo kinds and their labels. */
+  entryFormat: {
+    title: '항목 형식',
+    note: '항목 하나가 마크다운 파일 하나입니다. 다음 템플릿을 같은 폴더에 새 이름으로 복사해 값을 바꿉니다.',
+    body: '본문',
+    fields: {
+      workshops: {
+        title: '워크샵 이름(필수)',
+        title_en: '영문 이름(없으면 영문 페이지에도 한글 이름)',
+        date: '날짜(필수): YYYY-MM-DD, 월만 알면 YYYY-MM, 여러 날이면 첫날',
+        place: '장소',
+        members: '참여한 구성원의 파일 이름(src/content/members/ 안 .md 앞부분) 목록, 이름마다 개인 페이지 링크',
+        body: '워크샵 내용(마크다운)',
+      },
+      photos: {
+        image: '사진 경로(필수): 사진 파일은 public/images/photos/<연도>/에 두고, 경로는 /images/photos/<연도>/<파일 이름>',
+        year: '연도(필수): 따옴표 없는 정수',
+        kind: '종류(필수): {kinds} 중 하나',
+        people: '사진에 나온 구성원의 파일 이름 목록, 이름마다 개인 페이지 링크',
+        caption: '사진 설명',
+        date: '찍은 날짜: YYYY-MM-DD 또는 YYYY-MM',
+      },
+      comments: {
+        name: '글쓴이 이름(필수): 화면에 나오는 그대로',
+        date: '글을 남긴 날짜(필수): YYYY-MM-DD',
+        body: '남긴 글(마크다운)',
+      },
+    },
+  },
   /** The people boards (학생 현황, 졸업 현황) and the person pages. */
   people: {
     /** Section headings of the boards; `{n}` is the count beside a heading. */

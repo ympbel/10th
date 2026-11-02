@@ -144,6 +144,58 @@ export const en: typeof ko = {
     board: "the MPBEL site's seminar board",
     boardHref: 'https://ympbel.github.io/notice/seminar/',
   },
+  workshops: {
+    members: 'Members who took part',
+  },
+  photos: {
+    kinds: {
+      'lab-meeting': 'Lab meeting',
+      conference: 'Conference',
+      retreat: 'Retreat',
+      graduation: 'Graduation',
+      equipment: 'Equipment',
+      other: 'Other',
+    },
+    all: 'All',
+    byYear: 'Photos by year',
+    byKind: 'Photos by kind',
+    yearTitle: 'Photos {year}',
+    kindTitle: 'Photos · {kind}',
+    alt: '{kind}, {year}',
+    people: 'Members in the photo',
+  },
+  comments: {
+    howToLeave: 'How to leave a comment',
+    undecided: 'How to leave a comment has not been decided yet.',
+  },
+  entryFormat: {
+    title: 'Record format',
+    note: 'Each record is one markdown file. Copy this template to a new file in the same folder and change the values.',
+    body: 'Body',
+    fields: {
+      workshops: {
+        title: 'Workshop name (required), in Korean',
+        title_en: 'English name; without it the English page shows the Korean name',
+        date: 'Date (required): YYYY-MM-DD, or YYYY-MM when only the month is known; the first day of a multi-day workshop',
+        place: 'Place',
+        members: "File names of the members who took part (the part before .md in src/content/members/); each links to the person's page",
+        body: 'What the workshop did, in markdown',
+      },
+      photos: {
+        image: 'Photo path (required): put the file in public/images/photos/<year>/ and write /images/photos/<year>/<file name>',
+        year: 'Year (required): a number without quotes',
+        kind: 'Kind (required): one of {kinds}',
+        people: "File names of the members in the photo; each links to the person's page",
+        caption: 'Caption',
+        date: 'Date taken: YYYY-MM-DD or YYYY-MM',
+      },
+      comments: {
+        name: 'Name of the writer (required), as it should appear',
+        date: 'Date written (required): YYYY-MM-DD',
+        body: 'The message, in markdown',
+      },
+    },
+  },
   people: {
     faculty: 'Faculty',
     students: 'Students',

@@ -60,6 +60,24 @@ export function awardRecipient(
   return { slug: m.data.role === 'professor' ? undefined : award.member, name: displayName(m.data, locale) };
 }
 
+/** A member named by slug in a workshop's `members` or a photo's `people`: the name in `locale`, with the slug for a
+ * person page link unless the member is a professor (professors have no person page). A slug that names no member
+ * file throws, so a misspelt slug fails the build instead of linking to a missing page; `source` (`photos/<id>`)
+ * says which record holds it. `members` maps member slugs to member entries. */
+export function namedMember(
+  slug: string,
+  members: Map<string, { data: { role: string; name: string; name_en?: string } }>,
+  locale: Locale,
+  source = '',
+): { slug?: string; name: string } {
+  const m = members.get(slug);
+  if (!m) {
+    const where = source ? `${source}: ` : '';
+    throw new Error(`${where}"${slug}" is not a member file name (src/content/members/${slug}.md does not exist)`);
+  }
+  return { slug: m.data.role === 'professor' ? undefined : slug, name: displayName(m.data, locale) };
+}
+
 /** The member fields a byline is matched against. */
 type Named = { data: { role: string; name: string; name_en?: string; aliases?: string[] } };
 

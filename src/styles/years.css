@@ -206,27 +206,67 @@
   color: var(--c-cobalt);
 }
 
-/* Photos, when the year has any: four columns. */
-.yr-photos {
+/* ---------- Photos (components/PhotoGrid: a year's photos part and the photo board) ---------- */
+/* Four columns of square-cornered cells in a 1px Hairline frame: the photo, then a 13px caption, the date and kind,
+   and the members' name chips. */
+.photo-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--s-sm);
+  gap: var(--s-md) var(--s-sm);
+}
+.yr-part > .photo-grid {
   padding-top: var(--s-sm);
 }
-.yr-photos img {
+.photo-grid figure {
+  height: 100%;
+  border: 1px solid var(--c-hairline);
+}
+.photo-grid img {
   display: block;
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  background: var(--c-mist);
 }
-.yr-photos figcaption {
-  margin-top: var(--s-2xs);
-  color: var(--c-slate);
+.photo-grid figcaption {
+  padding: var(--s-xs);
+  color: var(--c-graphite);
   font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+.photo-meta {
+  color: var(--c-slate);
+}
+.photo-meta .sep {
+  color: var(--c-ash);
+}
+.photo-caption + .photo-meta {
+  margin-top: 2px;
+}
+
+/* Members named by a photo or a workshop: small square chips, linking to their person pages. */
+.member-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.member-chips a,
+.member-chips span {
+  display: block;
+  padding: 0 6px;
+  border: 1px solid var(--c-hairline);
+  color: var(--c-graphite);
+  font-size: var(--fs-label);
+  line-height: 20px;
+}
+.member-chips a:hover {
+  border-color: var(--c-cobalt);
+  color: var(--c-cobalt);
 }
 
 @media (max-width: 1024px) {
-  .yr-photos {
+  .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -243,7 +283,7 @@
     flex-wrap: wrap;
     gap: 0 var(--s-xs);
   }
-  .yr-photos {
+  .photo-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }

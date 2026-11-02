@@ -1,10 +1,11 @@
-/* Award, project and seminar boards (imported by components/AwardsPage, ProjectsPage and SeminarsPage, after the
-   global bundle, years.css and pub.css). The award and seminar years are the publication boards' year sections
-   (.pub-year in pub.css: the year heading over a 3px Graphite rule), each holding a table in the common table form
-   (.tbl in base.css: Ledger head, 1px Hairline Soft row lines); the challenge entries sit in a .pub-part section
-   after the years. Projects are rows between 1px Hairline lines in the member card form: the period in a key column
-   on the left, the title and a 13px definition list whose terms carry a 4×4 Ash square on the right. Colors and
-   spacing come from tokens.css. */
+/* Award, project, seminar, workshop, photo and comment boards (imported by the components/*Page board components,
+   after the global bundle, years.css and, for the tables, pub.css). The award and seminar years are the publication
+   boards' year sections (.pub-year in pub.css: the year heading over a 3px Graphite rule), each holding a table in
+   the common table form (.tbl in base.css: Ledger head, 1px Hairline Soft row lines); the challenge entries sit in a
+   .pub-part section after the years. Projects and workshops are rows between 1px Hairline lines in the member card
+   form: the period or date in a key column on the left, the title and the details on the right. Comments are rows
+   of name, date and message. A board without records shows the empty state (components/EmptyState). The photo grid
+   and the member chips are in years.css, which the year pages share. Colors and spacing come from tokens.css. */
 
 /* ---------- Tables ---------- */
 /* Fixed columns, so the tables of different years line up. */
@@ -79,10 +80,13 @@
 }
 
 /* ---------- Projects ---------- */
-.projects {
+.projects,
+.workshops,
+.comments {
   border-top: 1px solid var(--c-graphite);
 }
-.project {
+.project,
+.workshop {
   display: grid;
   grid-template-columns: 140px minmax(0, 1fr);
   grid-template-rows: auto 1fr;
@@ -93,14 +97,16 @@
   padding: var(--s-md) 0;
   border-bottom: 1px solid var(--c-hairline);
 }
-.project-title {
+.project-title,
+.workshop-title {
   grid-area: title;
   color: var(--c-graphite);
   font-size: var(--fs-ui);
   line-height: 1.6;
 }
 /* The period on the title's first line, the length under it. */
-.project-period {
+.project-period,
+.workshop-date {
   grid-area: period;
   color: var(--c-graphite);
   font-size: var(--fs-ui-sm);
@@ -115,7 +121,8 @@
   font-weight: var(--fw-regular);
   line-height: 1.6;
 }
-.project-body {
+.project-body,
+.workshop-body {
   grid-area: body;
 }
 
@@ -184,6 +191,168 @@
   border-top: 1px solid var(--c-hairline-soft);
 }
 
+/* ---------- Workshops and comments ---------- */
+.workshop-place {
+  margin-top: var(--s-2xs);
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+.comment {
+  padding: var(--s-md) 0;
+  border-bottom: 1px solid var(--c-hairline);
+}
+.comment-name,
+.comment-date {
+  display: inline;
+}
+.comment-name {
+  color: var(--c-graphite);
+  font-size: var(--fs-ui);
+  line-height: 1.6;
+}
+.comment-date {
+  margin-left: var(--s-xs);
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+
+/* A workshop write-up or a comment message: the markdown body, 14px Graphite. */
+.md-body {
+  margin-top: var(--s-xs);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui-sm);
+  line-height: 1.8;
+}
+.comment .md-body {
+  margin-top: var(--s-2xs);
+}
+.md-body > * + * {
+  margin-top: var(--s-xs);
+}
+.md-body :is(h1, h2, h3, h4, h5, h6) {
+  font-size: var(--fs-body);
+}
+.md-body a {
+  color: var(--c-graphite);
+  text-decoration: underline;
+  text-decoration-color: var(--c-hairline);
+  text-underline-offset: 3px;
+}
+.md-body a:hover {
+  color: var(--c-cobalt);
+  text-decoration-color: currentColor;
+}
+.md-body ul > li {
+  position: relative;
+  padding-left: var(--s-sm);
+}
+.md-body ul > li::before {
+  content: '';
+  position: absolute;
+  top: calc(0.9em - 2px);
+  left: 2px;
+  width: 4px;
+  height: 4px;
+  background: var(--c-ash);
+}
+.md-body ol {
+  padding-left: var(--s-md);
+  list-style: decimal;
+}
+.md-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* How to leave a comment: a heading over a 1px Hairline line and one line of text, after the comments. */
+.how-to-leave {
+  margin-top: var(--s-xl);
+}
+.how-to-leave h2 {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--c-hairline);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui);
+  line-height: 1.6;
+}
+.how-to-leave p {
+  margin-top: var(--s-xs);
+  color: var(--c-slate);
+  font-size: var(--fs-ui-sm);
+}
+
+/* ---------- Photos: the tab rows over the grid ---------- */
+/* Two rows of year tab cells (.year-tabs in base.css): 전체 and the years, then the kinds, whose cells grow to fit a
+   longer label. The current page's cell is filled Cobalt. */
+.photo-kinds {
+  margin-top: var(--s-xs);
+}
+.photo-kinds a {
+  width: auto;
+  min-width: var(--w-year-tab);
+  padding-right: var(--s-sm);
+  padding-left: var(--s-sm);
+}
+.photo-kinds + .photo-grid {
+  margin-top: var(--s-lg);
+}
+
+/* ---------- Empty boards ---------- */
+/* A Ledger panel in a 1px Hairline frame: the sentence, then the record format, that is the template's path and a
+   13px definition list of its keys between Hairline Soft lines. */
+.empty-state {
+  padding: var(--s-lg);
+  border: 1px solid var(--c-hairline);
+  background: var(--c-ledger);
+  color: var(--c-graphite);
+}
+.empty-lead {
+  font-size: var(--fs-ui);
+  font-weight: var(--fw-bold);
+}
+.empty-state h2 {
+  margin-top: var(--s-lg);
+  font-size: var(--fs-ui-sm);
+  line-height: 1.6;
+}
+.empty-note,
+.empty-template {
+  margin-top: var(--s-2xs);
+  font-size: var(--fs-body-sm);
+}
+.empty-note {
+  color: var(--c-slate);
+}
+/* Keys and paths stay in the site's two families (no monospace), set off as small Paper chips. */
+.empty-state code {
+  padding: 1px var(--s-2xs);
+  border: 1px solid var(--c-hairline);
+  background: var(--c-paper);
+  color: var(--c-graphite);
+  font-family: var(--f-sans);
+  font-size: var(--fs-body-sm);
+  overflow-wrap: anywhere;
+}
+.empty-format {
+  margin-top: var(--s-sm);
+  border-top: 1px solid var(--c-graphite);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+.empty-format > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  column-gap: var(--s-md);
+  padding: var(--s-xs) 0;
+  border-bottom: 1px solid var(--c-hairline-soft);
+}
+.empty-format dt {
+  font-weight: var(--fw-bold);
+}
+.empty-format dd {
+  color: var(--c-slate);
+}
+
 @media (max-width: 600px) {
   /* Columns size to their content on a phone. */
   .board-tbl {
@@ -201,7 +370,8 @@
     padding-left: var(--s-2xs);
   }
   /* The period goes under the title. */
-  .project {
+  .project,
+  .workshop {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: none;
     grid-template-areas:
@@ -209,12 +379,21 @@
       'period'
       'body';
   }
-  .project-period {
+  .project-period,
+  .workshop-date {
     margin-top: 2px;
     font-size: var(--fs-body-sm);
     line-height: 1.6;
   }
   .project-months {
     display: inline;
+  }
+  .empty-state {
+    padding: var(--s-md) var(--s-sm);
+  }
+  /* The key goes above its description. */
+  .empty-format > div {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2px;
   }
 }

@@ -1,0 +1,15 @@
+---
+// 사진 board, one year: /archive/photos/2024/ for each year that has photos (none while there are no photos).
+import '../../../styles/global.css';
+import { getCollection } from 'astro:content';
+import PhotosPage from '../../../components/PhotosPage.astro';
+import { photoYears } from '../../../lib/photos.ts';
+
+export async function getStaticPaths() {
+  return photoYears(await getCollection('photos')).map((year) => ({ params: { year: String(year) }, props: { year } }));
+}
+
+const { year } = Astro.props;
+---
+
+<PhotosPage locale="ko" year={year} />

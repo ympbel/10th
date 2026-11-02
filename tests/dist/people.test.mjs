@@ -237,8 +237,8 @@ for (const [lang, prefix] of [
       $('[data-member]').each((_, el) => {
         const id = $(el).attr('data-member');
         assert.equal(el.tagName, 'a', `${y} ${id}`);
-        // A name link, or a member's name in a paper's author line.
-        assert.ok($(el).hasClass('name') || $(el).closest('.yr-sub').length === 1, `${y} ${id}`);
+        // A name link, a member's name in a paper's author line, or a name chip under a photo.
+        assert.ok($(el).hasClass('name') || $(el).closest('.yr-sub, .member-chips').length === 1, `${y} ${id}`);
         assert.equal($(el).attr('href'), href(id), `${y} ${id}`);
         assert.ok(personIds.has(id), `${y} ${id}`);
       });

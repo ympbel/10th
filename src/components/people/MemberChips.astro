@@ -1,0 +1,40 @@
+---
+// The members a record names by slug (a workshop's `members`, a photo's `people`) as a row of name chips in the page
+// language: each links to the person page, and a professor's name stands unlinked (professors have no person page).
+// A slug that names no member file fails the build (namedMember). Nothing is drawn for an empty list. Styles:
+// .member-chips in years.css.
+import type { CollectionEntry } from 'astro:content';
+import MemberLink from './MemberLink.astro';
+import { namedMember } from '../../lib/people.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+
+interface Props {
+  slugs: string[];
+  /** Every member entry by slug. */
+  members: Map<string, CollectionEntry<'members'>>;
+  locale: Locale;
+  /** The record the slugs come from (`photos/<id>`), named in the error for a wrong slug. */
+  source: string;
+  /** The list's accessible name. */
+  label: string;
+}
+
+const { slugs, members, locale, source, label } = Astro.props;
+const people = slugs.map((slug) => namedMember(slug, members, locale, source));
+---
+
+{
+  people.length > 0 && (
+    <ul class="member-chips" aria-label={label}>
+      {people.map((p) => (
+        <li>
+          {p.slug ? (
+            <MemberLink id={p.slug} name={p.name} locale={locale} />
+          ) : (
+            <span lang={langOf(p.name, locale)}>{p.name}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  )
+}
