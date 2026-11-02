@@ -46,3 +46,95 @@ export const memberSchema = z
     link: z.string().optional(),
   })
   .strict();
+
+/** A four-digit year, written as a bare integer (`year: 2021`). */
+const year = z.number().int().min(1900).max(2100);
+
+/** Slugs of other entries: file names without `.md` (members/ for `members`, projects/ for `projects`). */
+const slugs = z.array(z.string().min(1)).default([]);
+
+/** One journal paper. `members` and `projects` are filled by the converter and can be corrected by hand. */
+export const paperSchema = z
+  .object({
+    year,
+    title: z.string().min(1),
+    // The sheet string as written; it may hold two names. One sheet row has none, so it may be left out.
+    first_author: z.string().default(''),
+    co_first: z.array(z.string()).default([]),
+    corresponding: z.array(z.string()).default([]),
+    // One sheet row has no journal, so it may be left out.
+    journal: z.string().default(''),
+    impact_factor: z.number().nonnegative().optional(),
+    acknowledgement: z.string().optional(),
+    projects: slugs,
+    members: slugs,
+    link: z.string().optional(),
+  })
+  .strict();
+
+/** One conference presentation. `conference` and `type` are unified through scripts/import/conferences.json. */
+export const presentationSchema = z
+  .object({
+    year,
+    title: z.string().min(1),
+    // Full author list as written. A few sheet rows have none, so it may be left out.
+    authors: z.string().default(''),
+    first_author: z.string().default(''),
+    corresponding: z.array(z.string()).default([]),
+    conference: z.string().min(1),
+    // The sheet's spelling, kept only when unification changed it.
+    conference_raw: z.string().optional(),
+    type: z.string().min(1),
+    session: z.string().optional(),
+    acknowledgement: z.string().optional(),
+    members: slugs,
+  })
+  .strict();
+
+/** One award. `member` is the recipient's member slug when the Korean name matched. */
+export const awardSchema = z
+  .object({
+    year,
+    recipient: z.string().min(1),
+    member: z.string().min(1).optional(),
+    conference: z.string().min(1),
+    category: z.string().min(1),
+    category_en: z.string().optional(),
+    title: z.string().optional(),
+  })
+  .strict();
+
+/** One challenge entry. The dates stay as written in the sheet (`March 17, 2021`). */
+export const challengeSchema = z
+  .object({
+    year,
+    host: z.string().min(1),
+    title: z.string().min(1),
+    objective: z.string().min(1),
+    dataset_release: z.string().optional(),
+    submission: z.string().optional(),
+    link: z.string().optional(),
+  })
+  .strict();
+
+/** One research project. Budgets are in thousands of won, exactly as in the sheet. */
+export const projectSchema = z
+  .object({
+    title: z.string().min(1),
+    title_en: z.string().optional(),
+    nickname: z.string().optional(),
+    agency: z.string().min(1),
+    program: z.string().min(1),
+    institution: z.string().min(1),
+    role: z.string().min(1),
+    start: date,
+    end: date,
+    months: z.number().int().nonnegative().optional(),
+    // As written, e.g. `20%`.
+    participation_rate: z.string().optional(),
+    budget_year_krw_thousand: z.number().nonnegative().optional(),
+    budget_total_krw_thousand: z.number().nonnegative().optional(),
+    acknowledgement_en: z.string().optional(),
+    acknowledgement_ko: z.string().optional(),
+  })
+  .strict();

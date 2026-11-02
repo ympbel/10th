@@ -36,3 +36,9 @@ def year_of(s):
     """Year of a parseable date string, else None."""
     d = parse_date(s)
     return int(d[:4]) if d else None
+
+
+def parse_year(s):
+    """'2021' -> 2021; anything but four digits (after stripping) -> None."""
+    s = (s or '').strip()
+    return int(s) if re.fullmatch(r'\d{4}', s) else None

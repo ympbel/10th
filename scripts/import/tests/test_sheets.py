@@ -34,5 +34,34 @@ class HeaderIndexTest(unittest.TestCase):
             sheets.header_index(['Name', 'Year'], 'Title')
 
 
+class FindHeaderTest(unittest.TestCase):
+    ROWS = [['Title row', ''], ['', 'Year', 'Title'], ['1', '2020', 'A']]
+
+    def test_first_row_with_every_label(self):
+        self.assertEqual(sheets.find_header(self.ROWS, 'Year', 'Title'), 1)
+
+    def test_missing_label_raises_value_error(self):
+        with self.assertRaisesRegex(ValueError, 'Journal'):
+            sheets.find_header(self.ROWS, 'Year', 'Journal')
+
+
+class CellTest(unittest.TestCase):
+    def test_stripped_text_and_empty_past_the_end(self):
+        self.assertEqual(sheets.cell([' a ', 'b'], 0), 'a')
+        self.assertEqual(sheets.cell([' a ', 'b'], 5), '')
+
+
+class PickRowsTest(unittest.TestCase):
+    def test_picked_cells_with_sheet_row_numbers_and_empty_count(self):
+        rows = [['', 'Year', 'Secret', 'Title'],
+                ['1', '2020', 'x', ' A '],
+                ['2', '', 'only a secret', ''],
+                [],
+                ['3', '2021']]
+        picked, empty = sheets.pick_rows(rows, 0, {'year': 1, 'title': 3})
+        self.assertEqual(picked, [(2, {'year': '2020', 'title': 'A'}), (5, {'year': '2021', 'title': ''})])
+        self.assertEqual(empty, 2)
+
+
 if __name__ == '__main__':
     unittest.main()

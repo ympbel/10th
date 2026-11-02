@@ -35,5 +35,14 @@ class YearOfTest(unittest.TestCase):
         self.assertIsNone(dates.year_of('#VALUE!'))
 
 
+class ParseYearTest(unittest.TestCase):
+    def test_four_digit_year(self):
+        self.assertEqual(dates.parse_year(' 2021 '), 2021)
+
+    def test_not_a_year(self):
+        for s in ['', '21', '2021?', '20210', 'abcd', None]:
+            self.assertIsNone(dates.parse_year(s), s)
+
+
 if __name__ == '__main__':
     unittest.main()

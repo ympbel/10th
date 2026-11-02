@@ -78,3 +78,33 @@ def header_index(row, name):
         if cell.strip() == name.strip():
             return i
     raise KeyError(name)
+
+
+def find_header(rows, *labels):
+    """Index of the first row containing every label as a whole cell (after stripping); ValueError if none."""
+    for i, row in enumerate(rows):
+        cells = {c.strip() for c in row}
+        if all(label in cells for label in labels):
+            return i
+    raise ValueError(f'no header row with {", ".join(labels)}')
+
+
+def cell(row, i):
+    """Stripped text of row[i]; '' past the end of a short row."""
+    return row[i].strip() if i < len(row) else ''
+
+
+def pick_rows(rows, header, index):
+    """Rows below rows[header] as (sheet row number, {key: cell text}) for the columns in index (key -> column).
+
+    Only the indexed cells are looked at: a row whose indexed cells are all empty is not returned but counted,
+    so columns outside an allowlist are never read, not even to decide emptiness. Returns (picked, empty_count).
+    """
+    picked, empty = [], 0
+    for i in range(header + 1, len(rows)):
+        values = {key: cell(rows[i], j) for key, j in index.items()}
+        if any(values.values()):
+            picked.append((i + 1, values))
+        else:
+            empty += 1
+    return picked, empty
