@@ -221,6 +221,35 @@ class EdgeCaseTest(unittest.TestCase):
             members.build_members(status_rows()[3:], alumni_rows())
 
 
+class DepartmentTest(unittest.TestCase):
+    def build(self, status_departments, alumni_department=None):
+        rows = status_rows()
+        for i, value in status_departments.items():
+            rows[i][10] = value
+        alumni = alumni_rows()
+        if alumni_department is not None:
+            alumni[2][10] = alumni_department  # 박구름
+        return by_name(members.build_members(rows, alumni))
+
+    def test_abbreviations_expanded_and_annotations_stripped(self):
+        people = self.build({3: '의(자퇴)', 4: '융', 9: '전자공학과 (휴학)'}, alumni_department='물리학과(인턴)')
+        self.assertEqual(people['김하늘']['department'], '의학과')
+        self.assertEqual(people['이바다']['department'], '융합의학과')  # 현황 value; the Alumni cell is empty
+        self.assertEqual(people['최별빛']['department'], '전자공학과')  # other annotation: stripped, not mapped
+        self.assertEqual(people['박구름']['department'], '물리학과')  # the Alumni sheet's 학과 too
+        text = json.dumps(list(people.values()), ensure_ascii=False)
+        for annotation in ['자퇴', '휴학', '인턴']:
+            self.assertNotIn(annotation, text)
+        for m in people.values():
+            self.assertNotIn('(', m.get('department', ''))
+
+    def test_no_other_mapping(self):
+        people = self.build({3: '의공학과', 4: '(자퇴)', 9: '물리(응용)학과'})
+        self.assertEqual(people['김하늘']['department'], '의공학과')  # only an exact '의' or '융' is expanded
+        self.assertNotIn('department', people['이바다'])  # nothing left after the annotation
+        self.assertEqual(people['최별빛']['department'], '물리(응용)학과')  # not trailing: kept
+
+
 class SlugTest(unittest.TestCase):
     def test_slugify(self):
         self.assertEqual(writer.slugify('Ye-In Park', 'x'), 'ye-in-park')

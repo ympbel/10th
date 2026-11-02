@@ -3,6 +3,7 @@
 Only the columns in the allowlists below are ever read. Everything else in those sheets (contact details,
 birth dates, administrative columns) never enters a record.
 """
+import re
 from itertools import zip_longest
 
 import dates
@@ -43,6 +44,12 @@ PROFESSOR_HEADER = '교수님'
 # Cell values that mean "nothing here": a dash and the spreadsheet error codes.
 _EMPTY = {'-', '#VALUE!', '#REF!', '#N/A', '#NAME?', '#DIV/0!', '#NUM!', '#NULL!', '#ERROR!'}
 
+# 학과 abbreviations used in the 현황 sheet. Only these exact values are expanded.
+DEPARTMENT_ABBR = {'의': '의학과', '융': '융합의학과'}
+
+# A trailing '(...)' after a 학과 is an administrative status such as '(자퇴)' or '(인턴)': never published.
+_ANNOTATION = re.compile(r'(\s*\([^()]*\))+$')
+
 
 def _cell(row, i):
     """Stripped cell text; '' past the end of a short row or for a value in _EMPTY."""
@@ -67,6 +74,12 @@ def _check_width(row, width, i):
     """A data row wider than its header means an unexpanded rowspan shifted the cells."""
     if len(row) > width:
         raise ValueError(f'row {i + 1} has {len(row)} cells but the header has {width}')
+
+
+def _department(value):
+    """'의(자퇴)' -> '의학과', '물리학과(인턴)' -> '물리학과': drop trailing annotations, expand abbreviations."""
+    value = _ANNOTATION.sub('', value or '').strip()
+    return DEPARTMENT_ABBR.get(value, value)
 
 
 def _pick(row, index):
@@ -148,7 +161,7 @@ def _member(role, status, alumni):
     optional = {
         'orcid': status.get('orcid'),
         'program': status.get('program'),
-        'department': alumni.get('department') or status.get('department'),
+        'department': _department(alumni.get('department')) or _department(status.get('department')),
         'major': status.get('major'),
         'joined': dates.parse_date(status.get('joined')) or dates.parse_date(alumni.get('start')),
         'degree': _degree(status, alumni),
