@@ -8,10 +8,12 @@ import '../styles/years.css';
 import SubLayout from '../layouts/SubLayout.astro';
 import YearTabs from './YearTabs.astro';
 import YearPart from './years/YearPart.astro';
+import PaperItem from './PaperItem.astro';
+import MemberLink from './people/MemberLink.astro';
 import { yearStats } from '../lib/years.ts';
-import { groupBy, sortByYearDesc, sortMembersByJoined } from '../lib/content.ts';
+import { groupBy, sortByYearDesc, sortMembersByJoined, yearMonth } from '../lib/content.ts';
 import { displayName, field } from '../lib/people.ts';
-import { localePath, type Locale } from '../lib/locale.ts';
+import { langOf, localePath, type Locale } from '../lib/locale.ts';
 import { url } from '../lib/url.ts';
 import { fill, t } from '../i18n/index.ts';
 
@@ -40,18 +42,12 @@ const memberBySlug = new Map(members.map((m) => [m.id, m]));
 const ofYear = <T extends { id: string; data: { year: number; order?: number } }>(items: T[]) =>
   sortByYearDesc(items.filter((item) => item.data.year === year));
 
-const HANGUL = /[\u1100-\u11ff\u3130-\u318f\uac00-\ud7a3]/;
-/** `ko` for Korean text on an English page, so screen readers read it in Korean. */
-const langOf = (text: string | undefined) => (locale === 'en' && text && HANGUL.test(text) ? 'ko' : undefined);
-/** `YYYY-MM[-DD]` → `YYYY.MM`. */
-const month = (date: string) => date.slice(0, 7).replace('-', '.');
+/** `ko` for Korean text on this page when it is English, so screen readers read it in Korean. */
+const lang = (text: string | undefined) => langOf(text, locale);
 
 type Member = (typeof members)[number];
-/** A member's name in this language, with the slug the person page link will use. */
-const person = (m: Member) => {
-  const name = displayName(m.data, locale);
-  return { slug: m.id, name, lang: langOf(name) };
-};
+/** A member's name in this language, with the slug of their person page. */
+const person = (m: Member) => ({ slug: m.id, name: displayName(m.data, locale) });
 
 const joined = sortMembersByJoined(stats.joined, 'asc').map(person);
 
@@ -68,29 +64,14 @@ const degrees = [...stats.degrees].sort(byDegreeDate).map((m) => {
     .join(', ');
   return {
     ...person(m),
-    detail: [type, degree?.date && month(degree.date)].filter(Boolean).join(' · '),
-    detailLang: langOf(type),
+    detail: [type, degree?.date && yearMonth(degree.date)].filter(Boolean).join(' · '),
+    detailLang: lang(type),
     affiliation,
-    affiliationLang: langOf(affiliation),
+    affiliationLang: lang(affiliation),
   };
 });
 
-const yearPapers = ofYear(papers).map((p) => {
-  const authors = [
-    p.data.co_first.length > 0 ? `(${p.data.co_first.join(', ')})` : '',
-    p.data.corresponding.length > 0 ? `${yp.corresponding}: ${p.data.corresponding.join(', ')}` : '',
-  ].filter(Boolean);
-  return {
-    title: p.data.title,
-    link: p.data.link,
-    first: p.data.first_author,
-    /** Co-first and corresponding authors after the bold first author. */
-    rest: authors.join(', '),
-    authorsLang: langOf([p.data.first_author, ...p.data.co_first, ...p.data.corresponding].join(' ')),
-    journal: p.data.journal,
-    impactFactor: p.data.impact_factor,
-  };
-});
+const yearPapers = ofYear(papers);
 
 const conferences = [...groupBy(ofYear(presentations), 'conference')].map(([conference, items]) => ({
   conference,
@@ -103,9 +84,10 @@ const yearAwards = ofYear(awards).map((a) => {
   const category = field(a.data, 'category', locale);
   const where = `${a.data.conference} · ${category}`;
   return {
-    ...(m ? person(m) : { slug: undefined, name: a.data.recipient, lang: langOf(a.data.recipient) }),
+    // A recipient who is a member (not a professor, who has no person page) links to their person page.
+    ...(m && m.data.role !== 'professor' ? person(m) : { slug: undefined, name: a.data.recipient }),
     where,
-    whereLang: langOf(where),
+    whereLang: lang(where),
     title: a.data.title,
   };
 });
@@ -116,10 +98,10 @@ const running = [...stats.projectsRunning]
     const title = field(p.data, 'title', locale);
     return {
       title,
-      titleLang: langOf(title),
+      titleLang: lang(title),
       agency: p.data.agency,
-      agencyLang: langOf(p.data.agency),
-      period: `${month(p.data.start)} – ${month(p.data.end)}`,
+      agencyLang: lang(p.data.agency),
+      period: `${yearMonth(p.data.start)} – ${yearMonth(p.data.end)}`,
     };
   });
 
@@ -160,9 +142,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
       {
         joined.map((m) => (
           <li>
-            <span class="name" data-member={m.slug} lang={m.lang}>
-              {m.name}
-            </span>
+            <MemberLink class="name" id={m.slug} name={m.name} locale={locale} />
           </li>
         ))
       }
@@ -174,9 +154,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
       {
         degrees.map((m) => (
           <li class="yr-row yr-item">
-            <span class="name" data-member={m.slug} lang={m.lang}>
-              {m.name}
-            </span>
+            <MemberLink class="name" id={m.slug} name={m.name} locale={locale} />
             <div>
               <p lang={m.detailLang}>{m.detail}</p>
               {m.affiliation && (
@@ -194,32 +172,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
   <YearPart part="papers" empty={yearPapers.length === 0} locale={locale}>
     <ol class="yr-list yr-papers">
       {
-        yearPapers.map((p) => (
-          <li class="yr-item">
-            <p class="yr-title" lang={langOf(p.title)}>
-              {p.link ? (
-                <a href={p.link} target="_blank" rel="noopener">
-                  {p.title}
-                </a>
-              ) : (
-                p.title
-              )}
-            </p>
-            {(p.first || p.rest) && (
-              <p class="yr-sub" lang={p.authorsLang}>
-                {p.first && <b>{p.first}</b>}
-                {p.first && p.rest && ', '}
-                {p.rest}
-              </p>
-            )}
-            <p class="yr-meta">
-              <span>{p.journal}</span>
-              {p.impactFactor !== undefined && (
-                <span class="yr-if">{fill(yp.impactFactor, { n: p.impactFactor })}</span>
-              )}
-            </p>
-          </li>
-        ))
+        yearPapers.map((p) => <PaperItem paper={p.data} locale={locale} />)
       }
     </ol>
   </YearPart>
@@ -234,9 +187,9 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
           <ul class="yr-list">
             {c.items.map((p) => (
               <li class="yr-item">
-                <p lang={langOf(p.title)}>{p.title}</p>
+                <p lang={lang(p.title)}>{p.title}</p>
                 <p class="yr-sub">
-                  {p.firstAuthor && <span lang={langOf(p.firstAuthor)}>{p.firstAuthor}</span>}
+                  {p.firstAuthor && <span lang={lang(p.firstAuthor)}>{p.firstAuthor}</span>}
                   <span class="yr-type">{p.type}</span>
                 </p>
               </li>
@@ -252,13 +205,17 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
       {
         yearAwards.map((a) => (
           <li class="yr-row yr-item">
-            <span class="name" data-member={a.slug} lang={a.lang}>
-              {a.name}
-            </span>
+            {a.slug ? (
+              <MemberLink class="name" id={a.slug} name={a.name} locale={locale} />
+            ) : (
+              <span class="name" lang={lang(a.name)}>
+                {a.name}
+              </span>
+            )}
             <div>
               <p lang={a.whereLang}>{a.where}</p>
               {a.title && (
-                <p class="yr-sub" lang={langOf(a.title)}>
+                <p class="yr-sub" lang={lang(a.title)}>
                   {a.title}
                 </p>
               )}
@@ -306,7 +263,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
             <li>
               <figure>
                 <img src={url(p.data.image)} alt="" loading="lazy" />
-                {p.data.caption && <figcaption lang={langOf(p.data.caption)}>{p.data.caption}</figcaption>}
+                {p.data.caption && <figcaption lang={lang(p.data.caption)}>{p.data.caption}</figcaption>}
               </figure>
             </li>
           ))}

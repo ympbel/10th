@@ -72,3 +72,15 @@ export function nested(fm, parent, key) {
   const m = block && new RegExp(`^[ \\t]+${key}:\\s*(.+)$`, 'm').exec(block[1]);
   return m ? unquote(m[1]) : undefined;
 }
+
+/** A top-level list from frontmatter text, items unquoted: `members:` followed by `  - "a"` lines → `['a']`. A flow
+ * list (`members: []`) or a missing key gives `[]`; the converter writes non-empty lists in block form only. */
+export function list(fm, key) {
+  const block = new RegExp(`^${key}:[ \\t]*\\n((?:[ \\t]+-.*(?:\\n|$))*)`, 'm').exec(fm);
+  if (!block) return [];
+  return block[1]
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith('-'))
+    .map((line) => unquote(line.slice(1)));
+}

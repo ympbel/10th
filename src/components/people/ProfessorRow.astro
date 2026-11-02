@@ -1,0 +1,32 @@
+---
+// One row of the faculty block on the students board: the professor's name and their other-language name on one
+// line. Professors have no person page; a professor with a `link` (the advisor's page on the main site) links there.
+import { displayName, otherName } from '../../lib/people.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+
+interface Props {
+  /** A professor member's `data`. */
+  member: { name: string; name_en?: string; link?: string };
+  locale: Locale;
+}
+
+const { member, locale } = Astro.props;
+const name = displayName(member, locale);
+const other = otherName(member, locale);
+---
+
+<li>
+  {
+    member.link ? (
+      <a class="name" href={member.link} target="_blank" rel="noopener" lang={langOf(name, locale)}>
+        {name}
+      </a>
+    ) : (
+      <span class="name" lang={langOf(name, locale)}>
+        {name}
+      </span>
+    )
+  }
+  {other && ' '}
+  {other && <span class="other" lang={langOf(other, locale)}>{other}</span>}
+</li>

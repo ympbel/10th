@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { displayName, field, itemsOf } from '../../src/lib/people.ts';
+import { displayName, field, itemsOf, otherName, personPath } from '../../src/lib/people.ts';
+import { langOf } from '../../src/lib/locale.ts';
+import { yearMonth } from '../../src/lib/content.ts';
 
 test('itemsOf() collects the papers, presentations and awards that name the member', () => {
   const data = {
@@ -50,4 +52,29 @@ test('displayName() gives the Korean name in Korean and the English name, when s
   assert.equal(displayName({ name: '홍길동', name_en: 'Gildong Hong' }, 'ko'), '홍길동');
   assert.equal(displayName({ name: '홍길동', name_en: 'Gildong Hong' }, 'en'), 'Gildong Hong');
   assert.equal(displayName({ name: '홍길동', name_en: '' }, 'en'), '홍길동');
+});
+
+test('otherName() gives the name a page shows second: English on Korean pages, Korean on English pages', () => {
+  assert.equal(otherName({ name: '홍길동', name_en: 'Gildong Hong' }, 'ko'), 'Gildong Hong');
+  assert.equal(otherName({ name: '홍길동', name_en: 'Gildong Hong' }, 'en'), '홍길동');
+  // Without an English name the Korean name is already shown first, so there is no second name.
+  assert.equal(otherName({ name: '홍길동', name_en: '' }, 'ko'), '');
+  assert.equal(otherName({ name: '홍길동', name_en: '' }, 'en'), '');
+});
+
+test('personPath() is the site-root path of a person page', () => {
+  assert.equal(personPath('gildong-hong'), '/people/gildong-hong/');
+});
+
+test('langOf() marks Korean text on English pages only', () => {
+  assert.equal(langOf('의학과', 'en'), 'ko');
+  assert.equal(langOf('Medicine', 'en'), undefined);
+  assert.equal(langOf('의학과', 'ko'), undefined);
+  assert.equal(langOf(undefined, 'en'), undefined);
+  assert.equal(langOf('', 'en'), undefined);
+});
+
+test('yearMonth() shows a date as YYYY.MM', () => {
+  assert.equal(yearMonth('2024-03-01'), '2024.03');
+  assert.equal(yearMonth('2026-08'), '2026.08');
 });

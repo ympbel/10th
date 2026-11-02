@@ -30,6 +30,8 @@ export const ko = {
   table: {
     name: '이름',
     nameEn: '영문 이름',
+    /** The second name column: the English name on Korean pages, the Korean name on English pages. */
+    otherName: '영문 이름',
     program: '과정',
     department: '학과',
     joined: '합류',
@@ -41,6 +43,7 @@ export const ko = {
     agency: '부처',
     grantProgram: '사업',
     period: '기간',
+    degreePeriod: '학위 기간',
     participation: '참여율',
     budget: '연구비',
   },
@@ -120,6 +123,36 @@ export const ko = {
     impactFactor: 'IF {n}',
     seminarsCount: '세미나 {n}건',
     seminarsLink: '세미나 게시판에서 보기',
+  },
+  /** The people boards (학생 현황, 졸업 현황) and the person pages. */
+  people: {
+    /** Section headings of the boards; `{n}` is the count beside a heading. */
+    faculty: '교수진',
+    students: '학생',
+    degreeHolders: '학위 취득자',
+    formers: '거쳐 간 구성원',
+    count: '{n}명',
+    /** Terms of the member card and the person page header. */
+    terms: {
+      program: '과정',
+      department: '학과·전공',
+      joined: '합류',
+      degree: '학위',
+      affiliation: '현 소속',
+      orcid: 'ORCID',
+      records: '기록',
+    },
+    /** A member whose join date has no year (Review Focus 1). */
+    joinedUnknown: '합류 연도 미상',
+    /** The former members list: the join month. */
+    joinedOn: '합류 {date}',
+    /** The record counts on a card: `논문 n · 발표 n · 수상 n`. */
+    recordCounts: { papers: '논문 {n}', presentations: '발표 {n}', awards: '수상 {n}' },
+    roles: { student: '재학', alumni: '졸업', former: '거쳐 간 구성원' },
+    /** Person pages: the count beside each part heading (the headings are yearPage.parts), and the note on which
+     * papers are collected. */
+    partCounts: { papers: '{n}편', presentations: '{n}건', awards: '{n}건' },
+    papersNote: '논문은 1저자·공동 1저자·교신저자인 것만 모았습니다.',
   },
   footer: {
     name: 'Yonsei Medical Physics and Biomedical Engineering Lab.',

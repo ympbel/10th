@@ -27,3 +27,12 @@ export function otherLocaleHref(pathname: string): string {
   const { locale, path } = splitPath(pathname);
   return url(localePath(path, locale === 'ko' ? 'en' : 'ko'));
 }
+
+/** Hangul syllables and jamo. */
+const HANGUL = /[ᄀ-ᇿ㄰-㆏가-힣]/;
+
+/** `'ko'` for Korean text on an English page (a value with no English version, shown as written), so screen readers
+ * read it in Korean; `undefined` otherwise. Pass the result to an element's `lang`. */
+export function langOf(text: string | undefined, locale: Locale): 'ko' | undefined {
+  return locale === 'en' && text && HANGUL.test(text) ? 'ko' : undefined;
+}

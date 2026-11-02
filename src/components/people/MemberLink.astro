@@ -1,0 +1,21 @@
+---
+// A member's name linking to their person page, on the people boards and the year pages. `data-member` carries the
+// slug, and a Korean name on an English page is marked `lang="ko"`. Professors have no person page, so this is for
+// students, alumni and former members only.
+import { langOf, localePath, type Locale } from '../../lib/locale.ts';
+import { personPath } from '../../lib/people.ts';
+import { url } from '../../lib/url.ts';
+
+interface Props {
+  /** The member's slug (the member file name). */
+  id: string;
+  /** The name to show, already in the page language (`displayName`). */
+  name: string;
+  locale: Locale;
+  class?: string;
+}
+
+const { id, name, locale, class: className } = Astro.props;
+---
+
+<a class={className} href={url(localePath(personPath(id), locale))} data-member={id} lang={langOf(name, locale)}>{name}</a>

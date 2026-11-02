@@ -1,6 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { groupBy, groupByYear, sortByYearDesc, sortMembersByJoined } from '../../src/lib/content.ts';
+import {
+  groupBy,
+  groupByYear,
+  sortByYearDesc,
+  sortMembersByDegree,
+  sortMembersByJoined,
+  yearMonth,
+} from '../../src/lib/content.ts';
 
 const ids = (entries: { id: string }[]) => entries.map((e) => e.id);
 
@@ -65,4 +72,20 @@ test("sortMembersByJoined(…, 'desc') puts the newest join first and still memb
     'a-unknown',
     'z-unknown',
   ]);
+});
+
+test("sortMembersByDegree(…, 'desc') puts the latest degree first, members without a degree date last", () => {
+  const graduates = [
+    { id: 'b-2021', data: { degree: { date: '2021-02' } } },
+    { id: 'none', data: {} },
+    { id: 'c-2024', data: { degree: { date: '2024-08-20' } } },
+    { id: 'a-2021', data: { degree: { date: '2021-02' } } },
+    { id: 'start-only', data: { degree: { start: '2023-03' } } },
+  ];
+  assert.deepEqual(ids(sortMembersByDegree(graduates, 'desc')), ['c-2024', 'a-2021', 'b-2021', 'none', 'start-only']);
+  assert.deepEqual(ids(sortMembersByDegree(graduates, 'asc')), ['a-2021', 'b-2021', 'c-2024', 'none', 'start-only']);
+});
+
+test('yearMonth() also takes a month-only date', () => {
+  assert.equal(yearMonth('2021-02'), '2021.02');
 });

@@ -1,5 +1,6 @@
-/* Year pages only (imported by components/YearPage.astro, after the global bundle): the summary line, the parts with
-   their headings, and the rows inside them. The year tab rail in the side area is in base.css and responsive.css
+/* Year pages (imported by components/YearPage.astro, after the global bundle): the summary line, the parts with
+   their headings, and the rows inside them. Person pages (components/people/PersonPage.astro) import it too for the
+   same parts and rows. The year tab rail in the side area is in base.css and responsive.css
    (.side .year-tabs). Parts follow the publication list form of DESIGN.md: a heading over a 3px Graphite rule, then
    rows divided by Hairline Soft lines. Colors and spacing come from tokens.css. */
 
@@ -109,7 +110,11 @@
   column-gap: var(--s-md);
 }
 .yr-row > .name {
+  color: var(--c-graphite);
   font-weight: var(--fw-bold);
+}
+.yr-row > a.name:hover {
+  color: var(--c-cobalt);
 }
 .yr-period {
   color: var(--c-slate);

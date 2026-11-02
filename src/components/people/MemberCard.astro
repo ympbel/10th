@@ -1,0 +1,27 @@
+---
+// A student's card on the students board, in the MPBEL member card form without the photo: the name (a link to the
+// person page) with the other-language name on the left, the definition list on the right.
+import type { CollectionEntry } from 'astro:content';
+import MemberLink from './MemberLink.astro';
+import MemberFacts from './MemberFacts.astro';
+import { displayName, otherName } from '../../lib/people.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+
+interface Props {
+  member: CollectionEntry<'members'>;
+  /** The member's papers (2016 on), presentations and awards. */
+  counts: { papers: number; presentations: number; awards: number };
+  locale: Locale;
+}
+
+const { member, counts, locale } = Astro.props;
+const other = otherName(member.data, locale);
+---
+
+<li class="member-card" data-member={member.id}>
+  <div class="mc-name">
+    <h3><MemberLink id={member.id} name={displayName(member.data, locale)} locale={locale} /></h3>
+    {other && <p class="other" lang={langOf(other, locale)}>{other}</p>}
+  </div>
+  <MemberFacts member={member.data} locale={locale} counts={counts} />
+</li>

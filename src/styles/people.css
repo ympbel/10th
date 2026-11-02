@@ -1,0 +1,218 @@
+/* People boards and person pages (imported by components/people/*Page.astro, after the global bundle): the part
+   headings, the faculty block, the member cards in the MPBEL member card form without photos (a row between 1px
+   Hairline lines, name 20px 700, a 13px definition list whose terms carry a 4×4 gray square), the degree holders
+   table (the common .tbl), the former members list, and the person page header and year groups. The person page
+   parts and rows themselves are the year page's (.yr-part, .yr-list in years.css). Colors and spacing come from
+   tokens.css. */
+
+/* ---------- Parts ---------- */
+.people-part + .people-part {
+  margin-top: var(--s-xl);
+}
+.people-part > h2 {
+  padding-bottom: var(--s-xs);
+  border-bottom: 3px solid var(--c-graphite);
+  color: var(--c-graphite);
+  font-size: var(--fs-subtitle);
+  line-height: 1.4;
+}
+/* The count beside a heading, on the boards and on the person page parts. */
+.people-part > h2 small,
+.yr-part > h2 small {
+  margin-left: 4px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-regular);
+}
+
+/* ---------- Faculty, former members: two columns of one-line rows ---------- */
+.prof-list,
+.former-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--s-lg);
+}
+.prof-list li,
+.former-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--s-xs);
+  padding: var(--pad-cell) 0;
+  border-bottom: 1px solid var(--c-hairline-soft);
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+.prof-list .name,
+.former-list .name {
+  color: var(--c-graphite);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+}
+.prof-list a.name:hover,
+.former-list a.name:hover {
+  color: var(--c-cobalt);
+}
+.former-list .period {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* ---------- Member card and person page header ---------- */
+.member-card,
+.person-head {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  column-gap: 25px;
+  padding: var(--s-md) 0;
+  border-bottom: 1px solid var(--c-hairline);
+}
+.person-head {
+  border-top: 1px solid var(--c-hairline);
+}
+.mc-name h3 {
+  font-size: var(--fs-subtitle);
+  line-height: 1.4;
+}
+.mc-name h3 a {
+  color: var(--c-graphite);
+}
+.mc-name h3 a:hover {
+  color: var(--c-cobalt);
+}
+.mc-name .other {
+  margin-top: 2px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+/* On a person page the heading already holds the name, so the header starts with the other-language name. */
+.person-head .other {
+  margin-top: 0;
+  color: var(--c-graphite);
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+}
+.person-head .role {
+  display: inline-block;
+  margin-top: var(--s-xs);
+  padding: 0 6px;
+  border: 1px solid var(--c-yonsei-navy);
+  color: var(--c-yonsei-navy);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  line-height: 22px;
+}
+.person-head .other + .role {
+  margin-top: var(--s-2xs);
+}
+
+/* The term column has one width per language, so the values line up from card to card. */
+.mc-facts {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  align-content: start;
+  gap: 6px var(--s-sm);
+  color: var(--c-graphite);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+.mc-facts:lang(en) {
+  grid-template-columns: 135px minmax(0, 1fr);
+}
+.mc-facts dt {
+  position: relative;
+  padding-left: 10px;
+  font-weight: var(--fw-bold);
+}
+.mc-facts dt::before {
+  content: '';
+  position: absolute;
+  top: calc(0.8em - 2px);
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: var(--c-ash);
+}
+/* ORCID: a square iD mark and the iD. */
+.orcid {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--c-graphite);
+}
+.orcid-mark {
+  width: 16px;
+  height: 16px;
+  background: var(--c-graphite);
+  color: var(--c-paper);
+  font-size: var(--fs-btn-link);
+  font-weight: var(--fw-bold);
+  line-height: 16px;
+  text-align: center;
+}
+.orcid:hover {
+  color: var(--c-cobalt);
+}
+.orcid:hover .orcid-mark {
+  background: var(--c-cobalt);
+}
+
+/* ---------- Degree holders table ---------- */
+.alumni-table {
+  min-width: 720px;
+}
+.alumni-table thead th {
+  white-space: nowrap;
+}
+.alumni-table tbody th {
+  border-bottom: 1px solid var(--c-hairline-soft);
+  white-space: nowrap;
+}
+.alumni-table .nowrap {
+  white-space: nowrap;
+}
+
+/* ---------- Person page: the papers note and the year groups inside each part ---------- */
+.person-note {
+  margin-top: var(--s-xs);
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+.pp-year {
+  margin-top: var(--s-md);
+}
+/* Papers are numbered through the whole part, not again from 1 in each year. */
+.yr-part[data-part='papers'] {
+  counter-reset: paper;
+}
+.pp-year .yr-papers {
+  counter-reset: none;
+}
+.pp-year h3 {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--c-hairline);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui);
+  line-height: 1.6;
+}
+.pp-year h3 a {
+  color: var(--c-graphite);
+}
+.pp-year h3 a:hover {
+  color: var(--c-cobalt);
+}
+
+@media (max-width: 600px) {
+  .prof-list,
+  .former-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* The name goes above the definition list. */
+  .member-card,
+  .person-head {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--s-xs);
+  }
+}

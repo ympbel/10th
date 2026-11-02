@@ -1,0 +1,46 @@
+---
+// The alumni board (졸업 현황) in one language, in two groups: everyone with a degree date in a table, latest degree
+// first (a current student who already holds a degree is there too), then the former members who left without a
+// degree, latest join first.
+import { getCollection } from 'astro:content';
+import '../../styles/people.css';
+import SubLayout from '../../layouts/SubLayout.astro';
+import AlumniTable from './AlumniTable.astro';
+import FormerList from './FormerList.astro';
+import { sortMembersByDegree, sortMembersByJoined } from '../../lib/content.ts';
+import type { Locale } from '../../lib/locale.ts';
+import { fill, t } from '../../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+
+const members = await getCollection('members');
+const graduates = sortMembersByDegree(
+  members.filter((m) => m.data.degree?.date),
+  'desc',
+);
+const formers = sortMembersByJoined(
+  members.filter((m) => m.data.role === 'former'),
+  'desc',
+);
+---
+
+<SubLayout title={s.boards.alumni} sectionKey="people" currentHref="/people/alumni/" locale={locale}>
+  <section class="people-part" aria-labelledby="graduates-title">
+    <h2 id="graduates-title">
+      {s.people.degreeHolders} <small>{fill(s.people.count, { n: graduates.length })}</small>
+    </h2>
+    <AlumniTable members={graduates} locale={locale} />
+  </section>
+
+  <section class="people-part" aria-labelledby="formers-title">
+    <h2 id="formers-title">
+      {s.people.formers} <small>{fill(s.people.count, { n: formers.length })}</small>
+    </h2>
+    <FormerList members={formers} locale={locale} />
+  </section>
+</SubLayout>

@@ -43,13 +43,17 @@ export function groupByYear<T extends Ordered>(items: T[]): Map<number, T[]> {
   return groupBy(sortByYearDesc(items), 'year');
 }
 
-/** A sorted copy of `members` by `joined` date: `'asc'` puts the earliest join first, `'desc'` the latest. Members
- * without `joined` (the join date had no year) come last in either order. Ties go by `id`. */
-export function sortMembersByJoined<T extends Entry<{ joined?: string }>>(members: T[], order: 'asc' | 'desc'): T[] {
+/** A sorted copy of `members` by the date `dateOf` reads: `'asc'` puts the earliest first, `'desc'` the latest.
+ * Members without that date come last in either order. Ties go by `id`. */
+function sortMembersByDate<T extends Entry<object>>(
+  members: T[],
+  dateOf: (member: T) => string | undefined,
+  order: 'asc' | 'desc',
+): T[] {
   const sign = order === 'asc' ? 1 : -1;
   return [...members].sort((a, b) => {
-    const x = a.data.joined;
-    const y = b.data.joined;
+    const x = dateOf(a);
+    const y = dateOf(b);
     if (x !== y) {
       if (x === undefined) return 1;
       if (y === undefined) return -1;
@@ -57,4 +61,24 @@ export function sortMembersByJoined<T extends Entry<{ joined?: string }>>(member
     }
     return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
   });
+}
+
+/** A sorted copy of `members` by `joined` date: `'asc'` puts the earliest join first, `'desc'` the latest. Members
+ * without `joined` (the join date had no year) come last in either order. Ties go by `id`. */
+export function sortMembersByJoined<T extends Entry<{ joined?: string }>>(members: T[], order: 'asc' | 'desc'): T[] {
+  return sortMembersByDate(members, (m) => m.data.joined, order);
+}
+
+/** A sorted copy of `members` by degree date (`degree.date`): `'desc'` puts the latest degree first. Members without
+ * a degree date come last in either order. Ties go by `id`. */
+export function sortMembersByDegree<T extends Entry<{ degree?: { date?: string } }>>(
+  members: T[],
+  order: 'asc' | 'desc',
+): T[] {
+  return sortMembersByDate(members, (m) => m.data.degree?.date, order);
+}
+
+/** A `YYYY-MM` or `YYYY-MM-DD` date as the boards show it: `2024-03-01` → `2024.03`. */
+export function yearMonth(date: string): string {
+  return date.slice(0, 7).replace('-', '.');
 }

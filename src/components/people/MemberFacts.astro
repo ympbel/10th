@@ -1,0 +1,96 @@
+---
+// The definition list of a member, in the MPBEL member card form (13px, bold terms with a small gray square): the
+// program, department and major, the join month, the ORCID link when there is one, and either the record counts (a
+// card on the students board) or the degree and the current affiliation (the header of a person page). A row with no
+// value is left out, except the join month, which says when it is unknown.
+import type { CollectionEntry } from 'astro:content';
+import { field } from '../../lib/people.ts';
+import { yearMonth } from '../../lib/content.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+import { fill, t } from '../../i18n/index.ts';
+
+interface Props {
+  member: CollectionEntry<'members'>['data'];
+  locale: Locale;
+  /** Person page header: add the degree (type and date) and the current affiliation and position. */
+  detail?: boolean;
+  /** Students board card: the papers (2016 on), presentations and awards counted for the member. */
+  counts?: { papers: number; presentations: number; awards: number };
+}
+
+const { member, locale, detail = false, counts } = Astro.props;
+const p = t(locale).people;
+
+/** A piece of a value, marked Korean when it is Korean text on an English page. */
+type Part = { text: string; lang?: 'ko' };
+const parts = (texts: (string | undefined)[]): Part[] =>
+  texts.filter((text): text is string => Boolean(text)).map((text) => ({ text, lang: langOf(text, locale) }));
+
+const degree = member.degree;
+const rows = [
+  { term: p.terms.program, parts: parts([member.program]), sep: '' },
+  {
+    term: p.terms.department,
+    parts: parts([field(member, 'department', locale), member.major]),
+    sep: ' · ',
+  },
+  { term: p.terms.joined, parts: parts([member.joined ? yearMonth(member.joined) : p.joinedUnknown]), sep: '' },
+  ...(detail
+    ? [
+        {
+          term: p.terms.degree,
+          parts: degree?.date ? parts([field(degree, 'type', locale), yearMonth(degree.date)]) : [],
+          sep: ' · ',
+        },
+        {
+          term: p.terms.affiliation,
+          parts: parts([field(member, 'affiliation', locale), field(member, 'position', locale)]),
+          sep: ', ',
+        },
+      ]
+    : []),
+].filter((row) => row.parts.length > 0);
+
+const records =
+  counts &&
+  (['papers', 'presentations', 'awards'] as const).map((key) => fill(p.recordCounts[key], { n: counts[key] })).join(' · ');
+---
+
+<dl class="mc-facts">
+  {
+    rows.map((row) => (
+      <>
+        <dt>{row.term}</dt>
+        <dd>
+          {row.parts.map((part, i) => (
+            <>
+              {i > 0 && row.sep}
+              <span lang={part.lang}>{part.text}</span>
+            </>
+          ))}
+        </dd>
+      </>
+    ))
+  }
+  {
+    member.orcid && (
+      <>
+        <dt>{p.terms.orcid}</dt>
+        <dd>
+          <a class="orcid" href={`https://orcid.org/${member.orcid}`} target="_blank" rel="noopener">
+            <span class="orcid-mark" aria-hidden="true">iD</span>
+            {member.orcid}
+          </a>
+        </dd>
+      </>
+    )
+  }
+  {
+    records && (
+      <>
+        <dt>{p.terms.records}</dt>
+        <dd>{records}</dd>
+      </>
+    )
+  }
+</dl>

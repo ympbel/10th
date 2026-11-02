@@ -1,0 +1,15 @@
+---
+// English person pages: /en/people/<slug>/ for every member but the professors (the slug is the member file name).
+import '../../../styles/global.css';
+import { getCollection } from 'astro:content';
+import PersonPage from '../../../components/people/PersonPage.astro';
+
+export async function getStaticPaths() {
+  const members = await getCollection('members', (m) => m.data.role !== 'professor');
+  return members.map((member) => ({ params: { slug: member.id }, props: { member } }));
+}
+
+const { member } = Astro.props;
+---
+
+<PersonPage member={member} locale="en" />

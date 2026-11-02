@@ -1,0 +1,133 @@
+---
+// A person page in one language, for every member but the professors: the header in the member card form (the
+// other-language name, the role, and the definition list with the degree and current affiliation), then the
+// member's papers (2016 on, with the note on which papers are collected), presentations and awards, each grouped by
+// year, newest first, in sheet order within a year. A year heading links to that year's page.
+import { getCollection, type CollectionEntry } from 'astro:content';
+import '../../styles/years.css';
+import '../../styles/people.css';
+import SubLayout from '../../layouts/SubLayout.astro';
+import YearPart from '../years/YearPart.astro';
+import PaperItem from '../PaperItem.astro';
+import MemberFacts from './MemberFacts.astro';
+import { groupByYear } from '../../lib/content.ts';
+import { displayName, field, itemsOf, otherName } from '../../lib/people.ts';
+import { YEARS, isLabEra } from '../../lib/years.ts';
+import { langOf, localePath, type Locale } from '../../lib/locale.ts';
+import { url } from '../../lib/url.ts';
+import { fill, t } from '../../i18n/index.ts';
+
+interface Props {
+  member: CollectionEntry<'members'>;
+  locale: Locale;
+}
+
+const { member, locale } = Astro.props;
+const s = t(locale);
+const p = s.people;
+const d = member.data;
+if (d.role === 'professor') throw new Error(`${member.id}: professors have no person page`);
+const role = d.role;
+
+const [papers, presentations, awards] = await Promise.all([
+  getCollection('papers'),
+  getCollection('presentations'),
+  getCollection('awards'),
+]);
+const items = itemsOf(member.id, { papers: papers.filter((x) => isLabEra(x.data.year)), presentations, awards });
+
+const name = displayName(d, locale);
+const other = otherName(d, locale);
+const lang = (text: string | undefined) => langOf(text, locale);
+/** The board the member is listed on, marked in the side navigation. */
+const board = role === 'student' ? '/people/students/' : '/people/alumni/';
+/** A year page link for a year heading, when the archive has that year. */
+const yearHref = (y: number) => (YEARS.includes(y) ? url(localePath(`/years/${y}/`, locale)) : undefined);
+
+const paperYears = [...groupByYear(items.papers)];
+const presentationYears = [...groupByYear(items.presentations)];
+const awardYears = [...groupByYear(items.awards)];
+const count = (part: keyof typeof p.partCounts, n: number) => fill(p.partCounts[part], { n });
+---
+
+<SubLayout title={name} sectionKey="people" currentHref={board} locale={locale}>
+  <div class="person-head">
+    <div class="mc-name">
+      {other && <p class="other" lang={lang(other)}>{other}</p>}
+      <p class="role">{p.roles[role]}</p>
+    </div>
+    <MemberFacts member={d} locale={locale} detail />
+  </div>
+
+  <YearPart
+    part="papers"
+    empty={items.papers.length === 0}
+    locale={locale}
+    count={count('papers', items.papers.length)}
+  >
+    <p slot="note" class="person-note">{p.papersNote}</p>
+    {
+      paperYears.map(([year, list]) => (
+        <div class="pp-year">
+          <h3>{yearHref(year) ? <a href={yearHref(year)}>{year}</a> : year}</h3>
+          <ol class="yr-list yr-papers">
+            {list.map((x) => (
+              <PaperItem paper={x.data} locale={locale} />
+            ))}
+          </ol>
+        </div>
+      ))
+    }
+  </YearPart>
+
+  <YearPart
+    part="presentations"
+    empty={items.presentations.length === 0}
+    locale={locale}
+    count={count('presentations', items.presentations.length)}
+  >
+    {
+      presentationYears.map(([year, list]) => (
+        <div class="pp-year">
+          <h3>{yearHref(year) ? <a href={yearHref(year)}>{year}</a> : year}</h3>
+          <ul class="yr-list">
+            {list.map((x) => (
+              <li class="yr-item">
+                <p lang={lang(x.data.title)}>{x.data.title}</p>
+                <p class="yr-sub">
+                  <span lang={lang(x.data.conference)}>{x.data.conference}</span>
+                  <span class="yr-type">{x.data.type}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </YearPart>
+
+  <YearPart part="awards" empty={items.awards.length === 0} locale={locale} count={count('awards', items.awards.length)}>
+    {
+      awardYears.map(([year, list]) => (
+        <div class="pp-year">
+          <h3>{yearHref(year) ? <a href={yearHref(year)}>{year}</a> : year}</h3>
+          <ul class="yr-list">
+            {list.map((x) => {
+              const where = `${x.data.conference} · ${field(x.data, 'category', locale)}`;
+              return (
+                <li class="yr-item">
+                  <p lang={lang(where)}>{where}</p>
+                  {x.data.title && (
+                    <p class="yr-sub" lang={lang(x.data.title)}>
+                      {x.data.title}
+                    </p>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))
+    }
+  </YearPart>
+</SubLayout>

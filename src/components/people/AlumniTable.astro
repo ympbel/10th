@@ -1,0 +1,74 @@
+---
+// The degree holders table on the alumni board: name (a link to the person page), the other-language name, degree,
+// department, degree period and current affiliation, one row per member with a degree date, in the order given.
+import type { CollectionEntry } from 'astro:content';
+import MemberLink from './MemberLink.astro';
+import { displayName, field, otherName } from '../../lib/people.ts';
+import { yearMonth } from '../../lib/content.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+import { t } from '../../i18n/index.ts';
+
+interface Props {
+  members: CollectionEntry<'members'>[];
+  locale: Locale;
+}
+
+const { members, locale } = Astro.props;
+const s = t(locale);
+
+const rows = members.map((m) => {
+  const d = m.data;
+  const degree = d.degree;
+  // Affiliation and position each carry their own lang: one may be Korean and the other English.
+  const affiliation = [field(d, 'affiliation', locale), field(d, 'position', locale)].filter(
+    (x): x is string => Boolean(x),
+  );
+  return {
+    id: m.id,
+    name: displayName(d, locale),
+    other: otherName(d, locale),
+    type: degree && field(degree, 'type', locale),
+    department: field(d, 'department', locale),
+    period: [degree?.start, degree?.date].filter((x): x is string => Boolean(x)).map(yearMonth).join(' – '),
+    affiliation,
+  };
+});
+---
+
+<div class="tbl-wrap">
+  <table class="tbl alumni-table">
+    <thead>
+      <tr>
+        <th scope="col">{s.table.name}</th>
+        <th scope="col">{s.table.otherName}</th>
+        <th scope="col">{s.table.degree}</th>
+        <th scope="col">{s.table.department}</th>
+        <th scope="col">{s.table.degreePeriod}</th>
+        <th scope="col">{s.table.affiliation}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr data-member={r.id}>
+            <th scope="row">
+              <MemberLink id={r.id} name={r.name} locale={locale} />
+            </th>
+            <td lang={langOf(r.other, locale)}>{r.other}</td>
+            <td lang={langOf(r.type, locale)}>{r.type}</td>
+            <td lang={langOf(r.department, locale)}>{r.department}</td>
+            <td class="nowrap">{r.period}</td>
+            <td>
+              {r.affiliation.map((part, i) => (
+                <>
+                  {i > 0 && ', '}
+                  <span lang={langOf(part, locale)}>{part}</span>
+                </>
+              ))}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

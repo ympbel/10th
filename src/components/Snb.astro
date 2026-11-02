@@ -1,8 +1,9 @@
 ---
 // Side navigation of a sub page: the section name on the blue title block, then the section's boards with the current
-// one marked. The title block's background image is set here because CSS files cannot see the base.
+// one marked. The title block's background image is set here because CSS files cannot see the base. A page under a
+// board (a person page under 학생 현황) marks the board too, but only the board's own page is `aria-current="page"`.
 import { MENU, type SectionKey } from '../lib/menu.ts';
-import { localePath, type Locale } from '../lib/locale.ts';
+import { localePath, splitPath, type Locale } from '../lib/locale.ts';
 import { url } from '../lib/url.ts';
 
 interface Props {
@@ -15,6 +16,8 @@ interface Props {
 const { sectionKey, currentHref, locale } = Astro.props;
 const section = MENU.find((s) => s.key === sectionKey);
 if (!section) throw new Error(`No menu section "${sectionKey}"`);
+const here = splitPath(Astro.url.pathname).path;
+const current = (href: string) => (href !== currentHref ? undefined : href === here ? 'page' : 'true');
 ---
 
 <nav class="snb" aria-labelledby="snb-title">
@@ -23,7 +26,7 @@ if (!section) throw new Error(`No menu section "${sectionKey}"`);
     {
       section.items.map((item) => (
         <li class={item.href === currentHref ? 'active' : undefined}>
-          <a href={url(localePath(item.href, locale))} aria-current={item.href === currentHref ? 'page' : undefined}>
+          <a href={url(localePath(item.href, locale))} aria-current={current(item.href)}>
             {item.label[locale]}
           </a>
         </li>

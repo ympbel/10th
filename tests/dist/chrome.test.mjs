@@ -127,6 +127,6 @@ test('sub page frame: visual band label, side navigation with the current board,
     );
     assert.equal($('.loca li a').attr('href'), lang === 'en' ? `${BASE}/en/` : `${BASE}/`, path);
     assert.equal($('.loca img').attr('src'), `${BASE}/images/site/home.png`, path);
-    assert.equal($('.contents').text().trim(), lang === 'en' ? 'Coming soon' : '준비 중', path);
+    assert.ok($('.contents').children().length > 0, path);
   }
 });

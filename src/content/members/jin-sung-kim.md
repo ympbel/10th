@@ -5,4 +5,5 @@ name_en: "Jin Sung Kim"
 aliases:
   - "Jin Sung Kim"
 order: 1
+link: "https://ympbel.github.io/member/professor/"
 ---

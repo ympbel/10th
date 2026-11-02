@@ -33,3 +33,16 @@ export function field<T extends object, K extends keyof T & string>(entry: T, ke
 export function displayName(member: { name: string; name_en?: string }, locale: Locale): string {
   return field(member, 'name', locale);
 }
+
+/** The name a page shows second, beside `displayName`: the English name on Korean pages and the Korean name on
+ * English pages. Empty when the member has no English name, since the Korean name is then already shown first. */
+export function otherName(member: { name: string; name_en?: string }, locale: Locale): string {
+  if (!member.name_en) return '';
+  return locale === 'en' ? member.name : member.name_en;
+}
+
+/** The site-root path of a member's person page (`/people/gildong-hong/`); pass it through `localePath` and `url`.
+ * Professors have no person page. */
+export function personPath(slug: string): string {
+  return `/people/${slug}/`;
+}
