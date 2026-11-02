@@ -46,3 +46,16 @@ export function otherName(member: { name: string; name_en?: string }, locale: Lo
 export function personPath(slug: string): string {
   return `/people/${slug}/`;
 }
+
+/** Who an award shows as its recipient: the member's name in `locale` when `member` names a member file, with the
+ * slug for a person page link unless the member is a professor (professors have no person page); otherwise the
+ * sheet's `recipient` string as written, unlinked. `members` maps member slugs to member entries. */
+export function awardRecipient(
+  award: { recipient: string; member?: string },
+  members: Map<string, { data: { role: string; name: string; name_en?: string } }>,
+  locale: Locale,
+): { slug?: string; name: string } {
+  const m = award.member ? members.get(award.member) : undefined;
+  if (!m) return { slug: undefined, name: award.recipient };
+  return { slug: m.data.role === 'professor' ? undefined : award.member, name: displayName(m.data, locale) };
+}

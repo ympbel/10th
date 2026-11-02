@@ -12,7 +12,7 @@ import PaperItem from './PaperItem.astro';
 import MemberLink from './people/MemberLink.astro';
 import { yearStats } from '../lib/years.ts';
 import { groupBy, sortByYearDesc, sortMembersByJoined, yearMonth } from '../lib/content.ts';
-import { displayName, field } from '../lib/people.ts';
+import { awardRecipient, displayName, field } from '../lib/people.ts';
 import { langOf, localePath, type Locale } from '../lib/locale.ts';
 import { url } from '../lib/url.ts';
 import { fill, t } from '../i18n/index.ts';
@@ -80,12 +80,11 @@ const conferences = [...groupBy(ofYear(presentations), 'conference')].map(([conf
 const presentationCount = conferences.reduce((n, c) => n + c.items.length, 0);
 
 const yearAwards = ofYear(awards).map((a) => {
-  const m = a.data.member ? memberBySlug.get(a.data.member) : undefined;
   const category = field(a.data, 'category', locale);
   const where = `${a.data.conference} · ${category}`;
   return {
-    // A recipient who is a member (not a professor, who has no person page) links to their person page.
-    ...(m && m.data.role !== 'professor' ? person(m) : { slug: undefined, name: a.data.recipient }),
+    // A member recipient by name in this language, linked unless a professor; anyone else as the sheet wrote it.
+    ...awardRecipient(a.data, memberBySlug, locale),
     where,
     whereLang: lang(where),
     title: a.data.title,

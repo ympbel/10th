@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { displayName, field, itemsOf, otherName, personPath } from '../../src/lib/people.ts';
+import { awardRecipient, displayName, field, itemsOf, otherName, personPath } from '../../src/lib/people.ts';
 import { langOf } from '../../src/lib/locale.ts';
 import { yearMonth } from '../../src/lib/content.ts';
 
@@ -77,4 +77,32 @@ test('langOf() marks Korean text on English pages only', () => {
 test('yearMonth() shows a date as YYYY.MM', () => {
   assert.equal(yearMonth('2024-03-01'), '2024.03');
   assert.equal(yearMonth('2026-08'), '2026.08');
+});
+
+const recipients = new Map([
+  ['gildong-hong', { data: { role: 'student', name: '홍길동', name_en: 'Gildong Hong' } }],
+  ['jin-sung-kim', { data: { role: 'professor', name: '김진성', name_en: 'Jin Sung Kim' } }],
+]);
+
+test('awardRecipient() links a member recipient and gives the name in the page language', () => {
+  const award = { recipient: '홍길동', member: 'gildong-hong' };
+  assert.deepEqual(awardRecipient(award, recipients, 'ko'), { slug: 'gildong-hong', name: '홍길동' });
+  assert.deepEqual(awardRecipient(award, recipients, 'en'), { slug: 'gildong-hong', name: 'Gildong Hong' });
+});
+
+test('awardRecipient() names a professor in the page language without a link (professors have no person page)', () => {
+  const award = { recipient: '김진성', member: 'jin-sung-kim' };
+  assert.deepEqual(awardRecipient(award, recipients, 'en'), { slug: undefined, name: 'Jin Sung Kim' });
+  assert.deepEqual(awardRecipient(award, recipients, 'ko'), { slug: undefined, name: '김진성' });
+});
+
+test('awardRecipient() keeps the sheet string when no member matches', () => {
+  assert.deepEqual(awardRecipient({ recipient: '외부 수상자' }, recipients, 'en'), {
+    slug: undefined,
+    name: '외부 수상자',
+  });
+  assert.deepEqual(awardRecipient({ recipient: '이름', member: 'no-such-file' }, recipients, 'en'), {
+    slug: undefined,
+    name: '이름',
+  });
 });
