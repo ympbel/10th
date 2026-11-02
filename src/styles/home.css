@@ -6,7 +6,7 @@
 .home {
   --h-hero: 570px;
   --h-hero-tablet: 400px;
-  --h-hero-photo-phone: 150px; /* the strip of photo above the slogan block at ≤600px */
+  --h-hero-photo-phone: 220px; /* the strip of photo above the slogan block at ≤600px */
   --fs-hero: 42px;
   --fs-hero-phone: 32px;
   --h-intro: 356px;
@@ -285,7 +285,7 @@
   white-space: nowrap;
 }
 .tl-none {
-  color: var(--c-ash);
+  color: var(--c-slate);
 }
 .tl-degrees {
   display: flex;
@@ -392,6 +392,9 @@
 .yp-col .more:hover {
   color: var(--c-cobalt);
 }
+.yp-col .more .chevron {
+  vertical-align: -1px;
+}
 
 /* ---------- Board links ---------- */
 .board-links {
@@ -408,6 +411,10 @@
   display: flex;
   border-right: 1px solid var(--c-panel-gray);
   border-bottom: 1px solid var(--c-panel-gray);
+}
+/* Eleven boards: the last takes the two cells its row leaves free at four columns, the whole row at two. */
+.board-links li:last-child {
+  grid-column: span 2;
 }
 .board-links a {
   display: flex;
@@ -537,6 +544,10 @@
     min-height: 0;
     padding-top: var(--h-hero-photo-phone);
   }
+  /* The photo only as tall as the strip, so the whole head is in it, not the top of the skull above the slogan. */
+  .hero-photo {
+    height: var(--h-hero-photo-phone);
+  }
   .hero-slogan {
     max-width: none;
   }
@@ -579,9 +590,6 @@
     padding: var(--s-md) var(--s-gutter);
   }
 
-  .board-links ul {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .board-links a {
     padding: 0 var(--s-md);
   }

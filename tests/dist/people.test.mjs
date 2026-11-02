@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { BASE, entries, exists, list, nested, page, scalar } from './helpers.mjs';
+import { BASE, DIST, entries, exists, list, nested, page, scalar } from './helpers.mjs';
 
 // The people boards and person pages (plan Task 10), in both languages: 학생 현황 (faculty, then student cards),
 // 졸업 현황 (degree holders table, then former members), and one page per non-professor member. Expected values are
@@ -64,19 +65,29 @@ function countsOf(id) {
 const month = (date) => date.slice(0, 7).replace('-', '.');
 const text = ($el) => $el.text().replace(/\s+/g, ' ').trim();
 
-test('the content holds the counts the boards are built for', () => {
-  assert.equal(professors.length, 8);
-  assert.equal(students.length, 23);
-  assert.equal(graduates.length, 13);
-  assert.equal(formers.length, 26);
-  assert.equal(persons.length, 61);
+// No literal counts: adding a member file (README 5.1) must not fail the suite. The sets above are derived from
+// src/content/members; the tests check the built pages against them.
+test('the content holds members for every board, each a professor or a person with a page', () => {
+  assert.ok(professors.length > 0, 'professors');
+  assert.ok(students.length > 0, 'students');
+  assert.ok(graduates.length > 0, 'graduates');
+  assert.ok(formers.length > 0, 'formers');
+  assert.equal(professors.length + persons.length, members.length);
 });
 
-test('61 person pages per language, none for professors', () => {
+test('one person page per non-professor member in each language, none for professors, no others', () => {
   const missing = persons.flatMap((m) => [`people/${m.id}`, `en/people/${m.id}`]).filter((p) => !exists(p));
   assert.deepEqual(missing, []);
   const extra = professors.flatMap((m) => [`people/${m.id}`, `en/people/${m.id}`]).filter((p) => exists(p));
   assert.deepEqual(extra, []);
+  const boards = new Set(['students', 'alumni']);
+  for (const dir of ['people', join('en', 'people')]) {
+    const built = readdirSync(join(DIST, dir), { withFileTypes: true })
+      .filter((d) => d.isDirectory() && !boards.has(d.name))
+      .map((d) => d.name)
+      .sort();
+    assert.deepEqual(built, [...personIds].sort(), dir);
+  }
 });
 
 for (const [lang, prefix] of [
@@ -109,7 +120,7 @@ for (const [lang, prefix] of [
   test(`${lang}: students page lists the faculty in order, the advisor linking to the main site`, () => {
     const $ = page(at('people', 'students'));
     const items = $('.professors li');
-    assert.equal(items.length, 8);
+    assert.equal(items.length, professors.length);
     items.each((i, li) => assert.ok(text($(li)).includes(scalar(professors[i].fm, 'name')), `row ${i + 1}`));
     const link = items.first().find('a[href*="ympbel.github.io/member/professor"]');
     assert.equal(link.length, 1);
@@ -121,7 +132,7 @@ for (const [lang, prefix] of [
   test(`${lang}: students page has one card per student, earliest join first, each linking to the person page`, () => {
     const $ = page(at('people', 'students'));
     const cards = $('.member-card');
-    assert.equal(cards.length, 23);
+    assert.equal(cards.length, students.length);
     assert.deepEqual(
       cards.map((_, c) => $(c).attr('data-member')).get(),
       students.map((m) => m.id),
@@ -163,7 +174,7 @@ for (const [lang, prefix] of [
   test(`${lang}: alumni page has the degree holders table, newest degree first`, () => {
     const $ = page(at('people', 'alumni'));
     const rows = $('.alumni-table tbody tr');
-    assert.equal(rows.length, 13);
+    assert.equal(rows.length, graduates.length);
     assert.deepEqual(
       rows.map((_, tr) => $(tr).attr('data-member')).get(),
       graduates.map((m) => m.id),
@@ -178,7 +189,7 @@ for (const [lang, prefix] of [
   test(`${lang}: alumni page lists the former members, latest join first`, () => {
     const $ = page(at('people', 'alumni'));
     const items = $('.former-list li');
-    assert.equal(items.length, 26);
+    assert.equal(items.length, formers.length);
     assert.deepEqual(
       items.map((_, li) => $(li).attr('data-member')).get(),
       formers.map((m) => m.id),

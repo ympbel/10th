@@ -45,7 +45,10 @@ const h = s.home;
             </ul>
           )}
           <a class="more" href={p.href} aria-label={fill(h.viewAllPapers, { year: p.year })}>
-            {h.viewAll} <span aria-hidden="true">→</span>
+            {h.viewAll}{' '}
+            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" aria-hidden="true">
+              <path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
           </a>
         </div>
         <div class="yp-col yp-degrees">
@@ -64,7 +67,10 @@ const h = s.home;
             </ul>
           )}
           <a class="more" href={p.href} aria-label={fill(h.viewAllDegrees, { year: p.year })}>
-            {h.viewAll} <span aria-hidden="true">→</span>
+            {h.viewAll}{' '}
+            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" aria-hidden="true">
+              <path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
           </a>
         </div>
         <div class="yp-col yp-awards">
@@ -86,7 +92,10 @@ const h = s.home;
             </ul>
           )}
           <a class="more" href={p.href} aria-label={fill(h.viewAllAwards, { year: p.year })}>
-            {h.viewAll} <span aria-hidden="true">→</span>
+            {h.viewAll}{' '}
+            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" aria-hidden="true">
+              <path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
           </a>
         </div>
       </section>
