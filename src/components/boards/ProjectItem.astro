@@ -1,0 +1,100 @@
+---
+// One project on the projects board: the title, the period with its length in the key column on the left, then the
+// facts (agency and program, institution, role, participation rate, budget in thousands of won as the sheet gives
+// them), the acknowledgement folded away (Korean first, then English), and, when papers list this project, those
+// papers folded away under "관련 논문 n편" with member names linking to their person pages.
+import type { CollectionEntry } from 'astro:content';
+import PaperItem from '../PaperItem.astro';
+import { yearMonth } from '../../lib/content.ts';
+import { field } from '../../lib/people.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+import { fill, t } from '../../i18n/index.ts';
+
+interface Props {
+  /** The project file name, also the item's anchor. */
+  id: string;
+  project: CollectionEntry<'projects'>['data'];
+  /** The papers whose `projects` lists this project, in the order to show. */
+  papers: CollectionEntry<'papers'>[];
+  /** Every member entry by slug, to link member names in the papers' author lines. */
+  people: Map<string, CollectionEntry<'members'>>;
+  locale: Locale;
+}
+
+const { id, project: p, papers, people, locale } = Astro.props;
+const s = t(locale).projects;
+const lang = (text: string | undefined) => langOf(text, locale);
+
+const thousands = new Intl.NumberFormat('en-US');
+const amount = (n: number | undefined, template: string) =>
+  n === undefined ? undefined : fill(template, { n: thousands.format(n) });
+
+const title = field(p, 'title', locale);
+const agency = `${p.agency} · ${p.program}`;
+const budget = [amount(p.budget_year_krw_thousand, s.budgetYear), amount(p.budget_total_krw_thousand, s.budgetTotal)]
+  .filter(Boolean)
+  .join(' · ');
+const acknowledgements = [p.acknowledgement_ko, p.acknowledgement_en].filter((text): text is string => Boolean(text));
+---
+
+<li class="project" id={id}>
+  <h2 class="project-title" lang={lang(title)}>{title}</h2>
+  <p class="project-period">
+    {yearMonth(p.start)} – {yearMonth(p.end)}{' '}
+    {p.months !== undefined && <span class="project-months">({fill(s.months, { n: p.months })})</span>}
+  </p>
+  <div class="project-body">
+    <dl class="project-facts">
+      <div class="project-agency wide">
+        <dt>{s.terms.agency}</dt>
+        <dd lang={lang(agency)}>{agency}</dd>
+      </div>
+      <div class="project-institution">
+        <dt>{s.terms.institution}</dt>
+        <dd lang={lang(p.institution)}>{p.institution}</dd>
+      </div>
+      <div class="project-role">
+        <dt>{s.terms.role}</dt>
+        <dd lang={lang(p.role)}>{p.role}</dd>
+      </div>
+      {
+        p.participation_rate && (
+          <div class="project-rate">
+            <dt>{s.terms.participation}</dt>
+            <dd>{p.participation_rate}</dd>
+          </div>
+        )
+      }
+      {
+        budget && (
+          <div class="project-budget wide">
+            <dt>{s.terms.budget}</dt>
+            <dd>{budget}</dd>
+          </div>
+        )
+      }
+    </dl>
+    {
+      acknowledgements.length > 0 && (
+        <details class="project-ack">
+          <summary>{s.acknowledgement}</summary>
+          {acknowledgements.map((text) => (
+            <p lang={lang(text)}>{text}</p>
+          ))}
+        </details>
+      )
+    }
+    {
+      papers.length > 0 && (
+        <details class="related-papers">
+          <summary>{fill(s.relatedPapers, { n: papers.length })}</summary>
+          <ol class="yr-list yr-papers">
+            {papers.map((paper) => (
+              <PaperItem paper={paper.data} people={people} locale={locale} />
+            ))}
+          </ol>
+        </details>
+      )
+    }
+  </div>
+</li>

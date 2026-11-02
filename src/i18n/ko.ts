@@ -46,6 +46,13 @@ export const ko = {
     degreePeriod: '학위 기간',
     participation: '참여율',
     budget: '연구비',
+    recipient: '수상자',
+    host: '주최',
+    title: '제목',
+    objective: '목적',
+    link: '링크',
+    date: '날짜',
+    presenter: '발표자',
   },
   /** A board with no records yet. */
   empty: '아직 기록이 없습니다. 추가하는 법은 README를 참고하세요.',
@@ -136,6 +143,34 @@ export const ko = {
     /** The count beside a heading: papers in the 연구실 이전 section, presentations under a conference. */
     papersCount: '{n}편',
     presentationsCount: '{n}건',
+  },
+  /** The awards board (수상): the challenge entries in their own section below the years, `{years}` their year or
+   * range, and the cell for that section in the year links. */
+  awards: {
+    challenges: '챌린지 참가 ({years})',
+    challengesTab: '챌린지',
+  },
+  /** The projects board (과제). Budgets are in thousands of won as the sheet gives them; `{n}` is the amount with
+   * thousands separators. */
+  projects: {
+    terms: {
+      agency: '부처·사업',
+      institution: '수행기관',
+      role: '역할',
+      participation: '참여율',
+      budget: '연구비',
+    },
+    months: '{n}개월',
+    budgetYear: '당해년도 {n}천원',
+    budgetTotal: '총 {n}천원',
+    acknowledgement: '사사 문구',
+    relatedPapers: '관련 논문 {n}편',
+  },
+  /** The seminars board (세미나): the note on where the posts are, with `{board}` linking the main site's board. */
+  seminars: {
+    note: '세미나 본문은 {board}에 있습니다.',
+    board: 'MPBEL 사이트 세미나 게시판',
+    boardHref: 'https://ympbel.github.io/notice/seminar/',
   },
   /** The people boards (학생 현황, 졸업 현황) and the person pages. */
   people: {

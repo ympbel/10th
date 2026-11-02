@@ -1,0 +1,133 @@
+---
+// The awards board in one language: the year links, then one table per year, newest first (recipient, conference,
+// category, presentation title, in sheet order), then the challenge entries in their own section with the host, the
+// challenge, its objective in full and a link to the challenge page.
+import { getCollection } from 'astro:content';
+import '../styles/years.css';
+import '../styles/pub.css';
+import '../styles/boards.css';
+import SubLayout from '../layouts/SubLayout.astro';
+import YearIndex from './pub/YearIndex.astro';
+import MemberLink from './people/MemberLink.astro';
+import { groupByYear } from '../lib/content.ts';
+import { awardRecipient, field } from '../lib/people.ts';
+import { yearAnchor } from '../lib/years.ts';
+import { langOf, type Locale } from '../lib/locale.ts';
+import { fill, t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+const lang = (text: string | undefined) => langOf(text, locale);
+
+const [awards, challenges, members] = await Promise.all([
+  getCollection('awards'),
+  getCollection('challenges'),
+  getCollection('members'),
+]);
+const memberBySlug = new Map(members.map((m) => [m.id, m]));
+
+const years = [...groupByYear(awards)].map(([year, list]) => ({
+  year,
+  rows: list.map((a) => ({
+    // A member recipient by name in this language, linked unless a professor; anyone else as the sheet wrote it.
+    ...awardRecipient(a.data, memberBySlug, locale),
+    conference: a.data.conference,
+    category: field(a.data, 'category', locale),
+    title: a.data.title,
+  })),
+}));
+
+/** The number at the end of a challenge file name (`2021-miccai-3`), which keeps the sheet order. */
+const seq = (id: string) => Number(/-(\d+)$/.exec(id)?.[1] ?? Infinity);
+const challengeRows = [...challenges].sort((a, b) => b.data.year - a.data.year || seq(a.id) - seq(b.id));
+const challengeYears = [...new Set(challengeRows.map((c) => c.data.year))].sort((a, b) => a - b);
+/** `2021`, or `2021–2026` once there are entries from more than one year. */
+const challengeRange =
+  challengeYears.length > 1 ? `${challengeYears[0]}–${challengeYears.at(-1)}` : String(challengeYears[0] ?? '');
+---
+
+<SubLayout title={s.boards.awards} sectionKey="award" currentHref="/awards/" locale={locale}>
+  <YearIndex
+    years={years.map(({ year }) => year)}
+    extra={challengeRows.length > 0 ? { href: '#challenges', label: s.awards.challengesTab } : undefined}
+    locale={locale}
+  />
+
+  {
+    years.map(({ year, rows }) => (
+      <section class="pub-year" id={yearAnchor(year)}>
+        <h2>{year}</h2>
+        <div class="tbl-wrap">
+          <table class="tbl board-tbl awards-tbl">
+            <thead>
+              <tr>
+                <th scope="col" class="col-name">{s.table.recipient}</th>
+                <th scope="col" class="col-conf">{s.table.conference}</th>
+                <th scope="col" class="col-cat">{s.table.category}</th>
+                <th scope="col">{s.table.presentationTitle}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr>
+                  <td>
+                    {r.slug ? (
+                      <MemberLink id={r.slug} name={r.name} locale={locale} />
+                    ) : (
+                      <span lang={lang(r.name)}>{r.name}</span>
+                    )}
+                  </td>
+                  <td lang={lang(r.conference)}>{r.conference}</td>
+                  <td lang={lang(r.category)}>{r.category}</td>
+                  <td lang={lang(r.title)}>{r.title}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))
+  }
+
+  {
+    challengeRows.length > 0 && (
+      <section id="challenges" class="pub-part">
+        <h2>{fill(s.awards.challenges, { years: challengeRange })}</h2>
+        <div class="tbl-wrap">
+          <table class="tbl board-tbl challenges-tbl">
+            <thead>
+              <tr>
+                <th scope="col" class="col-host">{s.table.host}</th>
+                <th scope="col" class="col-title">{s.table.title}</th>
+                <th scope="col">{s.table.objective}</th>
+                <th scope="col" class="col-link">{s.table.link}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {challengeRows.map(({ data: c }) => (
+                <tr>
+                  <td lang={lang(c.host)}>{c.host}</td>
+                  <th scope="row" lang={lang(c.title)}>
+                    {c.title}
+                  </th>
+                  <td lang={lang(c.objective)}>{c.objective}</td>
+                  <td>
+                    {c.link && (
+                      <a class="btn-link" href={c.link} target="_blank" rel="noopener">
+                        {s.table.link}
+                      </a>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )
+  }
+</SubLayout>

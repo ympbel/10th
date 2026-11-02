@@ -1,0 +1,212 @@
+/* Award, project and seminar boards (imported by components/AwardsPage, ProjectsPage and SeminarsPage, after the
+   global bundle, years.css and pub.css). The award and seminar years are the publication boards' year sections
+   (.pub-year in pub.css: the year heading over a 3px Graphite rule), each holding a table in the common table form
+   (.tbl in base.css: Ledger head, 1px Hairline Soft row lines); the challenge entries sit in a .pub-part section
+   after the years. Projects are rows between 1px Hairline lines in the member card form: the period in a key column
+   on the left, the title and a 13px definition list whose terms carry a 4×4 Ash square on the right. Colors and
+   spacing come from tokens.css. */
+
+/* ---------- Tables ---------- */
+/* Fixed columns, so the tables of different years line up. */
+.board-tbl {
+  table-layout: fixed;
+}
+/* Under a year heading the 3px Graphite rule already caps the table. */
+.pub-year .board-tbl {
+  border-top: 0;
+}
+.board-tbl tbody th {
+  border-bottom: 1px solid var(--c-hairline-soft);
+  color: var(--c-graphite);
+  font-weight: var(--fw-bold);
+}
+.board-tbl .nowrap {
+  white-space: nowrap;
+}
+/* A recipient who is a member links to their person page, in the form of the member links in author lines. */
+.board-tbl a[data-member] {
+  text-decoration: underline;
+  text-decoration-color: var(--c-hairline);
+  text-underline-offset: 3px;
+}
+.board-tbl a[data-member]:hover {
+  color: var(--c-cobalt);
+  text-decoration-color: currentColor;
+}
+.board-tbl .btn-link,
+.board-tbl .btn-link:hover {
+  color: var(--c-paper);
+}
+
+.awards-tbl .col-name {
+  width: 16%;
+}
+.awards-tbl .col-conf,
+.awards-tbl .col-cat {
+  width: 20%;
+}
+
+.seminars-tbl .col-date {
+  width: 110px;
+}
+.seminars-tbl .col-presenter {
+  width: 24%;
+}
+
+#challenges .tbl-wrap {
+  margin-top: var(--s-md);
+}
+.challenges-tbl .col-host {
+  width: 90px;
+}
+.challenges-tbl .col-title {
+  width: 24%;
+}
+.challenges-tbl .col-link {
+  width: 80px;
+}
+
+/* The note above the seminar tables links the main site's board. */
+.pub-note a {
+  color: var(--c-graphite);
+  text-decoration: underline;
+  text-decoration-color: var(--c-hairline);
+  text-underline-offset: 3px;
+}
+.pub-note a:hover {
+  color: var(--c-cobalt);
+  text-decoration-color: currentColor;
+}
+
+/* ---------- Projects ---------- */
+.projects {
+  border-top: 1px solid var(--c-graphite);
+}
+.project {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'period title'
+    'period body';
+  column-gap: var(--s-md);
+  padding: var(--s-md) 0;
+  border-bottom: 1px solid var(--c-hairline);
+}
+.project-title {
+  grid-area: title;
+  color: var(--c-graphite);
+  font-size: var(--fs-ui);
+  line-height: 1.6;
+}
+/* The period on the title's first line, the length under it. */
+.project-period {
+  grid-area: period;
+  color: var(--c-graphite);
+  font-size: var(--fs-ui-sm);
+  font-weight: var(--fw-bold);
+  line-height: calc(var(--fs-ui) * 1.6);
+  white-space: nowrap;
+}
+.project-months {
+  display: block;
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-regular);
+  line-height: 1.6;
+}
+.project-body {
+  grid-area: body;
+}
+
+/* Term and value pairs flow on a line; the agency and the budget each take a line of their own. */
+.project-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--s-md);
+  margin-top: var(--s-2xs);
+  color: var(--c-graphite);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+.project-facts > div {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+.project-facts > .wide {
+  flex-basis: 100%;
+}
+.project-facts dt {
+  position: relative;
+  flex: none;
+  padding-left: 10px;
+  font-weight: var(--fw-bold);
+}
+.project-facts dt::before {
+  content: '';
+  position: absolute;
+  top: calc(0.8em - 2px);
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: var(--c-ash);
+}
+.project-facts dd {
+  min-width: 0;
+}
+
+/* Acknowledgement and related papers: plain disclosure lines, open on demand. */
+.project details {
+  margin-top: var(--s-xs);
+  color: var(--c-graphite);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+.project details + details {
+  margin-top: var(--s-2xs);
+}
+.project summary {
+  width: fit-content;
+  cursor: pointer;
+  font-weight: var(--fw-bold);
+}
+.project summary:hover {
+  color: var(--c-cobalt);
+}
+.project-ack p {
+  margin-top: var(--s-2xs);
+  padding-left: var(--s-sm);
+  color: var(--c-slate);
+}
+.related-papers ol {
+  margin-top: var(--s-2xs);
+  border-top: 1px solid var(--c-hairline-soft);
+}
+
+@media (max-width: 600px) {
+  /* Columns size to their content on a phone. */
+  .board-tbl {
+    table-layout: auto;
+  }
+  .board-tbl thead th {
+    width: auto;
+  }
+  /* The period goes under the title. */
+  .project {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas:
+      'title'
+      'period'
+      'body';
+  }
+  .project-period {
+    margin-top: 2px;
+    font-size: var(--fs-body-sm);
+    line-height: 1.6;
+  }
+  .project-months {
+    display: inline;
+  }
+}

@@ -1,0 +1,36 @@
+---
+// The projects board in one language: every research project, latest start first (ties by file name), each with
+// its facts, its acknowledgement and the papers linked to it (ProjectItem).
+import { getCollection } from 'astro:content';
+import '../styles/years.css';
+import '../styles/boards.css';
+import SubLayout from '../layouts/SubLayout.astro';
+import ProjectItem from './boards/ProjectItem.astro';
+import { sortByYearDesc } from '../lib/content.ts';
+import type { Locale } from '../lib/locale.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+
+const [projects, papers, members] = await Promise.all([
+  getCollection('projects'),
+  getCollection('papers'),
+  getCollection('members'),
+]);
+const people = new Map(members.map((m) => [m.id, m]));
+
+const sorted = [...projects].sort((a, b) => b.data.start.localeCompare(a.data.start) || a.id.localeCompare(b.id));
+/** The papers whose `projects` lists a project, newest year first in sheet order. */
+const papersOf = (id: string) => sortByYearDesc(papers.filter((p) => p.data.projects.includes(id)));
+---
+
+<SubLayout title={s.boards.projects} sectionKey="project" currentHref="/projects/" locale={locale}>
+  <ol class="projects">
+    {sorted.map((p) => <ProjectItem id={p.id} project={p.data} papers={papersOf(p.id)} people={people} locale={locale} />)}
+  </ol>
+</SubLayout>

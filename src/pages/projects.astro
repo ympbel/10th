@@ -1,12 +1,7 @@
 ---
-// Temporary page so the menu link resolves; plan Task 12 replaces it with the board.
+// 과제 board: /projects/.
 import '../styles/global.css';
-import SubLayout from '../layouts/SubLayout.astro';
-import { t } from '../i18n/index.ts';
-
-const s = t('ko');
+import ProjectsPage from '../components/ProjectsPage.astro';
 ---
 
-<SubLayout title={s.boards.projects} sectionKey="project" currentHref="/projects/" locale="ko">
-  <p>{s.preparing}</p>
-</SubLayout>
+<ProjectsPage locale="ko" />

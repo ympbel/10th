@@ -1,0 +1,93 @@
+---
+// The seminars board in one language: the note on where the posts are, the year links, then one table per year,
+// newest first (date, title linking to the post on the MPBEL site in a new tab, presenter). A seminar belongs to the
+// year of its post date, as the year pages count it; the row shows the day it was held when the post gives one, and
+// rows run newest first by that day.
+import { getCollection } from 'astro:content';
+import '../styles/years.css';
+import '../styles/pub.css';
+import '../styles/boards.css';
+import SubLayout from '../layouts/SubLayout.astro';
+import YearIndex from './pub/YearIndex.astro';
+import { yearAnchor } from '../lib/years.ts';
+import { langOf, type Locale } from '../lib/locale.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+const lang = (text: string | undefined) => langOf(text, locale);
+
+/** The post number at the end of a seminar file name (`2025-12-31-471`), the main site's order within a day. */
+const postNo = (id: string) => Number(/-(\d+)$/.exec(id)?.[1] ?? 0);
+
+const rows = (await getCollection('seminars'))
+  .map(({ id, data }) => ({
+    id,
+    year: Number(data.date.slice(0, 4)),
+    posted: data.date,
+    day: data.event_date ?? data.date,
+    title: data.title,
+    presenter: data.presenter,
+    href: data.source_url,
+  }))
+  .sort(
+    (a, b) =>
+      b.year - a.year ||
+      b.day.localeCompare(a.day) ||
+      b.posted.localeCompare(a.posted) ||
+      postNo(b.id) - postNo(a.id),
+  );
+
+/** The rows by year, newest year first. */
+const years = new Map<number, typeof rows>();
+for (const row of rows) {
+  const list = years.get(row.year);
+  if (list) list.push(row);
+  else years.set(row.year, [row]);
+}
+
+const [before, after] = s.seminars.note.split('{board}');
+---
+
+<SubLayout title={s.boards.seminars} sectionKey="activity" currentHref="/activity/seminars/" locale={locale}>
+  <p class="pub-note">
+    {before}<a href={s.seminars.boardHref} target="_blank" rel="noopener">{s.seminars.board}</a>{after}
+  </p>
+  <YearIndex years={[...years.keys()]} locale={locale} />
+
+  {
+    [...years].map(([year, list]) => (
+      <section class="pub-year" id={yearAnchor(year)}>
+        <h2>{year}</h2>
+        <div class="tbl-wrap">
+          <table class="tbl board-tbl seminars-tbl">
+            <thead>
+              <tr>
+                <th scope="col" class="col-date">{s.table.date}</th>
+                <th scope="col">{s.table.title}</th>
+                <th scope="col" class="col-presenter">{s.table.presenter}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map((r) => (
+                <tr>
+                  <td class="nowrap">{r.day.replaceAll('-', '.')}</td>
+                  <td lang={lang(r.title)}>
+                    <a href={r.href} target="_blank" rel="noopener">
+                      {r.title}
+                    </a>
+                  </td>
+                  <td lang={lang(r.presenter)}>{r.presenter}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))
+  }
+</SubLayout>
