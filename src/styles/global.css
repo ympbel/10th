@@ -1,0 +1,3 @@
+/* Site-wide styles. Every page imports this file as its first import, so its bundle is linked before any page CSS.
+   It is empty until the design tokens and base styles exist; they are imported here in order: tokens, base,
+   responsive. */

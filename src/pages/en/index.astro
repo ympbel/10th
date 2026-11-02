@@ -1,0 +1,18 @@
+---
+// Placeholder English home until the shared layout exists: one internal link and one image, both through `url()`, so
+// the build-output link test has something to check.
+import '../../styles/global.css';
+import { url } from '../../lib/url.ts';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MPBEL 10th Anniversary Archive</title>
+  </head>
+  <body>
+    <a href={url('/')}><img src={url('/images/site/logo.png')} alt="MPBEL" /></a>
+  </body>
+</html>
