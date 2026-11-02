@@ -1,0 +1,17 @@
+---
+// Intro copy beside the figures: title with the small "Introduction" word, the Cerulean heading, and the paragraph
+// (the body of pages/<lang>/home.md, passed in the default slot).
+interface Props {
+  title: string;
+  word: string;
+  heading: string;
+}
+
+const { title, word, heading } = Astro.props;
+---
+
+<div class="intro">
+  <h2 class="intro-title">{title} <span>{word}</span></h2>
+  <p class="intro-heading">{heading}</p>
+  <div class="intro-body"><slot /></div>
+</div>

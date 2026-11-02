@@ -1,0 +1,126 @@
+---
+// The eleven-year timeline: heading and lead above a 3px Graphite rule, one column per year (bars, counts, who joined,
+// who took a degree), the legend, then the year panels (default slot). Each column links to its year page; the
+// script below turns a plain click into "show this year's panel" and keeps the choice in the URL hash (#y2024).
+// At ≤1024px each year becomes one row: year, horizontal bars and counts, names (home.css).
+import type { Locale } from '../../lib/locale.ts';
+import { YEARS } from '../../lib/years.ts';
+import { t } from '../../i18n/index.ts';
+
+type Person = { name: string; lang?: string };
+
+interface Props {
+  years: Array<{
+    year: number;
+    href: string;
+    papers: number;
+    presentations: number;
+    awards: number;
+    /** Projects running in the year. */
+    projects: number;
+    /** Bar heights in px (max 134), relative within each series. */
+    bars: { papers: number; presentations: number; awards: number };
+    /** The first few who joined, earliest first. */
+    joined: Person[];
+    /** How many more joined than are shown. */
+    joinedMore: number;
+    degrees: Person[];
+  }>;
+  /** The year shown when the page loads. */
+  selected: number;
+  locale: Locale;
+}
+
+const { years, selected, locale } = Astro.props;
+const s = t(locale);
+const tl = s.timeline;
+const range = `${YEARS[0]} – ${YEARS[YEARS.length - 1]}`;
+// Bars draw from an inline `--bar` (px as a number) so the ≤1024px layout can turn the same value into a width.
+const SERIES = ['papers', 'presentations', 'awards'] as const;
+// A column is 1/11 of 1200px. Korean labels fit two counts to a line (`논문 25 · 발표 67`) and several names to a
+// line; English labels and names do not, so English pages give each count and each name its own line.
+const stacked = locale === 'en';
+/** The four counts of a year as lines of text: two per line in Korean, one per line in English. */
+const numLines = (y: Props['years'][number]) => {
+  const items = [
+    `${tl.short.papers} ${y.papers}`,
+    `${tl.short.presentations} ${y.presentations}`,
+    `${tl.short.awards} ${y.awards}`,
+    `${tl.short.projects} ${y.projects}`,
+  ];
+  return stacked ? items : [items.slice(0, 2).join(' · '), items.slice(2).join(' · ')];
+};
+---
+
+<section class="wrap timeline" aria-labelledby="timeline-title">
+  <div class="timeline-head">
+    <h2 class="timeline-title" id="timeline-title">{tl.title} <span>{range}</span></h2>
+    <p class="timeline-lead">{tl.lead}</p>
+  </div>
+  <ol class="timeline-years">
+    {
+      years.map((y) => (
+        <li>
+          <a
+            href={y.href}
+            data-year={y.year}
+            class={y.year === selected ? 'on' : undefined}
+            aria-current={y.year === selected ? 'true' : undefined}
+          >
+            <span class="tl-year">{y.year}</span>
+            <span class="tl-figs">
+              <span class="tl-bars" aria-hidden="true">
+                {SERIES.map((k) => (
+                  <i class={`bar-${k}`} style={`--bar:${y.bars[k]}`} />
+                ))}
+              </span>
+              <span class="tl-nums">
+                {numLines(y).map((line) => (
+                  <span>{line}</span>
+                ))}
+              </span>
+            </span>
+            <span class="tl-people">
+              <span class="tl-join">
+                <span class="tl-label">{tl.joined}</span>
+                {y.joined.length === 0 ? (
+                  <span class="tl-none">{s.noRecords}</span>
+                ) : (
+                  <span class={stacked ? 'tl-names stacked' : 'tl-names'}>
+                    {y.joined.map((p) => (
+                      <span class="tl-name" lang={p.lang}>
+                        {p.name}
+                      </span>
+                    ))}
+                    {y.joinedMore > 0 && <span class="tl-more">+{y.joinedMore}</span>}
+                  </span>
+                )}
+              </span>
+              {y.degrees.length > 0 && (
+                <span class="tl-degrees">
+                  {y.degrees.map((p) => (
+                    <span class="chip" lang={p.lang}>
+                      {p.name}
+                    </span>
+                  ))}
+                </span>
+              )}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+  <ul class="timeline-legend">
+    <li><i class="bar-papers"></i>{tl.papers}</li>
+    <li><i class="bar-presentations"></i>{tl.presentations}</li>
+    <li><i class="bar-awards"></i>{tl.awards}</li>
+    <li><span class="chip">{tl.degrees}</span></li>
+    <li class="timeline-note">{tl.barNote}</li>
+  </ul>
+  <slot />
+</section>
+
+<script>
+  import '../../scripts/year-panel.ts';
+</script>

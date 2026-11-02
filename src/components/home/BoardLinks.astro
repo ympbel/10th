@@ -1,0 +1,32 @@
+---
+// Board link grid: every menu board with its number of records (`논문 217`), four to a row on desktop.
+import type { Locale } from '../../lib/locale.ts';
+import { t } from '../../i18n/index.ts';
+
+interface Props {
+  items: Array<{ href: string; label: string; count: number }>;
+  locale: Locale;
+}
+
+const { items, locale } = Astro.props;
+const s = t(locale);
+---
+
+<nav class="wrap board-links" aria-label={s.home.boardLinks}>
+  <ul>
+    {
+      items.map((b) => (
+        <li>
+          <a href={b.href}>
+            <span class="board-label">
+              {b.label} <span class="board-count">{b.count}</span>
+            </span>
+            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" aria-hidden="true">
+              <path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

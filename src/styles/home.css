@@ -1,0 +1,588 @@
+/* Home page only (imported by components/HomePage.astro, after the global bundle). Composition from the approved
+   sketches: the sibling site's visual band and intro band (.impeccable/mocks/decision/sibling.html), then the
+   eleven-year timeline, legend and year panel (spine.html), then the board link grid. Colors and spacing come from
+   tokens.css; the fixed sizes the sketches and spec 5.3 give are named once here. */
+
+.home {
+  --h-hero: 570px;
+  --h-hero-tablet: 400px;
+  --h-hero-photo-phone: 150px; /* the strip of photo above the slogan block at ≤600px */
+  --fs-hero: 42px;
+  --fs-hero-phone: 32px;
+  --h-intro: 356px;
+  --w-figures: 600px;
+  --w-intro: 550px;
+  --fs-figure: 34px;
+  --h-bars: 134px; /* the tallest bar; barHeights() in src/lib/years.ts uses the same maximum */
+  --w-bar: 14px;
+  --fs-tl-small: 11px; /* timeline counts, labels and chips */
+  --h-board-link: 70px;
+}
+
+/* ---------- Visual band ---------- */
+.hero {
+  position: relative;
+  height: var(--h-hero);
+  overflow: hidden;
+  background: var(--c-midnight-field);
+}
+/* The right half of the band, aligned to the right edge so the treatment unit and head stay in view. */
+.hero-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+}
+.hero-wrap {
+  position: relative;
+  height: 100%;
+}
+.hero-slogan {
+  position: absolute;
+  top: 165px;
+  left: var(--s-xl);
+  width: 500px;
+  color: var(--c-paper);
+}
+/* The Signal Mint 30×2px line: the system's one accent, on dark blue only. */
+.hero-slogan::before {
+  content: '';
+  display: block;
+  width: var(--s-lg);
+  height: 2px;
+  margin-bottom: 22px;
+  background: var(--c-signal-mint);
+}
+.hero h1 {
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+/* Korean title in Nanum Gothic throughout, so "10" matches the Hangul (spec 5.3). */
+.hero h1:lang(ko) {
+  font-family: 'Nanum Gothic', var(--f-sans);
+}
+.hero-years {
+  margin-top: var(--s-sm);
+  color: var(--c-cerulean);
+  font-size: var(--fs-title-lg);
+  letter-spacing: 3px;
+}
+
+/* ---------- Intro band: six figures + intro copy ---------- */
+.intro-band {
+  display: flex;
+  gap: var(--s-xl);
+  min-height: var(--h-intro);
+}
+.figures {
+  display: grid;
+  flex: 0 0 var(--w-figures);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1px;
+  height: calc(var(--h-intro) - 2 * 40px);
+  margin: 40px 0;
+  border: 1px solid var(--c-hairline);
+  background: var(--c-hairline);
+}
+.figures li {
+  display: flex;
+}
+.figures a {
+  flex: 1;
+  padding: 22px 28px;
+  background: var(--c-mist);
+}
+.figures b {
+  display: block;
+  color: var(--c-yonsei-navy);
+  font-size: var(--fs-figure);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.figures span {
+  display: block;
+  margin-top: 8px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+.figures a:hover {
+  background: var(--c-paper);
+}
+.figures a:hover b {
+  color: var(--c-cobalt);
+}
+.figures a:focus-visible {
+  outline-offset: -2px;
+}
+
+.intro {
+  flex: 0 0 var(--w-intro);
+  padding: 46px 0 40px;
+}
+.intro-title {
+  font-size: var(--fs-headline);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+.intro-title span {
+  margin-left: 3px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-lead);
+  font-weight: var(--fw-regular);
+  letter-spacing: 0;
+}
+.intro-heading {
+  margin-top: 6px;
+  color: var(--c-cerulean);
+  font-size: var(--fs-title-lg);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  text-wrap: balance;
+}
+.intro-body p {
+  margin-top: 12px;
+  font-size: var(--fs-body-lead);
+  line-height: 1.8;
+}
+
+/* ---------- Timeline ---------- */
+.timeline {
+  margin-top: var(--s-md);
+}
+.timeline-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-lg);
+  padding-bottom: 18px;
+  border-bottom: 3px solid var(--c-graphite);
+}
+.timeline-title {
+  color: var(--c-graphite);
+  font-size: var(--fs-headline);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+.timeline-title span {
+  margin-left: 3px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-lead);
+  font-weight: var(--fw-regular);
+  letter-spacing: 0;
+}
+.timeline-lead {
+  max-width: 560px;
+  color: var(--c-slate);
+  font-size: var(--fs-body);
+  line-height: 1.8;
+  text-align: right;
+}
+
+.timeline-years {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  border-bottom: 1px solid var(--c-hairline);
+}
+.timeline-years li {
+  display: flex;
+}
+.timeline-years li + li {
+  border-left: 1px solid var(--c-hairline-soft);
+}
+.timeline-years a {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  padding: 12px 10px 14px;
+  color: var(--c-graphite);
+}
+.timeline-years a > span {
+  display: block;
+}
+.timeline-years a.on {
+  background: var(--c-mist);
+}
+.timeline-years a:focus-visible {
+  outline-offset: -2px;
+}
+.tl-year {
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+}
+.timeline-years a:hover .tl-year,
+.timeline-years a.on .tl-year {
+  color: var(--c-cobalt);
+}
+.tl-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: var(--h-bars);
+  margin-top: 12px;
+}
+.tl-bars i {
+  display: block;
+  width: var(--w-bar);
+  height: calc(var(--bar) * 1px);
+}
+.bar-papers {
+  background: var(--c-cobalt);
+}
+.bar-presentations {
+  background: var(--c-cerulean);
+}
+.bar-awards {
+  background: var(--c-yonsei-navy);
+}
+.tl-nums {
+  display: block;
+  margin-top: 6px;
+  color: var(--c-ash);
+  font-size: var(--fs-tl-small);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+.tl-nums > span {
+  display: block;
+  white-space: nowrap;
+}
+.tl-people > span {
+  display: block;
+}
+.tl-join {
+  margin-top: var(--s-xs);
+  padding-top: 6px;
+  border-top: 1px dotted var(--c-hairline);
+  font-size: var(--fs-label);
+  line-height: 1.55;
+}
+.tl-label {
+  display: block;
+  color: var(--c-ash);
+  font-size: var(--fs-tl-small);
+  font-weight: var(--fw-bold);
+}
+.tl-names {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.4em;
+}
+.tl-names.stacked {
+  flex-direction: column;
+}
+.tl-name,
+.tl-more {
+  white-space: nowrap;
+}
+.tl-none {
+  color: var(--c-ash);
+}
+.tl-degrees {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 6px;
+}
+.chip {
+  display: inline-block;
+  padding: 1px var(--s-2xs);
+  background: var(--c-yonsei-navy);
+  color: var(--c-paper);
+  font-size: var(--fs-tl-small);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.timeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px var(--s-md);
+  padding: var(--s-xs) 0;
+  color: var(--c-slate);
+  font-size: var(--fs-label);
+}
+.timeline-legend li {
+  display: flex;
+  align-items: center;
+}
+.timeline-legend i {
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+}
+
+/* ---------- Year panels ---------- */
+.year-panels {
+  margin-top: 6px;
+}
+.year-panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-lg);
+  padding: 25px var(--s-lg);
+  background: var(--c-panel-gray);
+}
+/* `display: grid` would otherwise override the hidden attribute. */
+.year-panel[hidden] {
+  display: none;
+}
+.yp-col h3,
+.yp-col h4 {
+  font-size: var(--fs-title-lg);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.yp-col h3::after,
+.yp-col h4::after {
+  content: '';
+  display: block;
+  width: var(--s-lg);
+  height: 2px;
+  margin-top: var(--s-xs);
+  background: var(--c-yonsei-navy);
+}
+/* Graphite, not Slate: Slate on Panel Gray is under 4.5:1 at these sizes. */
+.yp-col small {
+  margin-left: 3px;
+  color: var(--c-graphite);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-regular);
+  letter-spacing: 0;
+}
+.yp-col ul {
+  margin-top: 12px;
+  font-size: var(--fs-ui-sm);
+  line-height: 1.5;
+}
+.yp-col li {
+  padding: 6px 0;
+  border-top: 1px dotted var(--c-ash);
+}
+.yp-col .meta {
+  margin-left: 2px;
+  color: var(--c-graphite);
+  font-size: var(--fs-label);
+}
+.yp-col .empty {
+  margin-top: 12px;
+  padding-top: 6px;
+  border-top: 1px dotted var(--c-ash);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui-sm);
+}
+.yp-col .more {
+  display: inline-block;
+  margin-top: var(--s-xs);
+  color: var(--c-graphite);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-bold);
+}
+.yp-col .more:hover {
+  color: var(--c-cobalt);
+}
+
+/* ---------- Board links ---------- */
+.board-links {
+  margin-top: var(--s-xl);
+  margin-bottom: var(--s-2xl);
+}
+.board-links ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--c-panel-gray);
+  border-left: 1px solid var(--c-panel-gray);
+}
+.board-links li {
+  display: flex;
+  border-right: 1px solid var(--c-panel-gray);
+  border-bottom: 1px solid var(--c-panel-gray);
+}
+.board-links a {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  height: var(--h-board-link);
+  padding: 0 var(--s-lg);
+  color: var(--c-graphite);
+  font-size: var(--fs-ui);
+}
+.board-count {
+  margin-left: 2px;
+  color: var(--c-slate);
+  font-variant-numeric: tabular-nums;
+}
+.board-links .chevron {
+  flex: none;
+  color: var(--c-ash);
+}
+.board-links a:hover {
+  background: var(--c-mist);
+}
+.board-links a:hover .chevron {
+  color: var(--c-cobalt);
+}
+.board-links a:focus-visible {
+  outline-offset: -2px;
+}
+
+/* ---------- ≤1024px ---------- */
+@media (max-width: 1024px) {
+  /* The photo fills the band and the slogan sits on a Midnight Field block over its lower left. */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: auto;
+    min-height: var(--h-hero-tablet);
+  }
+  .hero-photo {
+    width: 100%;
+    object-position: 70% center;
+  }
+  .hero .wrap {
+    width: 100%;
+    height: auto;
+    padding: 0;
+  }
+  .hero-slogan {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    max-width: 560px;
+    padding: var(--s-lg) var(--s-gutter);
+    background: var(--c-midnight-field);
+  }
+
+  .intro-band {
+    display: block;
+    min-height: 0;
+  }
+  .figures {
+    height: auto;
+    margin: var(--s-lg) 0 0;
+  }
+  .figures a {
+    padding: 18px var(--s-md);
+  }
+  .intro {
+    padding: var(--s-lg) 0 0;
+  }
+
+  .timeline {
+    margin-top: var(--s-xl);
+  }
+  .timeline-head {
+    display: block;
+  }
+  .timeline-lead {
+    max-width: none;
+    margin-top: var(--s-2xs);
+    text-align: left;
+  }
+
+  /* One row per year: year | horizontal bars and counts | who joined and the degree chips. */
+  .timeline-years {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .timeline-years li + li {
+    border-top: 1px solid var(--c-hairline-soft);
+    border-left: 0;
+  }
+  .timeline-years a {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-sm);
+    padding: 12px var(--s-xs);
+  }
+  .tl-bars {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+    height: auto;
+    margin-top: 4px;
+  }
+  .tl-bars i {
+    width: calc(var(--bar) * 100% / 134);
+    height: 6px;
+  }
+  .tl-join {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .board-links ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- ≤600px ---------- */
+@media (max-width: 600px) {
+  .hero {
+    min-height: 0;
+    padding-top: var(--h-hero-photo-phone);
+  }
+  .hero-slogan {
+    max-width: none;
+  }
+  .hero h1 {
+    font-size: var(--fs-hero-phone);
+  }
+  .hero-years {
+    font-size: var(--fs-subtitle);
+  }
+
+  .figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .figures b {
+    font-size: var(--fs-headline);
+  }
+
+  .intro-title {
+    font-size: var(--fs-title-lg);
+  }
+  .intro-heading {
+    font-size: var(--fs-subtitle);
+  }
+  .intro-body p {
+    font-size: var(--fs-ui);
+  }
+
+  .timeline-years a {
+    grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-xs);
+    padding: 12px 8px;
+  }
+  .tl-year {
+    font-size: var(--fs-ui);
+  }
+
+  .year-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-lg);
+    padding: var(--s-md) var(--s-gutter);
+  }
+
+  .board-links ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .board-links a {
+    padding: 0 var(--s-md);
+  }
+}

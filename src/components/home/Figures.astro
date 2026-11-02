@@ -1,0 +1,22 @@
+---
+// The six lab-wide figures in a 3×2 grid, each a link to its board. `data-count` carries the number for the build
+// test.
+interface Props {
+  items: Array<{ count: number; label: string; href: string }>;
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="figures">
+  {
+    items.map((f) => (
+      <li>
+        <a href={f.href} data-count={f.count}>
+          <b>{f.count}</b>
+          <span>{f.label}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

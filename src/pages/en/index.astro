@@ -1,17 +1,7 @@
 ---
-// Temporary English home until the home page is built (plan Task 8): the shared frame with the site title.
+// Home (English). The site-wide CSS comes first so its bundle is linked before the home page CSS.
 import '../../styles/global.css';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { t } from '../../i18n/index.ts';
-
-const s = t('en');
+import HomePage from '../../components/HomePage.astro';
 ---
 
-<BaseLayout locale="en">
-  <div class="wrap">
-    <div class="contents">
-      <h1 class="cnt_title">{s.siteTitle}</h1>
-      <p>{s.preparing}</p>
-    </div>
-  </div>
-</BaseLayout>
+<HomePage locale="en" />

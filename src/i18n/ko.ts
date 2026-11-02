@@ -56,6 +56,38 @@ export const ko = {
     joined: '합류',
     degrees: '학위 취득',
     barNote: '막대 높이는 항목별 상대값',
+    /** Heading beside the year range. */
+    title: '열한 해',
+    lead: '연도를 누르면 그 해의 논문, 학위, 수상이 아래에 펼쳐집니다.',
+    /** The two number lines under each year's bars: `논문 n · 발표 n` / `수상 n · 과제 n`. */
+    short: { papers: '논문', presentations: '발표', awards: '수상', projects: '과제' },
+  },
+  /** Home page, apart from the copy in pages/ko/home.md. */
+  home: {
+    /** The word beside `intro_title`. */
+    introWord: 'Introduction',
+    /** The six figures in the intro band. */
+    figures: {
+      members: '구성원',
+      degrees: '학위 취득',
+      papers: '논문(2016년 이후)',
+      presentations: '학회 발표',
+      awards: '수상',
+      projects: '연구과제',
+    },
+    /** Year panel column headings and their counts; `{n}` is the count, `{year}` the panel's year. */
+    papersCount: '논문 {n}편',
+    degreesTitle: '학위 취득',
+    degreesCount: '{n}명',
+    awardsTitle: '수상',
+    awardsCount: '{n}건',
+    /** The link at the foot of each year panel column, and the full names screen readers hear for it. */
+    viewAll: '모두 보기',
+    viewAllPapers: '{year}년 논문 모두 보기',
+    viewAllDegrees: '{year}년 학위 취득 모두 보기',
+    viewAllAwards: '{year}년 수상 모두 보기',
+    /** The board link grid. */
+    boardLinks: '게시판 바로가기',
   },
   footer: {
     name: 'Yonsei Medical Physics and Biomedical Engineering Lab.',

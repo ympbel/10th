@@ -1,0 +1,163 @@
+---
+// The home page in one language: visual band, intro band (six figures + intro copy), the eleven-year timeline with
+// its year panels, and the board link grid. This component loads every collection once and hands each part only the
+// plain values it shows; the parts below do no data work of their own.
+import { getCollection, getEntry, render } from 'astro:content';
+import '../styles/home.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from './home/Hero.astro';
+import Figures from './home/Figures.astro';
+import Intro from './home/Intro.astro';
+import Timeline from './home/Timeline.astro';
+import YearPanel from './home/YearPanel.astro';
+import BoardLinks from './home/BoardLinks.astro';
+import { YEARS, barHeights, labCounts, yearStats } from '../lib/years.ts';
+import { sortByYearDesc, sortMembersByJoined } from '../lib/content.ts';
+import { displayName, field } from '../lib/people.ts';
+import { MENU, type ItemKey } from '../lib/menu.ts';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+import { t } from '../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+const href = (path: string) => url(localePath(path, locale));
+
+const page = await getEntry('pages', `${locale}/home`);
+if (!page) throw new Error(`Missing src/content/pages/${locale}/home.md`);
+const { Content: IntroBody } = await render(page);
+
+const [members, papers, presentations, awards, projects, patents, seminars, workshops, photos, comments] =
+  await Promise.all([
+    getCollection('members'),
+    getCollection('papers'),
+    getCollection('presentations'),
+    getCollection('awards'),
+    getCollection('projects'),
+    getCollection('patents'),
+    getCollection('seminars'),
+    getCollection('workshops'),
+    getCollection('photos'),
+    getCollection('comments'),
+  ]);
+const data = { members, papers, presentations, awards, projects };
+const memberBySlug = new Map(members.map((m) => [m.id, m]));
+const latest = YEARS[YEARS.length - 1];
+
+type Member = (typeof members)[number];
+/** A member's name in this language; `lang` marks a Korean name shown on an English page. */
+const person = (m: Member) => ({
+  name: displayName(m.data, locale),
+  lang: locale === 'en' && !m.data.name_en ? 'ko' : undefined,
+});
+
+// Intro band: the six lab-wide figures, each linking to its board.
+const counts = labCounts(data);
+const figures = [
+  { count: counts.members, label: s.home.figures.members, href: href('/people/students/') },
+  { count: counts.degrees, label: s.home.figures.degrees, href: href('/people/alumni/') },
+  { count: counts.papers, label: s.home.figures.papers, href: href('/publication/papers/') },
+  { count: counts.presentations, label: s.home.figures.presentations, href: href('/publication/presentations/') },
+  { count: counts.awards, label: s.home.figures.awards, href: href('/awards/') },
+  { count: counts.projects, label: s.home.figures.projects, href: href('/projects/') },
+];
+
+// Timeline: one column per year, bar heights relative to each series' largest year.
+const stats = YEARS.map((y) => yearStats(y, data));
+const bars = {
+  papers: barHeights(stats.map((st) => st.papers)),
+  presentations: barHeights(stats.map((st) => st.presentations)),
+  awards: barHeights(stats.map((st) => st.awards)),
+};
+/** Names shown in a timeline column; the rest are counted as `+n`. */
+const SHOWN_JOINED = 4;
+const byDegreeDate = (a: Member, b: Member) =>
+  (a.data.degree?.date ?? '').localeCompare(b.data.degree?.date ?? '') || a.id.localeCompare(b.id);
+const years = YEARS.map((year, i) => {
+  const st = stats[i];
+  const joined = sortMembersByJoined(st.joined, 'asc');
+  return {
+    year,
+    href: href(`/years/${year}/`),
+    papers: st.papers,
+    presentations: st.presentations,
+    awards: st.awards,
+    projects: st.projectsRunning.length,
+    bars: { papers: bars.papers[i], presentations: bars.presentations[i], awards: bars.awards[i] },
+    joined: joined.slice(0, SHOWN_JOINED).map(person),
+    joinedMore: Math.max(0, joined.length - SHOWN_JOINED),
+    degrees: [...st.degrees].sort(byDegreeDate).map(person),
+  };
+});
+
+// Year panels: the first few papers and awards of each year in sheet order, and everyone who took a degree.
+/** Items listed per panel column; the year page has the rest. */
+const SHOWN_ITEMS = 5;
+const panels = YEARS.map((year, i) => {
+  const yearPapers = sortByYearDesc(papers.filter((p) => p.data.year === year));
+  const yearAwards = sortByYearDesc(awards.filter((a) => a.data.year === year));
+  const degrees = [...stats[i].degrees].sort(byDegreeDate);
+  return {
+    year,
+    href: href(`/years/${year}/`),
+    papers: {
+      count: yearPapers.length,
+      items: yearPapers.slice(0, SHOWN_ITEMS).map((p) => ({
+        title: p.data.title,
+        meta: [p.data.first_author, p.data.journal].filter(Boolean).join(' · '),
+      })),
+    },
+    degrees: {
+      count: degrees.length,
+      items: degrees.map((m) => ({ ...person(m), date: (m.data.degree?.date ?? '').slice(0, 7).replace('-', '.') })),
+    },
+    awards: {
+      count: yearAwards.length,
+      items: yearAwards.slice(0, SHOWN_ITEMS).map((a) => {
+        const m = a.data.member ? memberBySlug.get(a.data.member) : undefined;
+        return {
+          ...(m ? person(m) : { name: a.data.recipient, lang: locale === 'en' ? 'ko' : undefined }),
+          meta: [a.data.conference, field(a.data, 'category', locale)].join(' '),
+          metaLang: locale === 'en' && !a.data.category_en ? 'ko' : undefined,
+        };
+      }),
+    },
+  };
+});
+
+// Board links: every menu item with its number of records.
+const boardCounts: Record<ItemKey, number> = {
+  students: members.filter((m) => m.data.role === 'student').length,
+  alumni: members.filter((m) => m.data.role === 'alumni' || m.data.role === 'former').length,
+  papers: papers.length,
+  patents: patents.length,
+  presentations: presentations.length,
+  awards: awards.length,
+  projects: projects.length,
+  seminars: seminars.length,
+  workshops: workshops.length,
+  photos: photos.length,
+  comments: comments.length,
+};
+const boards = MENU.flatMap((section) =>
+  section.items.map((item) => ({ href: href(item.href), label: item.label[locale], count: boardCounts[item.key] })),
+);
+---
+
+<BaseLayout locale={locale} bodyClass="home">
+  <Hero slogan={page.data.slogan} years={page.data.slogan_years} />
+  <div class="wrap intro-band">
+    <Figures items={figures} />
+    <Intro title={page.data.intro_title} word={s.home.introWord} heading={page.data.intro_heading}>
+      <IntroBody />
+    </Intro>
+  </div>
+  <Timeline years={years} selected={latest} locale={locale}>
+    <YearPanel panels={panels} selected={latest} locale={locale} />
+  </Timeline>
+  <BoardLinks items={boards} locale={locale} />
+</BaseLayout>

@@ -1,0 +1,25 @@
+---
+// Visual band: the slogan as real text on Midnight Field at the left (Signal Mint line, title, year range) and the
+// main site's medical image at the right. At ≤1024px the image fills the band and the slogan sits on a Midnight
+// Field block over it (home.css).
+import { url } from '../../lib/url.ts';
+
+interface Props {
+  /** `slogan` of pages/<lang>/home.md: the page's h1. */
+  slogan: string;
+  /** `slogan_years` of pages/<lang>/home.md. */
+  years: string;
+}
+
+const { slogan, years } = Astro.props;
+---
+
+<div class="hero">
+  <img class="hero-photo" src={url('/images/site/visual.jpg')} alt="" width="2000" height="570" fetchpriority="high" />
+  <div class="wrap hero-wrap">
+    <div class="hero-slogan">
+      <h1>{slogan}</h1>
+      <p class="hero-years">{years}</p>
+    </div>
+  </div>
+</div>
