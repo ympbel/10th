@@ -561,6 +561,14 @@ class ReportTest(unittest.TestCase):
         rep.blanks('papers/x', {'a': 'filled', 'b': ''}, ('a', 'b', 'c'), {'a': 'A열', 'b': 'B열', 'c': 'C열'})
         self.assertEqual(rep.lines(report.CHECK), ['papers/x: B열 비어 있음', 'papers/x: C열 비어 있음'])
 
+    def test_head_lines_between_title_and_sections(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, 'report.md')
+            report.Report().write(path, head=['| a | b |', '|---|---|'])
+            with open(path, encoding='utf-8') as f:
+                text = f.read()
+        self.assertTrue(text.startswith('# 변환 보고서\n\n| a | b |\n|---|---|\n\n## 건수\n'))
+
     def test_unknown_section_rejected(self):
         with self.assertRaises(ValueError):
             report.Report().add('건너 뛴 행', 'typo')

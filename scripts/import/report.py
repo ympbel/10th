@@ -55,9 +55,12 @@ class Report:
     def lines(self, section):
         return list(self.sections[section])
 
-    def write(self, path):
-        """Write the report as Markdown, one '##' heading per section in SECTIONS order."""
+    def write(self, path, head=()):
+        """Write the report as Markdown: the title, the Markdown lines in head (run.py's count table), then one
+        '##' heading per section in SECTIONS order."""
         out = ['# 변환 보고서', '']
+        if head:
+            out += list(head) + ['']
         for name in SECTIONS:
             out += [f'## {name}', '']
             out += [f'- {line}' for line in self.sections[name]] or ['없음']

@@ -144,3 +144,73 @@ export const projectSchema = z
     acknowledgement_ko: z.string().optional(),
   })
   .strict();
+
+/**
+ * One patent, copied from the MPBEL site (its publicationSchema without pinned and legacy fields). `venue` holds
+ * the registration lines (등록국가, 등록번호, 등록일), one per line.
+ */
+export const patentSchema = z
+  .object({
+    year,
+    title: z.string().min(1),
+    authors: z.string().default(''),
+    venue: z.string().default(''),
+    link: z.string().optional(),
+    // The MPBEL file's within-year order, copied as is: the main site lists a larger number first.
+    order: z.number().int().optional(),
+  })
+  .strict();
+
+/** One seminar. The post itself stays on the main site; `source_url` links to it. */
+export const seminarSchema = z
+  .object({
+    title: z.string().min(1),
+    // The post date on the main site.
+    date,
+    presenter: z.string().optional(),
+    // The day the seminar was held, when the post gives it.
+    event_date: date.optional(),
+    source_url: z.url(),
+  })
+  .strict();
+
+/** One workshop (the body is its write-up). `members` are member slugs. */
+export const workshopSchema = z
+  .object({
+    title: z.string().min(1),
+    title_en: z.string().optional(),
+    date,
+    place: z.string().optional(),
+    members: slugs,
+  })
+  .strict();
+
+/** One photo. `image` is a site path under /images/photos/<yyyy>/; `people` are member slugs. */
+export const photoSchema = z
+  .object({
+    image: z.string().min(1),
+    year,
+    kind: z.enum(['lab-meeting', 'conference', 'retreat', 'graduation', 'equipment', 'other']),
+    people: slugs,
+    caption: z.string().optional(),
+    date: date.optional(),
+  })
+  .strict();
+
+/** One comment (the body is the message). */
+export const commentSchema = z
+  .object({
+    name: z.string().min(1),
+    date,
+  })
+  .strict();
+
+/** A page's fixed copy, one file per language (pages/ko/home.md, pages/en/home.md). The body is the intro paragraph. */
+export const pageSchema = z
+  .object({
+    slogan: z.string().min(1),
+    slogan_years: z.string().min(1),
+    intro_title: z.string().min(1),
+    intro_heading: z.string().min(1),
+  })
+  .strict();
