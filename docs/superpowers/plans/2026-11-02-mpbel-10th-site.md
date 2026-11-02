@@ -19,7 +19,7 @@
 - **개인정보 금지**: 전화번호, 이메일, 생년월일·나이, MBTI, 학번, 과학기술인등록번호, 과제 실무담당자, "Jin's 과제 담당", 5공 유무, 수료여부, 과제 연구내용. 변환 스크립트는 시트마다 **읽을 열의 허용 목록**만 읽는다. `data/`는 `.gitignore`에 있다. `report.md`에도 개인정보 값을 쓰지 않는다(행 번호와 열 이름만).
 - 디자인은 `DESIGN.md`만 따른다. 색은 `src/styles/tokens.css`의 변수로만 쓴다. 모서리 0px, 불릿은 정사각형, 상호작용 색은 Cobalt `#1563b4` 하나, Signal Mint `#59ffce`는 진한 블루 위 1–2px 선으로만, 글꼴 Lato + Nanum Gothic 굵기 400/700, 한국어 단락 `word-break: keep-all`, 제목·슬로건은 이미지가 아니라 텍스트.
 - 레이아웃: 1200px 고정 그리드, 상단 바 100px, 서브 페이지 240px 사이드 영역 + 60px 간격 + 900px 본문, 1024px 이하 유동(좌우 16px), 600px 이하 1열.
-- 숫자 기대값(변환 스크립트 `--check`와 빌드 결과 검사가 공유): 구성원 61(학생 23 + 졸업생 13 + 거쳐 간 26, 박예인은 학생이면서 학위 보유) + 교수 8, 논문 217(2016년 이후 162), 발표 379, 수상 41, 챌린지 5, 과제 15, 특허 7, 세미나 431.
+- 숫자 기대값(변환 스크립트 `--check`와 빌드 결과 검사가 공유): 구성원 61(학생 23 + 졸업생 13 + 거쳐 간 26, 박예인은 학생이면서 학위 보유) + 교수 8, 논문 217(2016년 이후 162), 발표 379, 수상 41, 챌린지 4, 과제 15, 특허 7, 세미나 431.
 - 테스트 명령은 glob을 따옴표로 감싼다: `node --test "tests/unit/**/*.test.ts"`, `node --test "tests/dist/**/*.test.mjs"`. `npm test` = 단위 → 빌드 → 빌드 결과 검사. 모든 페이지 파일은 `src/styles/global.css`를 첫 import로 둔다.
 - 커밋 메시지는 영어 conventional commit(`feat:`, `test:`, `chore:`)이고, 끝에 다음 두 줄을 붙인다:
   `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`
@@ -236,8 +236,8 @@
 - Create: `src/components/AwardsPage.astro`, `ProjectsPage.astro`, `SeminarsPage.astro`, 라우트 `src/pages/awards.astro`, `projects.astro`, `activity/seminars.astro` + `en/`, `src/styles/boards.css`, `tests/dist/boards.test.mjs`
 
 **Interfaces:**
-- 규칙: 수상 = 연도별 표(수상자(링크), 학회, 구분, 발표명) + `section#challenges` 표 5행(주최, 제목, 목적, 링크). 과제 = `start` 내림차순 목록, 항목에 과제명(`field(…,'title',locale)`), 부처·사업, 기관, 역할, 기간 `YYYY.MM – YYYY.MM (n개월)`, 참여율, 연구비 `n천원`(천 단위 구분 쉼표), 사사 `<details>`, `projects`에 이 slug가 든 논문이 있으면 `<details>` "관련 논문 n편". 세미나 = 연도 탭 + 연도별 표(날짜, 제목(`source_url`로 `target="_blank" rel="noopener"`), 발표자) + 안내문 "세미나 본문은 MPBEL 사이트 세미나 게시판에 있습니다."
-- DOM 계약: awards `tbody tr` 41 + `#challenges tbody tr` 5; projects `.project` 15, 연구비 텍스트에 `천원`; seminars `tbody tr` 431, 모든 제목 링크가 `https://ympbel.github.io/notice/seminar/`로 시작.
+- 규칙: 수상 = 연도별 표(수상자(링크), 학회, 구분, 발표명) + `section#challenges` 표 4행(주최, 제목, 목적, 링크). 과제 = `start` 내림차순 목록, 항목에 과제명(`field(…,'title',locale)`), 부처·사업, 기관, 역할, 기간 `YYYY.MM – YYYY.MM (n개월)`, 참여율, 연구비 `n천원`(천 단위 구분 쉼표), 사사 `<details>`, `projects`에 이 slug가 든 논문이 있으면 `<details>` "관련 논문 n편". 세미나 = 연도 탭 + 연도별 표(날짜, 제목(`source_url`로 `target="_blank" rel="noopener"`), 발표자) + 안내문 "세미나 본문은 MPBEL 사이트 세미나 게시판에 있습니다."
+- DOM 계약: awards `tbody tr` 41 + `#challenges tbody tr` 4; projects `.project` 15, 연구비 텍스트에 `천원`; seminars `tbody tr` 431, 모든 제목 링크가 `https://ympbel.github.io/notice/seminar/`로 시작.
 
 - [ ] **Step 1: 실패하는 빌드 결과 검사** `boards.test.mjs`: 위 계약 + 과제 중 `projects.json` 연결이 하나라도 있으면 "관련 논문" `<details>`가 그 과제에 있고, 연결이 없는 과제에는 없다.
 - [ ] **Step 2: 실패 확인.** → **Step 3: 구현.** → **Step 4: `npm test` 통과.** → **Step 5: Commit** `feat(boards): awards with challenges, projects with related papers, seminars linking to main site`
@@ -285,7 +285,7 @@
 
 - [ ] **Step 1: `report.md`를 다시 만들고**(`--check`), 사용자가 읽을 요약을 맨 위에 쓴다: 컬렉션별 건수와 기대값 대조, 별칭 후보 표(저자 표기 → 후보 구성원), 미연결 저자 수, 과제 미해결 값 목록(`중견`, `스위스` 등과 각 값이 붙은 논문 수), 날짜 누락 목록(slug + 열), 건너뛴 행.
 - [ ] **Step 2: 메인 세션이 사용자에게 `report.md` 요약과 `.impeccable/review/` 캡처를 보여 주고 답을 받는다**(별칭 확정, 과제 대응표, 공개 승인). **이 단계는 사용자 답 없이는 넘어가지 않는다.**
-- [ ] **Step 3: 답을 반영.** `projects.json`과 해당 구성원의 `aliases`를 채우고 `python3 scripts/import/run.py … --force --only members,papers,presentations,awards --check` 로 연결 필드를 다시 쓴다(수동 편집한 다른 필드가 있다면 그 파일은 `--only`에서 빼고 손으로 고친다). `npm test` 통과.
+- [ ] **Step 3: 답을 반영.** `projects.json`과 해당 구성원 파일의 `aliases`를 채우고 `python3 scripts/import/run.py … --force --only papers,presentations,awards --check` 로 연결 필드를 다시 쓴다. `members`를 `--only`에서 빼면 run.py는 구성원을 시트가 아니라 `src/content/members/*.md`에서 읽어 연결하므로 손으로 넣은 `aliases`가 쓰인다(Task 5 결정). `npm test` 통과.
 - [ ] **Step 4: Commit** `content: aliases and project mapping confirmed by the lab`
 
 ### Task 17: 원격 저장소, Pages, 첫 배포

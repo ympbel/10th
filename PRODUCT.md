@@ -97,7 +97,7 @@ MPBEL 메인 사이트(`https://ympbel.github.io/`)는 운영용입니다. 소�
 2026-11-02 설계 대화에서 정해진 것(자세한 내용은 `docs/superpowers/specs/2026-11-02-mpbel-10th-design.md`):
 - 2016년 이전 논문 55편은 논문 게시판 아래 "연구실 이전" 구역에 넣고, 홈 집계에는 2016년 이후 162편만 센다.
 - 거쳐 간 구성원은 졸업 현황 안에 두 묶음으로.
-- 챌린지 참가 5건은 수상 게시판 아래 구역에.
+- 챌린지 참가 4건은 수상 게시판 아래 구역에.
 - ORCID는 공개(값이 있는 사람만). "Jin's 과제 담당", 5공 유무, 수료여부 등 행정 열은 비공개.
 - UI는 한·영 토글. 한글만 있는 데이터는 영문 페이지에서도 한글 그대로.
 - 교수 8명은 학생 현황 게시판 맨 위 교수진 구역에.
@@ -120,7 +120,7 @@ MPBEL 메인 사이트(`https://ympbel.github.io/`)는 운영용입니다. 소�
 - `학회 초록.html`: 379건. 열: Year, 전체저자, 1st author, 교신저자, 교신저자 2, title, Conference Name, 발표형태, 사사, 세션, 발표 시간. 학회 이름 표기가 흔들립니다(`KSMP (Fall)`, `KSMP Fall`, `KSMP(Spring)` 등). 발표형태는 Poster 231, Oral 130 외 ePoster 등.
 - `과제정보.html`: 날짜 있는 과제 15건(나머지 행은 안내문·반복 머리글). 열: 연구과제명, 연구내용, 닉네임, 실무담당자(비공개), 부처명, 사업명, 연구수행기관, 참여유형, 3책5공여부, 참여시작일, 참여종료일, 참여개월수, 참여율, 당해년도연구비(천원), 총연구비(천원), 사사정보(영문·한글).
 - `수상 현황.html`: 41건(2018–2026, 그중 3건은 시트 번호 없음). 열: 연도, 수상자, 학회, 구분(구연상·포스터상·Young Investigator Award 등), 발표명.
-- `Challenge.html`: 5건(2021). 열: Year, Host, Running title, Objective, 데이터 공개일, 제출 마감, Link.
+- `Challenge.html`: 4건(2021; 시트 번호 2–5). 열: Year, Host, Running title, Objective, 데이터 공개일, 제출 마감, Link.
 - MPBEL 사이트 콘텐츠(읽기 전용): `../Website_20261028/src/content/patents/ko/` 7건(year, title, authors, venue에 등록국가·번호·일자, link), `seminars/ko/` 431건(title, date, presenter, event_date, legacy_images).
 - 초안 아티팩트 원문 사본: 세션 도구 결과로 저장된 HTML(`DATA` 객체에 초안이 쓴 변환 데이터가 들어 있음). 영구 자료가 아니므로 필요하면 아티팩트를 다시 읽습니다.
 
