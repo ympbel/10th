@@ -108,3 +108,17 @@ def pick_rows(rows, header, index):
         else:
             empty += 1
     return picked, empty
+
+
+def pick_columns(rows, columns, *anchors, extra=None):
+    """pick_rows below the header row for an allowlist of columns.
+
+    The header row is the first row containing every anchor (find_header). columns maps record keys to header
+    texts (header_index; KeyError when one is missing). extra, when given, is called with the header row and
+    returns more {key: column index} for columns found another way. Returns pick_rows' (picked, empty).
+    """
+    h = find_header(rows, *anchors)
+    index = {key: header_index(rows[h], label) for key, label in columns.items()}
+    if extra:
+        index.update(extra(rows[h]))
+    return pick_rows(rows, h, index)

@@ -328,6 +328,27 @@ class PresentationsTest(unittest.TestCase):
         self.assertEqual(self.report.lines(report.CHECK)[-1:],
                          [f'presentations/{self.records[3]["_file"]}: 전체저자 비어 있음'])
 
+    def test_author_column_left_of_first_author_must_be_header_less(self):
+        rows = pres_rows()
+        rows[0] = PRES_HEADER[:2] + ['Authors?'] + PRES_HEADER[3:]
+        with self.assertRaisesRegex(ValueError, 'header-less'):
+            presentations.build_presentations(rows, MEMBERS, load_json('conferences.json'), report.Report())
+
+    def test_blank_conference_reported_and_import_completes(self):
+        rows = pres_rows()[:2] + [
+            ['8', '2023', 'Sang Kyun Yoo', 'Sang Kyun Yoo', '', '', '', 'A talk at an unnamed meeting', '', 'Oral',
+             '', '', ''],
+            ['9', '2023', 'Sang Kyun Yoo', 'Sang Kyun Yoo', '', '', '', 'A talk at an unnamed meeting', '', 'Oral',
+             '', '', '']]
+        rep = report.Report()
+        records = presentations.build_presentations(rows, MEMBERS, load_json('conferences.json'), rep)
+        self.assertEqual(len(records), 3)
+        self.assertNotIn('conference', records[1])
+        self.assertIn(f'presentations/{records[1]["_file"]}: Conference Name 비어 있음', rep.lines(report.CHECK))
+        self.assertIn(f'presentations/{records[2]["_file"]}: Conference Name 비어 있음', rep.lines(report.CHECK))
+        # Without a conference there is no "same conference" to compare: no repeat line.
+        self.assertFalse([line for line in rep.lines(report.CHECK) if '중복 행인지 확인' in line])
+
     def test_only_schema_fields(self):
         for r in self.records:
             self.assertLessEqual(set(r), PRES_FIELDS)
@@ -520,6 +541,25 @@ class ReportTest(unittest.TestCase):
     def test_empty_section_says_none(self):
         text = self.write(report.Report())
         self.assertIn('## 별칭 후보\n\n없음\n', text)
+
+    def test_skip_and_empty_rows(self):
+        rep = report.Report()
+        rep.skip('시트', 3, '제목 없음')
+        rep.empty_rows('시트', 0)
+        rep.empty_rows('시트', 2)
+        self.assertEqual(rep.lines(report.SKIPPED), ['시트 3행: 제목 없음', '시트: 빈 행 2개'])
+
+    def test_year_or_skip(self):
+        rep = report.Report()
+        self.assertEqual(rep.year_or_skip('시트', 2, '2021'), 2021)
+        self.assertIsNone(rep.year_or_skip('시트', 4, ''))
+        self.assertIsNone(rep.year_or_skip('시트', 5, '2021?'))
+        self.assertEqual(rep.lines(report.SKIPPED), ['시트 4행: 연도 없음', '시트 5행: 연도 없음'])
+
+    def test_blanks(self):
+        rep = report.Report()
+        rep.blanks('papers/x', {'a': 'filled', 'b': ''}, ('a', 'b', 'c'), {'a': 'A열', 'b': 'B열', 'c': 'C열'})
+        self.assertEqual(rep.lines(report.CHECK), ['papers/x: B열 비어 있음', 'papers/x: C열 비어 있음'])
 
     def test_unknown_section_rejected(self):
         with self.assertRaises(ValueError):

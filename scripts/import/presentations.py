@@ -4,7 +4,6 @@ The full author list sits mostly in a header-less column immediately left of '1s
 the '전체저자' column; whichever is filled is used ('전체저자' when both are and they differ, reported).
 Conference names and presentation types go through conferences.json. '발표 시간' is not read.
 """
-import dates
 import link
 import names
 import report as rp
@@ -30,6 +29,14 @@ COLUMNS = {
 REQUIRED = ('title', 'first_author', 'conference', 'type')
 
 
+def _unheaded_author_column(header):
+    """{'unheaded_authors': the header-less column immediately left of '1st author'}; ValueError otherwise."""
+    i = sheets.header_index(header, COLUMNS['first_author']) - 1
+    if i < 0 or sheets.cell(header, i):
+        raise ValueError(f"{SHEET}: expected a header-less author column left of '1st author'")
+    return {'unheaded_authors': i}
+
+
 def _unify(table, raw, label, report):
     """table[raw]; a value missing from the table passes through and is reported once."""
     if raw in table:
@@ -50,9 +57,7 @@ def _authors(v, where, report):
 
 def _record(year, v, file, order, members, conf_map, report):
     where = f'presentations/{file}'
-    for key in REQUIRED:
-        if not v[key]:
-            report.add(rp.CHECK, f'{where}: {COLUMNS[key]} 비어 있음')
+    report.blanks(where, v, REQUIRED, COLUMNS)
     authors = _authors(v, where, report)
     conference = _unify(conf_map['conferences'], v['conference'], '학회 이름', report)
     record = {
@@ -76,9 +81,12 @@ def _record(year, v, file, order, members, conf_map, report):
 
 
 def _report_repeats(records, report):
-    """Report records sharing year, title (ignoring case) and conference: possibly one row entered twice."""
+    """Report records sharing year, title (ignoring case) and conference: possibly one row entered twice.
+    Records without a conference (reported as blank already) are not compared."""
     groups = {}
     for r in records:
+        if 'conference' not in r:
+            continue
         groups.setdefault((r['year'], r['title'].casefold(), r['conference']), []).append(r)
     for (year, _, conference), group in groups.items():
         if len(group) > 1:
@@ -94,25 +102,19 @@ def build_presentations(rows, members, conf_map, report):
     follow papers.file_base; 'order' is the record's 1-based position in the sheet. Records repeating the
     year, title and conference of another are reported for checking (all are kept).
     """
-    h = sheets.find_header(rows, COLUMNS['title'], COLUMNS['conference'])
-    index = {key: sheets.header_index(rows[h], label) for key, label in COLUMNS.items()}
-    index['unheaded_authors'] = index['first_author'] - 1
-    if index['unheaded_authors'] < 0 or sheets.cell(rows[h], index['unheaded_authors']):
-        raise ValueError(f"{SHEET}: expected a header-less author column left of '1st author'")
-    picked, empty = sheets.pick_rows(rows, h, index)
+    picked, empty = sheets.pick_columns(rows, COLUMNS, COLUMNS['title'], COLUMNS['conference'],
+                                        extra=_unheaded_author_column)
     records, taken = [], set()
     for n, v in picked:
         if not v['title']:
-            report.add(rp.SKIPPED, f'{SHEET} {n}행: 제목 없음')
+            report.skip(SHEET, n, '제목 없음')
             continue
-        year = dates.parse_year(v['year'])
+        year = report.year_or_skip(SHEET, n, v['year'])
         if year is None:
-            report.add(rp.SKIPPED, f'{SHEET} {n}행: 연도 없음')
             continue
         file = writer.unique_slug(file_base(year, v['first_author'], v['title']), taken)
         records.append(_record(year, v, file, len(records) + 1, members, conf_map, report))
     _report_repeats(records, report)
-    if empty:
-        report.add(rp.SKIPPED, f'{SHEET}: 빈 행 {empty}개')
+    report.empty_rows(SHEET, empty)
     report.add(rp.COUNTS, f'학회 발표 {len(records)}건')
     return records

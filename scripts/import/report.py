@@ -5,6 +5,8 @@ quote cells from columns the converters do not read.
 """
 from pathlib import Path
 
+import dates
+
 COUNTS = '건수'
 NEAR = '별칭 후보'  # author spelling → candidate member slugs (never linked automatically)
 UNMATCHED = '미연결 저자'  # spellings linked to no member
@@ -27,6 +29,28 @@ class Report:
             raise ValueError(f'unknown report section: {section}')
         if line not in self.sections[section]:
             self.sections[section].append(line)
+
+    def skip(self, sheet, n, reason):
+        """Note sheet row n as skipped."""
+        self.add(SKIPPED, f'{sheet} {n}행: {reason}')
+
+    def year_or_skip(self, sheet, n, value):
+        """value as a four-digit year; None after noting row n as skipped ('연도 없음')."""
+        year = dates.parse_year(value)
+        if year is None:
+            self.skip(sheet, n, '연도 없음')
+        return year
+
+    def empty_rows(self, sheet, count):
+        """Note how many empty rows a sheet had (nothing when there were none)."""
+        if count:
+            self.add(SKIPPED, f'{sheet}: 빈 행 {count}개')
+
+    def blanks(self, where, values, keys, columns):
+        """Note each key in keys whose value is empty as '<where>: <column header> 비어 있음'."""
+        for key in keys:
+            if not values.get(key):
+                self.add(CHECK, f'{where}: {columns[key]} 비어 있음')
 
     def lines(self, section):
         return list(self.sections[section])

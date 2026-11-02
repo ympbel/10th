@@ -63,5 +63,26 @@ class PickRowsTest(unittest.TestCase):
         self.assertEqual(empty, 2)
 
 
+class PickColumnsTest(unittest.TestCase):
+    ROWS = [['Title row', '', '', ''],
+            ['', 'Year', 'Secret', 'Title - with a hint'],
+            ['1', '2020', 'x', 'A'],
+            ['2', '', 'only a secret', '']]
+
+    def test_header_located_by_anchors_and_columns_by_text(self):
+        picked, empty = sheets.pick_columns(self.ROWS, {'year': 'Year'}, 'Year', 'Secret')
+        self.assertEqual((picked, empty), ([(3, {'year': '2020'})], 1))
+
+    def test_extra_columns_from_the_header_row(self):
+        def extra(header):
+            return {'title': next(i for i, c in enumerate(header) if c.startswith('Title'))}
+        picked, _ = sheets.pick_columns(self.ROWS, {'year': 'Year'}, 'Year', extra=extra)
+        self.assertEqual(picked, [(3, {'year': '2020', 'title': 'A'})])
+
+    def test_missing_column_raises_key_error(self):
+        with self.assertRaises(KeyError):
+            sheets.pick_columns(self.ROWS, {'journal': 'Journal'}, 'Year')
+
+
 if __name__ == '__main__':
     unittest.main()

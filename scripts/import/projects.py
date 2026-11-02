@@ -47,9 +47,7 @@ def _integer(value, where, label, report):
 
 def _record(values, start, file, report):
     where = f'projects/{file}'
-    for key in REQUIRED:
-        if not values[key]:
-            report.add(rp.CHECK, f'{where}: {COLUMNS[key]} 비어 있음')
+    report.blanks(where, values, REQUIRED, COLUMNS)
     end = dates.parse_date(values['end'])
     if not end:
         report.add(rp.MISSING_DATES, f'{where}: {COLUMNS["end"]}')
@@ -67,19 +65,16 @@ def build_projects(rows, report):
     The header row is the first one with '연구과제명' and '참여시작일'. A row is a project only when its
     참여시작일 is a date; other non-empty rows (notes, repeated headers) are skipped and reported by row number.
     """
-    h = sheets.find_header(rows, COLUMNS['title'], COLUMNS['start'])
-    index = {key: sheets.header_index(rows[h], label) for key, label in COLUMNS.items()}
-    picked, empty = sheets.pick_rows(rows, h, index)
+    picked, empty = sheets.pick_columns(rows, COLUMNS, COLUMNS['title'], COLUMNS['start'])
     records, taken = [], set()
     for n, values in picked:
         start = dates.parse_date(values['start'])
         if not start:
-            report.add(rp.SKIPPED, f'{SHEET} {n}행: 시작일 없음')
+            report.skip(SHEET, n, '시작일 없음')
             continue
         file = writer.unique_slug(f'project-{len(records) + 1:02d}', taken)
         records.append(_record(values, start, file, report))
-    if empty:
-        report.add(rp.SKIPPED, f'{SHEET}: 빈 행 {empty}개')
+    report.empty_rows(SHEET, empty)
     report.add(rp.COUNTS, f'과제 {len(records)}건')
     return records
 

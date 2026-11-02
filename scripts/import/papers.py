@@ -5,7 +5,6 @@ IF-공동교신 are internal tallies and are never read.
 """
 import re
 
-import dates
 import link
 import names
 import projects as pj
@@ -29,6 +28,8 @@ COLUMNS = {
 }
 # The project column's header carries a long hint after this prefix.
 PROJECT_PREFIX = '과제 이름'
+# Not required by the schema, but reported when empty.
+REQUIRED = ('first_author', 'journal')
 
 _NUMBER = re.compile(r'\d+(\.\d+)?')
 
@@ -44,11 +45,12 @@ def file_base(year, first_author, title):
     return f'{year}-{person}-{words}'
 
 
-def _prefixed(header, prefix):
+def _project_column(header):
+    """{'projects': index of the column whose header starts with PROJECT_PREFIX}; KeyError if there is none."""
     for i, label in enumerate(header):
-        if label.strip().startswith(prefix):
-            return i
-    raise KeyError(prefix)
+        if label.strip().startswith(PROJECT_PREFIX):
+            return {'projects': i}
+    raise KeyError(PROJECT_PREFIX)
 
 
 def _impact_factor(value, where, report):
@@ -65,9 +67,7 @@ def _record(year, v, file, order, members, projects, project_map, report):
     slugs, unresolved = pj.resolve_project_refs(v['projects'], projects, project_map)
     for piece in unresolved:
         report.add(rp.UNRESOLVED_PROJECTS, f'{piece} ({where})')
-    for key in ('first_author', 'journal'):
-        if not v[key]:
-            report.add(rp.CHECK, f'{where}: {COLUMNS[key]} 비어 있음')
+    report.blanks(where, v, REQUIRED, COLUMNS)
     record = {
         'year': year,
         'title': v['title'],
@@ -95,22 +95,17 @@ def build_papers(rows, members, projects, project_map, report):
     project_map the projects.json mapping. Rows without a title (the IF totals at the bottom) and rows
     without a year are skipped and reported by row number; empty rows are counted.
     """
-    h = sheets.find_header(rows, COLUMNS['title'], COLUMNS['journal'])
-    index = {key: sheets.header_index(rows[h], label) for key, label in COLUMNS.items()}
-    index['projects'] = _prefixed(rows[h], PROJECT_PREFIX)
-    picked, empty = sheets.pick_rows(rows, h, index)
+    picked, empty = sheets.pick_columns(rows, COLUMNS, COLUMNS['title'], COLUMNS['journal'], extra=_project_column)
     records, taken = [], set()
     for n, v in picked:
         if not v['title']:
-            report.add(rp.SKIPPED, f'{SHEET} {n}행: 제목 없음')
+            report.skip(SHEET, n, '제목 없음')
             continue
-        year = dates.parse_year(v['year'])
+        year = report.year_or_skip(SHEET, n, v['year'])
         if year is None:
-            report.add(rp.SKIPPED, f'{SHEET} {n}행: 연도 없음')
             continue
         file = writer.unique_slug(file_base(year, v['first_author'], v['title']), taken)
         records.append(_record(year, v, file, len(records) + 1, members, projects, project_map, report))
-    if empty:
-        report.add(rp.SKIPPED, f'{SHEET}: 빈 행 {empty}개')
+    report.empty_rows(SHEET, empty)
     report.add(rp.COUNTS, f'논문 {len(records)}건')
     return records
