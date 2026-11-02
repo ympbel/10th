@@ -105,6 +105,15 @@ export const en: typeof ko = {
     seminarsCount: 'Seminars {n}',
     seminarsLink: 'See them on the seminars board',
   },
+  publication: {
+    index: 'Jump to year',
+    papersNote:
+      'This board lists all {total} papers; the home page figure of {lab} counts only the papers since {start}, when the lab began.',
+    preLab: 'Before the lab ({from}–{to})',
+    preLabTab: '{from}–{to}',
+    papersCount: '{n}',
+    presentationsCount: '{n}',
+  },
   people: {
     faculty: 'Faculty',
     students: 'Students',

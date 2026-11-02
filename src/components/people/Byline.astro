@@ -1,0 +1,23 @@
+---
+// A byline as written (`Jaehee Chun`, `이혜진, 이삭, 윤용도`), with each name that is one of the record's members
+// linking to that member's person page. Without `people` the byline is plain text. Matching follows the importer
+// (bylinePieces in lib/people.ts), so a name links exactly when the importer put that member in `members`.
+import type { CollectionEntry } from 'astro:content';
+import MemberLink from './MemberLink.astro';
+import { bylinePieces } from '../../lib/people.ts';
+import type { Locale } from '../../lib/locale.ts';
+
+interface Props {
+  text: string;
+  /** The record's `members` (member slugs). */
+  slugs?: string[];
+  /** Every member entry by slug; leave out for plain text. */
+  people?: Map<string, CollectionEntry<'members'>>;
+  locale: Locale;
+}
+
+const { text, slugs = [], people, locale } = Astro.props;
+const pieces = people ? bylinePieces(text, slugs, people) : [{ text }];
+---
+
+{pieces.map((p) => (p.slug ? <MemberLink id={p.slug} name={p.text} locale={locale} /> : p.text))}

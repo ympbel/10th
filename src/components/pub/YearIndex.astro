@@ -1,0 +1,30 @@
+---
+// The row of year links above a publication board, in the main site's year tab form (90px cells, Hairline,
+// Ledger, 13px Slate; .year-tabs in base.css). Each cell jumps to that year's section on the same page (`#y2024`);
+// `extra` adds one more cell after the years (the papers board's 연구실 이전 section).
+import { yearAnchor } from '../../lib/years.ts';
+import type { Locale } from '../../lib/locale.ts';
+import { t } from '../../i18n/index.ts';
+
+interface Props {
+  /** The years with a section on the page, in page order. */
+  years: number[];
+  extra?: { href: string; label: string };
+  locale: Locale;
+}
+
+const { years, extra, locale } = Astro.props;
+const links = [...years.map((y) => ({ href: `#${yearAnchor(y)}`, label: String(y) })), ...(extra ? [extra] : [])];
+---
+
+<nav class="year-tabs pub-index" aria-label={t(locale).publication.index}>
+  <ul>
+    {
+      links.map((link) => (
+        <li>
+          <a href={link.href}>{link.label}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

@@ -1,0 +1,85 @@
+/* Publication boards (imported by the components in components/pub/, after the global bundle and years.css): the
+   main site's publication list form from DESIGN.md. The year links row is .year-tabs (base.css); each year is a
+   section with its heading (24px 700) over a 3px Graphite rule, then rows divided by 1px Hairline with the number in
+   Ash on the left. The row text (.yr-title, .yr-sub, .yr-meta, .yr-type) and the conference headings (.yr-conf)
+   come from years.css. Colors and spacing come from tokens.css. */
+
+.pub-note {
+  margin-bottom: var(--s-md);
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+}
+
+/* ---------- Year sections ---------- */
+.pub-year {
+  margin-top: var(--s-xl);
+}
+.pub-year > h2,
+.pub-year > h3 {
+  padding: 0 0 var(--s-xs) 5px;
+  border-bottom: 3px solid var(--c-graphite);
+  color: var(--c-graphite);
+  font-size: var(--fs-title-lg);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+/* Rows: 1px Hairline under each (the year pages use the softer line). */
+.pub-list > li {
+  border-bottom-color: var(--c-hairline);
+}
+/* Member names in an author line link to their person pages. */
+.yr-sub a[data-member] {
+  color: var(--c-graphite);
+  text-decoration: underline;
+  text-decoration-color: var(--c-hairline);
+  text-underline-offset: 3px;
+}
+.yr-sub a[data-member]:hover {
+  color: var(--c-cobalt);
+  text-decoration-color: currentColor;
+}
+
+/* ---------- Papers: the 연구실 이전 section after the lab's years ---------- */
+.pub-part {
+  margin-top: var(--s-2xl);
+}
+.pub-part > h2 {
+  padding: var(--s-sm) var(--s-md);
+  background: var(--c-mist);
+  color: var(--c-graphite);
+  font-size: var(--fs-title);
+  line-height: 1.4;
+}
+.pub-part > h2 small {
+  margin-left: 4px;
+  color: var(--c-slate);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-regular);
+}
+.pub-part .pub-year:first-of-type {
+  margin-top: var(--s-lg);
+}
+
+/* ---------- Patents: the number down from the total, venue lines, the LINK button ---------- */
+.pub-patents > li {
+  position: relative;
+  padding-left: 40px;
+}
+.pub-num {
+  position: absolute;
+  top: var(--pad-cell);
+  left: 0;
+  width: 28px;
+  color: var(--c-ash);
+  font-size: var(--fs-body-sm);
+  line-height: calc(var(--fs-body) * 1.6);
+  text-align: right;
+}
+.pub-venue span {
+  display: block;
+}
+.pub-link {
+  display: table;
+  margin: var(--s-2xs) 0 0 auto;
+}

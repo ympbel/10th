@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { LAB_START, YEARS, barHeights, isLabEra, labCounts, yearStats } from '../../src/lib/years.ts';
+import { LAB_START, YEARS, barHeights, isLabEra, labCounts, yearAnchor, yearStats } from '../../src/lib/years.ts';
 
 // Fake records in the shape of Astro entries (`id` + `data`); only the fields the helpers read.
 const data = {
@@ -77,4 +77,8 @@ test('labCounts() counts non-professors, degrees and papers from 2016 on', () =>
     awards: 2,
     projects: 4,
   });
+});
+
+test('yearAnchor() is the id of a year section on a publication board', () => {
+  assert.equal(yearAnchor(2024), 'y2024');
 });

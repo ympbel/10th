@@ -6,6 +6,7 @@ import {
   sortByYearDesc,
   sortMembersByDegree,
   sortMembersByJoined,
+  sortPatents,
   yearMonth,
 } from '../../src/lib/content.ts';
 
@@ -88,4 +89,8 @@ test("sortMembersByDegree(…, 'desc') puts the latest degree first, members wit
 
 test('yearMonth() also takes a month-only date', () => {
   assert.equal(yearMonth('2021-02'), '2021.02');
+});
+
+test('sortPatents() puts the newest year first and, within a year, a larger order first', () => {
+  assert.deepEqual(ids(sortPatents(items)), ['y2023-o1', 'y2022-o5', 'y2021-o2', 'y2021-o1', 'y2021-none']);
 });

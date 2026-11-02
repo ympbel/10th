@@ -11,6 +11,11 @@ export function isLabEra(year: number): boolean {
   return year >= LAB_START;
 }
 
+/** The id of a year's section on a publication board (`y2024`), which the board's year links point at. */
+export function yearAnchor(year: number): string {
+  return `y${year}`;
+}
+
 /** The member fields the counts read. A member without `joined` belongs to no year. */
 export type MemberLike = Entry<{ role: string; joined?: string; degree?: { date?: string } }>;
 /** A paper, presentation or award: counted by its `year`. */

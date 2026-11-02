@@ -1,12 +1,7 @@
 ---
-// Temporary page so the menu link resolves; plan Task 11 replaces it with the board.
+// 논문 board: /publication/papers/.
 import '../../styles/global.css';
-import SubLayout from '../../layouts/SubLayout.astro';
-import { t } from '../../i18n/index.ts';
-
-const s = t('ko');
+import PapersPage from '../../components/pub/PapersPage.astro';
 ---
 
-<SubLayout title={s.boards.papers} sectionKey="publication" currentHref="/publication/papers/" locale="ko">
-  <p>{s.preparing}</p>
-</SubLayout>
+<PapersPage locale="ko" />

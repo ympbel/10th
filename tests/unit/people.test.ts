@@ -1,6 +1,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { awardRecipient, displayName, field, itemsOf, otherName, personPath } from '../../src/lib/people.ts';
+import {
+  awardRecipient,
+  bylinePieces,
+  displayName,
+  field,
+  itemsOf,
+  otherName,
+  personPath,
+} from '../../src/lib/people.ts';
 import { langOf } from '../../src/lib/locale.ts';
 import { yearMonth } from '../../src/lib/content.ts';
 
@@ -105,4 +113,67 @@ test('awardRecipient() keeps the sheet string when no member matches', () => {
     slug: undefined,
     name: '이름',
   });
+});
+
+const authors = new Map([
+  ['byong-su-choi', { data: { role: 'alumni', name: '최병수', name_en: 'Byong Su Choi', aliases: ['Byoung Su Choi'] } }],
+  ['chae-seon-hong', { data: { role: 'student', name: '홍채선', name_en: 'Chaeseon Hong', aliases: [] } }],
+  ['hyejin-lee', { data: { role: 'student', name: '이혜진', name_en: 'Hyejin Lee', aliases: [] } }],
+  ['yongdo-yun', { data: { role: 'student', name: '윤 용도', name_en: 'Yongdo Yun', aliases: [] } }],
+  ['jin-sung-kim', { data: { role: 'professor', name: '김진성', name_en: 'Jin Sung Kim', aliases: [] } }],
+  ['twin-a', { data: { role: 'student', name: '김가', name_en: 'Ga Kim', aliases: ['G. Kim'] } }],
+  ['twin-b', { data: { role: 'student', name: '김나', name_en: 'Na Kim', aliases: ['G. Kim'] } }],
+]);
+/** The pieces' text joined back: always the byline as written. */
+const joined = (pieces: { text: string }[]) => pieces.map((p) => p.text).join('');
+
+test('bylinePieces() links a name that matches one of the record\'s members, after the importer\'s normalization', () => {
+  // Case, hyphens and spaces are ignored, as in scripts/import/names.py norm(); aliases count.
+  assert.deepEqual(bylinePieces('Byoung-Su  CHOI', ['byong-su-choi'], authors), [
+    { text: 'Byoung-Su  CHOI', slug: 'byong-su-choi' },
+  ]);
+  assert.deepEqual(bylinePieces('Chae-Seon Hong,', ['chae-seon-hong'], authors), [
+    { text: 'Chae-Seon Hong', slug: 'chae-seon-hong' },
+    { text: ',' },
+  ]);
+});
+
+test('bylinePieces() splits a list on commas, semicolons and "and", keeping the separators as written', () => {
+  const byline = 'Byong Su Choi, Sang Kyun Yoo and Chaeseon Hong; Jin Sung Kim';
+  const pieces = bylinePieces(byline, ['byong-su-choi', 'chae-seon-hong'], authors);
+  assert.equal(joined(pieces), byline);
+  assert.deepEqual(pieces, [
+    { text: 'Byong Su Choi', slug: 'byong-su-choi' },
+    { text: ', Sang Kyun Yoo and ' },
+    { text: 'Chaeseon Hong', slug: 'chae-seon-hong' },
+    { text: '; Jin Sung Kim' },
+  ]);
+});
+
+test('bylinePieces() matches a Korean byline against the Korean name, ignoring spaces', () => {
+  const byline = '이혜진, 이삭, 윤용도, 김진성';
+  const pieces = bylinePieces(byline, ['hyejin-lee', 'yongdo-yun', 'jin-sung-kim'], authors);
+  assert.equal(joined(pieces), byline);
+  assert.deepEqual(
+    pieces.filter((p) => p.slug).map((p) => [p.text, p.slug]),
+    [
+      ['이혜진', 'hyejin-lee'],
+      ['윤용도', 'yongdo-yun'],
+    ],
+  );
+});
+
+test('bylinePieces() links only the record\'s own members, never a professor or an ambiguous spelling', () => {
+  // Not in this record's members: plain text even though the name matches a member file.
+  assert.deepEqual(bylinePieces('Hyejin Lee', [], authors), [{ text: 'Hyejin Lee' }]);
+  // Professors have no person page.
+  assert.deepEqual(bylinePieces('Jin Sung Kim', ['jin-sung-kim'], authors), [{ text: 'Jin Sung Kim' }]);
+  // A spelling two of the record's members share is not guessed.
+  assert.deepEqual(bylinePieces('G. Kim', ['twin-a', 'twin-b'], authors), [{ text: 'G. Kim' }]);
+  // A slug with no member file is skipped.
+  assert.deepEqual(bylinePieces('Ga Kim', ['no-such-file'], authors), [{ text: 'Ga Kim' }]);
+});
+
+test('bylinePieces() gives nothing for an empty byline', () => {
+  assert.deepEqual(bylinePieces('', ['hyejin-lee'], authors), []);
 });

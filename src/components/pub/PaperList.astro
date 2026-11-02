@@ -1,0 +1,34 @@
+---
+// Papers by year in the main site's publication list form: a section per year (`#y2024`) with the year heading
+// over a 3px Graphite rule, then the papers numbered from 1 within the year (PaperItem). `level` is the heading
+// level of the year headings: 2 on the board, 3 inside the 연구실 이전 section.
+import type { CollectionEntry } from 'astro:content';
+import PaperItem from '../PaperItem.astro';
+import { yearAnchor } from '../../lib/years.ts';
+import type { Locale } from '../../lib/locale.ts';
+
+interface Props {
+  /** Year groups, newest first, each in sheet order (`groupByYear`). */
+  groups: [number, CollectionEntry<'papers'>[]][];
+  /** Every member entry by slug, to link member names in the author lines. */
+  people: Map<string, CollectionEntry<'members'>>;
+  level?: 2 | 3;
+  locale: Locale;
+}
+
+const { groups, people, level = 2, locale } = Astro.props;
+const Heading = level === 2 ? 'h2' : 'h3';
+---
+
+{
+  groups.map(([year, papers]) => (
+    <section class="pub-year" id={yearAnchor(year)}>
+      <Heading>{year}</Heading>
+      <ol class="yr-list yr-papers pub-list">
+        {papers.map((p) => (
+          <PaperItem paper={p.data} people={people} locale={locale} class="pub-item" />
+        ))}
+      </ol>
+    </section>
+  ))
+}

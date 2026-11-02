@@ -1,0 +1,34 @@
+---
+// The presentations board in one language: the year links, then the presentations by year, newest first, and by
+// conference within a year.
+import { getCollection } from 'astro:content';
+import '../../styles/years.css';
+import '../../styles/pub.css';
+import SubLayout from '../../layouts/SubLayout.astro';
+import YearIndex from './YearIndex.astro';
+import PresentationList from './PresentationList.astro';
+import { groupByYear } from '../../lib/content.ts';
+import type { Locale } from '../../lib/locale.ts';
+import { t } from '../../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+
+const [presentations, members] = await Promise.all([getCollection('presentations'), getCollection('members')]);
+const people = new Map(members.map((m) => [m.id, m]));
+const groups = [...groupByYear(presentations)];
+---
+
+<SubLayout
+  title={s.boards.presentations}
+  sectionKey="publication"
+  currentHref="/publication/presentations/"
+  locale={locale}
+>
+  <YearIndex years={groups.map(([year]) => year)} locale={locale} />
+  <PresentationList groups={groups} people={people} locale={locale} />
+</SubLayout>

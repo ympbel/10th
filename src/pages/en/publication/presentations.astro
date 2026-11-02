@@ -1,12 +1,7 @@
 ---
-// Temporary page so the menu link resolves; plan Task 11 replaces it with the board.
+// English 발표 board: /en/publication/presentations/.
 import '../../../styles/global.css';
-import SubLayout from '../../../layouts/SubLayout.astro';
-import { t } from '../../../i18n/index.ts';
-
-const s = t('en');
+import PresentationsPage from '../../../components/pub/PresentationsPage.astro';
 ---
 
-<SubLayout title={s.boards.presentations} sectionKey="publication" currentHref="/publication/presentations/" locale="en">
-  <p>{s.preparing}</p>
-</SubLayout>
+<PresentationsPage locale="en" />

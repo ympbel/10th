@@ -59,3 +59,55 @@ export function awardRecipient(
   if (!m) return { slug: undefined, name: award.recipient };
   return { slug: m.data.role === 'professor' ? undefined : award.member, name: displayName(m.data, locale) };
 }
+
+/** The member fields a byline is matched against. */
+type Named = { data: { role: string; name: string; name_en?: string; aliases?: string[] } };
+
+/** One piece of a byline: a name, with the member slug when it is a member to link, or the text between names. */
+export type BylinePiece = { text: string; slug?: string };
+
+// The importer's author rules (scripts/import/names.py, link.py), so a byline links exactly the members the
+// importer found in it. A list splits at `,` `;` ` and ` and at `. ` after two word characters (`Dr. Kim`, not
+// `G. Kim`); a name is compared lowercased with only ASCII letters kept, or, with no Latin letters, as a Korean name
+// without spaces.
+const SEPARATOR = /([,;]|\s+and\s+|(?<=[\p{L}\p{N}_]{2})\.\s+)/u;
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z]/g, '');
+const normKo = (s: string) => s.replace(/\s+/g, '');
+
+/** The one slug in `slugs` whose member has this spelling (English name or alias, or the Korean name for a name
+ * without Latin letters); none when no member or two members match. Professors are never matched. */
+function memberOf(name: string, slugs: string[], members: Map<string, Named>): string | undefined {
+  const key = norm(name);
+  const keyKo = normKo(name);
+  const found = [...new Set(slugs)].filter((slug) => {
+    const m = members.get(slug)?.data;
+    if (!m || m.role === 'professor') return false;
+    if (key) return [m.name_en ?? '', ...(m.aliases ?? [])].some((s) => s !== '' && norm(s) === key);
+    return keyKo !== '' && normKo(m.name) === keyKo;
+  });
+  return found.length === 1 ? found[0] : undefined;
+}
+
+/** A byline (`Jaehee Chun`, `이혜진, 이삭, 윤용도`) split into pieces for an author line: each name that is one of the
+ * record's members (`slugs`, its `members` field) carries that member's slug for a person page link; everything
+ * else is plain text. The pieces' text joined is the byline exactly as written. `members` maps member slugs to
+ * member entries. */
+export function bylinePieces(byline: string, slugs: string[], members: Map<string, Named>): BylinePiece[] {
+  const pieces: BylinePiece[] = [];
+  const add = (text: string, slug?: string) => {
+    if (text === '') return;
+    const last = pieces.at(-1);
+    if (!slug && last && !last.slug) last.text += text;
+    else pieces.push(slug ? { text, slug } : { text });
+  };
+  byline.split(SEPARATOR).forEach((part, i) => {
+    // Odd parts are the separators the split captured.
+    if (i % 2 === 1) return add(part);
+    const lead = part.length - part.trimStart().length;
+    const name = part.trim().replace(/[.,]+$/, '').trim();
+    add(part.slice(0, lead));
+    add(name, name ? memberOf(name, slugs, members) : undefined);
+    add(part.slice(lead + name.length));
+  });
+  return pieces;
+}

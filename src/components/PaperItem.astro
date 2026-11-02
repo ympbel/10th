@@ -1,31 +1,49 @@
 ---
-// One paper in a list (year pages, person pages): the bold title (a link when the paper has one), the author line
-// (first author in bold, co-first authors in parentheses, then the corresponding authors), and the journal with the
-// impact factor at the right end. Styles are in styles/years.css (.yr-item, .yr-title, .yr-sub, .yr-meta).
+// One paper in a list (year pages, person pages, the papers board): the bold title (a link when the paper has one),
+// the author line (first author in bold, co-first authors in parentheses, then the corresponding authors), and the
+// journal with the impact factor at the right end. Given `people` (every member by slug), the names in the author
+// line that are the paper's members link to their person pages. Styles are in styles/years.css (.yr-item,
+// .yr-title, .yr-sub, .yr-meta).
 import type { CollectionEntry } from 'astro:content';
+import Byline from './people/Byline.astro';
 import { langOf, type Locale } from '../lib/locale.ts';
 import { fill, t } from '../i18n/index.ts';
 
 interface Props {
   paper: CollectionEntry<'papers'>['data'];
   locale: Locale;
+  /** Every member entry by slug, to link member names in the author line; leave out for plain text. */
+  people?: Map<string, CollectionEntry<'members'>>;
+  /** Extra classes for the row (`pub-item` on the papers board). */
+  class?: string;
 }
 
-const { paper, locale } = Astro.props;
+const { paper, locale, people, class: className } = Astro.props;
 const yp = t(locale).yearPage;
 
 const first = paper.first_author;
-/** Co-first and corresponding authors after the bold first author. */
-const rest = [
-  paper.co_first.length > 0 ? `(${paper.co_first.join(', ')})` : '',
-  paper.corresponding.length > 0 ? `${yp.corresponding}: ${paper.corresponding.join(', ')}` : '',
-]
-  .filter(Boolean)
-  .join(', ');
-const authorsLang = langOf([first, ...paper.co_first, ...paper.corresponding].join(' '), locale);
+const coFirst = paper.co_first;
+const corresponding = paper.corresponding;
+
+/** The author line in order: separators as text, author strings as bylines (`bold` for the first author). */
+type Part = string | { byline: string; bold?: boolean };
+const parts: Part[] = [];
+/** Author strings separated by `, `. */
+const names = (list: string[]) => list.forEach((byline, i) => parts.push(...(i > 0 ? [', '] : []), { byline }));
+if (first) parts.push({ byline: first, bold: true });
+if (coFirst.length > 0) {
+  parts.push(parts.length > 0 ? ', (' : '(');
+  names(coFirst);
+  parts.push(')');
+}
+if (corresponding.length > 0) {
+  parts.push(`${parts.length > 0 ? ', ' : ''}${yp.corresponding}: `);
+  names(corresponding);
+}
+const authorsLang = langOf([first, ...coFirst, ...corresponding].join(' '), locale);
 ---
 
-<li class="yr-item">
+<li class:list={['yr-item', className]}>
   <p class="yr-title" lang={langOf(paper.title, locale)}>
     {
       paper.link ? (
@@ -38,11 +56,19 @@ const authorsLang = langOf([first, ...paper.co_first, ...paper.corresponding].jo
     }
   </p>
   {
-    (first || rest) && (
+    parts.length > 0 && (
       <p class="yr-sub" lang={authorsLang}>
-        {first && <b>{first}</b>}
-        {first && rest && ', '}
-        {rest}
+        {parts.map((part) =>
+          typeof part === 'string' ? (
+            part
+          ) : part.bold ? (
+            <b>
+              <Byline text={part.byline} slugs={paper.members} people={people} locale={locale} />
+            </b>
+          ) : (
+            <Byline text={part.byline} slugs={paper.members} people={people} locale={locale} />
+          ),
+        )}
       </p>
     )
   }

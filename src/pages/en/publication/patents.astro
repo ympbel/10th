@@ -1,12 +1,7 @@
 ---
-// Temporary page so the menu link resolves; plan Task 11 replaces it with the board.
+// English 특허 board: /en/publication/patents/.
 import '../../../styles/global.css';
-import SubLayout from '../../../layouts/SubLayout.astro';
-import { t } from '../../../i18n/index.ts';
-
-const s = t('en');
+import PatentsPage from '../../../components/pub/PatentsPage.astro';
 ---
 
-<SubLayout title={s.boards.patents} sectionKey="publication" currentHref="/publication/patents/" locale="en">
-  <p>{s.preparing}</p>
-</SubLayout>
+<PatentsPage locale="en" />

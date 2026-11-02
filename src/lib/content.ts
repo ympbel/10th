@@ -21,6 +21,18 @@ export function sortByYearDesc<T extends Ordered>(items: T[]): T[] {
   return [...items].sort((a, b) => b.data.year - a.data.year || byOrder(a, b));
 }
 
+/** A sorted copy in the main site's patent order: newest year first, and within a year a larger `order` first (the
+ * MPBEL patent files number them that way), entries without `order` last. */
+export function sortPatents<T extends Ordered>(items: T[]): T[] {
+  // Two numbered entries go larger first; byOrder puts an entry without `order` after a numbered one.
+  return [...items].sort((a, b) => {
+    if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+    const x = a.data.order;
+    const y = b.data.order;
+    return x !== undefined && y !== undefined ? y - x : byOrder(a, b);
+  });
+}
+
 /** Entries grouped by `data[key]` (`groupBy(presentations, 'conference')`). Groups come in the order their first
  * entry appears, and each group keeps the order given. */
 export function groupBy<T extends Entry<object>, K extends keyof T['data']>(

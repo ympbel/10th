@@ -1,0 +1,53 @@
+---
+// The papers board in one language: a note on why the board's total differs from the home figure, the year links,
+// the lab's years (2016 on) newest first, then the 연구실 이전 section with the earlier papers in the same form.
+import { getCollection } from 'astro:content';
+import '../../styles/years.css';
+import '../../styles/pub.css';
+import SubLayout from '../../layouts/SubLayout.astro';
+import YearIndex from './YearIndex.astro';
+import PaperList from './PaperList.astro';
+import { groupByYear } from '../../lib/content.ts';
+import { LAB_START, isLabEra } from '../../lib/years.ts';
+import type { Locale } from '../../lib/locale.ts';
+import { fill, t } from '../../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+const pub = s.publication;
+
+const [papers, members] = await Promise.all([getCollection('papers'), getCollection('members')]);
+const people = new Map(members.map((m) => [m.id, m]));
+
+const groups = [...groupByYear(papers)];
+const lab = groups.filter(([year]) => isLabEra(year));
+const preLab = groups.filter(([year]) => !isLabEra(year));
+const labCount = lab.reduce((n, [, list]) => n + list.length, 0);
+const preLabCount = papers.length - labCount;
+/** The earlier papers' years for the section title: the earliest year to the year before the lab. */
+const range = { from: preLab.at(-1)?.[0] ?? LAB_START - 1, to: LAB_START - 1 };
+---
+
+<SubLayout title={s.boards.papers} sectionKey="publication" currentHref="/publication/papers/" locale={locale}>
+  <p class="pub-note">{fill(pub.papersNote, { total: papers.length, lab: labCount, start: LAB_START })}</p>
+  <YearIndex
+    years={lab.map(([year]) => year)}
+    extra={preLab.length > 0 ? { href: '#pre-lab', label: fill(pub.preLabTab, range) } : undefined}
+    locale={locale}
+  />
+  <PaperList groups={lab} people={people} locale={locale} />
+  {
+    preLab.length > 0 && (
+      <section id="pre-lab" class="pub-part">
+        <h2>
+          {fill(pub.preLab, range)} <small>{fill(pub.papersCount, { n: preLabCount })}</small>
+        </h2>
+        <PaperList groups={preLab} people={people} level={3} locale={locale} />
+      </section>
+    )
+  }
+</SubLayout>

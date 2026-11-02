@@ -1,0 +1,27 @@
+---
+// The patents board in one language: the year links, then the patents by year in the main site's patent order
+// (newest year first, a larger `order` first within a year).
+import { getCollection } from 'astro:content';
+import '../../styles/years.css';
+import '../../styles/pub.css';
+import SubLayout from '../../layouts/SubLayout.astro';
+import YearIndex from './YearIndex.astro';
+import PatentList from './PatentList.astro';
+import { groupBy, sortPatents } from '../../lib/content.ts';
+import type { Locale } from '../../lib/locale.ts';
+import { t } from '../../i18n/index.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+
+const groups = [...groupBy(sortPatents(await getCollection('patents')), 'year')];
+---
+
+<SubLayout title={s.boards.patents} sectionKey="publication" currentHref="/publication/patents/" locale={locale}>
+  <YearIndex years={groups.map(([year]) => year)} locale={locale} />
+  <PatentList groups={groups} locale={locale} />
+</SubLayout>

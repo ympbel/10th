@@ -124,6 +124,19 @@ export const ko = {
     seminarsCount: '세미나 {n}건',
     seminarsLink: '세미나 게시판에서 보기',
   },
+  /** The publication boards (논문, 특허, 발표). */
+  publication: {
+    /** Accessible name of the row of year links above a board. */
+    index: '연도 바로가기',
+    /** The note at the top of the papers board: `{total}` papers on the board, `{lab}` of them from `{start}` on. */
+    papersNote: '이 게시판에는 논문 {total}편이 모두 있고, 홈의 논문 수 {lab}편은 연구실이 시작된 {start}년 이후만 센 것입니다.',
+    /** The section after the lab's years, with the earlier papers (`{from}`–`{to}`), and its cell in the year links. */
+    preLab: '연구실 이전 ({from}–{to})',
+    preLabTab: '{from}–{to}',
+    /** The count beside a heading: papers in the 연구실 이전 section, presentations under a conference. */
+    papersCount: '{n}편',
+    presentationsCount: '{n}건',
+  },
   /** The people boards (학생 현황, 졸업 현황) and the person pages. */
   people: {
     /** Section headings of the boards; `{n}` is the count beside a heading. */

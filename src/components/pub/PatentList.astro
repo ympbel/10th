@@ -1,0 +1,70 @@
+---
+// Patents in the main site's patent list form: a section per year (`#y2024`) with the year heading over a 3px
+// Graphite rule, then one row per patent, numbered down from the total as the main site does: the bold title (a
+// link to the patent record when there is one), the inventors, the registration lines (등록국가, 등록번호, 등록일)
+// one per line, and the LINK button (the title link repeated for the eye, so it is hidden from screen readers and
+// the tab order).
+import type { CollectionEntry } from 'astro:content';
+import { yearAnchor } from '../../lib/years.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+
+interface Props {
+  /** Year groups in the main site's patent order (`sortPatents`, then grouped by year). */
+  groups: [number, CollectionEntry<'patents'>[]][];
+  locale: Locale;
+}
+
+const { groups, locale } = Astro.props;
+const lang = (text: string | undefined) => langOf(text, locale);
+
+let n = groups.reduce((sum, [, list]) => sum + list.length, 0);
+const sections = groups.map(([year, list]) => ({
+  year,
+  rows: list.map((p) => ({
+    n: n--,
+    ...p.data,
+    lines: p.data.venue.split('\n').filter((line) => line.trim() !== ''),
+  })),
+}));
+---
+
+{
+  sections.map(({ year, rows }) => (
+    <section class="pub-year" id={yearAnchor(year)}>
+      <h2>{year}</h2>
+      <ol class="yr-list pub-list pub-patents">
+        {rows.map((p) => (
+          <li class="yr-item pub-item">
+            <span class="pub-num">{p.n}</span>
+            <p class="yr-title" lang={lang(p.title)}>
+              {p.link ? (
+                <a href={p.link} target="_blank" rel="noopener">
+                  {p.title}
+                </a>
+              ) : (
+                p.title
+              )}
+            </p>
+            {p.authors && (
+              <p class="yr-sub" lang={lang(p.authors)}>
+                {p.authors}
+              </p>
+            )}
+            {p.lines.length > 0 && (
+              <p class="yr-sub pub-venue">
+                {p.lines.map((line) => (
+                  <span lang={lang(line)}>{line}</span>
+                ))}
+              </p>
+            )}
+            {p.link && (
+              <a class="btn-link pub-link" href={p.link} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+                Link
+              </a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))
+}

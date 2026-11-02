@@ -1,0 +1,65 @@
+---
+// Presentations by year (`#y2024`, the year heading over a 3px Graphite rule), and within a year by conference: a
+// heading with the count, then one row per presentation with the title, the full author list (member names link to
+// their person pages) and the presentation type chip. A row without an author list shows the first author.
+import type { CollectionEntry } from 'astro:content';
+import Byline from '../people/Byline.astro';
+import { groupBy } from '../../lib/content.ts';
+import { yearAnchor } from '../../lib/years.ts';
+import { langOf, type Locale } from '../../lib/locale.ts';
+import { fill, t } from '../../i18n/index.ts';
+
+interface Props {
+  /** Year groups, newest first, each in sheet order (`groupByYear`). */
+  groups: [number, CollectionEntry<'presentations'>[]][];
+  /** Every member entry by slug, to link member names in the author lists. */
+  people: Map<string, CollectionEntry<'members'>>;
+  locale: Locale;
+}
+
+const { groups, people, locale } = Astro.props;
+const pub = t(locale).publication;
+const lang = (text: string | undefined) => langOf(text, locale);
+
+const years = groups.map(([year, list]) => ({
+  year,
+  // Conferences in the order their first presentation appears in the sheet.
+  conferences: [...groupBy(list, 'conference')].map(([conference, items]) => ({
+    conference,
+    items: items.map((p) => ({ ...p.data, byline: p.data.authors || p.data.first_author })),
+  })),
+}));
+---
+
+{
+  years.map(({ year, conferences }) => (
+    <section class="pub-year" id={yearAnchor(year)}>
+      <h2>{year}</h2>
+      {conferences.map((c) => (
+        <div class="yr-conf">
+          <h3>
+            <span lang={lang(c.conference)}>{c.conference}</span>{' '}
+            <small>{fill(pub.presentationsCount, { n: c.items.length })}</small>
+          </h3>
+          <ul class="yr-list pub-list">
+            {c.items.map((p) => (
+              <li class="yr-item pub-item">
+                <p class="yr-title" lang={lang(p.title)}>
+                  {p.title}
+                </p>
+                <p class="yr-sub">
+                  {p.byline && (
+                    <span class="pub-authors" lang={lang(p.byline)}>
+                      <Byline text={p.byline} slugs={p.members} people={people} locale={locale} />
+                    </span>
+                  )}
+                  <span class="yr-type">{p.type}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+  ))
+}
