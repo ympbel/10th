@@ -56,7 +56,7 @@ PAPER_HEADER = ['나스 위치', '', 'Year', '1st author', '공동 1저자', '�
                 '과제 이름 - "연구실 과제정보" 참고', '']
 PW = len(PAPER_HEADER)
 PAPER_FIELDS = {'year', 'title', 'first_author', 'co_first', 'corresponding', 'journal', 'impact_factor',
-                'acknowledgement', 'projects', 'members', 'link', '_file'}
+                'acknowledgement', 'projects', 'members', 'link', 'order', '_file'}
 
 
 def paper_row(year='', first='', co_first='', corr='', corr2='', title='', journal='', impact='', ack='',
@@ -97,7 +97,7 @@ class PapersTest(unittest.TestCase):
             'first_author': 'Byong Su Choi, Sang Kyun Yoo', 'co_first': [],
             'corresponding': ['Garam Han', 'Soyoung Jeon'], 'journal': 'Journal of Tests', 'impact_factor': 3.5,
             'acknowledgement': 'NRF-0001', 'projects': ['project-01'],
-            'members': ['byong-su-choi', 'sang-kyun-yoo', 'soyoung-jeon'],
+            'members': ['byong-su-choi', 'sang-kyun-yoo', 'soyoung-jeon'], 'order': 1,
             '_file': '2021-byong-su-choi-deep-learning-dose',
         })
 
@@ -120,6 +120,9 @@ class PapersTest(unittest.TestCase):
             self.assertNotIn(sentinel, text)
         for r in self.records:
             self.assertLessEqual(set(r), PAPER_FIELDS)
+
+    def test_sheet_order_kept(self):
+        self.assertEqual([r['order'] for r in self.records], [1, 2, 3])
 
     def test_file_names_unique(self):
         self.assertEqual([r['_file'] for r in self.records], [
@@ -206,6 +209,11 @@ class MapFilesTest(unittest.TestCase):
         self.assertEqual(data['types']['e-Poster'], 'ePoster')
         self.assertEqual(data['types']['ePoster'], 'ePoster')
 
+    def test_possible_typo_pair_left_out_so_it_is_reported(self):
+        conferences = load_json('conferences.json')['conferences']
+        self.assertNotIn('FPRT', conferences)
+        self.assertNotIn('FRPT', conferences)
+
     def test_canonical_names_map_to_themselves(self):
         data = load_json('conferences.json')
         for table in data.values():
@@ -218,7 +226,7 @@ class MapFilesTest(unittest.TestCase):
 PRES_HEADER = ['', 'Year', '', '1st author', '전체저자', '교신저자', '교신저자 2', 'title', 'Conference Name',
                '발표형태', '사사', '세션', '발표 시간']
 PRES_FIELDS = {'year', 'title', 'authors', 'first_author', 'corresponding', 'conference', 'conference_raw', 'type',
-               'session', 'acknowledgement', 'members', '_file'}
+               'session', 'acknowledgement', 'members', 'order', '_file'}
 
 
 def pres_rows():
@@ -253,7 +261,7 @@ class PresentationsTest(unittest.TestCase):
             'year': 2023, 'title': 'Phantom dosimetry with films', 'authors': 'Soyoung Jeon. Sangmin lee, Garam Han',
             'first_author': 'Soyoung Jeon', 'corresponding': ['Garam Han'], 'conference': 'KSMP Fall',
             'conference_raw': 'KSMP (Fall)', 'type': 'ePoster', 'session': 'Session 3', 'acknowledgement': 'NRF-1',
-            'members': ['soyoung-jeon', 'sangmin-lee'], '_file': '2023-soyoung-jeon-phantom-dosimetry-with',
+            'members': ['soyoung-jeon', 'sangmin-lee'], 'order': 1, '_file': '2023-soyoung-jeon-phantom-dosimetry-with',
         })
 
     def test_unchanged_conference_has_no_raw(self):
@@ -293,6 +301,33 @@ class PresentationsTest(unittest.TestCase):
         self.assertIn('학회 초록 8행: 제목 없음', skipped)
         self.assertIn('학회 초록: 빈 행 1개', skipped)
 
+    def test_sheet_order_kept(self):
+        self.assertEqual([r['order'] for r in self.records], [1, 2, 3, 4])
+
+    def test_korean_byline_links_by_korean_name(self):
+        rows = [PRES_HEADER,
+                ['1', '2024', '신 비, 홍나그네, Soyoung Jeon', '신 비', '', '한가람', '', '한글 초록 제목', 'KSMP', 'Oral',
+                 '', '', '']]
+        rep = report.Report()
+        r = presentations.build_presentations(rows, MEMBERS, load_json('conferences.json'), rep)[0]
+        self.assertEqual(r['members'], ['member-5', 'soyoung-jeon'])
+        self.assertEqual(rep.lines(report.UNMATCHED), ['홍나그네'])
+
+    def test_same_title_twice_at_one_conference_reported(self):
+        rows = pres_rows()[:2] + [
+            ['8', '2023', 'Sang Kyun Yoo', 'Sang Kyun Yoo', '', '', '', 'phantom dosimetry with films', 'KSMP Fall',
+             'Poster', '', '', ''],
+            ['9', '2023', 'Sang Kyun Yoo', 'Sang Kyun Yoo', '', '', '', 'Phantom dosimetry with films', 'AAPM',
+             'Poster', '', '', '']]
+        rep = report.Report()
+        records = presentations.build_presentations(rows, MEMBERS, load_json('conferences.json'), rep)
+        self.assertEqual(len(records), 3)
+        self.assertEqual(rep.lines(report.CHECK), [
+            '학회 초록: 2023 "Phantom dosimetry with films" (KSMP Fall) 2건 — 중복 행인지 확인: '
+            'presentations/2023-soyoung-jeon-phantom-dosimetry-with, presentations/2023-sang-kyun-yoo-phantom-dosimetry-with'])
+        self.assertEqual(self.report.lines(report.CHECK)[-1:],
+                         [f'presentations/{self.records[3]["_file"]}: 전체저자 비어 있음'])
+
     def test_only_schema_fields(self):
         for r in self.records:
             self.assertLessEqual(set(r), PRES_FIELDS)
@@ -323,20 +358,20 @@ class AwardsTest(unittest.TestCase):
     def test_korean_name_with_a_space_links(self):
         self.assertEqual(self.records[0], {
             'year': 2022, 'recipient': '신 비', 'member': 'member-5', 'conference': 'KOSRO', 'category': '구연상',
-            'title': 'Award winning talk', '_file': '2022-award-01',
+            'title': 'Award winning talk', 'order': 1, '_file': '2022-award-01',
         })
 
     def test_unmatched_recipient_kept_and_reported(self):
         self.assertEqual(self.records[1], {
             'year': 2021, 'recipient': '나그네', 'conference': 'KSMP', 'category': '포스터상',
-            '_file': '2021-award-02',
+            'order': 2, '_file': '2021-award-02',
         })
         self.assertIn('나그네', self.report.lines(report.UNMATCHED))
 
     def test_unnumbered_row_with_a_year_included(self):
         self.assertEqual(len(self.records), 3)
-        self.assertEqual((self.records[2]['year'], self.records[2]['member'], self.records[2]['_file']),
-                         (2024, 'member-5', '2024-award-03'))
+        self.assertEqual((self.records[2]['year'], self.records[2]['member'], self.records[2]['_file'],
+                          self.records[2]['order']), (2024, 'member-5', '2024-award-03', 3))
 
     def test_row_without_year_skipped_and_reported(self):
         self.assertIn('수상 현황 6행: 연도 없음', self.report.lines(report.SKIPPED))

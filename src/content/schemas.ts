@@ -69,6 +69,8 @@ export const paperSchema = z
     projects: slugs,
     members: slugs,
     link: z.string().optional(),
+    // 1-based position in the source sheet, written by the converter; boards sort within a year by it.
+    order: z.number().int().optional(),
   })
   .strict();
 
@@ -88,6 +90,8 @@ export const presentationSchema = z
     session: z.string().optional(),
     acknowledgement: z.string().optional(),
     members: slugs,
+    // 1-based position in the source sheet, written by the converter; boards sort within a year by it.
+    order: z.number().int().optional(),
   })
   .strict();
 
@@ -101,6 +105,8 @@ export const awardSchema = z
     category: z.string().min(1),
     category_en: z.string().optional(),
     title: z.string().optional(),
+    // 1-based position in the source sheet, written by the converter; boards sort within a year by it.
+    order: z.number().int().optional(),
   })
   .strict();
 

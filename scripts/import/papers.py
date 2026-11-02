@@ -60,7 +60,7 @@ def _impact_factor(value, where, report):
     return None
 
 
-def _record(year, v, file, members, projects, project_map, report):
+def _record(year, v, file, order, members, projects, project_map, report):
     where = f'papers/{file}'
     slugs, unresolved = pj.resolve_project_refs(v['projects'], projects, project_map)
     for piece in unresolved:
@@ -82,12 +82,14 @@ def _record(year, v, file, members, projects, project_map, report):
             [v['first_author'], v['co_first'], v['corresponding'], v['corresponding_2']], members, report),
     }
     record = {k: x for k, x in record.items() if x is not None and x != ''}
+    record['order'] = order
     record['_file'] = file
     return record
 
 
 def build_papers(rows, members, projects, project_map, report):
-    """Paper records (schema keys plus '_file') for the rows with a title and a four-digit year.
+    """Paper records (schema keys plus '_file') for the rows with a title and a four-digit year. 'order' is the
+    record's 1-based position in the sheet, used to sort within a year.
 
     members are member records (professors are never linked), projects the build_projects records, and
     project_map the projects.json mapping. Rows without a title (the IF totals at the bottom) and rows
@@ -107,7 +109,7 @@ def build_papers(rows, members, projects, project_map, report):
             report.add(rp.SKIPPED, f'{SHEET} {n}행: 연도 없음')
             continue
         file = writer.unique_slug(file_base(year, v['first_author'], v['title']), taken)
-        records.append(_record(year, v, file, members, projects, project_map, report))
+        records.append(_record(year, v, file, len(records) + 1, members, projects, project_map, report))
     if empty:
         report.add(rp.SKIPPED, f'{SHEET}: 빈 행 {empty}개')
     report.add(rp.COUNTS, f'논문 {len(records)}건')

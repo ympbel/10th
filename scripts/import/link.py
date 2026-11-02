@@ -2,8 +2,9 @@
 
 Linking is decided once, at conversion time, and written into each record. Only exact matches after
 normalization are linked; near spellings are returned as candidates for the report and never linked.
-Professors have no person pages, so they are never linked; a byline that exactly matches a professor is
-known rather than unmatched and is left out of the report.
+A byline with Latin letters is matched against English names and aliases, one without (a Korean byline)
+against Korean names. Professors have no person pages, so they are never linked; a byline that exactly
+matches a professor is known rather than unmatched and is left out of the report.
 """
 import names
 import report as rp
@@ -18,8 +19,17 @@ def _english(member):
     return [s for s in [member.get('name_en', '')] + list(member.get('aliases', [])) if s]
 
 
-def _is_professor(key, members):
-    return any(names.norm(s) == key for m in members if m.get('role') == 'professor' for s in _english(m))
+def _is_professor(author, members):
+    """True when author is exactly a professor's spelling (English, or Korean for a name without Latin letters)."""
+    key, key_ko = names.norm(author), names.norm_ko(author)
+    for m in members:
+        if m.get('role') != 'professor':
+            continue
+        if key and any(names.norm(s) == key for s in _english(m)):
+            return True
+        if not key and key_ko and names.norm_ko(m.get('name', '')) == key_ko:
+            return True
+    return False
 
 
 def _only(slugs):
@@ -53,10 +63,16 @@ def candidates(author, members):
     return list(dict.fromkeys(found))
 
 
+def _match(author, members):
+    """match_en for a name with Latin letters, else match_ko."""
+    return match_en(author, members) if names.norm(author) else match_ko(author, members)
+
+
 def link_authors(strings, members):
     """(slugs, unmatched, near) for author-list strings.
 
-    Each string is split with names.split_authors and every name is matched with match_en. slugs are the
+    Each string is split with names.split_authors and every name is matched with match_en, or with match_ko
+    when it has no Latin letters. slugs are the
     matched members, de-duplicated in order of first appearance. unmatched lists each unmatched name once;
     near pairs an unmatched name with its candidate slugs when it has any. A professor's exact spelling is in
     neither list (never linked, and never offered as a student's alias).
@@ -64,11 +80,11 @@ def link_authors(strings, members):
     slugs, unmatched, near = [], [], []
     for s in strings:
         for author in names.split_authors(s or ''):
-            slug = match_en(author, members)
+            slug = _match(author, members)
             if slug:
                 if slug not in slugs:
                     slugs.append(slug)
-            elif author not in unmatched and not _is_professor(names.norm(author), members):
+            elif author not in unmatched and not _is_professor(author, members):
                 unmatched.append(author)
                 found = candidates(author, members)
                 if found:

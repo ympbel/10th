@@ -27,4 +27,8 @@ category_en: "Best Oral Presentation Award"
 
 # 수상한 발표 제목.
 title: "Development of a test method"
+
+# 시트 순서 (자동). 원본 시트에서 몇 번째 항목이었는지(1부터, 정수, 따옴표 없이). 게시판은 같은 해 안에서 이 순서로 놓습니다.
+# 변환 스크립트가 채웁니다. 새로 쓸 때는 같은 해 항목들 사이에서 놓일 자리에 맞는 숫자를 씁니다.
+order: 42
 ---

@@ -48,7 +48,7 @@ def _authors(v, where, report):
     return headed or unheaded
 
 
-def _record(year, v, file, members, conf_map, report):
+def _record(year, v, file, order, members, conf_map, report):
     where = f'presentations/{file}'
     for key in REQUIRED:
         if not v[key]:
@@ -70,15 +70,29 @@ def _record(year, v, file, members, conf_map, report):
             [authors, v['first_author'], v['corresponding'], v['corresponding_2']], members, report),
     }
     record = {k: x for k, x in record.items() if x is not None and x != ''}
+    record['order'] = order
     record['_file'] = file
     return record
+
+
+def _report_repeats(records, report):
+    """Report records sharing year, title (ignoring case) and conference: possibly one row entered twice."""
+    groups = {}
+    for r in records:
+        groups.setdefault((r['year'], r['title'].casefold(), r['conference']), []).append(r)
+    for (year, _, conference), group in groups.items():
+        if len(group) > 1:
+            files = ', '.join(f'presentations/{r["_file"]}' for r in group)
+            report.add(rp.CHECK, f'{SHEET}: {year} "{group[0]["title"]}" ({conference}) {len(group)}건 — '
+                                 f'중복 행인지 확인: {files}')
 
 
 def build_presentations(rows, members, conf_map, report):
     """Presentation records (schema keys plus '_file') for the rows with a title and a four-digit year.
 
     conf_map is conferences.json: {'conferences': {raw: canonical}, 'types': {raw: canonical}}. File names
-    follow papers.file_base.
+    follow papers.file_base; 'order' is the record's 1-based position in the sheet. Records repeating the
+    year, title and conference of another are reported for checking (all are kept).
     """
     h = sheets.find_header(rows, COLUMNS['title'], COLUMNS['conference'])
     index = {key: sheets.header_index(rows[h], label) for key, label in COLUMNS.items()}
@@ -96,7 +110,8 @@ def build_presentations(rows, members, conf_map, report):
             report.add(rp.SKIPPED, f'{SHEET} {n}행: 연도 없음')
             continue
         file = writer.unique_slug(file_base(year, v['first_author'], v['title']), taken)
-        records.append(_record(year, v, file, members, conf_map, report))
+        records.append(_record(year, v, file, len(records) + 1, members, conf_map, report))
+    _report_repeats(records, report)
     if empty:
         report.add(rp.SKIPPED, f'{SHEET}: 빈 행 {empty}개')
     report.add(rp.COUNTS, f'학회 발표 {len(records)}건')

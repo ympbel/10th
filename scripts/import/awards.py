@@ -22,7 +22,8 @@ REQUIRED = ('recipient', 'conference', 'category')
 
 
 def build_awards(rows, members, report):
-    """Award records (schema keys plus '_file' = '<year>-award-<nn>', nn the 1-based order in the sheet)."""
+    """Award records (schema keys plus '_file' = '<year>-award-<nn>'); nn and 'order' are the record's 1-based
+    position in the sheet."""
     h = sheets.find_header(rows, COLUMNS['year'], COLUMNS['recipient'])
     index = {key: sheets.header_index(rows[h], label) for key, label in COLUMNS.items()}
     picked, empty = sheets.pick_rows(rows, h, index)
@@ -48,6 +49,7 @@ def build_awards(rows, members, report):
             'title': v['title'],
         }
         record = {k: x for k, x in record.items() if x is not None and x != ''}
+        record['order'] = len(records) + 1
         record['_file'] = file
         records.append(record)
     if empty:

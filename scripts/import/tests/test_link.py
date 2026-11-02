@@ -95,6 +95,13 @@ class LinkAuthorsTest(unittest.TestCase):
         self.assertTrue(names.near('Garam Han', 'Garam Hahn'))
         self.assertEqual(link.link_authors(['Garam Han, Soyoung Jeon'], people), (['soyoung-jeon'], [], []))
 
+    def test_korean_byline_matches_korean_name(self):
+        self.assertEqual(link.link_authors(['신 비, Soyoung Jeon, 홍나그네'], MEMBERS),
+                         (['member-5', 'soyoung-jeon'], ['홍나그네'], []))
+
+    def test_professor_korean_name_neither_linked_nor_reported(self):
+        self.assertEqual(link.link_authors(['한가람, 신비'], MEMBERS), (['member-5'], [], []))
+
     def test_empty_strings(self):
         self.assertEqual(link.link_authors(['', '  '], MEMBERS), ([], [], []))
 
