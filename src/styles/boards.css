@@ -189,8 +189,16 @@
   .board-tbl {
     table-layout: auto;
   }
-  .board-tbl thead th {
+  /* (0,2,2): beats the (0,2,0) column widths above. */
+  .board-tbl thead th[class] {
     width: auto;
+  }
+  /* Narrower side padding, so a long unbroken word (a Korean compound under keep-all, an English term) still fits
+     the four award columns in a phone's width. */
+  .board-tbl th,
+  .board-tbl td {
+    padding-right: var(--s-2xs);
+    padding-left: var(--s-2xs);
   }
   /* The period goes under the title. */
   .project {
