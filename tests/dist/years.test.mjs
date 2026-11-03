@@ -135,7 +135,8 @@ for (const [lang, prefix] of [
     const e = expected(2022);
     const slugs = (part) =>
       $(`section[data-part="${part}"] .name[data-member]`).map((_, el) => $(el).attr('data-member')).get();
-    assert.equal(slugs('degrees').length, 4);
+    assert.ok(e.degrees.length > 0, 'a member took a degree in 2022');
+    assert.equal(slugs('degrees').length, e.degrees.length);
     assert.deepEqual(new Set(slugs('degrees')), new Set(e.degrees));
     assert.deepEqual(new Set(slugs('joined')), new Set(e.joined));
     assert.equal(slugs('joined').length, e.joined.length);
@@ -143,10 +144,17 @@ for (const [lang, prefix] of [
       assert.equal($(`section[data-part="${part}"] .yr-item`).length, e[part].length, part);
     }
     assert.ok(text($('section[data-part="seminars"]')).includes(String(e.seminars.length)));
-    assert.equal(
-      $('section[data-part="seminars"] a').attr('href'),
-      `${BASE}${prefix}/activity/seminars/`,
-    );
+  });
+
+  test(`${lang}: the seminars link goes to the year's section of the seminars board`, () => {
+    const board = page(join(dir, 'activity', 'seminars'));
+    const linked = YEARS.filter((y) => expected(y).seminars.length > 0);
+    assert.ok(linked.includes(2022), 'seminars in 2022');
+    for (const y of linked) {
+      const href = page(path(y))('section[data-part="seminars"] a').attr('href');
+      assert.equal(href, `${BASE}${prefix}/activity/seminars/#y${y}`, `${y}`);
+      assert.equal(board(`section.pub-year#y${y}`).length, 1, `${y}`);
+    }
   });
 
   test(`${lang}: 2022 paper bylines link the paper's members to their person pages`, () => {

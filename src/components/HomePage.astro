@@ -132,7 +132,8 @@ const panels = YEARS.map((year, i) => {
 // Board links: every menu item with its number of records.
 const boardCounts: Record<ItemKey, number> = {
   students: members.filter((m) => m.data.role === 'student').length,
-  alumni: members.filter((m) => m.data.role === 'alumni' || m.data.role === 'former').length,
+  // What the alumni board lists: everyone with a degree date (a current student too), then the former members.
+  alumni: members.filter((m) => m.data.degree?.date || m.data.role === 'former').length,
   papers: papers.length,
   patents: patents.length,
   presentations: presentations.length,

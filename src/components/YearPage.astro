@@ -11,7 +11,7 @@ import YearPart from './years/YearPart.astro';
 import PaperItem from './PaperItem.astro';
 import MemberLink from './people/MemberLink.astro';
 import PhotoGrid from './PhotoGrid.astro';
-import { yearStats } from '../lib/years.ts';
+import { yearAnchor, yearStats } from '../lib/years.ts';
 import { groupBy, sortByYearDesc, sortMembersByJoined, yearMonth } from '../lib/content.ts';
 import { awardRecipient, displayName, field } from '../lib/people.ts';
 import { langOf, localePath, type Locale } from '../lib/locale.ts';
@@ -249,7 +249,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
   <YearPart part="seminars" empty={seminarCount === 0} locale={locale}>
     <p class="yr-seminars">
       {fill(yp.seminarsCount, { n: seminarCount })}
-      <a class="more" href={url(localePath('/activity/seminars/', locale))}>
+      <a class="more" href={`${url(localePath('/activity/seminars/', locale))}#${yearAnchor(year)}`}>
         {yp.seminarsLink} <span aria-hidden="true">→</span>
       </a>
     </p>

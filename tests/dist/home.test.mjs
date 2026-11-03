@@ -27,10 +27,15 @@ const FIGURES = [
   count('projects'),
 ];
 
+/** Names a timeline column shows; the rest are counted as `+n`. */
+const SHOWN_JOINED = 4;
+/** How many members joined in year `y` (`joined` starts with the year). */
+const joinedIn = (y) => members.filter((fm) => (scalar(fm, 'joined') ?? '').slice(0, 4) === String(y)).length;
+
 /** The board link counts in menu order. */
 const BOARDS = [
   roles.filter((r) => r === 'student').length,
-  roles.filter((r) => r === 'alumni' || r === 'former').length,
+  members.filter((fm) => nested(fm, 'degree', 'date') || scalar(fm, 'role') === 'former').length,
   papers.length,
   count('patents'),
   count('presentations'),
@@ -95,10 +100,25 @@ for (const [lang, path, prefix] of [
     assert.deepEqual($('.timeline a.on').map((_, a) => $(a).attr('data-year')).get(), ['2026']);
   });
 
-  test(`${lang}: the 2024 column shows four who joined and +8`, () => {
-    const col = $('.timeline a[data-year="2024"]');
-    assert.equal(col.find('.tl-name').length, 4);
-    assert.equal(text(col.find('.tl-more')), '+8');
+  test(`${lang}: each timeline column names up to four who joined that year and counts the rest as +n`, () => {
+    assert.ok(joinedIn(2024) > SHOWN_JOINED, '2024 has more joiners than the column names');
+    for (const y of YEARS) {
+      const n = joinedIn(y);
+      const col = $(`.timeline a[data-year="${y}"]`);
+      assert.equal(col.find('.tl-name').length, Math.min(SHOWN_JOINED, n), `${y}`);
+      assert.equal(text(col.find('.tl-more')), n > SHOWN_JOINED ? `+${n - SHOWN_JOINED}` : '', `${y}`);
+    }
+  });
+
+  test(`${lang}: the alumni board link counts the people the alumni board lists`, () => {
+    const board = page(join(path, 'people', 'alumni'));
+    const listed = new Set(
+      board('tr[data-member], .former-list li[data-member]')
+        .map((_, el) => board(el).attr('data-member'))
+        .get(),
+    );
+    assert.ok(listed.size > 0);
+    assert.equal(BOARDS[1], listed.size);
   });
 
   test(`${lang}: eleven year panels, only 2026 visible, each with links to its year page`, () => {

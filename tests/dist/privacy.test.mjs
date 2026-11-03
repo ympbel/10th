@@ -26,7 +26,8 @@ const PATENT_WORDS = COLUMN_WORDS.filter((w) => w !== '등록번호');
 // boards show: 31 values in the imported content match it (patent `PCT/KR2009/006655`, grant numbers such as
 // `A080756` in paper acknowledgements, budgets such as `640000`). So the pages are checked for the excluded columns'
 // names instead, which only a leaked column would bring. `등록번호` is left out: the patents board shows it as a label.
-const PAGE_WORDS = ['MBTI', '생년월일', '학번', '과학기술인'];
+// The footer's phone label is `TEL.`, so `전화` does not occur on a page unless a column leaks.
+const PAGE_WORDS = ['전화', 'Email', 'MBTI', '생년월일', '학번', '실무담당자', '과학기술인'];
 
 /** Content markdown files (relative to src/content/), templates (`_*.md`) excluded: a template may name an excluded
  * column to say it has no slot. */

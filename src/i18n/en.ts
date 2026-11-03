@@ -12,7 +12,6 @@ export const en: typeof ko = {
   breadcrumb: 'You are here',
   home: 'Home',
   more: 'More',
-  preparing: 'Coming soon',
   boards: {
     students: 'Students',
     alumni: 'Alumni',

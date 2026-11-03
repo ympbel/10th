@@ -11,7 +11,6 @@ export const ko = {
   breadcrumb: '현재 위치',
   home: '홈',
   more: '더보기',
-  preparing: '준비 중',
   /** Board titles, keyed by menu item key; also the menu item labels (src/lib/menu.ts). */
   boards: {
     students: '학생 현황',

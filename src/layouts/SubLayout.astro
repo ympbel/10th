@@ -19,8 +19,6 @@ interface Props {
   locale: Locale;
   /** `menu` (default): the section's side navigation. `years`: the side area holds the `side` slot (year tabs). */
   side?: 'menu' | 'years';
-  /** The year a year page shows, for its year tab rail. */
-  currentYear?: number;
 }
 
 const { title, sectionKey, currentHref, locale, side = 'menu' } = Astro.props;

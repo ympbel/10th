@@ -59,12 +59,12 @@
 
 ## 2. 로컬 실행
 
-Node.js 24 이상을 씁니다(`.nvmrc`, GitHub Actions도 24). 저장소 폴더에서:
+Node.js 24 이상을 씁니다(`.nvmrc`, GitHub Actions도 24). `npm test`는 변환 스크립트 테스트에 Python 3(`python3`, 표준 라이브러리만)도 씁니다. 저장소 폴더에서:
 
 ```bash
 npm install     # 처음 한 번, 또는 package.json이 바뀌었을 때
 npm run dev     # http://localhost:4321/10th/ 에서 미리보기. 파일을 고치면 바로 반영됩니다
-npm test        # 단위 테스트 → 빌드(dist/) → 빌드 결과 검사
+npm test        # 변환 스크립트 테스트 → 단위 테스트 → 빌드(dist/) → 빌드 결과 검사
 ```
 
 - 사이트는 하위 경로에 있으므로 `http://localhost:4321/`이 아니라 `http://localhost:4321/10th/`을 엽니다. 앞의 주소는 404입니다.
@@ -344,11 +344,10 @@ npm test        # 단위 테스트 → 빌드(dist/) → 빌드 결과 검사
 
 `npm test`가 차례로 돌리는 것:
 
+- `scripts/import/tests/` (`npm run test:import`, `python3 -m unittest discover -s scripts/import/tests -t scripts/import`): 변환 스크립트(시트 읽기, 허용 열, 저자 연결, 파일 이름, 보고서). `data/` 없이 가짜 입력으로 돕니다.
 - `tests/unit/` (`npm run test:unit`): 경로에 `base` 붙이기(`url()`, 마크다운 플러그인), 템플릿 제외 규칙과 빈 컬렉션, 메뉴와 언어 경로, 정렬·집계·연도별 숫자, 사람 조회, 사진 탭, 홈 연도 패널.
 - 빌드 (`npm run build`): frontmatter 오류가 여기서 걸립니다.
 - `tests/dist/` (`npm run test:dist`): 모든 사이트 안 링크·이미지가 `/10th/`로 시작하고 실제 파일로 이어지는지, 상단 바·푸터·KR/EN 토글, CSS 순서, 개인정보 검사, 홈 숫자와 내용 파일 건수의 일치, 연도 페이지, 사람·출판·게시판·빈 게시판의 내용, 약속한 페이지가 모두 있는지(`pages.test.mjs`).
-
-변환 스크립트는 따로 테스트합니다: `python3 -m unittest discover -s scripts/import/tests -t scripts/import`.
 
 ### 배포
 
@@ -359,7 +358,7 @@ git commit -m "content: 2026 논문 추가"
 git push origin main
 ```
 
-push하면 GitHub Actions의 "Deploy to GitHub Pages" 워크플로가 `npm ci` → 단위 테스트 → 빌드 → 빌드 결과 검사를 하고, 모두 통과하면 GitHub Pages에 올립니다. **테스트가 하나라도 실패하면 배포하지 않으며**, 사이트는 이전 상태 그대로입니다. 진행 상황은 저장소의 Actions 탭 또는:
+push하면 GitHub Actions의 "Deploy to GitHub Pages" 워크플로가 `npm ci` → 변환 스크립트 테스트 → 단위 테스트 → 빌드 → 빌드 결과 검사를 하고, 모두 통과하면 GitHub Pages에 올립니다. **테스트가 하나라도 실패하면 배포하지 않으며**, 사이트는 이전 상태 그대로입니다. 진행 상황은 저장소의 Actions 탭 또는:
 
 ```bash
 gh run list --workflow deploy.yml --limit 3

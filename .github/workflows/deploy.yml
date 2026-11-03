@@ -18,6 +18,8 @@ jobs:
           cache: npm
       - run: npm ci
       # A failing test stops the job here, so nothing is uploaded and the deploy job does not run.
+      # The converter tests (scripts/import) need only the Python 3 standard library and no data/.
+      - run: python3 -m unittest discover -s scripts/import/tests -t scripts/import
       - run: npm run test:unit
       - run: npm run build
       - run: npm run test:dist
