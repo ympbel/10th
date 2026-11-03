@@ -2,17 +2,26 @@
 
 | 항목 | 건수 | 기대값 | 새로 씀 | 그대로 둠 | 대조 |
 |---|---:|---:|---:|---:|---|
-| papers | 217 | 217 | 217 | 0 | 맞음 |
-| presentations | 379 | 379 | 379 | 0 | 맞음 |
-| awards | 41 | 41 | 41 | 0 | 맞음 |
+| members | 61 | 61 | 0 | 61 | 맞음 |
+| professors | 8 | 8 | 0 | 8 | 맞음 |
+| papers | 217 | 217 | 0 | 217 | 맞음 |
+| presentations | 379 | 379 | 0 | 379 | 맞음 |
+| awards | 41 | 41 | 0 | 41 | 맞음 |
+| challenges | 4 | 4 | 0 | 4 | 맞음 |
+| projects | 15 | 15 | 0 | 15 | 맞음 |
+| patents | 7 | 7 | 0 | 7 | 맞음 |
+| seminars | 431 | 431 | 0 | 431 | 맞음 |
 
 ## 건수
 
-- 구성원 61명, 교수 8명 (src/content/members에서 읽음)
+- 구성원 61명, 교수 8명
 - 과제 15건
 - 논문 217건
 - 학회 발표 379건
 - 수상 41건
+- 챌린지 4건
+- 특허 7건
+- 세미나 431건
 
 ## 보정
 
@@ -536,7 +545,8 @@
 
 ## 날짜 누락
 
-없음
+- seminars/2020-03-30-1: event_date
+- seminars/2022-10-26-184: event_date
 
 ## 건너뛴 행
 
@@ -569,3 +579,10 @@
 - 학회 초록: 2023 "Synthetic CT Generation using Transformer-based Cycle-GAN and Geometric Conserving Loss for MR-only Radiotherapy" (KSMP Spring) 2건 — 중복 행인지 확인: presentations/2023-chan-woong-lee-synthetic-ct-generation, presentations/2023-chan-woong-lee-synthetic-ct-generation-2
 - 학회 초록: 2022 "환자 데이터를 활용한 선형가속기 사용 시설의 자동 차폐 평가 프로그램 개발" (KSMP Spring) 2건 — 중복 행인지 확인: presentations/2022-dong-hyeok-choi-untitled, presentations/2022-dong-hyeok-choi-untitled-2
 - 학회 초록: 2021 "Validation of Geant4 Electromagnetic Physical Models Based on Theoretical Data for Biological Effectiveness in Particle Therapy" (KJMP) 2건 — 중복 행인지 확인: presentations/2021-hyo-kyeong-kang-validation-of-geant4, presentations/2021-min-cheol-han-validation-of-geant4
+- seminars/2022-10-26-184: presenter 비어 있음
+- seminars/2025-02-20-389: presenter 비어 있음
+- seminars/2025-04-02-392: presenter 비어 있음
+- seminars/2025-04-02-393: presenter 비어 있음
+- seminars/2025-04-02-395: presenter 비어 있음
+- seminars/2025-04-02-397: presenter 비어 있음
+- seminars/2025-12-31-464: presenter 비어 있음
