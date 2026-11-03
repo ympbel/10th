@@ -9,5 +9,6 @@ conference: "KTCVS"
 type: "Oral"
 members:
   - "juyoung-lee"
+  - "lee-kang-houn"
 order: 346
 ---

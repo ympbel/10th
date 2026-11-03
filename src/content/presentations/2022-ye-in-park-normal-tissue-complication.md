@@ -9,5 +9,6 @@ conference: "KOSRO"
 type: "Poster"
 members:
   - "ye-in-park"
+  - "min-seo-choi"
 order: 214
 ---

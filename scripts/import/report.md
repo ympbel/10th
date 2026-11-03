@@ -2,45 +2,27 @@
 
 | 항목 | 건수 | 기대값 | 새로 씀 | 그대로 둠 | 대조 |
 |---|---:|---:|---:|---:|---|
-| members | 61 | 61 | 61 | 0 | 맞음 |
-| professors | 8 | 8 | 8 | 0 | 맞음 |
 | papers | 217 | 217 | 217 | 0 | 맞음 |
 | presentations | 379 | 379 | 379 | 0 | 맞음 |
 | awards | 41 | 41 | 41 | 0 | 맞음 |
-| challenges | 4 | 4 | 4 | 0 | 맞음 |
-| projects | 15 | 15 | 15 | 0 | 맞음 |
-| patents | 7 | 7 | 7 | 0 | 맞음 |
-| seminars | 431 | 431 | 431 | 0 | 맞음 |
 
 ## 건수
 
-- 구성원 61명, 교수 8명
+- 구성원 61명, 교수 8명 (src/content/members에서 읽음)
 - 과제 15건
 - 논문 217건
 - 학회 발표 379건
 - 수상 41건
-- 챌린지 4건
-- 특허 7건
-- 세미나 431건
+
+## 보정
+
+- papers/2002-benjamin-c-lewis-evaluating-motion-of → papers/2020-benjamin-c-lewis-evaluating-motion-of: year 2020
+- presentations/2004-choi-sungwoon-correlation-study-between → presentations/2024-choi-sungwoon-correlation-study-between: year 2024
 
 ## 별칭 후보
 
-- Byoung Su Choi → byong-su-choi
-- Jooyoung lee → juyoung-lee
-- Jong Hoon Kim → jeongheon-kim
-- Jae Young Lee → juyoung-lee
-- Yondo Yun → yongdo-yun
-- Byoungsu Choi → byong-su-choi
-- Min-Seok Cho → min-seo-choi
-- Yu Jin Park → ye-in-park
-- Inkyoung Park → inkyung-park
-- Jea Hyun Seok → jae-hyun-seok
-- Kang houn Lee → lee-kang-houn
-- Kang Houn Lee → lee-kang-houn
-- DO Shin → bi-shin
-- DH Shin → bi-shin
-- Byeong Su Choi → byong-su-choi
-- Choi Sungwoon → sungwoon-choi
+- Jae Sung Lee → juyoung-lee
+- Jonghyun Kim → jeongheon-kim
 
 ## 미연결 저자
 
@@ -91,14 +73,12 @@
 - Hong In Yoon
 - Sunmi Kim
 - Tae Suk Suh
-- Byoung Su Choi
 - Sven Olberg
 - Sohyun Ahn
 - Wloo Sang Ahn
 - Woong Sub Koom
 - A Reum Choe
 - Jung-in Kim
-- Jooyoung lee
 - Sung yong park
 - Justin Park
 - Joongyo Lee
@@ -191,7 +171,6 @@
 - Pyo H
 - Eunhyuk Shin
 - Jun Suk Shin
-- Jong Hoon Kim
 - Sung Ho Park
 - Seonkyu Kim
 - Hae Sun Jeong
@@ -229,7 +208,6 @@
 - Jongeun Kim
 - Inhwan Yeo
 - Hoyeon Lee
-- Jae Young Lee
 - Dongryul Oh
 - Soorim Han
 - Yeong-bi Kim
@@ -237,7 +215,6 @@
 - Sewuk Chang
 - Heejeong Lee
 - Kyung Hwan Kim
-- Yondo Yun
 - Xiaoying Liang
 - Bo Lu
 - Jun Tan
@@ -299,14 +276,12 @@
 - Chae-Seon Hong1*
 - Ph.D.†
 - Paulo Jorge Ribeiro Da Fonte
-- Byoungsu Choi
 - Shanti Marasini
 - Alex Macintyre
 - Eunsu Kim
 - Jin Sook Kim
 - Do Won Kim
 - Chan Hyeon Kim
-- Min-Seok Cho
 - Joseph Deasy
 - Andreas Rimner
 - Austen N. Curcuru
@@ -330,7 +305,6 @@
 - H. Michael Gach
 - Ji Hoon Pyo
 - Hyounggun Lee
-- Yu Jin Park
 - H. Kendall Kiser
 - Austen Curcuru
 - Michael Gach
@@ -358,7 +332,6 @@
 - Minsoo Chun
 - Kyung Hwan Shin
 - Jang-Hwan Choi
-- Inkyoung Park
 - Deepak K. Shrestha
 - Vijayalakshmi Shridhar
 - Michael Dohopolski
@@ -379,7 +352,6 @@
 - Eric  Laugeman
 - Taeho Kimqqaaaaàà
 - Yongjea Jang
-- Jea Hyun Seok
 - Jeesuk Chang
 - Ryeonghwang Park
 - Soon Sung Lee
@@ -429,10 +401,8 @@
 - Yang Kyun Park
 - Mu-han Lin
 - Sven Olberg Jin Sung Kim
-- Kang houn Lee
 - B Choi
 - Mu han Lim
-- Kang Houn Lee
 - Dan Nguyen
 - You Zhang
 - Jing Wang
@@ -467,8 +437,6 @@
 - DW Kim
 - WK Chung
 - EJ Heo
-- DO Shin
-- DH Shin
 - JS Kim
 - S Olberg
 - B Cai
@@ -479,7 +447,6 @@
 - GH Jahng
 - SH Choi
 - Thomas Mazur
-- Byeong Su Choi
 - MS
 - Hokin Kim
 - Sanchit Hira
@@ -540,7 +507,6 @@
 - J Jung
 - H Li
 - R Khan
-- Choi Sungwoon
 - Kim Dong Wook
 
 ## 과제 미해결 값
@@ -570,8 +536,7 @@
 
 ## 날짜 누락
 
-- seminars/2020-03-30-1: event_date
-- seminars/2022-10-26-184: event_date
+없음
 
 ## 건너뛴 행
 
@@ -604,10 +569,3 @@
 - 학회 초록: 2023 "Synthetic CT Generation using Transformer-based Cycle-GAN and Geometric Conserving Loss for MR-only Radiotherapy" (KSMP Spring) 2건 — 중복 행인지 확인: presentations/2023-chan-woong-lee-synthetic-ct-generation, presentations/2023-chan-woong-lee-synthetic-ct-generation-2
 - 학회 초록: 2022 "환자 데이터를 활용한 선형가속기 사용 시설의 자동 차폐 평가 프로그램 개발" (KSMP Spring) 2건 — 중복 행인지 확인: presentations/2022-dong-hyeok-choi-untitled, presentations/2022-dong-hyeok-choi-untitled-2
 - 학회 초록: 2021 "Validation of Geant4 Electromagnetic Physical Models Based on Theoretical Data for Biological Effectiveness in Particle Therapy" (KJMP) 2건 — 중복 행인지 확인: presentations/2021-hyo-kyeong-kang-validation-of-geant4, presentations/2021-min-cheol-han-validation-of-geant4
-- seminars/2022-10-26-184: presenter 비어 있음
-- seminars/2025-02-20-389: presenter 비어 있음
-- seminars/2025-04-02-392: presenter 비어 있음
-- seminars/2025-04-02-393: presenter 비어 있음
-- seminars/2025-04-02-395: presenter 비어 있음
-- seminars/2025-04-02-397: presenter 비어 있음
-- seminars/2025-12-31-464: presenter 비어 있음

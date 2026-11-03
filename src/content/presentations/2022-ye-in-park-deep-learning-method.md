@@ -11,5 +11,6 @@ conference_raw: "64th AAPM"
 type: "ePoster"
 members:
   - "ye-in-park"
+  - "min-seo-choi"
 order: 248
 ---

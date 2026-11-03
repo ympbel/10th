@@ -4,6 +4,8 @@ name: "이주영"
 name_en: "Juyoung Lee"
 aliases:
   - "Juyoung Lee"
+  - "Jooyoung lee"
+  - "Jae Young Lee"
 department: "융합의학과"
 joined: "2020-03"
 degree:

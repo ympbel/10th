@@ -11,6 +11,7 @@ conference_raw: "KSMP (Spring)"
 type: "Poster"
 session: "방사선치료 물리"
 members:
+  - "ye-in-park"
   - "donghyeok-choi"
 order: 176
 ---

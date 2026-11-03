@@ -19,6 +19,7 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
 | `--only members,papers` | 이 컬렉션만 쓰고, 세고, 대조합니다. 연결에 필요한 과제는 쓰지 않아도 시트에서 읽습니다. `members`가 빠지면 구성원은 시트가 아니라 이미 있는 `src/content/members/*.md` 파일에서 읽습니다(아래 "다시 돌릴 때"). 이름: `members`, `papers`, `presentations`, `awards`, `challenges`, `projects`, `patents`, `seminars`. |
 | `--check` | 건수가 기대값과 다르면 종료 코드 1로 끝납니다. |
 | `--report` | 보고서를 쓸 곳. 기본은 `scripts/import/report.md`. |
+| `--corrections` | 시트 오타 보정표. 기본은 `scripts/import/corrections.json`(아래 "시트 오타 보정"). |
 
 끝나면 건수 표(건수, 기대값, 새로 씀, 그대로 둠, 대조)를 출력하고 `report.md` 맨 위에도 적습니다. 기대값은 `run.py`의 `EXPECTED` 표 한 곳에만 있습니다.
 
@@ -41,9 +42,27 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
 - 학회 이름과 발표 형태는 `conferences.json`으로 표기를 통일합니다. 표에 없는 표기는 그대로 두고 "새 표기"에 적습니다.
 - 논문의 과제 이름은 과제명이나 닉네임이 정확히 같을 때, 또는 `projects.json`(`{"줄임말": "project-03"}`)에 적힌 줄임말일 때만 연결합니다. 나머지는 "과제 미해결 값"에 적습니다.
 
+## 시트 오타 보정 (`corrections.json`)
+
+시트를 고치지 않고 시트 값의 오타를 바로잡는 표입니다. 손으로 관리하며, `--force`로 다시 써도 보정이 남습니다.
+
+```json
+{
+  "papers/2002-benjamin-c-lewis-evaluating-motion-of": {"year": 2020},
+  "presentations/2004-choi-sungwoon-correlation-study-between": {"year": 2024}
+}
+```
+
+- 열쇠는 `"<컬렉션>/<보정 전 파일 이름>"`, 곧 시트 값으로 정해지는 파일 이름입니다. 값은 `{필드: 값}`이고 파일에 쓰는 필드 이름(`year`, `title`, `journal` 등)을 씁니다. 연도는 숫자로 씁니다.
+- 되는 컬렉션은 파일 이름 규칙이 항목에서 나오는 `papers`, `presentations`, `awards`입니다(`run.py`의 `FILE_NAMES`, 빌더와 같은 규칙: `papers.file_base`, `awards.file_base`).
+- 시트에서 항목을 만든 뒤 쓰기 전에 값을 덮어쓰고, 고친 항목으로 파일 이름을 다시 정합니다. 연도를 고치면 파일 이름도 바뀌고(`2002-…` → `2020-…`), 다른 항목이 그 이름을 쓰고 있으면 `-2`를 붙입니다. 저자 연결(`members`)은 시트의 저자 표기로 이미 정해진 뒤이므로 저자 표기는 여기서 고치지 않습니다.
+- 적용한 보정은 `report.md`의 "보정"에 `이전 이름 → 새 이름: 필드 값`으로 적힙니다. 다른 구역의 줄(확인할 값 등)은 보정 전 파일 이름을 씁니다.
+- 틀린 열쇠는 오류입니다. 컬렉션 이름이 틀리거나 그 컬렉션에 보정 규칙이 없으면, 값이 빈 객체이거나 객체가 아니면, `_`로 시작하는 필드(`_file`)를 적으면 읽을 때 멈춥니다. 열쇠의 파일 이름이 시트에서 나오지 않으면 그 컬렉션을 만들 때 열쇠를 적은 `ValueError`로 멈춥니다. 모든 컬렉션을 만든 뒤에 쓰기 시작하므로 이때는 아무 파일도 쓰지 않습니다. `--only`에 없는 컬렉션의 열쇠는 그 실행에서 검사하지 않습니다.
+- `--force`는 파일을 지우지 않으므로 이름이 바뀐 항목의 원래 파일은 `git rm`으로 지웁니다. 남아 있으면 "확인할 값"에 적힙니다.
+
 ## `report.md`
 
-사용자가 확인할 것을 모은 보고서입니다. 건수 표 아래에 다음 구역이 있습니다: 건수, 별칭 후보, 미연결 저자, 과제 미해결 값, 날짜 누락, 건너뛴 행(행 번호와 이유, 빈 행 수), 새 표기, 확인할 값(비어 있는 필수 값, 서로 다른 저자 열, 숫자가 아닌 값, 중복일 수 있는 발표 행). 행 번호, 열 이름, 저자 표기, 제목, 파일 이름만 적고 개인정보 열의 값은 적지 않습니다.
+사용자가 확인할 것을 모은 보고서입니다. 건수 표 아래에 다음 구역이 있습니다: 건수, 보정(`corrections.json`에서 적용한 값), 별칭 후보, 미연결 저자, 과제 미해결 값, 날짜 누락, 건너뛴 행(행 번호와 이유, 빈 행 수), 새 표기, 확인할 값(비어 있는 필수 값, 서로 다른 저자 열, 숫자가 아닌 값, 중복일 수 있는 발표 행). 행 번호, 열 이름, 저자 표기, 제목, 파일 이름만 적고 개인정보 열의 값은 적지 않습니다.
 
 ## 개인정보
 
@@ -61,7 +80,8 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
   python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/content --out src/content --force --only papers,presentations,awards --check
   ```
 - `report.md`는 돌릴 때마다 새로 씁니다. `--only`로 돌리면 그 컬렉션과 연결에 쓴 컬렉션의 내용만 담깁니다.
-- `--force`는 파일을 지우지 않습니다. 시트에서 나오지 않는 파일(운영자가 새로 쓴 항목, 이름을 바꾼 구성원 파일)은 그대로 남고, 연결도 다시 정해지지 않습니다. 그런 파일의 `members`는 손으로 고칩니다.
+- `--force`는 파일을 지우지 않습니다. 시트에서 나오지 않는 파일(운영자가 새로 쓴 항목, 이름을 바꾼 구성원 파일, `corrections.json`으로 이름이 바뀐 항목의 원래 파일)은 그대로 남고, 연결도 다시 정해지지 않습니다. 그런 파일의 `members`는 손으로 고칩니다.
+- 시트 값의 오타를 항목 파일에서만 고치면 `--force`로 다시 쓸 때 되돌아갑니다. 다시 쓸 컬렉션이면 `corrections.json`에 적습니다.
 - 구성원을 시트에서 다시 만들면(`--only`에 `members`, 또는 `--only` 없이 `--force`) 이어 받는 것은 `aliases`뿐입니다. 지도교수의 `link`, 졸업 처리(`role`, `degree`), 채운 `*_en` 같은 손으로 고친 값은 시트 값으로 돌아가고, 이름을 바꾼 구성원은 시트의 파일 이름(`member-24` 등)으로 다시 생깁니다.
 - 구성원 파일을 읽는 부분(`mpbel.py`)은 YAML의 일부만 읽습니다. 목록은 줄마다 `- 값`(한 줄 목록은 빈 `[]`만), 여러 줄 값은 `|-`만 됩니다. `[a, b]`, `>`, 들여 쓴 이어지는 줄을 만나면 그 파일 경로와 함께 `ValueError`로 멈춥니다.
 - `--force` 없이 돌리면 있는 파일은 그대로 두고 건수만 셉니다. 이때도 `report.md`는 새로 쓰이며 표의 "새로 씀"이 0, "그대로 둠"이 건수가 됩니다. 마지막 변환의 보고서를 남겨 두려면 `--report`로 다른 곳에 씁니다.
@@ -79,6 +99,7 @@ python3 scripts/import/run.py --data data --mpbel ../Website_20261028/src/conten
 | `writer.py` | 파일 이름 slug와 마크다운 쓰기 |
 | `report.py` | `report.md` |
 | `conferences.json`, `projects.json` | 학회 표기 통일표, 과제 줄임말 대응표 |
+| `corrections.json` | 시트 오타 보정표(위 "시트 오타 보정") |
 
 ## 테스트
 

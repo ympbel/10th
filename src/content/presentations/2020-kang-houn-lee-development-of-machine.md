@@ -8,6 +8,7 @@ corresponding:
 conference: "KTCVS"
 type: "Oral"
 members:
+  - "lee-kang-houn"
   - "juyoung-lee"
 order: 347
 ---

@@ -11,6 +11,7 @@ type: "Oral"
 members:
   - "inkyung-park"
   - "jaehee-chun"
+  - "byong-su-choi"
   - "sang-kyun-yoo"
 order: 290
 ---

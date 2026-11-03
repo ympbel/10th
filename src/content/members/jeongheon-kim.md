@@ -4,6 +4,7 @@ name: "김정헌"
 name_en: "Jeongheon Kim"
 aliases:
   - "Jeongheon Kim"
+  - "Jong Hoon Kim"
 orcid: "0000-0001-9321-3117"
 program: "통합"
 department: "의학과"

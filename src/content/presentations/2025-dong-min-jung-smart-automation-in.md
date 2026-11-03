@@ -9,5 +9,6 @@ conference: "KOSRO"
 type: "Poster"
 members:
   - "dong-min-jung"
+  - "juyoung-lee"
 order: 79
 ---

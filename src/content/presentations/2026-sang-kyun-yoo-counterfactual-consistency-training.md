@@ -9,5 +9,6 @@ conference: "AOCMP"
 type: "Young Investigator Competition"
 members:
   - "sang-kyun-yoo"
+  - "juyoung-lee"
 order: 14
 ---

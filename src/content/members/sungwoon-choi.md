@@ -4,6 +4,7 @@ name: "최성운"
 name_en: "Sungwoon Choi"
 aliases:
   - "Sungwoon Choi"
+  - "Choi Sungwoon"
 orcid: "0009-0006-9440-3717"
 department: "의학과"
 major: "물리학과"

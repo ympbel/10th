@@ -49,8 +49,9 @@ const titleOf = (e) => value(e, 'title');
 /** Member slugs a record's byline should link: its `members` without professors (they have no person page). */
 const linkable = (e) => list(e.fm, 'members').filter((slug) => !professorIds.has(slug));
 
-// At import: 217 papers (162 from 2016 on, 55 before), 379 presentations, 7 patents. The checks below count from
-// the files, so adding a record never breaks them; this one only guards against an emptied or truncated folder.
+// At import: 217 papers (163 from 2016 on and 54 before, with scripts/import/corrections.json), 379 presentations,
+// 7 patents. The checks below count from the files, so adding a record never breaks them; this one only guards against
+// an emptied or truncated folder.
 test('the content holds at least the imported records, the papers split at the lab start', () => {
   assert.ok(papers.length >= 217, `${papers.length} papers`);
   assert.equal(labPapers.length + preLabPapers.length, papers.length);

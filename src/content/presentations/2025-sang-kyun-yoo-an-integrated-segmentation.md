@@ -11,5 +11,6 @@ conference_raw: "KSMP (Fall)"
 type: "Oral"
 members:
   - "sang-kyun-yoo"
+  - "juyoung-lee"
 order: 66
 ---

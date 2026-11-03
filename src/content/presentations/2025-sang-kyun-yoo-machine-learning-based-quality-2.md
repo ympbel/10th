@@ -9,5 +9,6 @@ conference: "ESTRO"
 type: "Poster"
 members:
   - "sang-kyun-yoo"
+  - "byong-su-choi"
 order: 123
 ---

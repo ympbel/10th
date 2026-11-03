@@ -9,6 +9,7 @@ conference: "KOSRO"
 type: "Poster"
 members:
   - "min-seo-choi"
+  - "byong-su-choi"
   - "nalee-kim"
   - "jaehee-chun"
 order: 334

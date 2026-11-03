@@ -1,5 +1,5 @@
 ---
-year: 2002
+year: 2020
 title: "Evaluating motion of pancreatic tumors and anatomical surrogates using cine MRI in 0.35T MRgRT under free breathing conditions"
 first_author: "Benjamin C. Lewis"
 co_first: []

@@ -527,7 +527,7 @@ class ReportTest(unittest.TestCase):
         rep.add(report.COUNTS, '논문 1건')
         text = self.write(rep)
         headings = [line[3:] for line in text.splitlines() if line.startswith('## ')]
-        self.assertEqual(headings[:6], ['건수', '별칭 후보', '미연결 저자', '과제 미해결 값', '날짜 누락', '건너뛴 행'])
+        self.assertEqual(headings[:7], ['건수', '보정', '별칭 후보', '미연결 저자', '과제 미해결 값', '날짜 누락', '건너뛴 행'])
         self.assertEqual(headings, list(report.SECTIONS))
         self.assertLess(text.index('- 논문 1건'), text.index('- x 3행: 연도 없음'))
 

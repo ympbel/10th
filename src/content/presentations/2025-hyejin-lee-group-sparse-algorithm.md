@@ -10,5 +10,6 @@ type: "Poster"
 members:
   - "hyejin-lee"
   - "sac-lee"
+  - "yongdo-yun"
 order: 74
 ---

@@ -11,5 +11,6 @@ type: "Poster"
 members:
   - "sang-kyun-yoo"
   - "jaehee-chun"
+  - "byong-su-choi"
 order: 294
 ---

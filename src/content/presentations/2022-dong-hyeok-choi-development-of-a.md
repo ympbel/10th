@@ -12,5 +12,6 @@ type: "ePoster"
 members:
   - "donghyeok-choi"
   - "na-hye-kwon"
+  - "jae-hyun-seok"
 order: 247
 ---

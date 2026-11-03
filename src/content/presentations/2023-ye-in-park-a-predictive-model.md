@@ -11,5 +11,6 @@ type: "ePoster"
 session: "Data Science Specialty Program General ePoster Viewing"
 members:
   - "ye-in-park"
+  - "min-seo-choi"
 order: 196
 ---

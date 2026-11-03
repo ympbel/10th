@@ -10,6 +10,7 @@ journal: "Computerized Medical Imaging and Graphics"
 impact_factor: 5.7
 acknowledgement: "P0019304"
 projects: []
-members: []
+members:
+  - "juyoung-lee"
 order: 66
 ---

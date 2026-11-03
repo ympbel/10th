@@ -1,5 +1,5 @@
 ---
-year: 2004
+year: 2024
 title: "Correlation Study between MEMS Magnetic Sensors and Angles of Permanent Magnet in the Respiratory Training for Heavy Ion Therapy"
 authors: "Choi Sungwoon, Kim Dong Wook"
 first_author: "Choi Sungwoon"
@@ -9,6 +9,7 @@ conference: "KPS Fall"
 conference_raw: "KPS (Fall)"
 type: "Poster"
 session: "Applied Physics: Photonics & Quantum & Bio Physics"
-members: []
+members:
+  - "sungwoon-choi"
 order: 379
 ---

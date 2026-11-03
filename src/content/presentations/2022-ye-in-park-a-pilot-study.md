@@ -8,5 +8,6 @@ conference: "KSMP Spring"
 type: "Poster"
 members:
   - "ye-in-park"
+  - "min-seo-choi"
 order: 254
 ---

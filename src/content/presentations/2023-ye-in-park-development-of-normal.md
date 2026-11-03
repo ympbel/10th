@@ -11,5 +11,6 @@ conference_raw: "KSMP (Spring)"
 type: "Oral"
 members:
   - "ye-in-park"
+  - "min-seo-choi"
 order: 185
 ---

@@ -8,6 +8,7 @@ from pathlib import Path
 import dates
 
 COUNTS = '건수'
+CORRECTIONS = '보정'  # <collection>/<file> → <collection>/<file>: the fields corrections.json set
 NEAR = '별칭 후보'  # author spelling → candidate member slugs (never linked automatically)
 UNMATCHED = '미연결 저자'  # spellings linked to no member
 UNRESOLVED_PROJECTS = '과제 미해결 값'  # pieces of a paper's project cell that name no project
@@ -16,7 +17,7 @@ SKIPPED = '건너뛴 행'  # <sheet> <n>행: <reason>, and empty-row counts
 NEW_SPELLINGS = '새 표기'  # conference names and presentation types not in conferences.json
 CHECK = '확인할 값'  # empty required values, conflicting columns, unreadable numbers
 
-SECTIONS = (COUNTS, NEAR, UNMATCHED, UNRESOLVED_PROJECTS, MISSING_DATES, SKIPPED, NEW_SPELLINGS, CHECK)
+SECTIONS = (COUNTS, CORRECTIONS, NEAR, UNMATCHED, UNRESOLVED_PROJECTS, MISSING_DATES, SKIPPED, NEW_SPELLINGS, CHECK)
 
 
 class Report:

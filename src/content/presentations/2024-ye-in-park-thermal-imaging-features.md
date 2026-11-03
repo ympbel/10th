@@ -10,5 +10,6 @@ conference: "AAPM"
 type: "Oral"
 members:
   - "ye-in-park"
+  - "min-seo-choi"
 order: 130
 ---

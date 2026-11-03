@@ -8,6 +8,7 @@ corresponding:
 conference: "AAPM"
 type: "Poster"
 members:
+  - "bi-shin"
   - "na-hye-kwon"
 order: 327
 ---

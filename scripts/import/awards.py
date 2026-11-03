@@ -20,6 +20,11 @@ COLUMNS = {
 REQUIRED = ('recipient', 'conference', 'category')
 
 
+def file_base(year, n):
+    """'<year>-award-<nn>' for the n-th award in the sheet (1-based)."""
+    return f'{year}-award-{n:02d}'
+
+
 def build_awards(rows, members, report):
     """Award records (schema keys plus '_file' = '<year>-award-<nn>'); nn and 'order' are the record's 1-based
     position in the sheet."""
@@ -29,7 +34,7 @@ def build_awards(rows, members, report):
         year = report.year_or_skip(SHEET, n, v['year'])
         if year is None:
             continue
-        file = writer.unique_slug(f'{year}-award-{len(records) + 1:02d}', taken)
+        file = writer.unique_slug(file_base(year, len(records) + 1), taken)
         report.blanks(f'awards/{file}', v, REQUIRED, COLUMNS)
         member = link.match_ko(v['recipient'], members)
         if not member and v['recipient']:

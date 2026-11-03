@@ -10,5 +10,6 @@ type: "Poster"
 acknowledgement: "KHIDI (HI19C1330)"
 members:
   - "byong-su-choi"
+  - "inkyung-park"
 order: 236
 ---

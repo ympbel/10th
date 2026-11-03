@@ -10,5 +10,6 @@ conference: "KSIIM"
 type: "Poster"
 members:
   - "sang-kyun-yoo"
+  - "juyoung-lee"
 order: 67
 ---
