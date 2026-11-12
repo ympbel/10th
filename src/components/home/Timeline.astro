@@ -2,7 +2,7 @@
 // The eleven-year timeline: heading and lead above a 3px Graphite rule, one column per year (bars, counts, who joined,
 // who took a degree), the legend, then the year panels (default slot). Each column links to its year page; the
 // script below turns a plain click into "show this year's panel" and keeps the choice in the URL hash (#y2024).
-// At ≤1024px each year becomes one row: year, horizontal bars and counts, names (home.css).
+// Below 1200px each year becomes one row: year, horizontal bars and counts, names (home.css).
 import type { Locale } from '../../lib/locale.ts';
 import { YEARS } from '../../lib/years.ts';
 import { t } from '../../i18n/index.ts';
@@ -35,7 +35,7 @@ const { years, selected, locale } = Astro.props;
 const s = t(locale);
 const tl = s.timeline;
 const range = `${YEARS[0]} – ${YEARS[YEARS.length - 1]}`;
-// Bars draw from an inline `--bar` (px as a number) so the ≤1024px layout can turn the same value into a width.
+// Bars draw from an inline `--bar` (px as a number) so the narrow layout can turn the same value into a width.
 const SERIES = ['papers', 'presentations', 'awards'] as const;
 // A column is 1/11 of 1200px. Korean labels fit two counts to a line (`논문 25 · 발표 67`) and several names to a
 // line; English labels and names do not, so English pages give each count and each name its own line.
@@ -52,7 +52,7 @@ const numLines = (y: Props['years'][number]) => {
 };
 ---
 
-<section class="wrap timeline" aria-labelledby="timeline-title">
+<section id="history" class="wrap timeline" aria-labelledby="timeline-title">
   <div class="timeline-head">
     <h2 class="timeline-title" id="timeline-title">{tl.title} <span>{range}</span></h2>
     <p class="timeline-lead">{tl.lead}</p>

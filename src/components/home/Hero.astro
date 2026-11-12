@@ -1,7 +1,5 @@
 ---
-// Visual band: the slogan as real text on Midnight Field at the left (Signal Mint line, title, year range) and the
-// main site's medical image at the right. At ≤1024px the image fills the band and the slogan sits on a Midnight
-// Field block over it (home.css).
+import type { Locale } from '../../lib/locale.ts';
 import { url } from '../../lib/url.ts';
 
 interface Props {
@@ -9,17 +7,20 @@ interface Props {
   slogan: string;
   /** `slogan_years` of pages/<lang>/home.md. */
   years: string;
+  locale: Locale;
 }
 
-const { slogan, years } = Astro.props;
+const { slogan, years, locale } = Astro.props;
 ---
 
 <div class="hero">
   <img class="hero-photo" src={url('/images/site/visual.jpg')} alt="" width="2000" height="570" fetchpriority="high" />
   <div class="wrap hero-wrap">
     <div class="hero-slogan">
+      <p class="hero-years"><span lang="en">YONSEI UNIVERSITY · MPBEL</span> <span>{years}</span></p>
+      <p class="hero-display" lang="en" aria-hidden="true">10<span>Years.</span></p>
       <h1>{slogan}</h1>
-      <p class="hero-years">{years}</p>
+      <a class="hero-link" href="#history">{locale === 'ko' ? '10년의 연혁 보기' : 'Explore the timeline'} <span aria-hidden="true">↓</span></a>
     </div>
   </div>
 </div>

@@ -9,7 +9,7 @@ import { BASE, DIST, allHtmlFiles, isRedirect } from './helpers.mjs';
 // imports styles/global.css as its first import so this bundle is linked before any page CSS.
 const TOKEN_MARKER = '--c-yonsei-navy:';
 const BASE_MARKER = '.topmenu';
-const RESPONSIVE_MARKER = '@media (max-width:1024px)';
+const RESPONSIVE_MARKER = '@media not (min-width:1200px)';
 
 const cssCache = new Map();
 /** Text of a built stylesheet (`/10th/_astro/x.css` → `dist/_astro/x.css`), read once. */

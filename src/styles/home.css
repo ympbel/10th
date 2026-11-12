@@ -4,14 +4,7 @@
    tokens.css; the fixed sizes the sketches and spec 5.3 give are named once here. */
 
 .home {
-  --h-hero: 570px;
-  --h-hero-tablet: 400px;
-  --h-hero-photo-phone: 220px; /* the strip of photo above the slogan block at ≤600px */
-  --fs-hero: 42px;
-  --fs-hero-phone: 32px;
   --h-intro: 356px;
-  --w-figures: 600px;
-  --w-intro: 550px;
   --fs-figure: 34px;
   --h-bars: 134px; /* the tallest bar; barHeights() in src/lib/years.ts uses the same maximum */
   --w-bar: 14px;
@@ -19,69 +12,121 @@
   --h-board-link: 70px;
 }
 
-/* ---------- Visual band ---------- */
+/* Anniversary cover and table of contents */
 .hero {
   position: relative;
-  height: var(--h-hero);
-  overflow: hidden;
+  isolation: isolate;
   background: var(--c-midnight-field);
+  color: var(--c-paper);
 }
-/* The right half of the band, aligned to the right edge so the treatment unit and head stay in view. */
 .hero-photo {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
+  inset: 0 0 0 auto;
+  width: 66%;
   height: 100%;
   object-fit: cover;
   object-position: right center;
 }
+.hero::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(90deg, var(--c-midnight-field) 34%, rgb(0 20 41 / .76) 53%, rgb(0 20 41 / .08) 100%);
+  content: '';
+}
 .hero-wrap {
   position: relative;
-  height: 100%;
+  z-index: 1;
+  padding-block: clamp(52px, 8vw, 120px);
 }
 .hero-slogan {
-  position: absolute;
-  top: 165px;
-  left: var(--s-xl);
-  width: 500px;
-  color: var(--c-paper);
-}
-/* The Signal Mint 30×2px line: the system's one accent, on dark blue only. */
-.hero-slogan::before {
-  content: '';
-  display: block;
-  width: var(--s-lg);
-  height: 2px;
-  margin-bottom: 22px;
-  background: var(--c-signal-mint);
-}
-.hero h1 {
-  font-size: var(--fs-hero);
-  font-weight: var(--fw-bold);
-  line-height: 1.3;
-  text-wrap: balance;
-}
-/* Korean title in Nanum Gothic throughout, so "10" matches the Hangul (spec 5.3). */
-.hero h1:lang(ko) {
-  font-family: 'Nanum Gothic', var(--f-sans);
+  max-width: 620px;
 }
 .hero-years {
-  margin-top: var(--s-sm);
-  color: var(--c-cerulean);
-  font-size: var(--fs-title-lg);
-  letter-spacing: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+.hero-years span:last-child {
+  color: #9fcafa;
+}
+.hero-display {
+  margin: 24px 0 16px;
+  font-family: var(--f-editorial);
+  font-size: clamp(72px, 13vw, 184px);
+  font-weight: 700;
+  letter-spacing: -.09em;
+  line-height: .82;
+}
+.hero-display span {
+  display: block;
+  color: #a9c9ff;
+  font-size: .7em;
+  letter-spacing: -.085em;
+}
+.hero h1 {
+  max-width: 34ch;
+  margin-top: 28px;
+  font-size: clamp(18px, 2.4vw, 26px);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 28px;
+  padding: 9px 15px;
+  border: 1px solid #9fcafa;
+  color: var(--c-paper);
+}
+.hero-link:hover,
+.hero-link:focus-visible {
+  background: var(--c-paper);
+  color: var(--c-midnight-field);
+}
+.edition-contents ul {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-bottom: 1px solid var(--c-hairline);
+}
+.edition-contents a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: center;
+  gap: 4px 8px;
+  min-height: 74px;
+  height: 100%;
+  padding: 12px;
+  color: var(--c-yonsei-navy);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.edition-contents small {
+  grid-row: 2;
+  color: var(--c-slate);
+  font-weight: 400;
+}
+.edition-arrow {
+  grid-area: 1 / 2;
+}
+.edition-contents a:hover {
+  background: var(--c-notice-tint);
 }
 
 /* ---------- Intro band: six figures + intro copy ---------- */
 .intro-band {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   gap: var(--s-xl);
   min-height: var(--h-intro);
 }
 .figures {
   display: grid;
-  flex: 0 0 var(--w-figures);
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-rows: 1fr;
   gap: 1px;
@@ -123,7 +168,6 @@
 }
 
 .intro {
-  flex: 0 0 var(--w-intro);
   padding: 46px 0 40px;
 }
 .intro-title {
@@ -141,7 +185,7 @@
 }
 .intro-heading {
   margin-top: 6px;
-  color: var(--c-cerulean);
+  color: var(--c-yonsei-navy);
   font-size: var(--fs-title-lg);
   font-weight: var(--fw-bold);
   line-height: 1.4;
@@ -166,8 +210,8 @@
   border-bottom: 3px solid var(--c-graphite);
 }
 .timeline-title {
-  color: var(--c-graphite);
-  font-size: var(--fs-headline);
+  color: var(--c-yonsei-navy);
+  font-size: clamp(32px, 5vw, 62px);
   font-weight: var(--fw-bold);
   line-height: 1.4;
   letter-spacing: 1px;
@@ -331,7 +375,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--s-lg);
   padding: 25px var(--s-lg);
-  background: var(--c-panel-gray);
+  background: #edf3fd;
 }
 /* `display: grid` would otherwise override the hidden attribute. */
 .year-panel[hidden] {
@@ -446,33 +490,13 @@
   outline-offset: -2px;
 }
 
-/* ---------- ≤1024px ---------- */
-@media (max-width: 1024px) {
-  /* The photo fills the band and the slogan sits on a Midnight Field block over its lower left. */
-  .hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: auto;
-    min-height: var(--h-hero-tablet);
+/* ---------- Below the desktop grid width ---------- */
+@media (width < 1200px) {
+  .edition-contents ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .hero-photo {
-    width: 100%;
-    object-position: 70% center;
-  }
-  .hero .wrap {
-    width: 100%;
-    height: auto;
-    padding: 0;
-  }
-  .hero-slogan {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: auto;
-    max-width: 560px;
-    padding: var(--s-lg) var(--s-gutter);
-    background: var(--c-midnight-field);
+  .edition-contents a {
+    min-height: 62px;
   }
 
   .intro-band {
@@ -540,22 +564,15 @@
 
 /* ---------- ≤600px ---------- */
 @media (max-width: 600px) {
-  .hero {
-    min-height: 0;
-    padding-top: var(--h-hero-photo-phone);
-  }
-  /* The photo only as tall as the strip, so the whole head is in it, not the top of the skull above the slogan. */
   .hero-photo {
-    height: var(--h-hero-photo-phone);
+    width: 100%;
   }
-  .hero-slogan {
-    max-width: none;
+  .hero::after {
+    background: linear-gradient(90deg, rgb(0 20 41 / .96), rgb(0 20 41 / .52)),
+      linear-gradient(0deg, var(--c-midnight-field), transparent 80%);
   }
-  .hero h1 {
-    font-size: var(--fs-hero-phone);
-  }
-  .hero-years {
-    font-size: var(--fs-subtitle);
+  .edition-contents ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .figures {

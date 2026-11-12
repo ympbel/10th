@@ -16,6 +16,7 @@ import { sortByYearDesc, sortMembersByJoined } from '../lib/content.ts';
 import { displayName, field } from '../lib/people.ts';
 import { MENU, type ItemKey } from '../lib/menu.ts';
 import { localePath, type Locale } from '../lib/locale.ts';
+import { chapters } from '../lib/chapters.ts';
 import { url } from '../lib/url.ts';
 import { t } from '../i18n/index.ts';
 
@@ -150,12 +151,25 @@ const boards = MENU.flatMap((section) =>
 ---
 
 <BaseLayout locale={locale} bodyClass="home">
-  <Hero slogan={page.data.slogan} years={page.data.slogan_years} />
+  <Hero slogan={page.data.slogan} years={page.data.slogan_years} locale={locale} />
+  <nav id="edition-contents" class="wrap edition-contents" aria-label={locale === 'ko' ? '10주년 목차' : 'Anniversary contents'}>
+    <ul>
+      {chapters.map((chapter) => (
+        <li>
+          <a href={chapter.path === '/years/' ? '#history' : href(chapter.path)}>
+            <span lang="en">{chapter.title}</span>
+            {locale === 'ko' && <small>{chapter.ko}</small>}
+            <span class="edition-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
   <div class="wrap intro-band">
-    <Figures items={figures} />
     <Intro title={page.data.intro_title} word={s.home.introWord} heading={page.data.intro_heading}>
       <IntroBody />
     </Intro>
+    <Figures items={figures} />
   </div>
   <Timeline years={years} selected={latest} locale={locale}>
     <YearPanel panels={panels} selected={latest} locale={locale} />

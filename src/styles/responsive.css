@@ -1,9 +1,9 @@
-/* Responsive layer, imported last by global.css. Every rule sits inside a media query, so above 1024px the desktop
-   layout in base.css is untouched. DESIGN.md: at ≤1024px the fixed 1200px grid becomes fluid with 16px gutters, the
+/* Responsive layer, imported last by global.css. Every rule sits inside a media query, so from 1200px the desktop
+   layout in base.css is untouched. DESIGN.md: below 1200px the fixed 1200px grid becomes fluid with 16px gutters, the
    menu becomes a drawer behind a 40×40 toggle, and the side navigation becomes a row of tabs above the content; at
    ≤600px everything runs in one column. */
 
-@media (max-width: 1024px) {
+@media (width < 1200px) {
   body {
     min-width: 0;
   }
