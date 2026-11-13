@@ -2,6 +2,9 @@
 // Sub page frame: the 250px visual band with the archive label, then inside the 1200px grid a 240px side area
 // (the section's side navigation, or the year tab rail on year pages) and the 900px main column with the page
 // heading, the breadcrumb and the page content.
+import '../styles/edition.css';
+import { chapters } from '../lib/chapters.ts';
+import { localePath } from '../lib/locale.ts';
 import BaseLayout from './BaseLayout.astro';
 import Snb from '../components/Snb.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
@@ -24,12 +27,14 @@ interface Props {
 const { title, sectionKey, currentHref, locale, side = 'menu' } = Astro.props;
 if (side === 'menu' && !sectionKey) throw new Error(`SubLayout "${title}": side navigation needs a sectionKey`);
 const s = t(locale);
+const chapter = chapters.find((entry) => entry.path === (side === 'years' ? '/years/' : currentHref));
 ---
 
-<BaseLayout title={title} locale={locale}>
+<BaseLayout title={title} locale={locale} bodyClass={chapter && "edition-board"}>
   <div class="sub_visual" style={`background-image:url(${url('/images/site/sub_visual.jpg')})`}>
     <div class="wrap">
       <p class="sub_visual-label">{s.archiveLabel}</p>
+      {chapter && <p class="edition-masthead" lang="en" aria-hidden="true">{chapter.title}</p>}
     </div>
   </div>
   <div id="sub_contents" class="wrap">
@@ -41,6 +46,11 @@ const s = t(locale);
         <h1 class="cnt_title">{title}</h1>
         <Breadcrumb sectionKey={sectionKey} title={title} locale={locale} />
       </div>
+      {chapter && (
+        <a class="edition-return" href={url(localePath('/', locale)) + (side === 'years' ? '#history' : '#edition-contents')}>
+          <span aria-hidden="true">←</span> {side === 'years' ? (locale === 'ko' ? '전체 연혁' : 'Full timeline') : (locale === 'ko' ? '10주년 목차' : 'Anniversary contents')}
+        </a>
+      )}
       <div class="contents">
         <slot />
       </div>

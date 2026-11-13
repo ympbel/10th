@@ -41,6 +41,7 @@
   --s-gutter: 16px; /* side gutter at ≤1024px */
 
   /* Type: two families, weights 400 and 700 */
+  --f-editorial: "Instrument Sans", Lato, sans-serif;
   --f-sans: Lato, 'Nanum Gothic', sans-serif;
   --fs-display: 36px;
   --fs-headline: 28px;

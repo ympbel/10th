@@ -1,6 +1,6 @@
 ---
-// Top bar: logo and archive label (home link), the six menu sections with their dropdowns, the KR/EN toggle. At
-// ≤1024px the menu becomes a drawer opened by the toggle button and closed by it or by Escape (responsive.css,
+// Top bar: logo and archive label (home link), the six menu sections with their dropdowns, the KR/EN toggle. Below
+// 1200px the menu becomes a drawer opened by the toggle button and closed by it or by Escape (responsive.css,
 // script below).
 import { MENU } from '../lib/menu.ts';
 import { localePath, otherLocaleHref, type Locale } from '../lib/locale.ts';
@@ -30,7 +30,7 @@ const languages: Array<{ locale: Locale; label: string; href: string }> = [
       <img src={url('/images/site/logo.png')} alt={s.logoAlt} width="142" height="50" />
       <span class="logo-label">{s.archiveLabel}</span>
     </a>
-    {/* The toggle comes before the drawer it opens so Tab goes from it into the menu; at ≤1024px flex `order` puts
+    {/* The toggle comes before the drawer it opens so Tab goes from it into the menu; below 1200px flex `order` puts
         KR/EN before it on screen (responsive.css). It is hidden on desktop. */}
     <button type="button" class="nav-toggle" aria-label={s.menuToggle} aria-expanded="false" aria-controls="navi">
       <svg width="20" height="13" viewBox="0 0 20 13" aria-hidden="true">

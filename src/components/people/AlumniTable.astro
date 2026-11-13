@@ -2,6 +2,7 @@
 // The degree holders table on the alumni board: name (a link to the person page), the other-language name, degree,
 // department, degree period and current affiliation, one row per member with a degree date, in the order given.
 import type { CollectionEntry } from 'astro:content';
+import MemberPortrait from './MemberPortrait.astro';
 import MemberLink from './MemberLink.astro';
 import { displayName, field, otherName } from '../../lib/people.ts';
 import { yearMonth } from '../../lib/content.ts';
@@ -52,6 +53,7 @@ const rows = members.map((m) => {
         rows.map((r) => (
           <tr data-member={r.id}>
             <th scope="row">
+              <MemberPortrait id={r.id} size="thumbnail" />
               <MemberLink id={r.id} name={r.name} locale={locale} />
             </th>
             <td lang={langOf(r.other, locale)}>{r.other}</td>
