@@ -14,4 +14,5 @@ degree:
   type: "이학박사"
 affiliation: "MSKCC"
 position: "Postdoctoral Research Associate"
+order: 9
 ---

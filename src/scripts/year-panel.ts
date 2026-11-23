@@ -30,3 +30,23 @@ for (const link of links) {
 }
 
 if (links.length > 0) select(resolveYear(location.hash, YEARS, YEARS[YEARS.length - 1]));
+
+// Keep an independent annual scale for each research metric.
+const timeline = document.getElementById('history');
+const seriesButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-chart-series]')];
+for (const button of seriesButtons) {
+  button.addEventListener('click', () => {
+    if (!timeline) return;
+    timeline.dataset.series = button.dataset.chartSeries;
+    for (const other of seriesButtons) other.setAttribute('aria-pressed', String(other === button));
+    const ticks = (button.dataset.ticks ?? '').split(',');
+    const scale = timeline.querySelector('.chart-scale');
+    timeline.style.setProperty('--chart-intervals', String(ticks.length - 1));
+    scale?.replaceChildren(...ticks.map((tick, i) => {
+      const label = document.createElement('span');
+      label.textContent = tick;
+      label.style.top = String(i / (ticks.length - 1) * 100) + '%';
+      return label;
+    }));
+  });
+}

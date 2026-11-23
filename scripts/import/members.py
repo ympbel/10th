@@ -138,6 +138,7 @@ def _read_alumni(rows):
         if not _cell(row, number).isdigit():
             continue
         record = _pick(row, index)
+        record['order'] = len(alumni) + 1
         key = names.norm_ko(record['name'])
         if key in alumni:
             raise ValueError(f'row {i + 1} of the Alumni sheet repeats a name of an earlier row')
@@ -167,6 +168,7 @@ def _member(role, status, alumni):
         'degree': _degree(status, alumni),
         'affiliation': alumni.get('affiliation'),
         'position': alumni.get('position'),
+        'order': alumni.get('order'),
     }
     record = {
         'role': role,

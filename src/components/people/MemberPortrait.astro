@@ -5,13 +5,14 @@ import type { ImageMetadata } from 'astro';
 interface Props {
   id: string;
   size: 'card' | 'thumbnail';
+  fallbackName?: string;
 }
 
-const { id, size } = Astro.props;
+const { id, size, fallbackName } = Astro.props;
 // Published portraits from the official MPBEL member directory, matched to archive member IDs.
 const portraits = import.meta.glob<{ default: ImageMetadata }>('/src/assets/portraits/*.jpg', { eager: true });
 const portrait = portraits[`/src/assets/portraits/${id}.jpg`]?.default;
-const width = size === 'card' ? 360 : 80;
+const width = size === 'card' ? 480 : 80;
 ---
 
 {portrait && (
@@ -19,10 +20,11 @@ const width = size === 'card' ? 360 : 80;
     src={portrait}
     alt=""
     width={width}
-    height={width}
+    height={size === 'card' ? 600 : width}
     fit="cover"
-    position="attention"
+    position="center"
     class={`member-portrait member-portrait--${size}`}
     loading="lazy"
   />
 )}
+{!portrait && size === 'card' && <span class="portrait-placeholder" aria-hidden="true">{fallbackName ?? 'MPBEL'}</span>}

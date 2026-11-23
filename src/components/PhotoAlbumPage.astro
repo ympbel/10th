@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PhotoLayout from '../layouts/PhotoLayout.astro';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+interface Props { photos: CollectionEntry<'photos'>[]; locale: Locale }
+const { photos, locale } = Astro.props;
+const cover = photos[0];
+const title = cover.data.caption ?? String(cover.data.year);
+---
+<PhotoLayout title={title} locale={locale}>
+  <header class="photo-album-heading">
+    <p class="photo-archive-kicker">MPBEL / PHOTO STORY</p>
+    <p class="photo-story-date">{cover.data.date?.replaceAll('-', '.')} · {photos.length} {locale === 'ko' ? '장의 사진' : 'photographs'}</p>
+    <h1>{title}</h1>
+    <a href={url(localePath('/archive/photos/' + cover.data.year + '/', locale)) + '#albums'}>← {cover.data.year} {locale === 'ko' ? '앨범으로' : 'albums'}</a>
+  </header>
+  <div class="photo-story-images">
+    {photos.map((photo, i) => <figure data-photo={photo.id}>
+      <a href={url(photo.data.image)} target="_blank" rel="noopener" aria-label={locale === 'ko' ? '사진 크게 보기' : 'View larger'}><img src={url(photo.data.image)} alt={title + ' · ' + (i + 1)} loading={i === 0 ? 'eager' : 'lazy'} /></a>
+      <figcaption><span>{title}</span><span>{String(i + 1).padStart(2,'0')} / {String(photos.length).padStart(2,'0')}</span></figcaption>
+    </figure>)}
+  </div>
+  <a class="photo-story-return" href={url(localePath('/archive/photos/', locale)) + '#albums'}>← {locale === 'ko' ? '모든 이야기 보기' : 'All stories'}</a>
+</PhotoLayout>

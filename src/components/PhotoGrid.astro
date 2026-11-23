@@ -36,7 +36,7 @@ const cells = sortPhotos(photos).map(({ id, data }) => {
     cells.map((c) => (
       <li>
         <figure>
-          <img src={url(c.data.image)} alt={c.alt} lang={langOf(c.alt, locale)} loading="lazy" />
+          <a class="photo-open" href={url(c.data.image)} target="_blank" rel="noopener" aria-label={c.alt + (locale === 'ko' ? ' · 크게 보기' : ' · View larger')}><img src={url(c.data.thumbnail ?? c.data.image)} alt={c.alt} lang={langOf(c.alt, locale)} loading="lazy" /></a>
           <figcaption>
             {c.data.caption && (
               <p class="photo-caption" lang={langOf(c.data.caption, locale)}>

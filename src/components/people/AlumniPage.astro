@@ -1,13 +1,15 @@
 ---
-// The alumni board (졸업 현황) in one language, in two groups: everyone with a degree date in a table, latest degree
-// first (a current student who already holds a degree is there too), then the former members who left without a
-// degree, latest join first.
+// Degree-holder galleries retain the Alumni sheet row order within each degree group.
+import { Image } from 'astro:assets';
+import coverOne from '../../assets/portraits/inkyung-park.jpg';
+import coverTwo from '../../assets/portraits/jaehee-chun.jpg';
+import coverThree from '../../assets/portraits/jin-dong-cho.jpg';
 import { getCollection } from 'astro:content';
 import '../../styles/people.css';
 import SubLayout from '../../layouts/SubLayout.astro';
-import AlumniTable from './AlumniTable.astro';
+import AlumniCard from './AlumniCard.astro';
 import FormerList from './FormerList.astro';
-import { sortMembersByDegree, sortMembersByJoined } from '../../lib/content.ts';
+import { sortMembersByDegree } from '../../lib/content.ts';
 import type { Locale } from '../../lib/locale.ts';
 import { fill, t } from '../../i18n/index.ts';
 
@@ -22,19 +24,65 @@ const members = await getCollection('members');
 const graduates = sortMembersByDegree(
   members.filter((m) => m.data.degree?.date),
   'desc',
+).sort((a, b) =>
+  (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER),
 );
-const formers = sortMembersByJoined(
-  members.filter((m) => m.data.role === 'former'),
-  'desc',
-);
+
+function degreeGroup(member: (typeof graduates)[number]) {
+  const degree = [member.data.degree?.type, member.data.degree?.type_en].join(' ');
+  if (/박사|doctor|ph\.?\s*d/i.test(degree)) return 'doctoral';
+  if (/석사|master|m\.?sc/i.test(degree)) return 'masters';
+  return 'unclassified';
+}
+const degreeGroups = [
+  { key: 'doctoral', label: locale === 'ko' ? '박사 졸업생' : 'Doctoral alumni' },
+  { key: 'masters', label: locale === 'ko' ? '석사 졸업생' : "Master’s alumni" },
+  { key: 'unclassified', label: locale === 'ko' ? '학위 구분 미기재' : 'Degree not specified' },
+].map((group) => ({
+  ...group,
+  members: graduates.filter((member) => degreeGroup(member) === group.key),
+})).filter((group) => group.members.length > 0);
+// Keep only existing former members, in the requested roster order.
+const rosterNames = [
+  '이효택', '송한현', '홍민우', '고희주', '이강훈', '조진동', '천재희', '신재익',
+  '김나리', '박인경', '이주영', '오명환', '김예진', '백승협', '민병국', '박혜성',
+  '김유진', '엄희성', '김채림', '장성훈', '강효경', '신 비', '이우찬', '장이진',
+  '최아진', '최병수', '유상균', '팽소원', '조현정', '최성운', '정우진', '최민서',
+  '최동혁', '박규리', '권나혜', '이석호', '황준일', '정동영', '박예인',
+];
+const normalizeName = (name: string) => name.replace(/\s/g, '');
+const formers = rosterNames.map((name) => {
+  const member = members.find((m) => normalizeName(m.data.name) === normalizeName(name));
+  if (!member) throw new Error(`Historical roster member not found: ${name}`);
+  return member;
+}).filter((member) => member.data.role === 'former');
 ---
 
 <SubLayout title={s.boards.alumni} sectionKey="people" currentHref="/people/alumni/" locale={locale}>
+  <div slot="cover" class="students-cover-portraits" aria-hidden="true">
+    {[coverOne, coverTwo, coverThree].map((photo) => (
+      <Image src={photo} alt="" width={200} height={280} fit="cover" loading="eager" />
+    ))}
+  </div>
   <section class="people-part" aria-labelledby="graduates-title">
     <h2 id="graduates-title">
       {s.people.degreeHolders} <small>{fill(s.people.count, { n: graduates.length })}</small>
     </h2>
-    <AlumniTable members={graduates} locale={locale} />
+    <nav class="alumni-degree-nav" aria-label={locale === 'ko' ? '학위별 졸업생' : 'Alumni by degree'}>
+      {degreeGroups.map((group) => (
+        <a href={'#alumni-' + group.key}>{group.label}<span>{group.members.length}</span></a>
+      ))}
+    </nav>
+    {degreeGroups.map((group) => (
+      <section class="alumni-degree-group" id={'alumni-' + group.key} aria-labelledby={'alumni-heading-' + group.key}>
+        <h3 class="alumni-degree-heading" id={'alumni-heading-' + group.key}>
+          {group.label}<small>{fill(s.people.count, { n: group.members.length })}</small>
+        </h3>
+        <ul class="member-list alumni-gallery alumni-gallery--graduates" data-degree={group.key}>
+          {group.members.map((member) => <AlumniCard member={member} locale={locale} variant="graduate" headingLevel="h4" />)}
+        </ul>
+      </section>
+    ))}
   </section>
 
   <section class="people-part" aria-labelledby="formers-title">

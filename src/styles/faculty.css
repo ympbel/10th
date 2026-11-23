@@ -1,0 +1,15 @@
+.faculty-intro { color: #52647a; margin-bottom: 40px; }
+.faculty-list { list-style: none; padding: 0; margin: 0; }
+.faculty-profile { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 64px; padding: 48px 0; border-top: 1px solid #cdd6e2; scroll-margin-top: 30px; }
+.faculty-photo .member-portrait { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; }
+.faculty-eyebrow { color: #1563b4; font-size: 12px; letter-spacing: .08em; margin-bottom: 14px; }
+.faculty-copy h2 { color: #112b46; font-size: 34px; font-weight: 500; }
+.faculty-other { color: #64758a; margin-top: 3px; }
+.faculty-position { color: #112b46; margin-top: 24px; font-size: 18px; }
+.faculty-affiliation { color: #52647a; margin-top: 6px; }
+.faculty-details { margin-top: 28px; display: grid; gap: 24px; }
+.faculty-details h3 { font-size: 13px; color: #52647a; margin-bottom: 8px; }
+.faculty-details p, .faculty-details li { font-size: 15px; line-height: 1.8; }
+.faculty-details ul { padding-left: 18px; }
+.faculty-source { display: inline-block; margin-top: 28px; color: #1563b4; border-bottom: 1px solid #b4c8df; padding-bottom: 4px; }
+@media (max-width: 700px) { .faculty-profile { grid-template-columns: 1fr; gap: 28px; padding: 32px 0; } .faculty-photo { max-width: 300px; } .faculty-copy h2 { font-size: 28px; } }

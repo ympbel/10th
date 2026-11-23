@@ -39,11 +39,8 @@ const students = byDate(
   1,
 );
 const graduates = byDate(members.filter(degreeDateOf), degreeDateOf, -1);
-const formers = byDate(
-  members.filter((m) => role(m) === 'former'),
-  joinedOf,
-  -1,
-);
+const rosterNames = '이효택 송한현 홍민우 고희주 이강훈 조진동 천재희 신재익 김나리 박인경 이주영 오명환 김예진 백승협 민병국 박혜성 김유진 엄희성 김채림 장성훈 강효경 신비 이우찬 장이진 최아진 최병수 유상균 팽소원 조현정 최성운 정우진 최민서 최동혁 박규리 권나혜 이석호 황준일 정동영 박예인'.split(' ');
+const formers = rosterNames.map((name) => members.find((m) => scalar(m.fm, 'name').replace(/\s/g, '') === name)).filter((m) => role(m) === 'former');
 const persons = members.filter((m) => role(m) !== 'professor');
 const personIds = new Set(persons.map((m) => m.id));
 
@@ -80,7 +77,7 @@ test('one person page per non-professor member in each language, none for profes
   assert.deepEqual(missing, []);
   const extra = professors.flatMap((m) => [`people/${m.id}`, `en/people/${m.id}`]).filter((p) => exists(p));
   assert.deepEqual(extra, []);
-  const boards = new Set(['students', 'alumni']);
+  const boards = new Set(['faculty', 'students', 'alumni']);
   for (const dir of ['people', join('en', 'people')]) {
     const built = readdirSync(join(DIST, dir), { withFileTypes: true })
       .filter((d) => d.isDirectory() && !boards.has(d.name))
@@ -117,16 +114,18 @@ for (const [lang, prefix] of [
   /** The name a page shows first: the English name on English pages when there is one, else the Korean name. */
   const shownName = (m) => (lang === 'en' && scalar(m.fm, 'name_en')) || scalar(m.fm, 'name');
 
-  test(`${lang}: students page lists the faculty in order, the advisor linking to the main site`, () => {
-    const $ = page(at('people', 'students'));
-    const items = $('.professors li');
-    assert.equal(items.length, professors.length);
-    items.each((i, li) => assert.ok(text($(li)).includes(scalar(professors[i].fm, 'name')), `row ${i + 1}`));
-    const link = items.first().find('a[href*="ympbel.github.io/member/professor"]');
-    assert.equal(link.length, 1);
-    assert.equal(link.attr('target'), '_blank');
-    assert.match(link.attr('rel'), /noopener/);
-    assert.equal($('.professors a[href*="/people/"]').length, 0, 'professors have no person pages');
+  test(`${lang}: faculty has its own page with portraits and profiles, separate from students`, () => {
+    assert.equal(page(at('people', 'students'))('.professors').length, 0);
+    const $ = page(at('people', 'faculty'));
+    const items = $('.faculty-profile');
+    assert.deepEqual(items.map((_, li) => $(li).attr('data-member')).get(), professors.map((m) => m.id));
+    items.each((i, li) => {
+      assert.ok(text($(li)).includes(shownName(professors[i])));
+      assert.equal($(li).find('.faculty-photo img').length, 1);
+      assert.ok(text($(li).find('.faculty-position')));
+      assert.ok(text($(li).find('.faculty-affiliation')));
+    });
+    assert.equal(items.first().find('a[href*="ympbel.github.io/member/professor"]').length, 1);
   });
 
   test(`${lang}: students page has one card per student, earliest join first, each linking to the person page`, () => {
@@ -171,22 +170,35 @@ for (const [lang, prefix] of [
     assert.ok($('a[href^="https://orcid.org/"]').length > 0);
   });
 
-  test(`${lang}: alumni page has the degree holders table, newest degree first`, () => {
+  test(lang + ': alumni cards are grouped by degree and retain source sheet order', () => {
     const $ = page(at('people', 'alumni'));
-    const rows = $('.alumni-table tbody tr');
-    assert.equal(rows.length, graduates.length);
+    const cards = $('.alumni-gallery--graduates > .alumni-card');
+    assert.equal(cards.length, graduates.length);
     assert.deepEqual(
-      rows.map((_, tr) => $(tr).attr('data-member')).get(),
-      graduates.map((m) => m.id),
+      cards.map((_, card) => $(card).attr('data-member')).get().sort(),
+      graduates.map((m) => m.id).sort(),
     );
-    rows.each((i, tr) => {
-      const m = graduates[i];
-      assert.equal($(tr).find(`a[href="${href(m.id)}"]`).length, 1, m.id);
-      assert.ok(text($(tr)).includes(month(degreeDateOf(m))), m.id);
+    for (const group of [
+      { key: 'doctoral', type: /박사|doctor|ph\.?\s*d/i },
+      { key: 'masters', type: /석사|master|m\.?sc/i },
+    ]) {
+      const expected = graduates
+        .filter((m) => group.type.test([nested(m.fm, 'degree', 'type'), nested(m.fm, 'degree', 'type_en')].join(' ')))
+        .sort((a, b) => Number(scalar(a.fm, 'order')) - Number(scalar(b.fm, 'order')));
+      const actual = $('.alumni-gallery[data-degree="' + group.key + '"] > .alumni-card')
+        .map((_, card) => $(card).attr('data-member')).get();
+      assert.deepEqual(actual, expected.map((m) => m.id), group.key);
+    }
+    cards.each((_, card) => {
+      const m = graduates.find((member) => member.id === $(card).attr('data-member'));
+      assert.equal($(card).find('a[href="' + href(m.id) + '"]').length, 2, m.id);
+      assert.ok(text($(card)).includes(month(degreeDateOf(m))), m.id);
+      const type = nested(m.fm, 'degree', 'type');
+      if (type) assert.ok(text($(card)).includes(type), m.id);
     });
   });
 
-  test(`${lang}: alumni page lists the former members, latest join first`, () => {
+  test(`${lang}: alumni page lists only existing former members in the requested order`, () => {
     const $ = page(at('people', 'alumni'));
     const items = $('.former-list li');
     assert.equal(items.length, formers.length);
@@ -197,7 +209,7 @@ for (const [lang, prefix] of [
     items.each((i, li) => {
       const m = formers[i];
       assert.equal($(li).find(`a[href="${href(m.id)}"]`).length, 1, m.id);
-      if (joinedOf(m)) assert.ok(text($(li)).includes(month(joinedOf(m))), m.id);
+      assert.equal($(li).find("img").length, 0, m.id);
     });
   });
 

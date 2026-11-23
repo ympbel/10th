@@ -28,15 +28,15 @@ const s = t(locale);
     <title>{title ? `${title} | MPBEL 10th` : s.siteTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {(bodyClass === 'home' || bodyClass === 'edition-board') && (
-      <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700&display=swap" rel="stylesheet" />
+    {(bodyClass === 'home' || bodyClass?.includes('edition-board')) && (
+      <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
     )}
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700&display=swap" rel="stylesheet" />
   </head>
   <body class={bodyClass}>
     <a class="skip" href="#main">{s.skipToContent}</a>
-    <Header locale={locale} languageHrefs={languageHrefs} />
+    <Header locale={locale} languageHrefs={languageHrefs} edition={bodyClass === 'home' || bodyClass?.includes('people-edition') || bodyClass?.includes('photo-edition')} />
     <main id="main">
       <slot />
     </main>

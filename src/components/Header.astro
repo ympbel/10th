@@ -9,12 +9,13 @@ import { t } from '../i18n/index.ts';
 
 interface Props {
   locale: Locale;
+  edition?: boolean;
   /** The KR/EN hrefs, for a page that has no address of its own (404). Without it, the toggle links this page's
    * address in each language. */
   languageHrefs?: Record<Locale, string>;
 }
 
-const { locale, languageHrefs } = Astro.props;
+const { locale, languageHrefs, edition = false } = Astro.props;
 const s = t(locale);
 // The toggle links to the same page in each language: this page for the current one, its counterpart for the other.
 const here = Astro.url.pathname;
@@ -24,12 +25,13 @@ const languages: Array<{ locale: Locale; label: string; href: string }> = [
 ];
 ---
 
-<header class="topmenu">
+<header class:list={['topmenu', { 'magazine-header': edition }]}>
   <div class="topmenu-inner">
     <a class="logo" href={url(localePath('/', locale))}>
       <img src={url('/images/site/logo.png')} alt={s.logoAlt} width="142" height="50" />
       <span class="logo-label">{s.archiveLabel}</span>
     </a>
+    {edition && <a class="header-contents" href={url(localePath('/', locale)) + '#edition-contents'}>{locale === 'ko' ? '목차' : 'Contents'}</a>}
     {/* The toggle comes before the drawer it opens so Tab goes from it into the menu; below 1200px flex `order` puts
         KR/EN before it on screen (responsive.css). It is hidden on desktop. */}
     <button type="button" class="nav-toggle" aria-label={s.menuToggle} aria-expanded="false" aria-controls="navi">

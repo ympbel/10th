@@ -131,9 +131,12 @@ class BuildMembersTest(unittest.TestCase):
             '_file': 'garam-han',
         })
 
-    def test_order_only_on_professors(self):
-        for m in self.result:
-            self.assertEqual('order' in m, m['role'] == 'professor', m['name'])
+    def test_sheet_order_on_alumni_and_professors(self):
+        self.assertEqual(self.people['박구름']['order'], 1)
+        self.assertEqual(self.people['이바다']['order'], 2)
+        self.assertEqual(self.people['한가람']['order'], 1)
+        self.assertNotIn('order', self.people['김하늘'])
+        self.assertNotIn('order', self.people['최별빛'])
 
     def test_no_private_column_reaches_any_dict(self):
         text = json.dumps(self.result, ensure_ascii=False)

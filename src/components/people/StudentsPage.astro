@@ -1,10 +1,12 @@
 ---
-// The students board (학생 현황) in one language: the faculty block (professors in `order`, the advisor linking to the
-// main site), then one card per current student, earliest join first, with their record counts.
+// Current students only, earliest join first. Faculty have their own board.
+import { Image } from 'astro:assets';
+import coverOne from '../../assets/portraits/jae-hyun-seok.jpg';
+import coverTwo from '../../assets/portraits/jeongheon-kim.jpg';
+import coverThree from '../../assets/portraits/chanwoong-lee.jpg';
 import { getCollection } from 'astro:content';
 import '../../styles/people.css';
 import SubLayout from '../../layouts/SubLayout.astro';
-import ProfessorRow from './ProfessorRow.astro';
 import MemberCard from './MemberCard.astro';
 import { sortMembersByJoined } from '../../lib/content.ts';
 import { itemsOf } from '../../lib/people.ts';
@@ -26,9 +28,6 @@ const [members, papers, presentations, awards] = await Promise.all([
   getCollection('awards'),
 ]);
 
-const professors = members
-  .filter((m) => m.data.role === 'professor')
-  .sort((a, b) => (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER));
 const students = sortMembersByJoined(
   members.filter((m) => m.data.role === 'student'),
   'asc',
@@ -43,15 +42,11 @@ const countsOf = (id: string) => {
 ---
 
 <SubLayout title={s.boards.students} sectionKey="people" currentHref="/people/students/" locale={locale}>
-  <section class="people-part professors" aria-labelledby="faculty-title">
-    <h2 id="faculty-title">
-      {s.people.faculty} <small>{fill(s.people.count, { n: professors.length })}</small>
-    </h2>
-    <ul class="prof-list">
-      {professors.map((m) => <ProfessorRow member={m.data} locale={locale} />)}
-    </ul>
-  </section>
-
+  <div slot="cover" class="students-cover-portraits" aria-hidden="true">
+    {[coverOne, coverTwo, coverThree].map((photo) => (
+      <Image src={photo} alt="" width={200} height={280} fit="cover" loading="eager" />
+    ))}
+  </div>
   <section class="people-part" aria-labelledby="students-title">
     <h2 id="students-title">
       {s.people.students} <small>{fill(s.people.count, { n: students.length })}</small>

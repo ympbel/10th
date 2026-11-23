@@ -66,6 +66,7 @@ test('yearStats() puts a member without joined in no year', () => {
 test('barHeights() draws 0 as 2px, the maximum as 134px and the rest in proportion', () => {
   assert.deepEqual(barHeights([0, 25, 67]), [2, 50, 134]);
   assert.deepEqual(barHeights([0, 0, 0]), [2, 2, 2]);
+  assert.deepEqual(barHeights([0, 10, 25], 180, 30), [2, 60, 150]);
 });
 
 test('labCounts() counts non-professors, degrees and papers from 2016 on', () => {

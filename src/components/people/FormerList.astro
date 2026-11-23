@@ -1,46 +1,21 @@
 ---
-// The former members on the alumni board: name (a link to the person page), the other-language name, and the time in
-// the lab as far as it is known (join month, and the leaving month when the file has one), in the order given.
 import type { CollectionEntry } from 'astro:content';
 import MemberLink from './MemberLink.astro';
-import { displayName, otherName } from '../../lib/people.ts';
-import { yearMonth } from '../../lib/content.ts';
-import { langOf, type Locale } from '../../lib/locale.ts';
-import { fill, t } from '../../i18n/index.ts';
+import { displayName } from '../../lib/people.ts';
+import type { Locale } from '../../lib/locale.ts';
 
 interface Props {
   members: CollectionEntry<'members'>[];
   locale: Locale;
 }
-
 const { members, locale } = Astro.props;
-const p = t(locale).people;
-
-/** `2019.03 – 2020.02` when both ends are known, `합류 2019.03` with the join month only, else nothing. */
-function stay(joined: string | undefined, left: string | undefined): string {
-  if (joined && left) return `${yearMonth(joined)} – ${yearMonth(left)}`;
-  return joined ? fill(p.joinedOn, { date: yearMonth(joined) }) : '';
-}
 ---
 
-<ul class="former-list">
-  {
-    members.map((m) => {
-      const other = otherName(m.data, locale);
-      const period = stay(m.data.joined, m.data.left);
-      return (
-        <li data-member={m.id}>
-          <MemberLink class="name" id={m.id} name={displayName(m.data, locale)} locale={locale} />
-          {other && ' '}
-          {other && (
-            <span class="other" lang={langOf(other, locale)}>
-              {other}
-            </span>
-          )}
-          {period && ' '}
-          {period && <span class="period">{period}</span>}
-        </li>
-      );
-    })
-  }
-</ul>
+<ol class="former-list historical-roster">
+  {members.map((member, index) => (
+    <li data-member={member.id}>
+      <span class="roster-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+      <MemberLink id={member.id} name={displayName(member.data, locale)} locale={locale} />
+    </li>
+  ))}
+</ol>

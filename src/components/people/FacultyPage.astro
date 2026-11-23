@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import SubLayout from '../../layouts/SubLayout.astro';
+import MemberPortrait from './MemberPortrait.astro';
+import profiles from '../../profiles/faculty.json';
+import { displayName, otherName } from '../../lib/people.ts';
+import type { Locale } from '../../lib/locale.ts';
+import { t } from '../../i18n/index.ts';
+import '../../styles/people.css';
+import '../../styles/faculty.css';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const s = t(locale);
+const professors = (await getCollection('members', (m) => m.data.role === 'professor'))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
+type Profile = { position: string; position_en?: string; affiliation: string; affiliation_en?: string; research: string; research_en?: string; bio: string; bio_en?: string; education: string[]; education_en?: string[]; source: string };
+const profileOf = (id: string) => (profiles as Record<string, Profile>)[id];
+const localized = (profile: Profile, key: 'position' | 'affiliation' | 'research' | 'bio') => locale === 'en' ? profile[key + '_en' as keyof Profile] as string || profile[key] : profile[key];
+---
+<SubLayout title={s.boards.faculty} sectionKey="people" currentHref="/people/faculty/" locale={locale}>
+  <div slot="cover" class="students-cover-portraits" aria-hidden="true">
+    {professors.slice(0, 3).map((m) => <MemberPortrait id={m.id} size="thumbnail" />)}
+  </div>
+  <p class="faculty-intro">{locale === 'ko' ? '공식 홈페이지에 공개된 소개를 바탕으로 정리한 교수진입니다.' : 'Faculty profiles from the official MPBEL directory.'}</p>
+  <ul class="faculty-list professors">
+    {professors.map((member) => {
+      const profile = profileOf(member.id);
+      const education = locale === 'en' ? profile.education_en ?? profile.education : profile.education;
+      return <li class="faculty-profile" id={member.id} data-member={member.id}>
+        <div class="faculty-photo"><MemberPortrait id={member.id} size="card" fallbackName={displayName(member.data, locale)} /></div>
+        <div class="faculty-copy">
+          <p class="faculty-eyebrow">{member.data.order === 1 ? (locale === 'ko' ? '지도교수' : 'Principal investigator') : (locale === 'ko' ? '교수진' : 'Faculty')}</p>
+          <h2>{displayName(member.data, locale)}</h2>
+          {otherName(member.data, locale) && <p class="faculty-other">{otherName(member.data, locale)}</p>}
+          <p class="faculty-position">{localized(profile, 'position')}</p>
+          <p class="faculty-affiliation">{localized(profile, 'affiliation')}</p>
+          {localized(profile, 'bio') && <p>{localized(profile, 'bio')}</p>}
+          <div class="faculty-details">
+            {localized(profile, 'research') && <section><h3>{locale === 'ko' ? '연구·강의 분야' : 'Research & teaching'}</h3><p>{localized(profile, 'research')}</p></section>}
+            {education.length > 0 && <section><h3>{locale === 'ko' ? '학력' : 'Education'}</h3><ul>{education.map((item) => <li>{item}</li>)}</ul></section>}
+          </div>
+          <a class="faculty-source" href={member.data.link ?? profile.source} target="_blank" rel="noopener">{locale === 'ko' ? '공식 소개 보기' : 'Official profile'} ↗</a>
+        </div>
+      </li>;
+    })}
+  </ul>
+</SubLayout>

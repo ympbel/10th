@@ -1,0 +1,80 @@
+.magazine-header .topmenu-inner {
+  position: relative;
+  gap: 24px;
+  height: 88px;
+}
+.magazine-header .logo img {
+  width: 114px;
+  height: auto;
+}
+.magazine-header .logo-label {
+  font-size: 11px;
+  max-width: 170px;
+  color: #52647a;
+}
+.magazine-header .header-contents {
+  margin-left: auto;
+  color: #16385f;
+  font-size: 14px;
+}
+.magazine-header .nav-toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #16385f;
+  order: 3;
+  cursor: pointer;
+}
+.magazine-header .langbut {
+  margin-left: 0;
+  order: 2;
+}
+.magazine-header .nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: auto;
+  padding: 32px;
+  background: #fff;
+  box-shadow: 0 15px 30px rgb(0 20 41 / .1);
+}
+.magazine-header .nav.open { display: block; }
+.magazine-header #nav {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 24px;
+}
+.magazine-header #nav > li > a {
+  height: auto;
+  padding: 0 0 10px;
+  font-size: 14px;
+}
+.magazine-header #nav .sub {
+  display: block;
+  position: static;
+  transform: none;
+  width: auto;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.magazine-header #nav .sub a {
+  padding: 5px 0;
+  color: #52647a;
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  .magazine-header .topmenu-inner { gap: 12px; height: 76px; }
+  .magazine-header .logo { min-height: 0; }
+  .magazine-header .logo img { width: 100px; }
+  .magazine-header .logo-label { display: none; }
+  .magazine-header .langbut a { width: 30px; }
+  .magazine-header .nav { padding: 24px 16px; }
+  .magazine-header #nav { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}

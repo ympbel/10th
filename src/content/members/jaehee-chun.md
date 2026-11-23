@@ -13,4 +13,5 @@ degree:
   type: "이학박사"
 affiliation: "UC Davis"
 position: "Medical Physics Residency"
+order: 3
 ---

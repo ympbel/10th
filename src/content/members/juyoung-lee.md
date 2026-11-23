@@ -14,4 +14,5 @@ degree:
   type: "공학석사"
 affiliation: "Emory University"
 position: "Ph.D Candidate"
+order: 5
 ---

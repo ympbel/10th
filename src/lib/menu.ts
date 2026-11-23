@@ -17,7 +17,7 @@ function item(key: ItemKey, href: string): MenuItem {
 
 /** The six top menu sections. The year pages are not in the menu (they are reached from the home timeline). */
 export const MENU: MenuSection[] = [
-  { key: 'people', label: 'PEOPLE', items: [item('students', '/people/students/'), item('alumni', '/people/alumni/')] },
+  { key: 'people', label: 'PEOPLE', items: [item('faculty', '/people/faculty/'), item('students', '/people/students/'), item('alumni', '/people/alumni/')] },
   {
     key: 'publication',
     label: 'PUBLICATION',

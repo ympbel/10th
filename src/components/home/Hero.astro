@@ -18,9 +18,12 @@ const { slogan, years, locale } = Astro.props;
   <div class="wrap hero-wrap">
     <div class="hero-slogan">
       <p class="hero-years"><span lang="en">YONSEI UNIVERSITY · MPBEL</span> <span>{years}</span></p>
-      <p class="hero-display" lang="en" aria-hidden="true">10<span>Years.</span></p>
-      <h1>{slogan}</h1>
-      <a class="hero-link" href="#history">{locale === 'ko' ? '10년의 연혁 보기' : 'Explore the timeline'} <span aria-hidden="true">↓</span></a>
+      <p class="hero-display" lang="en" aria-hidden="true">10 <span>Years.</span></p>
+      <div class="hero-caption">
+        <p class="hero-theme" lang="en">A decade of<br /><em>discovery.</em></p>
+        <h1>{slogan}</h1>
+      </div>
+      <a class="hero-link" href="#edition-contents">{locale === 'ko' ? '기념 책자 펼치기' : 'Explore the anniversary edition'}</a>
     </div>
   </div>
 </div>

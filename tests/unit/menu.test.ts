@@ -4,7 +4,7 @@ import { MENU, sectionOf } from '../../src/lib/menu.ts';
 import { localePath, otherLocaleHref } from '../../src/lib/locale.ts';
 import { t } from '../../src/i18n/index.ts';
 
-test('MENU has the six sections and eleven boards in menu order', () => {
+test('MENU has the six sections and twelve boards in menu order', () => {
   assert.deepEqual(
     MENU.map((s) => s.key),
     ['people', 'publication', 'award', 'project', 'activity', 'archive'],
@@ -15,7 +15,7 @@ test('MENU has the six sections and eleven boards in menu order', () => {
   );
   assert.deepEqual(
     MENU.flatMap((s) => s.items.map((i) => i.key)),
-    ['students', 'alumni', 'papers', 'patents', 'presentations', 'awards', 'projects', 'seminars', 'workshops', 'photos', 'comments'],
+    ['faculty', 'students', 'alumni', 'papers', 'patents', 'presentations', 'awards', 'projects', 'seminars', 'workshops', 'photos', 'comments'],
   );
 });
 
@@ -30,8 +30,8 @@ test('every menu href is a site-root path that starts and ends with /', () => {
 
 test('menu items carry a Korean and an English label', () => {
   const people = MENU[0].items;
-  assert.deepEqual(people[0].label, { ko: '학생 현황', en: 'Students' });
-  assert.deepEqual(people[1].label, { ko: '졸업 현황', en: 'Alumni' });
+  assert.deepEqual(people[1].label, { ko: '학생 현황', en: 'Students' });
+  assert.deepEqual(people[2].label, { ko: '졸업 현황', en: 'Alumni' });
   for (const item of MENU.flatMap((s) => s.items)) {
     assert.ok(item.label.ko && item.label.en, item.key);
   }

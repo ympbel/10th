@@ -13,4 +13,5 @@ degree:
   type: "이학박사"
 affiliation: "연세대학교 디지털헬스연구원"
 position: "박사후연구원"
+order: 8
 ---

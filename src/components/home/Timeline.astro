@@ -1,10 +1,8 @@
 ---
-// The eleven-year timeline: heading and lead above a 3px Graphite rule, one column per year (bars, counts, who joined,
-// who took a degree), the legend, then the year panels (default slot). Each column links to its year page; the
-// script below turns a plain click into "show this year's panel" and keeps the choice in the URL hash (#y2024).
-// Below 1200px each year becomes one row: year, horizontal bars and counts, names (home.css).
+// An annual chart with a selectable research metric. Year links reveal the corresponding record panel.
+// The chart scrolls horizontally on narrow screens and keeps ordinary year-page links without JavaScript.
 import type { Locale } from '../../lib/locale.ts';
-import { YEARS } from '../../lib/years.ts';
+import { YEARS, barHeights } from '../../lib/years.ts';
 import { t } from '../../i18n/index.ts';
 
 type Person = { name: string; lang?: string };
@@ -18,8 +16,6 @@ interface Props {
     awards: number;
     /** Projects running in the year. */
     projects: number;
-    /** Bar heights in px (max 134), relative within each series. */
-    bars: { papers: number; presentations: number; awards: number };
     /** The first few who joined, earliest first. */
     joined: Person[];
     /** How many more joined than are shown. */
@@ -35,8 +31,23 @@ const { years, selected, locale } = Astro.props;
 const s = t(locale);
 const tl = s.timeline;
 const range = `${YEARS[0]} – ${YEARS[YEARS.length - 1]}`;
-// Bars draw from an inline `--bar` (px as a number) so the narrow layout can turn the same value into a width.
 const SERIES = ['papers', 'presentations', 'awards'] as const;
+type Series = (typeof SERIES)[number];
+const steps = { papers: 10, presentations: 20, awards: 5 };
+const totals = Object.fromEntries(SERIES.map((key) => [key, years.reduce((n, year) => n + year[key], 0)]));
+
+function scaleFor(key: Series) {
+  const values = years.map((year) => year[key]);
+  const step = steps[key];
+  const maximum = Math.max(step, Math.ceil(Math.max(0, ...values) / step) * step);
+  const ticks = Array.from({ length: maximum / step + 1 }, (_, i) => maximum - i * step);
+  return { ticks, heights: barHeights(values, 180, maximum) };
+}
+const scales = {
+  papers: scaleFor('papers'),
+  presentations: scaleFor('presentations'),
+  awards: scaleFor('awards'),
+};
 // A column is 1/11 of 1200px. Korean labels fit two counts to a line (`논문 25 · 발표 67`) and several names to a
 // line; English labels and names do not, so English pages give each count and each name its own line.
 const stacked = locale === 'en';
@@ -52,18 +63,31 @@ const numLines = (y: Props['years'][number]) => {
 };
 ---
 
-<section id="history" class="wrap timeline" aria-labelledby="timeline-title">
+<section id="history" class="wrap timeline" data-series="papers" style={'--chart-intervals:' + (scales.papers.ticks.length - 1)} aria-labelledby="timeline-title">
   <div class="timeline-head">
     <h2 class="timeline-title" id="timeline-title">{tl.title} <span>{range}</span></h2>
     <p class="timeline-lead">{tl.lead}</p>
   </div>
-  <ol class="timeline-years">
+  <div class="timeline-series" role="group" aria-label={locale === 'ko' ? '그래프 항목 선택' : 'Chart metric'}>
+    {SERIES.map((key) => (
+      <button type="button" data-chart-series={key} data-ticks={scales[key].ticks.join(',')} aria-controls="timeline-plot" aria-pressed={key === 'papers'}>
+        <span>{tl[key]}</span><strong>{totals[key]}</strong>
+      </button>
+    ))}
+  </div>
+  <div class="timeline-chart">
+    <div class="chart-scale" aria-hidden="true">
+      {scales.papers.ticks.map((tick, i) => <span style={'top:' + i / (scales.papers.ticks.length - 1) * 100 + '%'}>{tick}</span>)}
+    </div>
+    <div class="timeline-scroll" id="timeline-plot" role="region" aria-label={locale === 'ko' ? '연도별 연구 실적 그래프' : 'Annual research output chart'} tabindex="0">
+    <ol class="timeline-years">
     {
-      years.map((y) => (
+      years.map((y, yearIndex) => (
         <li>
           <a
             href={y.href}
             data-year={y.year}
+            aria-controls={'year-records-' + y.year}
             class={y.year === selected ? 'on' : undefined}
             aria-current={y.year === selected ? 'true' : undefined}
           >
@@ -71,7 +95,7 @@ const numLines = (y: Props['years'][number]) => {
             <span class="tl-figs">
               <span class="tl-bars" aria-hidden="true">
                 {SERIES.map((k) => (
-                  <i class={`bar-${k}`} style={`--bar:${y.bars[k]}`} />
+                  <i class={`bar-${k}`} data-count={y[k]} style={'--bar:' + scales[k].heights[yearIndex]} />
                 ))}
               </span>
               <span class="tl-nums">
@@ -111,13 +135,12 @@ const numLines = (y: Props['years'][number]) => {
       ))
     }
   </ol>
-  <ul class="timeline-legend">
-    <li><i class="bar-papers"></i>{tl.papers}</li>
-    <li><i class="bar-presentations"></i>{tl.presentations}</li>
-    <li><i class="bar-awards"></i>{tl.awards}</li>
-    <li><span class="chip">{tl.degrees}</span></li>
-    <li class="timeline-note">{tl.barNote}</li>
-  </ul>
+    </div>
+  </div>
+  <div class="timeline-chart-note">
+    <p>{locale === 'ko' ? '막대 위 숫자는 해당 연도의 실적입니다.' : 'Values above the bars show the annual total.'}</p>
+    <p class="chart-swipe-hint">{locale === 'ko' ? '좌우로 밀어 연도를 선택하세요.' : 'Scroll sideways to choose a year.'}</p>
+  </div>
   <slot />
 </section>
 

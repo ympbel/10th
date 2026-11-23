@@ -79,7 +79,7 @@ test('html lang is en under /en/ and ko elsewhere; menu links stay in the page l
     const english = isEnglish(path);
     assert.equal($('html').attr('lang'), english ? 'en' : 'ko', path);
     const hrefs = $('#nav a').map((_, a) => $(a).attr('href')).get();
-    assert.equal(hrefs.length, 6 + 11, path);
+    assert.equal(hrefs.length, 6 + 12, path);
     for (const href of hrefs) assert.equal(isEnglish(href), english, `${path}: ${href}`);
   }
 });
@@ -118,7 +118,7 @@ test('sub page frame: visual band label, side navigation with the current board,
     assert.equal($('.sub_visual .sub_visual-label').text().trim(), '10th Anniversary Archive', path);
     assert.match($('.sub_visual').attr('style'), /sub_visual\.jpg/, path);
     assert.equal($('.snb .tit').text().trim(), 'PEOPLE', path);
-    assert.equal($('.snb .vNav li').length, 2, path);
+    assert.equal($('.snb .vNav li').length, 3, path);
     const active = $('.snb .vNav li.active a');
     assert.equal(active.text().trim(), title, path);
     assert.equal(active.attr('href'), href, path);

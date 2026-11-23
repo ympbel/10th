@@ -27,7 +27,7 @@ const UNDECIDED = {
 };
 const BOARDS = [
   { collection: 'workshops', path: 'activity/workshops', item: 'article.workshop' },
-  { collection: 'photos', path: 'archive/photos', item: '.photo-grid figure' },
+  { collection: 'photos', path: 'archive/photos', item: '.photo-album' },
   { collection: 'comments', path: 'archive/comments', item: 'article.comment' },
 ];
 
@@ -57,7 +57,8 @@ for (const [lang, prefix] of LANGS) {
       const empty = $('.contents .empty-state');
       if (n > 0) {
         assert.equal(empty.length, 0);
-        assert.equal($(`.contents ${item}`).length, n);
+        if (collection === 'photos') assert.equal($('.photo-album').toArray().reduce((sum, el) => sum + Number($(el).attr('data-photo-count')), 0), n);
+        else assert.equal($(`.contents ${item}`).length, n);
         return;
       }
       assert.equal(empty.length, 1);
@@ -83,12 +84,12 @@ for (const [lang, prefix] of LANGS) {
     assert.deepEqual(subfolders(`${prefix}archive/photos/k`).sort(), [...photoKinds].sort());
     for (const year of photoYears) {
       const $ = page(`${prefix}archive/photos/${year}`);
-      assert.equal($('.photo-grid figure').length, photos.filter((p) => scalar(p.fm, 'year') === year).length, year);
+      assert.equal($('.photo-album').toArray().reduce((sum, el) => sum + Number($(el).attr('data-photo-count')), 0), photos.filter((p) => scalar(p.fm, 'year') === year).length, year);
       assert.equal($(`.photo-tabs a[aria-current="page"]`).attr('href'), `${BASE}/${prefix}archive/photos/${year}/`);
     }
     for (const kind of photoKinds) {
       const $ = page(`${prefix}archive/photos/k/${kind}`);
-      assert.equal($('.photo-grid figure').length, photos.filter((p) => scalar(p.fm, 'kind') === kind).length, kind);
+      assert.equal($('.photo-album').toArray().reduce((sum, el) => sum + Number($(el).attr('data-photo-count')), 0), photos.filter((p) => scalar(p.fm, 'kind') === kind).length, kind);
       assert.equal($(`.photo-tabs a[aria-current="page"]`).attr('href'), `${BASE}/${prefix}archive/photos/k/${kind}/`);
     }
   });

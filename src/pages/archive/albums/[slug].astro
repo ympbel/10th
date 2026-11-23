@@ -1,0 +1,11 @@
+---
+import '../../../styles/global.css';
+import { getCollection } from 'astro:content';
+import { photoAlbums } from '../../../lib/photos.ts';
+import PhotoAlbumPage from '../../../components/PhotoAlbumPage.astro';
+export async function getStaticPaths() {
+  return photoAlbums(await getCollection('photos')).map((album) => ({params:{slug:album.id},props:{photos:album.photos}}));
+}
+const { photos } = Astro.props;
+---
+<PhotoAlbumPage photos={photos} locale="ko" />

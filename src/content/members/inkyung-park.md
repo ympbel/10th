@@ -13,4 +13,5 @@ degree:
   date: "2022-02"
   type: "공학석사"
 affiliation: "Own Business"
+order: 4
 ---
