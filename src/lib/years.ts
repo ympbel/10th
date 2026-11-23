@@ -93,8 +93,8 @@ export function labCounts(data: LabData): {
 const EMPTY_BAR = 2;
 
 /** Bar heights in px for one timeline series: 0 draws a 2px stub, the series' largest value draws `max`, and every
- * other value is in proportion to it, rounded to a whole px. */
-export function barHeights(values: number[], max = 134): number[] {
-  const top = Math.max(0, ...values);
+ * other value is in proportion to it, rounded to a whole px. An explicit ceiling aligns bars to a labelled axis. */
+export function barHeights(values: number[], max = 134, ceiling?: number): number[] {
+  const top = ceiling ?? Math.max(0, ...values);
   return values.map((v) => (v === 0 ? EMPTY_BAR : Math.round((v / top) * max)));
 }

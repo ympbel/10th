@@ -1,0 +1,318 @@
+/* Publication overview, annual chart and the selected year's records. */
+.contents-chart {
+  display: block;
+  height: 330px;
+  padding: 24px;
+  border: 1px solid #d9e3ef;
+  border-radius: 18px;
+  background: #fff;
+}
+.mini-chart-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+.mini-chart-heading p { font-size: 14px; color: #52647a; }
+.mini-chart-heading strong {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--f-editorial);
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -.06em;
+}
+.mini-chart-heading small {
+  margin-left: 8px;
+  color: #52647a;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.mini-chart-heading > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #d9e3ef;
+  border-radius: 24px;
+  color: #52647a;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mini-chart-heading b { color: #0a347f; font-size: 20px; font-weight: 500; }
+.contents-chart-bars {
+  display: grid;
+  grid-template-columns: repeat(11,minmax(0,1fr));
+  align-items: stretch;
+  gap: 9px;
+  height: 150px;
+  border: 0;
+  background: linear-gradient(#eaf0f6 1px,transparent 1px) 0 0 / 100% 65px;
+}
+.mini-chart-year {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding-bottom: 22px;
+  min-width: 0;
+}
+.mini-bar {
+  position: relative;
+  display: block;
+  height: var(--height);
+  min-height: 1px;
+  border-radius: 4px 4px 0 0;
+  background: #b9cce6;
+}
+.is-peak .mini-bar { background: #164a8a; }
+.mini-bar-value {
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 100%;
+  color: #52647a;
+  font-size: 11px;
+  text-align: center;
+}
+.is-peak .mini-bar-value { color: #0a347f; font-weight: 600; }
+.mini-year {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: #52647a;
+  font-size: 11px;
+  text-align: center;
+}
+.contents-chart-label { margin-top: 12px; font-size: 12px; color: #52647a; }
+
+.timeline {
+  --chart-accent: #154b8d;
+  --chart-muted: #b8cbe5;
+  margin-block: 40px 0;
+}
+.timeline[data-series='presentations'] { --chart-accent: #0b7278; --chart-muted: #b4dcda; }
+.timeline[data-series='awards'] { --chart-accent: #66509b; --chart-muted: #d6cce9; }
+.timeline-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  padding-bottom: 30px;
+}
+.timeline-title { color: #112b46; font-size: 44px; font-weight: 500; letter-spacing: -.045em; line-height: 1.1; }
+.timeline-title span { display: block; margin-top: 10px; color: #52647a; font-size: 16px; font-weight: 400; letter-spacing: .02em; }
+.timeline-lead { max-width: 400px; color: #52647a; font-size: 15px; line-height: 1.8; }
+.timeline-series {
+  display: flex;
+  gap: 6px;
+  width: fit-content;
+  padding: 5px;
+  margin-bottom: 26px;
+  border: 1px solid #dce4ed;
+  border-radius: 16px;
+  background: #edf2f8;
+}
+.timeline-series button {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: #52647a;
+  cursor: pointer;
+}
+.timeline-series button span { font-size: 15px; }
+.timeline-series strong { font-size: 24px; font-weight: 500; letter-spacing: -.04em; }
+.timeline-series button[aria-pressed='true'] { background: #fff; color: var(--chart-accent); box-shadow: 0 3px 10px rgb(15 42 77 / .07); }
+.timeline-series button:hover { color: var(--chart-accent); }
+.timeline-chart {
+  position: relative;
+  padding: 24px 24px 18px 44px;
+  border: 1px solid #dce4ed;
+  border-radius: 20px;
+  background: #fff;
+}
+.timeline-chart::before {
+  content: '';
+  position: absolute;
+  top: 48px;
+  left: 44px;
+  right: 24px;
+  height: 181px;
+  background: linear-gradient(#e4ebf3 1px,transparent 1px) 0 0 / 100% calc(180px / var(--chart-intervals));
+}
+.chart-scale {
+  position: absolute;
+  left: 12px;
+  top: 48px;
+  height: 180px;
+  color: #52647a;
+  font-size: 12px;
+}
+.chart-scale span {
+  position: absolute;
+  left: 0;
+  transform: translateY(-50%);
+  line-height: 1;
+}
+.timeline-scroll { position: relative; overflow-x: auto; scrollbar-width: thin; overscroll-behavior-x: contain; }
+.timeline-years {
+  display: grid;
+  grid-template-columns: repeat(11,minmax(0,1fr));
+  gap: 12px;
+  min-width: 800px;
+}
+.timeline-years li { display: flex; min-width: 0; }
+.timeline-years a {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-width: 0;
+  padding: 0 0 8px;
+  color: #52647a;
+}
+.tl-figs { display: contents; }
+.tl-bars {
+  order: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 204px;
+}
+.tl-bars i {
+  position: relative;
+  display: block;
+  width: min(38px,70%);
+  height: calc(var(--bar) * 1px);
+  border-radius: 6px 6px 0 0;
+  background: var(--chart-muted);
+  transition: background .2s ease;
+}
+.tl-bars i[data-count='0'] { height: 0; }
+.tl-bars i::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #52647a;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+.timeline[data-series='papers'] .tl-bars i:not(.bar-papers),
+.timeline[data-series='presentations'] .tl-bars i:not(.bar-presentations),
+.timeline[data-series='awards'] .tl-bars i:not(.bar-awards) { display: none; }
+.timeline-years a.on .tl-bars i,
+.timeline-years a:hover .tl-bars i,
+.timeline-years a:focus-visible .tl-bars i { background: var(--chart-accent); }
+.timeline-years a.on .tl-bars i::after { color: var(--chart-accent); font-weight: 700; }
+.tl-year {
+  order: 2;
+  margin-top: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.timeline-years a.on .tl-year { color: #fff; background: var(--chart-accent); }
+.tl-nums,
+.tl-people {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.timeline-chart-note { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; margin-top: 12px; color: #52647a; font-size: 13px; }
+.chart-swipe-hint { display: none; }
+
+.year-panels { margin-top: 42px; }
+.year-panel { display: grid; grid-template-columns: 1.3fr 1fr 1fr; align-items: start; gap: 20px; }
+.year-panel[hidden] { display: none; }
+.yp-summary {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #d8e2ee;
+}
+.yp-kicker { color: #52647a; font-size: 13px; }
+.yp-summary h3 { color: #112b46; font-family: 'Instrument Serif',Georgia,serif; font-size: 80px; font-weight: 400; letter-spacing: -.035em; line-height: 1.1; }
+.yp-summary-detail { max-width: 780px; }
+.yp-summary-counts { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; color: #52647a; }
+.yp-summary-counts b { margin-left: 4px; font-size: 22px; font-weight: 500; color: #153e6e; }
+.yp-joined { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 12px; color: #52647a; font-size: 14px; }
+.yp-joined > span:first-child { color: #153e6e; font-weight: 500; }
+.yp-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 26px;
+  border: 1px solid #dae3ee;
+  border-radius: 18px;
+  background: #fff;
+  color: #112b46;
+}
+.yp-col-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid #d5e0ed; }
+.yp-col h4 { font-size: 20px; font-weight: 500; }
+.yp-count { font-family: 'Instrument Serif',Georgia,serif; font-size: 58px; font-weight: 400; letter-spacing: -.04em; line-height: 1; }
+.yp-col li { padding: 18px 0; border-bottom: 1px solid #dfe6ef; }
+.yp-col li:last-child { border-bottom: 0; }
+.yp-paper-title { font-size: 15px; line-height: 1.65; }
+.yp-col .meta { display: block; margin-top: 8px; color: #52647a; font-size: 13px; line-height: 1.6; }
+.yp-col .yp-person { font-size: 18px; font-weight: 500; }
+.yp-col .empty { padding-block: 24px; color: #52647a; font-size: 15px; }
+.yp-col .more { align-self: flex-start; margin-top: auto; padding-top: 24px; color: #153e6e; font-size: 14px; text-decoration: underline; text-underline-offset: 6px; }
+.yp-col .more:hover { text-decoration-thickness: 2px; }
+.yp-degrees { background: #edf3fa; border-color: #edf3fa; }
+.yp-degrees li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.yp-degrees .meta { margin-top: 0; white-space: nowrap; }
+.yp-awards { background: #0d315d; border-color: #0d315d; color: #fff; }
+.yp-awards .yp-col-heading,
+.yp-awards li { border-color: #355376; }
+.yp-awards .yp-count { color: #c1d7f5; }
+.yp-award-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.yp-venue { padding: 3px 9px; border: 1px solid #6883a3; border-radius: 20px; color: #d9e7f8; font-size: 12px; }
+.yp-awards .meta,
+.yp-awards .empty { color: #c1d3eb; }
+.yp-awards .more { color: #fff; }
+
+@media (max-width: 1000px) {
+  .chart-swipe-hint { display: block; }
+  .year-panel { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .yp-papers { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .timeline { margin-top: 28px; }
+  .timeline-head { display: block; }
+  .timeline-title { font-size: 36px; }
+  .timeline-lead { margin-top: 18px; }
+  .timeline-series { width: 100%; }
+  .timeline-series button { flex: 1; min-width: 0; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; }
+  .timeline-series button span { font-size: 13px; }
+  .timeline-series strong { font-size: 24px; }
+  .timeline-chart { padding-right: 12px; }
+  .year-panel { grid-template-columns: minmax(0,1fr); }
+  .yp-summary { align-items: flex-start; flex-direction: column; gap: 20px; }
+  .yp-papers { grid-column: auto; }
+  .yp-summary h3 { font-size: 72px; }
+  .yp-col { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tl-bars i { transition: none; }
+}

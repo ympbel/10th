@@ -9,6 +9,7 @@ import { BASE, entries, exists, page, scalar } from './helpers.mjs';
 const LANGS = ['', 'en/'];
 const YEARS = Array.from({ length: 11 }, (_, i) => 2016 + i);
 const BOARDS = [
+  'people/faculty',
   'people/students',
   'people/alumni',
   'publication/papers',
@@ -40,7 +41,7 @@ test('eleven year pages and the /years/ redirect in both languages (24 pages)', 
 
 test('the eleven boards in both languages', () => {
   const paths = LANGS.flatMap((lang) => BOARDS.map((board) => `${lang}${board}`));
-  assert.equal(paths.length, 22);
+  assert.equal(paths.length, 24);
   assert.deepEqual(missing(paths), []);
 });
 

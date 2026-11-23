@@ -34,3 +34,15 @@ export function sortPhotos<T extends PhotoLike>(photos: T[]): T[] {
     return a.id.localeCompare(b.id);
   });
 }
+
+/** One dated occasion is one album; use its first photo id as a stable route. */
+export function photoAlbums<T extends PhotoLike & Entry<{ caption?: string }>>(photos: T[]) {
+  const groups = new Map<string, T[]>();
+  for (const photo of sortPhotos(photos)) {
+    const key = `${photo.data.date ?? photo.data.year}:${photo.data.caption ?? photo.id}`;
+    const group = groups.get(key) ?? [];
+    group.push(photo);
+    groups.set(key, group);
+  }
+  return [...groups.values()].map((photos) => ({ id: photos[0].id, cover: photos[0], photos }));
+}

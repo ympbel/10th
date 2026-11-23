@@ -10,6 +10,9 @@
 # 사이트가 배포된 하위 경로는 사이트가 앞에 붙이므로, 여기에는 /images/부터 씁니다.
 image: "/images/photos/2026/lab-meeting-01.jpg"
 
+# 작은 미리보기 이미지가 별도로 있으면 지정합니다. 생략하면 image를 사용합니다.
+# thumbnail: "/images/photos/2026/lab-meeting-01-thumb.jpg"
+
 # [필수] 연도(정수). 연도 탭과 연도 페이지에 쓰입니다.
 year: 2026
 

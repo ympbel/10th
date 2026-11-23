@@ -13,6 +13,7 @@ export const ko = {
   more: '더보기',
   /** Board titles, keyed by menu item key; also the menu item labels (src/lib/menu.ts). */
   boards: {
+    faculty: '교수진',
     students: '학생 현황',
     alumni: '졸업 현황',
     papers: '논문',
@@ -181,7 +182,7 @@ export const ko = {
     kinds: {
       'lab-meeting': '랩미팅',
       conference: '학회',
-      retreat: 'MT',
+      retreat: '연구실 워크샵',
       graduation: '졸업식',
       equipment: '장비',
       other: '기타',

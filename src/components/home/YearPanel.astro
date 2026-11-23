@@ -1,20 +1,19 @@
 ---
-// One Panel Gray panel per year under the timeline, all rendered at build time; only `selected` is visible until the
-// timeline script shows another. Three columns: the year's first papers, the degrees taken, the first awards; each
-// ends with a link to the year page, which lists everything.
 import type { Locale } from '../../lib/locale.ts';
 import { fill, t } from '../../i18n/index.ts';
 
-/** `lang` marks a Korean name, `metaLang` a Korean category, on an English page. */
-type Item = { name: string; lang?: string; meta: string; metaLang?: string };
+type Person = { name: string; lang?: string };
 
 interface Props {
   panels: Array<{
     year: number;
     href: string;
+    presentations: number;
+    projects: number;
+    joined: Person[];
     papers: { count: number; items: Array<{ title: string; meta: string }> };
-    degrees: { count: number; items: Array<{ name: string; lang?: string; date: string }> };
-    awards: { count: number; items: Item[] };
+    degrees: { count: number; items: Array<Person & { date: string }> };
+    awards: { count: number; items: Array<Person & { conference: string; category: string; metaLang?: string }> };
   }>;
   selected: number;
   locale: Locale;
@@ -26,79 +25,67 @@ const h = s.home;
 ---
 
 <div class="year-panels">
-  {
-    panels.map((p) => (
-      <section class="year-panel" data-year={p.year} hidden={p.year !== selected} aria-labelledby={`year-panel-${p.year}`}>
-        <div class="yp-col yp-papers">
-          <h3 id={`year-panel-${p.year}`}>
-            {p.year} <small>{fill(h.papersCount, { n: p.papers.count })}</small>
-          </h3>
-          {p.papers.items.length === 0 ? (
-            <p class="empty">{s.noRecords}</p>
-          ) : (
-            <ul>
-              {p.papers.items.map((i) => (
-                <li>
-                  {i.title} {i.meta && <span class="meta">{i.meta}</span>}
-                </li>
-              ))}
-            </ul>
-          )}
-          <a class="more" href={p.href} aria-label={fill(h.viewAllPapers, { year: p.year })}>
-            {h.viewAll}{' '}
-            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" aria-hidden="true">
-              <path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" />
-            </svg>
-          </a>
+  {panels.map((p) => (
+    <section class="year-panel" id={'year-records-' + p.year} data-year={p.year} hidden={p.year !== selected} aria-labelledby={'year-panel-' + p.year}>
+      <header class="yp-summary">
+        <div>
+          <p class="yp-kicker">{locale === 'ko' ? '선택한 해의 기록' : 'The year in focus'}</p>
+          <h3 id={'year-panel-' + p.year}>{p.year}</h3>
         </div>
-        <div class="yp-col yp-degrees">
-          <h4>
-            {h.degreesTitle} <small>{fill(h.degreesCount, { n: p.degrees.count })}</small>
-          </h4>
-          {p.degrees.items.length === 0 ? (
-            <p class="empty">{s.noRecords}</p>
-          ) : (
-            <ul>
-              {p.degrees.items.map((i) => (
-                <li>
-                  <span lang={i.lang}>{i.name}</span> <span class="meta">{i.date}</span>
-                </li>
-              ))}
-            </ul>
+        <div class="yp-summary-detail">
+          <p class="yp-summary-counts">
+            <span>{s.timeline.papers} <b>{p.papers.count}</b></span>
+            <span>{s.timeline.presentations} <b>{p.presentations}</b></span>
+            <span>{s.timeline.awards} <b>{p.awards.count}</b></span>
+            <span>{s.timeline.short.projects} <b>{p.projects}</b></span>
+          </p>
+          {p.joined.length > 0 && (
+            <p class="yp-joined">
+              <span>{s.timeline.joined}</span>
+              {p.joined.map((person) => <span lang={person.lang}>{person.name}</span>)}
+            </p>
           )}
-          <a class="more" href={p.href} aria-label={fill(h.viewAllDegrees, { year: p.year })}>
-            {h.viewAll}{' '}
-            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" aria-hidden="true">
-              <path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" />
-            </svg>
-          </a>
         </div>
-        <div class="yp-col yp-awards">
-          <h4>
-            {h.awardsTitle} <small>{fill(h.awardsCount, { n: p.awards.count })}</small>
-          </h4>
-          {p.awards.items.length === 0 ? (
-            <p class="empty">{s.noRecords}</p>
-          ) : (
-            <ul>
-              {p.awards.items.map((i) => (
-                <li>
-                  <span lang={i.lang}>{i.name}</span>{' '}
-                  <span class="meta" lang={i.metaLang}>
-                    {i.meta}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <a class="more" href={p.href} aria-label={fill(h.viewAllAwards, { year: p.year })}>
-            {h.viewAll}{' '}
-            <svg class="chevron" width="7" height="12" viewBox="0 0 7 12" aria-hidden="true">
-              <path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" />
-            </svg>
-          </a>
+      </header>
+
+      <div class="yp-col yp-papers">
+        <div class="yp-col-heading">
+          <h4>{s.timeline.papers}</h4><span class="yp-count">{p.papers.count}</span>
         </div>
-      </section>
-    ))
-  }
+        {p.papers.items.length === 0 ? <p class="empty">{s.noRecords}</p> : (
+          <ul>{p.papers.items.map((item) => (
+            <li><p class="yp-paper-title">{item.title}</p>{item.meta && <p class="meta">{item.meta}</p>}</li>
+          ))}</ul>
+        )}
+        <a class="more" href={p.href} aria-label={fill(h.viewAllPapers, { year: p.year })}>{h.viewAll}</a>
+      </div>
+
+      <div class="yp-col yp-degrees">
+        <div class="yp-col-heading">
+          <h4>{h.degreesTitle}</h4><span class="yp-count">{p.degrees.count}</span>
+        </div>
+        {p.degrees.items.length === 0 ? <p class="empty">{s.noRecords}</p> : (
+          <ul>{p.degrees.items.map((item) => (
+            <li><span class="yp-person" lang={item.lang}>{item.name}</span><span class="meta">{item.date}</span></li>
+          ))}</ul>
+        )}
+        <a class="more" href={p.href} aria-label={fill(h.viewAllDegrees, { year: p.year })}>{h.viewAll}</a>
+      </div>
+
+      <div class="yp-col yp-awards">
+        <div class="yp-col-heading">
+          <h4>{h.awardsTitle}</h4><span class="yp-count">{p.awards.count}</span>
+        </div>
+        {p.awards.items.length === 0 ? <p class="empty">{s.noRecords}</p> : (
+          <ul>{p.awards.items.map((item) => (
+            <li>
+              <div class="yp-award-top"><span class="yp-person" lang={item.lang}>{item.name}</span><span class="yp-venue">{item.conference}</span></div>
+              <p class="meta" lang={item.metaLang}>{item.category}</p>
+            </li>
+          ))}</ul>
+        )}
+        <a class="more" href={p.href} aria-label={fill(h.viewAllAwards, { year: p.year })}>{h.viewAll}</a>
+      </div>
+    </section>
+  ))}
 </div>

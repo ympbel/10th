@@ -7,11 +7,11 @@
 import { getCollection } from 'astro:content';
 import '../styles/years.css';
 import '../styles/boards.css';
-import SubLayout from '../layouts/SubLayout.astro';
+import '../styles/photo-archive.css';
+import PhotoLayout from '../layouts/PhotoLayout.astro';
 import YearIndex from './pub/YearIndex.astro';
 import EmptyState from './EmptyState.astro';
-import PhotoGrid from './PhotoGrid.astro';
-import { PHOTO_KINDS, photoKinds, photoYears, type PhotoKind } from '../lib/photos.ts';
+import { photoAlbums, PHOTO_KINDS, photoKinds, photoYears, type PhotoKind } from '../lib/photos.ts';
 import { localePath, type Locale } from '../lib/locale.ts';
 import { url } from '../lib/url.ts';
 import { fill, t } from '../i18n/index.ts';
@@ -40,6 +40,8 @@ const current = year !== undefined ? yearHref(year) : kind !== undefined ? kindH
 const shown = photos.filter(
   (photo) => (year === undefined || photo.data.year === year) && (kind === undefined || photo.data.kind === kind),
 );
+const albums = photoAlbums(shown);
+const featured = photos.find((photo) => photo.data.caption === '연구실 스승의날' && photo.data.year === 2025) ?? albums[0]?.cover;
 const title =
   year !== undefined
     ? fill(p.yearTitle, { year })
@@ -50,12 +52,25 @@ const title =
 const kindList = PHOTO_KINDS.map((k) => `${k} (${p.kinds[k]})`).join(', ');
 ---
 
-<SubLayout title={title} sectionKey="archive" currentHref={BOARD} locale={locale}>
+<PhotoLayout title={title} locale={locale}>
   {
     photos.length === 0 ? (
       <EmptyState collection="photos" locale={locale} values={{ kinds: kindList }} />
     ) : (
       <>
+        <header class="photo-editorial-heading">
+          <p class="photo-archive-kicker">MPBEL / THE VISUAL CHRONICLE</p>
+          <div class="photo-title-row"><h1 lang="en">Shared<br /><em>moments.</em></h1>
+            <div class="photo-opening-note"><p>{locale === 'ko' ? '연구실의 하루가, 우리의 역사가 되기까지.' : 'Everyday moments. A shared history.'}</p>
+              <p>{locale === 'ko' ? '함께 배우고, 축하하고, 새로운 곳으로 향했던 순간들을 한 권의 사진집으로 엮었습니다.' : 'A photo journal of learning, celebration and journeys together.'}</p>
+              <span>2017 — 2026</span></div></div>
+        </header>
+        {year === undefined && kind === undefined && featured && <figure class="photo-featured">
+          <img src={url(featured.data.image)} alt={featured.data.caption ?? ''} loading="eager" />
+          <figcaption><span>{featured.data.caption}</span><span>{featured.data.date?.replaceAll('-', '.')} / MPBEL</span></figcaption>
+        </figure>}
+        <section id="albums" class="photo-album-section" aria-labelledby="album-heading">
+        <div class="photo-section-head"><h2 id="album-heading">{locale === 'ko' ? '장면을 고르다' : 'Explore the stories'}</h2><p>{albums.length} {locale === 'ko' ? '개의 이야기' : 'stories'}<span> / </span>{shown.length} {locale === 'ko' ? '장의 사진' : 'photographs'}</p></div>
         <YearIndex
           years={photoYears(photos)}
           first={{ href: href(BOARD), label: p.all }}
@@ -76,8 +91,17 @@ const kindList = PHOTO_KINDS.map((k) => `${k} (${p.kinds[k]})`).join(', ');
             ))}
           </ul>
         </nav>
-        <PhotoGrid photos={shown} members={memberBySlug} locale={locale} />
+        <ul class="photo-albums">
+          {albums.map((album, index) => <li class="photo-album" data-photo-count={album.photos.length}>
+            <a href={href('/archive/albums/' + album.id + '/')}>
+              <div class="photo-album-image"><img src={url(album.cover.data.thumbnail ?? album.cover.data.image)} alt={album.cover.data.caption ?? ''} loading="lazy" /><span class="photo-album-count">{String(album.photos.length).padStart(2, '0')} {locale === 'ko' ? '장' : 'PHOTOS'} ↗</span></div>
+              <div class="photo-album-meta"><span>{String(index + 1).padStart(2, '0')} / {album.cover.data.date?.replaceAll('-', '.')}</span><span>{p.kinds[album.cover.data.kind]}</span></div>
+              <h3>{album.cover.data.caption}</h3>
+            </a>
+          </li>)}
+        </ul>
+        </section>
       </>
     )
   }
-</SubLayout>
+</PhotoLayout>

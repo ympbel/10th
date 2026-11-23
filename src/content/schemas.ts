@@ -189,6 +189,7 @@ export const workshopSchema = z
 export const photoSchema = z
   .object({
     image: z.string().min(1),
+    thumbnail: z.string().min(1).optional(),
     year,
     kind: z.enum(['lab-meeting', 'conference', 'retreat', 'graduation', 'equipment', 'other']),
     people: slugs,

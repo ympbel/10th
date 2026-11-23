@@ -1,0 +1,18 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '../styles/edition.css';
+import '../styles/photo-archive.css';
+import { localePath, type Locale } from '../lib/locale.ts';
+import { url } from '../lib/url.ts';
+interface Props { title: string; locale: Locale }
+const { title, locale } = Astro.props;
+---
+<BaseLayout title={title} locale={locale} bodyClass="edition-board photo-edition">
+  <div class="photo-shell">
+    <nav class="photo-breadcrumb" aria-label={locale === 'ko' ? '현재 위치' : 'Breadcrumb'}>
+      <a href={url(localePath('/', locale)) + '#edition-contents'}>← {locale === 'ko' ? '10주년 목차' : 'Contents'}</a>
+      <a href={url(localePath('/archive/photos/', locale))}>PHOTO ARCHIVE</a>
+    </nav>
+    <slot />
+  </div>
+</BaseLayout>

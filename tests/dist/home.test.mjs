@@ -34,6 +34,7 @@ const joinedIn = (y) => members.filter((fm) => (scalar(fm, 'joined') ?? '').slic
 
 /** The board link counts in menu order. */
 const BOARDS = [
+  roles.filter((r) => r === 'professor').length,
   roles.filter((r) => r === 'student').length,
   members.filter((fm) => nested(fm, 'degree', 'date') || scalar(fm, 'role') === 'former').length,
   papers.length,
@@ -55,7 +56,7 @@ const text = ($el) => $el.text().replace(/\s+/g, ' ').trim();
 test('the home figures and the papers board link show the counts derived from the content files', () => {
   const $ = page('');
   assert.deepEqual($('.figures a[data-count]').map((_, a) => Number($(a).attr('data-count'))).get(), FIGURES);
-  assert.equal(text($('.board-links a').eq(2)), `${text($('#nav .sub a').eq(2))} ${BOARDS[2]}`);
+  assert.equal(text($('.board-links a').eq(3)), `${text($('#nav .sub a').eq(3))} ${BOARDS[3]}`);
 });
 
 for (const [lang, path, prefix] of [
@@ -94,7 +95,7 @@ for (const [lang, path, prefix] of [
       assert.equal($(a).find('.tl-bars i').length, 3, y);
       for (const bar of $(a).find('.tl-bars i').get()) {
         const v = Number(/--bar:(\d+)/.exec($(bar).attr('style'))?.[1]);
-        assert.ok(v >= 2 && v <= 134, `${y}: bar ${v}`);
+        assert.ok(v >= 2 && v <= 180, `${y}: bar ${v}`);
       }
     });
     assert.deepEqual($('.timeline a.on').map((_, a) => $(a).attr('data-year')).get(), ['2026']);
@@ -113,12 +114,12 @@ for (const [lang, path, prefix] of [
   test(`${lang}: the alumni board link counts the people the alumni board lists`, () => {
     const board = page(join(path, 'people', 'alumni'));
     const listed = new Set(
-      board('tr[data-member], .former-list li[data-member]')
+      board('.alumni-gallery--graduates > li[data-member], .former-list > li[data-member]')
         .map((_, el) => board(el).attr('data-member'))
         .get(),
     );
     assert.ok(listed.size > 0);
-    assert.equal(BOARDS[1], listed.size);
+    assert.equal(BOARDS[2], listed.size);
   });
 
   test(`${lang}: eleven year panels, only 2026 visible, each with links to its year page`, () => {
@@ -142,7 +143,7 @@ for (const [lang, path, prefix] of [
 
   test(`${lang}: eleven board links with the menu hrefs and each board's count`, () => {
     const links = $('.board-links a');
-    assert.equal(links.length, 11);
+    assert.equal(links.length, 12);
     assert.deepEqual(
       links.map((_, a) => $(a).attr('href')).get(),
       $('#nav .sub a').map((_, a) => $(a).attr('href')).get(),

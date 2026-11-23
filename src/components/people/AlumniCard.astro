@@ -1,0 +1,68 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import MemberPortrait from './MemberPortrait.astro';
+import MemberLink from './MemberLink.astro';
+import { displayName, otherName, field, personPath } from '../../lib/people.ts';
+import { yearMonth } from '../../lib/content.ts';
+import { langOf, localePath, type Locale } from '../../lib/locale.ts';
+import { url } from '../../lib/url.ts';
+import { fill, t } from '../../i18n/index.ts';
+
+interface Props {
+  member: CollectionEntry<'members'>;
+  locale: Locale;
+  variant: 'graduate' | 'former';
+  headingLevel?: 'h3' | 'h4';
+}
+
+const { member, locale, variant, headingLevel = 'h3' } = Astro.props;
+const NameHeading = headingLevel;
+const s = t(locale);
+const data = member.data;
+const other = otherName(data, locale);
+const degree = data.degree;
+const affiliation = [field(data, 'affiliation', locale), field(data, 'position', locale)].filter(
+  (part): part is string => Boolean(part),
+);
+const degreePeriod = [degree?.start, degree?.date]
+  .filter((date): date is string => Boolean(date)).map(yearMonth).join(' – ');
+const stay = data.joined && data.left
+  ? yearMonth(data.joined) + ' – ' + yearMonth(data.left)
+  : data.joined ? fill(s.people.joinedOn, { date: yearMonth(data.joined) }) : '';
+const facts = variant === 'graduate' ? [
+  { label: s.table.degree, value: degree && field(degree, 'type', locale) },
+  { label: s.table.department, value: field(data, 'department', locale) },
+  { label: s.table.degreePeriod, value: degreePeriod },
+] : [
+  { label: s.table.period, value: stay },
+];
+const href = url(localePath(personPath(member.id), locale));
+---
+
+<li class="member-card alumni-card" data-member={member.id}>
+  <div class="mc-name">
+    <a class="portrait-link" href={href} aria-label={displayName(data, locale)}>
+      <MemberPortrait id={member.id} size="card" fallbackName={displayName(data, locale)} />
+    </a>
+    <div class="alumni-name-row">
+      <NameHeading><MemberLink id={member.id} name={displayName(data, locale)} locale={locale} /></NameHeading>
+    </div>
+    {other && <p class="other" lang={langOf(other, locale)}>{other}</p>}
+  </div>
+  <dl class="mc-facts alumni-facts">
+    {facts.filter((fact) => fact.value).map((fact) => (
+      <>
+        <dt>{fact.label}</dt>
+        <dd lang={langOf(fact.value, locale)}>{fact.value}</dd>
+      </>
+    ))}
+    {affiliation.length > 0 && (
+      <>
+        <dt>{s.table.affiliation}</dt>
+        <dd>{affiliation.map((part, i) => (
+          <>{i > 0 && ' · '}<span lang={langOf(part, locale)}>{part}</span></>
+        ))}</dd>
+      </>
+    )}
+  </dl>
+</li>

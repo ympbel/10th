@@ -10,8 +10,10 @@ department: "의학과"
 major: "원자력공학"
 joined: "2019-03-11"
 degree:
+  type: "이학박사"
   start: "2020-09-01"
   date: "2026-02"
 affiliation: "서울대병원 방사선종양학과"
 position: "Medical Physics Fellow"
+order: 11
 ---

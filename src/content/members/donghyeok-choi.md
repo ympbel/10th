@@ -14,4 +14,5 @@ degree:
   type: "이학박사"
 affiliation: "Washington University School of Medicine in St.Louis"
 position: "Postdoctoral Research Associate"
+order: 10
 ---

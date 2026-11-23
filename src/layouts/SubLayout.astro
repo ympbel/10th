@@ -3,6 +3,7 @@
 // (the section's side navigation, or the year tab rail on year pages) and the 900px main column with the page
 // heading, the breadcrumb and the page content.
 import '../styles/edition.css';
+import '../styles/students-edition.css';
 import { chapters } from '../lib/chapters.ts';
 import { localePath } from '../lib/locale.ts';
 import BaseLayout from './BaseLayout.astro';
@@ -27,14 +28,35 @@ interface Props {
 const { title, sectionKey, currentHref, locale, side = 'menu' } = Astro.props;
 if (side === 'menu' && !sectionKey) throw new Error(`SubLayout "${title}": side navigation needs a sectionKey`);
 const s = t(locale);
+const studentsEdition = currentHref === '/people/students/';
+const alumniEdition = currentHref === '/people/alumni/';
+const facultyEdition = currentHref === '/people/faculty/';
+const peopleEdition = studentsEdition || alumniEdition || facultyEdition;
 const chapter = chapters.find((entry) => entry.path === (side === 'years' ? '/years/' : currentHref));
 ---
 
-<BaseLayout title={title} locale={locale} bodyClass={chapter && "edition-board"}>
+<BaseLayout title={title} locale={locale} bodyClass={peopleEdition ? 'edition-board people-edition ' + (studentsEdition ? 'students-edition' : 'alumni-edition') : chapter && 'edition-board'}>
   <div class="sub_visual" style={`background-image:url(${url('/images/site/sub_visual.jpg')})`}>
     <div class="wrap">
-      <p class="sub_visual-label">{s.archiveLabel}</p>
-      {chapter && <p class="edition-masthead" lang="en" aria-hidden="true">{chapter.title}</p>}
+      {peopleEdition ? (
+        <div class="students-cover">
+          <div class="students-cover-copy">
+            <p class="sub_visual-label">{s.archiveLabel}</p>
+            <p class="edition-masthead" lang="en" aria-hidden="true">
+              {facultyEdition ? <>Guiding minds.<br />Shared <em>discovery.</em></> : studentsEdition ? <>The people<br />behind <em>discovery.</em></> : <>Our paths.<br />One shared <em>story.</em></>}
+            </p>
+            <p class="students-masthead-note">{facultyEdition ? (locale === 'ko' ? '연구의 방향을 함께 만들어가는 교수진.' : 'The faculty guiding our shared research journey.') : studentsEdition
+              ? (locale === 'ko' ? '함께 질문하고, 발견하고, 성장하는 사람들.' : 'People who question, discover and grow together.')
+              : (locale === 'ko' ? '서로 다른 길에서도 이어지는 연구실의 인연.' : 'A shared journey, wherever life takes us.')}</p>
+          </div>
+          <slot name="cover" />
+        </div>
+      ) : (
+        <>
+          <p class="sub_visual-label">{s.archiveLabel}</p>
+          {chapter && <p class="edition-masthead" lang="en" aria-hidden="true">{chapter.title}</p>}
+        </>
+      )}
     </div>
   </div>
   <div id="sub_contents" class="wrap">
@@ -48,7 +70,7 @@ const chapter = chapters.find((entry) => entry.path === (side === 'years' ? '/ye
       </div>
       {chapter && (
         <a class="edition-return" href={url(localePath('/', locale)) + (side === 'years' ? '#history' : '#edition-contents')}>
-          <span aria-hidden="true">←</span> {side === 'years' ? (locale === 'ko' ? '전체 연혁' : 'Full timeline') : (locale === 'ko' ? '10주년 목차' : 'Anniversary contents')}
+          {side === 'years' ? (locale === 'ko' ? '전체 연혁' : 'Full timeline') : (locale === 'ko' ? '10주년 목차' : 'Anniversary contents')}
         </a>
       )}
       <div class="contents">

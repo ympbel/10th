@@ -13,6 +13,7 @@ export const en: typeof ko = {
   home: 'Home',
   more: 'More',
   boards: {
+    faculty: 'Faculty',
     students: 'Students',
     alumni: 'Alumni',
     papers: 'Papers',
@@ -150,7 +151,7 @@ export const en: typeof ko = {
     kinds: {
       'lab-meeting': 'Lab meeting',
       conference: 'Conference',
-      retreat: 'Retreat',
+      retreat: 'Lab workshop',
       graduation: 'Graduation',
       equipment: 'Equipment',
       other: 'Other',

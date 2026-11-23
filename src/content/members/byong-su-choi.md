@@ -16,4 +16,5 @@ degree:
   type: "이학박사"
 affiliation: "Mayo Clinic Florida"
 position: "Radiation Oncology Medical Physics in Carbon Therapy Fellowship"
+order: 7
 ---

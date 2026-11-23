@@ -10,8 +10,10 @@ department: "의학과"
 major: "의과학과"
 joined: "2021-03-02"
 degree:
+  type: "이학박사"
   start: "2022-03-01"
   date: "2026-08"
 affiliation: "연세암병원"
 position: "Postdoctoral Research Associate"
+order: 13
 ---

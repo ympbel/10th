@@ -12,4 +12,5 @@ degree:
   type: "의학박사"
 affiliation: "삼성서울병원 방사선종양학과"
 position: "조교수"
+order: 1
 ---

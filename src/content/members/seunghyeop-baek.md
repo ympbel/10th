@@ -13,4 +13,5 @@ degree:
   type: "공학석사"
 affiliation: "연세암병원"
 position: "의학물리사"
+order: 6
 ---
