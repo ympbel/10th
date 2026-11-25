@@ -9,4 +9,5 @@ export const chapters = [
   { path: '/publication/presentations/', title: 'Conferences', ko: '학회 발표' },
   { path: '/awards/', title: 'Awards', ko: '수상' },
   { path: '/archive/photos/', title: 'Photos', ko: '사진 아카이브' },
+  { path: '/archive/comments/', title: 'Comments', ko: '코멘트' },
 ];

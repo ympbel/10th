@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../lib/locale.ts';
+import { localePath } from '../../lib/locale.ts';
+import { url } from '../../lib/url.ts';
+import { displayName, field } from '../../lib/people.ts';
+import { compareAlumni } from '../../lib/voices.ts';
+import { alumniUs, usPoint } from '../../data/alumni-us.ts';
+import { koreaSites } from '../../data/alumni-korea.ts';
+import { koreaOutline } from '../../data/korea-outline.ts';
+import { usOutline } from '../../data/us-outline.ts';
+import MemberPortrait from './MemberPortrait.astro';
+import '../../styles/alumni-us.css';
+interface Props { members: CollectionEntry<'members'>[]; locale: Locale }
+const {members,locale}=Astro.props;
+const ko=locale==='ko';
+const koreanMembers=koreaSites.flatMap(site=>site.members.map(id=>{const person=members.find(m=>m.id===id);if(!person)throw new Error('Missing domestic alumnus '+id);return {...site,member:id,institution:field(person.data,'affiliation',locale) as string,city:ko?site.city:site.cityEn,state:ko?'대한민국':'South Korea',person};})).sort((a,b)=>compareAlumni(a.person,b.person));
+const destinations=alumniUs.map(place=>{const member=members.find(m=>m.id===place.member);if(!member || member.data.role!=='alumni')throw new Error(`Missing alumni map member: ${place.member}`);return {...place,person:member,...usPoint(place.lon,place.lat)};}).sort((a,b)=>compareAlumni(a.person,b.person));
+---
+<section class="us-network" aria-labelledby="us-title">
+ <div class="wrap">
+  <header class="us-heading"><div><p class="us-kicker">MPBEL / ALUMNI NETWORK</p><h2 id="us-title">{ko?<>연세에서,<br/><em>더 넓은 세상으로.</em></>:<>From Yonsei.<br/><em>To the world.</em></>}</h2></div><div class="us-total"><strong>{String(destinations.length+koreanMembers.length).padStart(2,'0')}</strong><span>{ko?'한국과 미국에서 이어가는 연구와 임상':'Research & care in Korea and the US'}</span></div></header>
+  <div class="network-regions"><span>{ko?'한국':'Korea'} <strong>{koreanMembers.length}</strong></span><span>{ko?'미국':'United States'} <strong>{destinations.length}</strong></span></div>
+  <div class="us-layout">
+   <div class="us-map-column">
+    <div class="network-map-pair">
+    <section class="network-country" aria-labelledby="korea-map-title"><h3 id="korea-map-title">{ko?'한국':'Korea'} <span>07 / KOREA</span></h3>
+    <svg class="us-map korea-map" viewBox="0 0 960 460" role="group" aria-label={ko?'한국 졸업생 지도와 서울 확대 지도':'Korea alumni map with Seoul inset'}>
+     <path d={koreaOutline} class="us-land"/>
+     <text x="50" y="432" class="us-country">KOREA</text><circle cx="146" cy="114" r="8" class="korea-seoul-dot"/><path d="M154 114L330 50" class="us-leader"/>
+     <rect x="330" y="40" width="600" height="380" rx="8" class="korea-inset"/><text x="355" y="70" class="us-city">{ko?'서울 확대':'SEOUL'}</text>
+     <path d="M340 308Q430 285 515 315T685 280T920 310" class="korea-river"/>
+     {koreaSites.map(site=><a class="us-marker" href={'#us-person-'+site.members[0]} data-us-select={site.members[0]} data-site-members={site.members.join(',')} role="button" aria-controls={'us-person-'+site.members[0]} aria-pressed="false" aria-label={`${ko?site.short:site.shortEn} · ${site.members.length}${ko?'명':' alumni'}`}>
+      <path d={`M${site.x},${site.y} L${site.labelX},${site.labelY+8}`} class="us-leader"/><circle cx={site.x} cy={site.y} r="22" class="us-halo"/>
+      <rect x={site.x-34} y={site.y-34} width="68" height="68" rx="14" class="institution-badge"/>
+      <image href={url(site.logo)} x={site.x-27} y={site.y-27} width="54" height="54" preserveAspectRatio="xMidYMid meet" class="institution-logo"/>
+      {site.members.length>1 && <g aria-hidden="true"><circle cx={site.x+30} cy={site.y-29} r="13" class="institution-count-bg"/><text x={site.x+30} y={site.y-24} text-anchor="middle" class="institution-count">{site.members.length}</text></g>}
+      <text x={site.labelX} y={site.labelY} class="us-label">{ko?site.short:site.shortEn}</text><text x={site.labelX} y={site.labelY+26} class="us-city">{ko?site.city:site.cityEn}</text>
+     </a>)}
+    </svg></section>
+    <section class="network-country" aria-labelledby="usa-map-title"><h3 id="usa-map-title">{ko?'미국':'United States'} <span>05 / USA</span></h3>
+    <svg class="us-map" viewBox="0 0 960 460" role="group" aria-label={ko?'미국 진출 졸업생 지도':'US alumni destinations map'}>
+     <defs><pattern id="us-grid" width="48" height="46" patternUnits="userSpaceOnUse"><path d="M48 0H0V46" fill="none" stroke="currentColor" stroke-width=".5"/></pattern></defs>
+     <rect width="960" height="460" fill="url(#us-grid)" class="us-grid"/>
+     <path d={usOutline} class="us-land"/>
+     <text x="310" y="260" class="us-country">UNITED STATES</text>
+     {destinations.map((p,index)=><a class:list={['us-marker',{'is-active':false}]} href={'#us-person-'+p.member} data-us-select={p.member} role="button" aria-controls={'us-person-'+p.member} aria-pressed={String(false)} aria-label={`${p.short} · ${p.city} · ${displayName(p.person.data,locale)}`}>
+      <path d={`M${p.x},${p.y} L${p.pinX},${p.pinY}`} class="us-leader"/>
+      <circle cx={p.x} cy={p.y} r="4" class="institution-location-dot"/>
+      <rect x={p.pinX-34} y={p.pinY-34} width="68" height="68" rx="14" class="institution-badge"/>
+      <image href={url(p.logo)} x={p.pinX-27} y={p.pinY-27} width="54" height="54" preserveAspectRatio="xMidYMid meet" class="institution-logo"/>
+      <text x={p.labelX} y={p.labelY} class="us-label">{p.short}</text><text x={p.labelX} y={p.labelY+19} class="us-city">{p.city}</text>
+     </a>)}
+    </svg>
+    </section></div>
+    <div class="us-member-nav" aria-label={ko?'국내외 졸업생':'Alumni worldwide'}>{[...koreanMembers,...destinations].map((p,index)=><a href={'#us-person-'+p.member} data-us-select={p.member} aria-controls={'us-person-'+p.member} aria-pressed={String(false)} role="button" class:list={[{'is-active':false}]}><span>{String(index+1).padStart(2,'0')}</span>{displayName(p.person.data,locale)}</a>)}</div>
+   </div>
+   <div class="us-profiles" aria-live="polite" aria-atomic="true">
+    {[...koreanMembers,...destinations].map((p,index)=><article class="us-person" id={'us-person-'+p.member} data-us-person={p.member}>
+      <div class="us-person-top"><MemberPortrait id={p.member} size="card" fit="contain" natural/><span>{String(index+1).padStart(2,'0')} / {'key' in p?'KOREA':'USA'}</span></div>
+      <p class="us-location">{p.city}, {p.state}</p><h2>{displayName(p.person.data,locale)}</h2><h3>{p.institution}</h3><p class="us-position">{field(p.person.data,'position',locale)}</p>
+      <div class="us-person-links"><a href={url(localePath('/people/'+p.member+'/',locale))}>{ko?'구성원 기록':'Alumni profile'} ↗</a><a href={p.source} target="_blank" rel="noopener">{ko?'기관':'Institution'} ↗</a></div>
+    </article>)}
+   </div>
+  </div>
+ </div>
+</section>
+<script>
+ const root=document.querySelector<HTMLElement>('.us-network');
+ if(root){
+  const controls=[...root.querySelectorAll<HTMLElement>('[data-us-select]')];
+  const panels=[...root.querySelectorAll<HTMLElement>('[data-us-person]')];
+  const select=(id:string)=>{if(!panels.some(p=>p.dataset.usPerson===id))return;panels.forEach(p=>p.hidden=p.dataset.usPerson!==id);controls.forEach(c=>{const active=c.dataset.usSelect===id || (c.dataset.siteMembers?.split(',').includes(id) ?? false);c.classList.toggle('is-active',active);c.setAttribute('aria-pressed',String(active));});};
+  root.classList.add('is-ready');select(panels[0]?.dataset.usPerson ?? '');
+  controls.forEach(control=>{control.addEventListener('click',event=>{event.preventDefault();select(control.dataset.usSelect!);});control.addEventListener('keydown',event=>{if(event.key===' '){event.preventDefault();select(control.dataset.usSelect!);}});});
+ }
+</script>

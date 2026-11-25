@@ -31,7 +31,7 @@ const rows = [
   { term: p.terms.program, parts: parts([member.program]), sep: '' },
   {
     term: p.terms.department,
-    parts: parts([field(member, 'department', locale), member.major]),
+    parts: parts([field(member, 'department', locale)]),
     sep: ' · ',
   },
   { term: p.terms.joined, parts: parts([member.joined ? yearMonth(member.joined) : p.joinedUnknown]), sep: '' },

@@ -33,7 +33,6 @@ const range = { from: preLab.at(-1)?.[0] ?? LAB_START - 1, to: LAB_START - 1 };
 ---
 
 <SubLayout title={s.boards.papers} sectionKey="publication" currentHref="/publication/papers/" locale={locale}>
-  <p class="pub-note">{fill(pub.papersNote, { total: papers.length, lab: labCount, start: LAB_START })}</p>
   <YearIndex
     years={lab.map(([year]) => year)}
     extra={preLab.length > 0 ? { href: '#pre-lab', label: fill(pub.preLabTab, range) } : undefined}

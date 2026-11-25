@@ -1,5 +1,6 @@
 ---
 role: "student"
+joined: "2026-03"
 name: "이재환"
 name_en: "Jaehwan Lee"
 aliases:
@@ -7,7 +8,6 @@ aliases:
 orcid: "0009-0003-5162-8877"
 program: "박사"
 department: "의학과"
-major: "방사선의과학"
 degree:
   start: "2026-03-01"
 ---

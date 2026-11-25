@@ -54,9 +54,6 @@ const [before, after] = s.seminars.note.split('{board}');
 ---
 
 <SubLayout title={s.boards.seminars} sectionKey="activity" currentHref="/activity/seminars/" locale={locale}>
-  <p class="pub-note">
-    {before}<a href={s.seminars.boardHref} target="_blank" rel="noopener">{s.seminars.board}</a>{after}
-  </p>
   <YearIndex years={[...years.keys()]} locale={locale} />
 
   {

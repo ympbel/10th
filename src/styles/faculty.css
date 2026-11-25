@@ -13,3 +13,12 @@
 .faculty-details ul { padding-left: 18px; }
 .faculty-source { display: inline-block; margin-top: 28px; color: #1563b4; border-bottom: 1px solid #b4c8df; padding-bottom: 4px; }
 @media (max-width: 700px) { .faculty-profile { grid-template-columns: 1fr; gap: 28px; padding: 32px 0; } .faculty-photo { max-width: 300px; } .faculty-copy h2 { font-size: 28px; } }
+.faculty-email { display:block; margin-top:24px; color:var(--accent); font-size:14px; overflow-wrap:anywhere; }
+.faculty-photo .portrait-placeholder { display:grid; place-items:center; aspect-ratio:4 / 5; background:var(--surface-alt); color:var(--text-secondary); font-size:28px; }
+.faculty-photo .member-portrait { object-fit:contain; object-position:center; background:#edf1f6; }
+.people-edition .students-cover-portraits .member-portrait { object-fit:contain; height:auto; aspect-ratio:4 / 5; background:#edf1f6; }
+
+.faculty-profile{grid-template-columns:minmax(0,236px) minmax(0,1fr);}
+.faculty-photo .member-portrait{aspect-ratio:auto;object-fit:cover;background:transparent;}
+.people-edition .students-cover-portraits .member-portrait{aspect-ratio:auto;object-fit:cover;background:transparent;}
+@media(max-width:700px){.faculty-profile{grid-template-columns:1fr;}.faculty-photo{max-width:236px;}}

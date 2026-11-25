@@ -152,6 +152,11 @@ export const projectSchema = z
 export const patentSchema = z
   .object({
     year,
+    kind: z.enum(['patent','copyright']).optional(),
+    status: z.string().optional(),
+    application_number: z.string().optional(),
+    registration_number: z.string().optional(),
+    sources: z.array(z.string()).optional(),
     title: z.string().min(1),
     authors: z.string().default(''),
     venue: z.string().default(''),

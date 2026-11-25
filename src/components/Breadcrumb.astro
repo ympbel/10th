@@ -22,7 +22,7 @@ const crumbs = [section && section.label, title].filter((c): c is string => Bool
 <nav class="loca" aria-label={s.breadcrumb}>
   <ol>
     <li>
-      <a href={url(localePath('/', locale))}><img src={url('/images/site/home.png')} alt={s.home} width="13" height="12" /></a>
+      <a href={url(localePath('/', locale))}><img src={url('/images/site/home.png')} alt={locale === 'ko' ? '홈' : 'Home'} width="13" height="12" /></a>
     </li>
     {
       crumbs.map((crumb, i) => (

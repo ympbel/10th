@@ -2,6 +2,7 @@
 // Top bar: logo and archive label (home link), the six menu sections with their dropdowns, the KR/EN toggle. Below
 // 1200px the menu becomes a drawer opened by the toggle button and closed by it or by Escape (responsive.css,
 // script below).
+import { chapters } from '../lib/chapters.ts';
 import { MENU } from '../lib/menu.ts';
 import { localePath, otherLocaleHref, type Locale } from '../lib/locale.ts';
 import { url } from '../lib/url.ts';
@@ -27,8 +28,9 @@ const languages: Array<{ locale: Locale; label: string; href: string }> = [
 
 <header class:list={['topmenu', { 'magazine-header': edition }]}>
   <div class="topmenu-inner">
-    <a class="logo" href={url(localePath('/', locale))}>
-      <img src={url('/images/site/logo.png')} alt={s.logoAlt} width="142" height="50" />
+    <a class="logo" aria-label={s.logoAlt} href={url(localePath('/', locale))}>
+      <img class="logo-light" src={url('/images/site/logo.png')} alt={s.logoAlt} width="142" height="50" />
+      <img class="logo-dark" src={url('/images/site/logo-dark.svg')} alt="" aria-hidden="true" width="142" height="43" />
       <span class="logo-label">{s.archiveLabel}</span>
     </a>
     {edition && <a class="header-contents" href={url(localePath('/', locale)) + '#edition-contents'}>{locale === 'ko' ? '목차' : 'Contents'}</a>}
@@ -40,6 +42,15 @@ const languages: Array<{ locale: Locale; label: string; href: string }> = [
       </svg>
     </button>
     <nav id="navi" class="nav" aria-label={s.mainNav}>
+      <div class="drawer-edition">
+        <a class="drawer-cover" href={url(localePath('/archive/photos/', locale))}>
+          <img src={url('/images/photos/2026/20260515-0c4b491257-thumb.jpg')} alt={locale === 'ko' ? '2026년 스승의 날 MPBEL 단체 사진' : 'MPBEL together on Teachers’ Day 2026'} loading="lazy" />
+          <span>MPBEL / 10 YEARS TOGETHER</span>
+        </a>
+        <div class="drawer-index"><p>{locale === 'ko' ? '10주년 기념 책자' : 'The anniversary edition'}</p><ol>
+          {chapters.map((chapter,index) => <li><a href={chapter.path === '/years/' ? url(localePath('/',locale))+'#history' : url(localePath(chapter.path,locale))}><small>{String(index+1).padStart(2,'0')}</small><span>{locale === 'ko' ? chapter.ko : chapter.title}</span><span aria-hidden="true">↗</span></a></li>)}
+        </ol><div class="drawer-more">{MENU.flatMap(section => section.items).filter(item => ['/projects/','/activity/seminars/','/activity/workshops/'].includes(item.href)).map(item => <a href={url(localePath(item.href,locale))}>{item.label[locale]}</a>)}</div></div>
+      </div>
       <ul id="nav">
         {
           MENU.map((section) => (
@@ -57,6 +68,7 @@ const languages: Array<{ locale: Locale; label: string; href: string }> = [
         }
       </ul>
     </nav>
+    <button class="theme-toggle" type="button" aria-label={locale === 'ko' ? '다크 모드' : 'Dark mode'} aria-pressed="false"><span class="theme-icon" aria-hidden="true">◐</span><span class="theme-toggle-label">{locale === 'ko' ? '다크' : 'Dark'}</span></button>
     <div class="langbut" role="group" aria-label={s.language}>
       <ul>
         {
@@ -91,4 +103,13 @@ const languages: Array<{ locale: Locale; label: string; href: string }> = [
       toggle.focus();
     });
   })();
+</script>
+
+<script>
+ const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+ const ko = document.documentElement.lang === 'ko';
+ const update = () => { const dark = document.documentElement.dataset.theme === 'dark'; if (!button) return; button.setAttribute('aria-pressed',String(dark)); button.setAttribute('aria-label',ko ? (dark?'라이트 모드':'다크 모드') : (dark?'Light mode':'Dark mode')); const label=button.querySelector('.theme-toggle-label'); if(label) label.textContent=ko?(dark?'라이트':'다크'):(dark?'Light':'Dark'); };
+ update();
+ button?.addEventListener('click',()=>{const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=theme;try{localStorage.setItem('mpbel-theme',theme);}catch(e){}update();});
+ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',(e)=>{try{if(!localStorage.getItem('mpbel-theme')){document.documentElement.dataset.theme=e.matches?'dark':'light';update();}}catch(err){}});
 </script>

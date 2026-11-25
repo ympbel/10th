@@ -6,9 +6,8 @@ aliases:
   - "Jeongheon Kim"
   - "Jong Hoon Kim"
 orcid: "0000-0001-9321-3117"
-program: "통합"
+program: "통합 (박사)"
 department: "의학과"
-major: "방사선학"
 joined: "2022-06-13"
 degree:
   start: "2023-03-01"

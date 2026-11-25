@@ -12,9 +12,10 @@ interface Props {
   /** Year groups in the main site's patent order (`sortPatents`, then grouped by year). */
   groups: [number, CollectionEntry<'patents'>[]][];
   locale: Locale;
+  idPrefix?: string;
 }
 
-const { groups, locale } = Astro.props;
+const { groups, locale, idPrefix = '' } = Astro.props;
 const lang = (text: string | undefined) => langOf(text, locale);
 
 let n = groups.reduce((sum, [, list]) => sum + list.length, 0);
@@ -30,11 +31,12 @@ const sections = groups.map(([year, list]) => ({
 
 {
   sections.map(({ year, rows }) => (
-    <section class="pub-year" id={yearAnchor(year)}>
+    <section class="pub-year" id={idPrefix + yearAnchor(year)}>
       <h2>{year}</h2>
       <ol class="yr-list pub-list pub-patents">
         {rows.map((p) => (
           <li class="yr-item pub-item">
+            {p.status && <span class="patent-status">{p.status}</span>}
             <span class="pub-num">{p.n}</span>
             <p class="yr-title" lang={lang(p.title)}>
               {p.link ? (

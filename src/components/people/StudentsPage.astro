@@ -1,12 +1,9 @@
 ---
 // Current students only, earliest join first. Faculty have their own board.
-import { Image } from 'astro:assets';
-import coverOne from '../../assets/portraits/jae-hyun-seok.jpg';
-import coverTwo from '../../assets/portraits/jeongheon-kim.jpg';
-import coverThree from '../../assets/portraits/chanwoong-lee.jpg';
 import { getCollection } from 'astro:content';
 import '../../styles/people.css';
 import SubLayout from '../../layouts/SubLayout.astro';
+import RandomPortraits from './RandomPortraits.astro';
 import MemberCard from './MemberCard.astro';
 import { sortMembersByJoined } from '../../lib/content.ts';
 import { itemsOf } from '../../lib/people.ts';
@@ -42,11 +39,7 @@ const countsOf = (id: string) => {
 ---
 
 <SubLayout title={s.boards.students} sectionKey="people" currentHref="/people/students/" locale={locale}>
-  <div slot="cover" class="students-cover-portraits" aria-hidden="true">
-    {[coverOne, coverTwo, coverThree].map((photo) => (
-      <Image src={photo} alt="" width={200} height={280} fit="cover" loading="eager" />
-    ))}
-  </div>
+  <RandomPortraits slot="cover" members={students} className="students-cover-portraits" poolKey="students-header" />
   <section class="people-part" aria-labelledby="students-title">
     <h2 id="students-title">
       {s.people.students} <small>{fill(s.people.count, { n: students.length })}</small>

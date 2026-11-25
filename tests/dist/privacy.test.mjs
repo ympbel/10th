@@ -55,10 +55,15 @@ test('content files hold no excluded column names, phone numbers or e-mail addre
   assert.deepEqual(leaks, []);
 });
 
-test('built pages hold no phone numbers, e-mail addresses or excluded column names', () => {
-  const leaks = allHtmlFiles().flatMap((file) =>
-    findings(readFileSync(file, 'utf8'), PAGE_WORDS).map((what) => `${relative(DIST, file)}: ${what}`),
-  );
+test('built pages allow only the three explicitly supplied faculty work emails, with no other private contacts', () => {
+  const leaks = allHtmlFiles().flatMap((file) => {
+    let html = readFileSync(file,'utf8');
+    const path = relative(DIST,file).replaceAll('\\','/');
+    if (/^(en\/)?people\/faculty\/index\.html$/.test(path)) {
+      for (const email of ['HOLEE@yuhs.ac','KPARK02@yuhs.ac','CHKIM514@yuhs.ac']) html=html.replaceAll(email,'');
+    }
+    return findings(html,PAGE_WORDS).map(what=>`${path}: ${what}`);
+  });
   assert.deepEqual(leaks, []);
 });
 

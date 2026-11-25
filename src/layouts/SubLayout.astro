@@ -3,6 +3,7 @@
 // (the section's side navigation, or the year tab rail on year pages) and the 900px main column with the page
 // heading, the breadcrumb and the page content.
 import '../styles/edition.css';
+import '../styles/archive-edition.css';
 import '../styles/students-edition.css';
 import { chapters } from '../lib/chapters.ts';
 import { localePath } from '../lib/locale.ts';
@@ -32,11 +33,14 @@ const studentsEdition = currentHref === '/people/students/';
 const alumniEdition = currentHref === '/people/alumni/';
 const facultyEdition = currentHref === '/people/faculty/';
 const peopleEdition = studentsEdition || alumniEdition || facultyEdition;
+const archiveEdition = !peopleEdition;
+const editionTitles: Record<string, string> = {publication:'Research in print.', award:'Milestones. Recognition.', project:'Ideas in progress.', activity:'Exchange. Discovery.', archive:'Our shared voices.', people:'People & discovery.'};
 const chapter = chapters.find((entry) => entry.path === (side === 'years' ? '/years/' : currentHref));
 ---
 
-<BaseLayout title={title} locale={locale} bodyClass={peopleEdition ? 'edition-board people-edition ' + (studentsEdition ? 'students-edition' : 'alumni-edition') : chapter && 'edition-board'}>
-  <div class="sub_visual" style={`background-image:url(${url('/images/site/sub_visual.jpg')})`}>
+<BaseLayout title={title} locale={locale} bodyClass={peopleEdition ? 'edition-board people-edition ' + (studentsEdition ? 'students-edition' : 'alumni-edition') : 'edition-board archive-edition'}>
+  <slot name="opening" />
+  {!Astro.slots.has('opening') && <div class="sub_visual" style={`background-image:url(${url('/images/site/sub_visual.jpg')})`}>
     <div class="wrap">
       {peopleEdition ? (
         <div class="students-cover">
@@ -54,11 +58,12 @@ const chapter = chapters.find((entry) => entry.path === (side === 'years' ? '/ye
       ) : (
         <>
           <p class="sub_visual-label">{s.archiveLabel}</p>
-          {chapter && <p class="edition-masthead" lang="en" aria-hidden="true">{chapter.title}</p>}
+          <p class="edition-masthead" lang="en" aria-hidden="true">{chapter?.title ?? editionTitles[sectionKey ?? 'archive']}</p>
         </>
       )}
     </div>
   </div>
+  }
   <div id="sub_contents" class="wrap">
     <div class="side">
       {side === 'menu' && sectionKey ? <Snb sectionKey={sectionKey} currentHref={currentHref} locale={locale} /> : <slot name="side" />}
@@ -68,7 +73,7 @@ const chapter = chapters.find((entry) => entry.path === (side === 'years' ? '/ye
         <h1 class="cnt_title">{title}</h1>
         <Breadcrumb sectionKey={sectionKey} title={title} locale={locale} />
       </div>
-      {chapter && (
+      {(chapter || archiveEdition) && (
         <a class="edition-return" href={url(localePath('/', locale)) + (side === 'years' ? '#history' : '#edition-contents')}>
           {side === 'years' ? (locale === 'ko' ? '전체 연혁' : 'Full timeline') : (locale === 'ko' ? '10주년 목차' : 'Anniversary contents')}
         </a>

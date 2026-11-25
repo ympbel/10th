@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+interface Props { members:CollectionEntry<'members'>[]; className:string; poolKey:string }
+const {members,className,poolKey}=Astro.props;
+const portraits=import.meta.glob<{default:ImageMetadata}>('/src/assets/portraits/*.jpg',{eager:true});
+const people=members.map(member=>({id:member.id,portrait:portraits[`/src/assets/portraits/${member.id}.jpg`]?.default})).filter(person=>person.portrait);
+---
+<div class={className} data-random-portraits={poolKey} aria-hidden="true">
+ {people.slice(0,3).map(person=><Image src={person.portrait!} data-person={person.id} alt="" width={320} height={440} fit="cover" loading="eager"/>)}
+</div>
+<template data-portrait-pool={poolKey}>
+ {people.map(person=><Image src={person.portrait!} data-person={person.id} alt="" width={320} height={440} fit="cover" loading="lazy"/>)}
+</template>
+<script>
+ import {initRandomPortraits} from '../../scripts/random-portraits.ts';
+ initRandomPortraits();
+ window.addEventListener('pageshow',event=>{if(event.persisted)initRandomPortraits();});
+</script>

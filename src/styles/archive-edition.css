@@ -1,0 +1,42 @@
+.archive-edition { background: #f8f9fb; color: #15304d; }
+.archive-edition .sub_visual { height: auto; background-image: none !important; background: #10273f; box-shadow: none; padding: 64px 0 70px; }
+.archive-edition .edition-masthead { font-size: clamp(48px,8vw,104px); font-weight: 500; max-width: 100%; }
+.archive-cover-note { margin-top: 24px; color: #b9cce3; font-size: 14px; }
+.archive-edition #sub_contents { display: block; padding-bottom: 96px; }
+.archive-edition .side { width: 100%; margin: 0; }
+.archive-edition .snb { display: flex; align-items: baseline; gap: 40px; border-bottom: 1px solid #cdd6e2; margin: 0; background: transparent; }
+.archive-edition .snb .tit { background: transparent; color: #52647a; height: auto; padding: 22px 0; font-size: 12px; border: 0; }
+.archive-edition .vNav { display: flex; flex-wrap: wrap; gap: 28px; padding: 0; background: transparent; border: 0; }
+.archive-edition .vNav li, .archive-edition .vNav li + li { margin: 0; border: 0; }
+.archive-edition .vNav a { padding: 22px 0; background: transparent; border: 0; color: #52647a; }
+.archive-edition .vNav .active a { color: #1563b4; box-shadow: inset 0 -2px #1563b4; }
+.archive-edition .contentBox { width: 100%; }
+.archive-edition .cnt_head { margin-top: 44px; border: 0; }
+.archive-edition .cnt_title { font-size: 32px; font-weight: 500; }
+.archive-edition .contents { margin-top: 38px; }
+.archive-edition .year-tabs { background: transparent; border: 0; margin-bottom: 32px; }
+.archive-edition .year-tabs ul { display: flex; flex-wrap: wrap; gap: 12px 24px; background: transparent; border: 0; }
+.archive-edition .year-tabs li { border: 0; flex: 0 0 auto; }
+.archive-edition .year-tabs a { border: 0; padding: 8px 0; background: transparent; color: #52647a; }
+.archive-edition .year-tabs a[aria-current=page] { color: #1563b4; box-shadow: inset 0 -2px #1563b4; }
+.archive-edition .pub-year > :is(h2,h3) { border-bottom: 1px solid #b7c4d5; padding-bottom: 20px; font-family:'Instrument Sans',Lato,sans-serif; font-size:40px; font-weight:400; color:#15304d; }
+.archive-edition .pub-item { padding-top: 28px; padding-bottom: 28px; border-bottom:1px solid #dce3ec; }
+.archive-edition .yr-title { font-size: 18px; line-height: 1.6; font-weight:500; max-width: 960px; }
+.archive-edition .yr-sub,.archive-edition .yr-meta { line-height:1.9; color:#637185; }
+.archive-edition .yr-conf { color:#1563b4; margin-top:30px; border:0; font-weight:500; }
+.archive-edition .pub-venue { display:flex; flex-wrap:wrap; gap:3px 24px; margin-top:12px; }
+.archive-edition .pub-num { top:30px; }
+.archive-edition .btn-link { border:1px solid #b7c4d5; background:transparent; color:#1563b4; padding:5px 12px; border-radius:20px; }
+.archive-edition .board-table { background:transparent; }
+@media(max-width:600px){.archive-edition .sub_visual {padding:40px 0;} .archive-edition .snb{gap:20px;} .archive-edition .vNav{gap:18px;} .archive-edition .vNav a{font-size:13px;} .archive-edition .yr-title{font-size:16px;} .archive-edition .snb .tit{display:none;} }
+.patent-summary {display:flex;gap:60px;padding:16px 0 32px;border-bottom:1px solid var(--rule);margin-bottom:24px;}
+.patent-summary p {font-size:13px;color:var(--text-secondary);}
+.patent-summary strong {display:block;font-family:'Instrument Sans',sans-serif;font-size:54px;font-weight:500;color:var(--text-primary);}
+.patent-status {display:inline-block;padding:3px 10px;border:1px solid var(--rule);border-radius:18px;font-size:11px;color:var(--accent);margin-bottom:12px;}
+.patent-related {margin-top:72px;}
+.patent-related > h2 {font-size:28px;font-weight:400;}
+.patent-review {margin-top:64px;padding:24px;border:1px solid var(--rule);}
+.patent-review summary {cursor:pointer;color:var(--text-primary);font-size:16px;}
+.patent-review > p {margin-top:20px;color:var(--text-secondary);}
+.archive-edition .snb .tit { background-image:none !important; }
+.archive-edition .snb .tit::before, .archive-edition .vNav a::before { display:none; }

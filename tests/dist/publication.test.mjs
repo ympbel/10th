@@ -118,11 +118,8 @@ for (const [lang, dir] of [
     );
   });
 
-  test(`${lang}: the papers note gives the board total and the home figure`, () => {
-    const $ = page(path('papers'));
-    const note = text($('.pub-note').first());
-    assert.ok(note.includes(String(papers.length)), note);
-    assert.ok(note.includes(String(labPapers.length)), note);
+  test(`${lang}: papers omit explanatory guidance`, () => {
+    assert.equal(page(path('papers'))('.pub-note').length,0);
   });
 
   test(`${lang}: papers year index links #y2026 … #y2016 and #pre-lab, all on the page`, () => {
@@ -161,10 +158,11 @@ for (const [lang, dir] of [
 
   test(`${lang}: patents in the main site's form, newest year first and a larger order first`, () => {
     const $ = page(path('patents'));
-    const rows = $('.pub-item');
-    assert.equal(rows.length, patents.length);
+    const visiblePatents = patents.filter(p=>scalar(p.fm,'kind')!=='copyright' && !['확인 필요','출원 준비','거절'].includes(scalar(p.fm,'status')));
+    const rows = $('.patent-main .pub-item');
+    assert.equal(rows.length, visiblePatents.length);
     assertIndexResolves($);
-    patents.forEach((p, i) => {
+    visiblePatents.forEach((p, i) => {
       const row = rows.eq(i);
       assert.equal(text(row.find('.yr-title')), titleOf(p), p.id);
       assert.equal(row.closest('section.pub-year').attr('id'), `y${yearOf(p)}`);

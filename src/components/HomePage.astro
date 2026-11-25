@@ -6,6 +6,9 @@ import { getCollection, getEntry, render } from 'astro:content';
 import '../styles/home.css';
 import '../styles/home-data.css';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/home-refresh.css';
+import '../styles/voices.css';
+import { voiceGroups } from '../lib/voices.ts';
 import Hero from './home/Hero.astro';
 import Figures from './home/Figures.astro';
 import Intro from './home/Intro.astro';
@@ -46,6 +49,7 @@ const [members, papers, presentations, awards, projects, patents, seminars, work
     getCollection('photos'),
     getCollection('comments'),
   ]);
+const groupedVoices = voiceGroups(comments,members);
 const data = { members, papers, presentations, awards, projects };
 const memberBySlug = new Map(members.map((m) => [m.id, m]));
 const latest = YEARS[YEARS.length - 1];
@@ -66,6 +70,9 @@ const figures = [
   { count: counts.presentations, label: s.home.figures.presentations, href: href('/publication/presentations/') },
   { count: counts.awards, label: s.home.figures.awards, href: href('/awards/') },
   { count: counts.projects, label: s.home.figures.projects, href: href('/projects/') },
+  { count: patents.filter(p => p.data.kind !== 'copyright' && p.data.status !== '확인 필요' && p.data.status !== '출원 준비' && p.data.status !== '거절').length, label: locale === 'ko' ? '특허 · 출원 및 등록' : 'Patents · filed & granted', href: href('/publication/patents/') },
+  { count: seminars.length, label: locale === 'ko' ? '세미나' : 'Seminars', href: href('/activity/seminars/') },
+  { count: photos.length, label: locale === 'ko' ? '사진 기록' : 'Photographs', href: href('/archive/photos/') },
 ];
 
 // Timeline: one column per year, bar heights relative to each series' largest year.
@@ -137,7 +144,7 @@ const boardCounts: Record<ItemKey, number> = {
   // What the alumni board lists: everyone with a degree date (a current student too), then the former members.
   alumni: members.filter((m) => m.data.degree?.date || m.data.role === 'former').length,
   papers: papers.length,
-  patents: patents.length,
+  patents: patents.filter(p => p.data.kind !== 'copyright' && !['확인 필요','출원 준비','거절'].includes(p.data.status ?? '')).length,
   presentations: presentations.length,
   awards: awards.length,
   projects: projects.length,
@@ -153,15 +160,20 @@ const boards = MENU.flatMap((section) =>
 
 <BaseLayout locale={locale} bodyClass="home">
   <Hero slogan={page.data.slogan} years={page.data.slogan_years} locale={locale} />
-  <EditionContents locale={locale} counts={boardCounts} years={years} />
   <div class="wrap intro-band">
     <Intro title={page.data.intro_title} word={s.home.introWord} heading={page.data.intro_heading}>
       <IntroBody />
     </Intro>
     <Figures items={figures} />
   </div>
+  <EditionContents locale={locale} counts={boardCounts} years={years} />
   <Timeline years={years} selected={latest} locale={locale}>
     <YearPanel panels={panels} selected={latest} locale={locale} />
   </Timeline>
-  <BoardLinks items={boards} locale={locale} />
+  <div class="archive-directory"><BoardLinks items={boards} locale={locale} /></div>
+  <section class="wrap home-comments" aria-labelledby="home-comments-title">
+    <p class="edition-eyebrow">VOICES / MPBEL</p>
+    <div class="home-comments-head"><h2 id="home-comments-title">{locale === 'ko' ? '함께 쓴 10년, 앞으로의 한마디.' : 'Ten years together. A few words for tomorrow.'}</h2><a href={href('/archive/comments/')}>{locale === 'ko' ? '코멘트 보기' : 'Read the messages'} ↗</a></div>
+    {groupedVoices.map(group=><div class="home-voices-group"><h3><a href={href('/archive/comments/')+'#voices-'+group.key}>{locale==='ko'?group.ko:group.en} <small>{group.rows.length}</small> ↗</a></h3><ul class="home-voices">{group.rows.slice(0,3).map(comment => <li><strong>{comment.data.name}</strong><p lang="ko">{comment.body?.trim().slice(0,170)}…</p><a href={href('/archive/comments/')+'#comment-'+comment.id}>{locale === 'ko' ? '전문 읽기' : 'Read the letter'} ↗</a></li>)}</ul></div>)}
+  </section>
 </BaseLayout>

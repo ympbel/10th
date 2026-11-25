@@ -5,7 +5,7 @@ import { join, relative, sep } from 'node:path';
 import { load } from 'cheerio';
 import { BASE, DIST, allHtmlFiles, isRedirect, page } from './helpers.mjs';
 
-const SECTIONS = ['PEOPLE', 'PUBLICATION', 'AWARD', 'PROJECT', 'ACTIVITY', 'ARCHIVE'];
+const SECTIONS = ['PEOPLE', 'RESEARCH OUTPUTS', 'AWARD', 'PROJECT', 'ACTIVITY', 'ARCHIVE'];
 const NOT_FOUND = `${BASE}/404.html`;
 
 /** The URL path a built file is served at: `dist/people/students/index.html` → `/10th/people/students/`,
@@ -31,7 +31,7 @@ test('every page has the top bar: logo with alt, the six menu sections and the K
   for (const { path, $ } of pages) {
     const bar = $('.topmenu');
     assert.equal(bar.length, 1, path);
-    const logo = bar.find('.logo img[alt]');
+    const logo = bar.find('.logo .logo-light[alt]');
     assert.equal(logo.length, 1, path);
     assert.ok(logo.attr('alt').trim() !== '', path);
     assert.equal(logo.attr('src'), `${BASE}/images/site/logo.png`, path);

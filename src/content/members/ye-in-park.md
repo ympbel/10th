@@ -1,5 +1,5 @@
 ---
-role: "student"
+role: "alumni"
 name: "박예인"
 name_en: "Ye-In Park"
 aliases:

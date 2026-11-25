@@ -1,56 +1,41 @@
 ---
-// The comments board in one language: the comments newest first, each with the writer's name, the date and the
-// message (the markdown body); without any, the empty state. The section on how to leave a comment always ends the
-// board; the way (a form, a comment widget) is not decided yet, and the section says so.
 import { getCollection, render } from 'astro:content';
-import '../styles/years.css';
 import '../styles/boards.css';
+import '../styles/voices.css';
 import SubLayout from '../layouts/SubLayout.astro';
-import EmptyState from './EmptyState.astro';
+import MemberPortrait from './people/MemberPortrait.astro';
 import { langOf, type Locale } from '../lib/locale.ts';
+import { voiceGroups } from '../lib/voices.ts';
 import { t } from '../i18n/index.ts';
-
-interface Props {
-  locale: Locale;
-}
-
+interface Props { locale: Locale }
 const { locale } = Astro.props;
 const s = t(locale);
-const lang = (text: string | undefined) => langOf(text, locale);
-
-const rows = await Promise.all(
-  (await getCollection('comments'))
-    .sort((a, b) => b.data.date.localeCompare(a.data.date) || a.id.localeCompare(b.id))
-    .map(async (c) => ({ id: c.id, data: c.data, body: c.body ?? '', Content: (await render(c)).Content })),
-);
+const groups = await Promise.all(voiceGroups(await getCollection('comments'), await getCollection('members')).map(async group=>({...group, rows: await Promise.all(group.rows.map(async c=>({...c,Content:(await render(c)).Content})))})));
+const total=groups.reduce((n,g)=>n+g.rows.length,0);
 ---
-
 <SubLayout title={s.boards.comments} sectionKey="archive" currentHref="/archive/comments/" locale={locale}>
-  {
-    rows.length === 0 ? (
-      <EmptyState collection="comments" locale={locale} />
-    ) : (
-      <ol class="comments">
-        {rows.map(({ id, data, body, Content }) => (
-          <li>
-            <article class="comment" id={`comment-${id}`}>
-              <h2 class="comment-name" lang={lang(data.name)}>
-                {data.name}
-              </h2>
-              <p class="comment-date">
-                <time datetime={data.date}>{data.date.replaceAll('-', '.')}</time>
-              </p>
-              <div class="md-body" lang={lang(body)}>
-                <Content />
-              </div>
-            </article>
-          </li>
-        ))}
-      </ol>
-    )
-  }
-  <section id="how-to-leave" class="how-to-leave">
-    <h2>{s.comments.howToLeave}</h2>
-    <p>{s.comments.undecided}</p>
-  </section>
+  <div class="voices-heading"><p>LETTERS / MPBEL</p><h2>{locale === 'ko' ? '함께한 10년, 다음을 향한 마음.' : 'Ten years together. Words for tomorrow.'}</h2><span>{String(total).padStart(2,'0')} VOICES</span></div>
+  <nav class="voices-group-nav" aria-label={locale==='ko'?'코멘트 구분':'Voice groups'}>{groups.map(group=><a href={'#voices-'+group.key}>{locale==='ko'?group.ko:group.en}<span>{group.rows.length}</span></a>)}</nav>
+  {groups.map(group=><section class="voices-group" id={'voices-'+group.key}>
+  <h2 class="voices-group-title">{locale==='ko'?group.ko:group.en}</h2>
+  <ol class="voices-index">{group.rows.map(c=><li><a href={'#comment-'+c.id}>{c.data.name}</a></li>)}</ol>
+  <ol class="comments voices-letters">
+    {group.rows.map(({id,data,body,Content,member},index)=><li>
+      <article class="comment voice-letter" id={'comment-'+id}>
+        <details open={index===0}>
+          <summary>
+            <div class="voice-person"><MemberPortrait id={member?.id ?? ''} size="thumbnail" fit="contain" /><div><small>{String(index+1).padStart(2,'0')} / LETTER</small><h2 class="comment-name" lang={langOf(data.name,locale)}>{data.name}</h2></div></div>
+            <p class="voice-opening" lang={langOf(body,locale)}>{body?.trim().split(/\n\s*\n/)[0].slice(0,160)}{(body?.trim().split(/\n\s*\n/)[0].length ?? 0)>160?'…':''}</p>
+            <span class="voice-expand" aria-hidden="true">+</span>
+          </summary>
+          <div class="md-body" lang={langOf(body,locale)}><Content /></div>
+        </details>
+      </article>
+    </li>)}
+  </ol>
+  </section>)}
 </SubLayout>
+<script>
+ const revealLetter = () => {const id=decodeURIComponent(location.hash.slice(1)); const target=document.getElementById(id); const details=target?.querySelector('details'); if(details) details.open=true;};
+ revealLetter(); window.addEventListener('hashchange',revealLetter);
+</script>

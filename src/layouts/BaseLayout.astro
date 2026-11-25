@@ -2,6 +2,7 @@
 // The page frame every page shares: <html lang>, head with the fonts, top bar, main, footer.
 // The site-wide CSS (styles/global.css) is imported by every page file as its first import, not here: Astro links a
 // page's stylesheets in the order it meets their imports, so an import here would come after a page's own CSS.
+import '../styles/theme.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import type { Locale } from '../lib/locale.ts';
@@ -24,11 +25,14 @@ const s = t(locale);
 <html lang={locale}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      (function(){var theme='light';try{theme=localStorage.getItem('mpbel-theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch(e){} document.documentElement.dataset.theme=theme;})();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title ? `${title} | MPBEL 10th` : s.siteTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {(bodyClass === 'home' || bodyClass?.includes('edition-board')) && (
+    {true && (
       <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
     )}
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" />
@@ -36,7 +40,7 @@ const s = t(locale);
   </head>
   <body class={bodyClass}>
     <a class="skip" href="#main">{s.skipToContent}</a>
-    <Header locale={locale} languageHrefs={languageHrefs} edition={bodyClass === 'home' || bodyClass?.includes('people-edition') || bodyClass?.includes('photo-edition')} />
+    <Header locale={locale} languageHrefs={languageHrefs} edition={true} />
     <main id="main">
       <slot />
     </main>

@@ -64,14 +64,7 @@ for (const [lang, prefix] of LANGS) {
       assert.equal(empty.length, 1);
       assert.equal($(`.contents ${item}`).length, 0);
       assert.equal(text(empty.find('.empty-lead')), EMPTY[lang]);
-      assert.ok(
-        empty.find('code').filter((_, el) => $(el).text() === `src/content/${collection}/_template.md`).length === 1,
-        'the template path',
-      );
-      const keys = empty.find('dl dt code').map((_, el) => $(el).text()).get();
-      assert.deepEqual(keys, templateKeys(collection));
-      assert.equal(empty.find('dl dd').length, empty.find('dl dt').length);
-      empty.find('dl dd').each((_, el) => assert.notEqual(text($(el)), ''));
+      assert.equal(empty.find('code,dl').length,0);
     });
   }
 
@@ -94,13 +87,10 @@ for (const [lang, prefix] of LANGS) {
     }
   });
 
-  test(`${lang} comments: the how-to-leave section ends the board and says the way is not decided`, () => {
+  test(`${lang} comments: letters replace setup guidance`, () => {
     const $ = page(`${prefix}archive/comments`);
-    const section = $('.contents section#how-to-leave');
-    assert.equal(section.length, 1);
-    assert.ok($('.contents').children().last().is(section), 'last in the content');
-    assert.notEqual(text(section.children('h2')), '');
-    assert.equal(text(section.children('p')), UNDECIDED[lang]);
+    assert.equal($('#how-to-leave').length,0);
+    assert.equal($('.voice-letter').length,entries('comments').length);
   });
 }
 

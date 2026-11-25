@@ -284,3 +284,20 @@
 }
 .people-edition .historical-roster a { color: #112b46; }
 .people-edition .historical-roster a:hover { color: #1563b4; }
+/* People boards: aligned five-person rows that adapt to available space. */
+.people-edition .vNav a::before { display:none; }
+.people-edition .member-list { grid-template-columns:repeat(5,minmax(0,1fr)); gap:48px 24px; align-items:start; }
+.people-edition .member-list .member-card:nth-child(n) { padding-top:0; }
+.people-edition .member-list .mc-name h3,
+.people-edition .member-list .alumni-name-row h4 { font-size:20px; margin-top:16px; }
+.people-edition .member-list .mc-facts,
+.people-edition .member-list .alumni-facts,
+.people-edition .member-list .mc-facts:lang(en),
+.people-edition .member-list .alumni-facts:lang(en) { grid-template-columns:minmax(0,1fr); gap:3px; font-size:12px; }
+.people-edition .member-list .mc-facts dt { margin-top:8px; font-size:11px; }
+.people-edition .member-list .mc-facts dt:first-child { margin-top:0; }
+.people-edition .member-list .mc-facts dd { overflow-wrap:anywhere; }
+@media(max-width:1100px){.people-edition .member-list { grid-template-columns:repeat(4,minmax(0,1fr)); gap:40px 22px; }}
+@media(max-width:850px){.people-edition .member-list { grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px 20px; }}
+@media(max-width:600px){.people-edition .member-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px 18px; }}
+@media(max-width:360px){.people-edition .member-list { grid-template-columns:minmax(0,1fr); }}

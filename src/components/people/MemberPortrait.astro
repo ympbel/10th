@@ -6,13 +6,15 @@ interface Props {
   id: string;
   size: 'card' | 'thumbnail';
   fallbackName?: string;
+  fit?: 'cover' | 'contain';
+  natural?: boolean;
 }
 
-const { id, size, fallbackName } = Astro.props;
+const { id, size, fallbackName, fit = 'cover', natural = false } = Astro.props;
 // Published portraits from the official MPBEL member directory, matched to archive member IDs.
 const portraits = import.meta.glob<{ default: ImageMetadata }>('/src/assets/portraits/*.jpg', { eager: true });
 const portrait = portraits[`/src/assets/portraits/${id}.jpg`]?.default;
-const width = size === 'card' ? 480 : 80;
+const width = natural && portrait ? portrait.width : size === 'card' ? 480 : 80;
 ---
 
 {portrait && (
@@ -20,8 +22,8 @@ const width = size === 'card' ? 480 : 80;
     src={portrait}
     alt=""
     width={width}
-    height={size === 'card' ? 600 : width}
-    fit="cover"
+    height={natural && portrait ? portrait.height : size === 'card' ? 600 : width}
+    fit={fit}
     position="center"
     class={`member-portrait member-portrait--${size}`}
     loading="lazy"

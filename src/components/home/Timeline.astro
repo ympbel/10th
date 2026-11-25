@@ -66,7 +66,6 @@ const numLines = (y: Props['years'][number]) => {
 <section id="history" class="wrap timeline" data-series="papers" style={'--chart-intervals:' + (scales.papers.ticks.length - 1)} aria-labelledby="timeline-title">
   <div class="timeline-head">
     <h2 class="timeline-title" id="timeline-title">{tl.title} <span>{range}</span></h2>
-    <p class="timeline-lead">{tl.lead}</p>
   </div>
   <div class="timeline-series" role="group" aria-label={locale === 'ko' ? '그래프 항목 선택' : 'Chart metric'}>
     {SERIES.map((key) => (
@@ -136,10 +135,6 @@ const numLines = (y: Props['years'][number]) => {
     }
   </ol>
     </div>
-  </div>
-  <div class="timeline-chart-note">
-    <p>{locale === 'ko' ? '막대 위 숫자는 해당 연도의 실적입니다.' : 'Values above the bars show the annual total.'}</p>
-    <p class="chart-swipe-hint">{locale === 'ko' ? '좌우로 밀어 연도를 선택하세요.' : 'Scroll sideways to choose a year.'}</p>
   </div>
   <slot />
 </section>

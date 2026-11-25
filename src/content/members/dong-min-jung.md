@@ -7,7 +7,6 @@ aliases:
 orcid: "0009-0006-6755-6523"
 program: "박사"
 department: "의학과"
-major: "데이터사이언스, 인공지능"
 joined: "2024-03-01"
 degree:
   start: "2024-03-01"

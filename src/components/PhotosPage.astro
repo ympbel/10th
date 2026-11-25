@@ -41,7 +41,7 @@ const shown = photos.filter(
   (photo) => (year === undefined || photo.data.year === year) && (kind === undefined || photo.data.kind === kind),
 );
 const albums = photoAlbums(shown);
-const featured = photos.find((photo) => photo.data.caption === '연구실 스승의날' && photo.data.year === 2025) ?? albums[0]?.cover;
+const featured = photos.find((photo) => photo.data.caption === '연구실 스승의날' && photo.data.year === 2026) ?? albums[0]?.cover;
 const title =
   year !== undefined
     ? fill(p.yearTitle, { year })

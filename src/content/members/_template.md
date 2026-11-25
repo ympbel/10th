@@ -35,7 +35,6 @@ department: "융합의학과"
 department_en: "Department of Integrative Medicine"
 
 # 전공.
-major: "의학물리"
 
 # 합류일(연구실 첫 출근일). 모르면 줄을 지웁니다. 연표의 합류 칸에 세지 않고 "합류 연도 미상"으로 다룹니다.
 joined: "2024-03-01"

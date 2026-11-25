@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { page } from './helpers.mjs';
+for(const prefix of ['', 'en/'])test(`${prefix || 'ko/'}: Korean and US alumni maps lead the page`,()=>{
+ const $=page(prefix+'people/alumni');
+ assert.equal($('main > .us-network').length,1);
+ assert.equal($('main > .sub_visual').length,0);
+ assert.equal($('.us-map .us-marker').length,9);
+ assert.equal($('.us-person').length,12);
+ assert.equal($('.institution-logo').length,9);
+ assert.equal($('.us-cross').length,0);
+ assert.equal($('.network-regions a[href*="inkyung-park"]').length,0);
+ $('.institution-logo').each((_,el)=>assert.match($(el).attr('href'),/\/images\/institutions\/.+\.(png|svg)$/));
+ assert.equal($('h1').length,1);
+ assert.equal($('.korea-map .us-marker').length,4);
+ assert.equal($('.korea-map [data-site-members="sang-kyun-yoo,seunghyeop-baek,ye-in-park,seok-ho-lee"]').length,1);
+ for(const id of ['nalee-kim','jin-dong-cho','sang-kyun-yoo','seunghyeop-baek','na-hye-kwon','seok-ho-lee','ye-in-park'])assert.equal($(`[data-us-person="${id}"]`).length,1);
+ const ids=new Set();
+ $('.us-map:not(.korea-map) .us-marker').each((_,el)=>{const id=$(el).attr('data-us-select');ids.add(id);assert.equal($(`#us-person-${id}`).length,1);assert.ok($(`#us-person-${id} a`).first().attr('href').includes(`/people/${id}/`));});
+ assert.deepEqual([...ids].sort(),['jaehee-chun','byong-su-choi','min-seo-choi','donghyeok-choi','juyoung-lee'].sort());
+ assert.equal($('.alumni-gallery--graduates .alumni-card').length || $('.alumni-gallery--graduates > li').length,13);
+});

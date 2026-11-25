@@ -15,6 +15,7 @@ const members = frontmatters('members');
 const roles = members.map((fm) => scalar(fm, 'role'));
 const papers = frontmatters('papers');
 const count = (collection) => frontmatters(collection).length;
+const patentCount = frontmatters('patents').filter(fm=>scalar(fm,'kind')!=='copyright' && !['확인 필요','출원 준비','거절'].includes(scalar(fm,'status'))).length;
 
 /** The six figures, in order: members without professors, degrees taken, papers from 2016 on, presentations,
  * awards, projects. */
@@ -25,6 +26,9 @@ const FIGURES = [
   count('presentations'),
   count('awards'),
   count('projects'),
+  patentCount,
+  count('seminars'),
+  count('photos'),
 ];
 
 /** Names a timeline column shows; the rest are counted as `+n`. */
@@ -38,7 +42,7 @@ const BOARDS = [
   roles.filter((r) => r === 'student').length,
   members.filter((fm) => nested(fm, 'degree', 'date') || scalar(fm, 'role') === 'former').length,
   papers.length,
-  count('patents'),
+  patentCount,
   count('presentations'),
   count('awards'),
   count('projects'),
@@ -65,18 +69,19 @@ for (const [lang, path, prefix] of [
 ]) {
   const $ = page(path);
 
-  test(`${lang}: the hero h1 is the slogan from home.md and the band image is visual.jpg under the base`, () => {
-    assert.equal($('h1').length, 1);
-    assert.equal(text($('.hero h1')), slogan(lang));
-    const img = $('.hero img[src$="visual.jpg"]');
-    assert.equal(img.length, 1);
-    assert.equal(img.attr('src'), `${BASE}/images/site/visual.jpg`);
-    assert.equal(img.attr('alt'), '');
+  test(`${lang}: photo cover leads, followed by introduction, figures, contents, timeline and comments`, () => {
+    assert.equal($('h1').length,1);
+    assert.ok(text($('.intro h2')).includes('MPBEL'));
+    assert.equal($('.hero').length,1);
+    const nodes=$('main *').toArray();
+    const selectors=['.hero','.intro','.figures','#edition-contents','#history','.home-comments'];
+    const positions=selectors.map(selector=>nodes.indexOf($(selector)[0]));
+    assert.ok(positions.every((n,i)=>n>=0 && (i===0 || n>positions[i-1])));
   });
 
-  test(`${lang}: six figures with numeric data-count matching the content files`, () => {
+  test(`${lang}: nine figures with numeric data-count matching the content files`, () => {
     const cells = $('.figures a[data-count]');
-    assert.equal(cells.length, 6);
+    assert.equal(cells.length, 9);
     const values = cells.map((_, a) => $(a).attr('data-count')).get();
     for (const v of values) assert.match(v, /^\d+$/);
     assert.deepEqual(values.map(Number), FIGURES);

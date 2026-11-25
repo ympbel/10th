@@ -1,73 +1,151 @@
 {
   "dong-wook-kim": {
-    "position": "Clinical Professor",
-    "affiliation": "Department of Radiation Oncology, Yonsei Cancer Center",
-    "research": "Monte Carlo simulation & medical physics",
-    "bio": "",
-    "education": [],
-    "source": "https://ympbel.github.io/member/collaborators/"
-  },
-  "hojin-kim": {
-    "position": "Assistant Professor",
-    "affiliation": "Department of Radiation Oncology, Yonsei Cancer Center",
-    "research": "Optimization algorithm, deep learning",
-    "bio": "",
-    "education": [],
-    "source": "https://ympbel.github.io/member/collaborators/"
-  },
-  "member-65": {
-    "position": "Research Professor",
-    "affiliation": "Ewha Womans University College of Medicine",
-    "research": "MC Simulation, CBCT Scatter Correction, Medical Physics",
-    "bio": "",
-    "education": [],
-    "source": "https://ympbel.github.io/member/collaborators/"
-  },
-  "member-66": {
-    "position": "Clinical Assistant Professor",
-    "affiliation": "Department of Radiation Oncology, Yonsei Cancer Center",
-    "research": "Medical physics, Particle therapy",
-    "bio": "",
-    "education": [],
-    "source": "https://ympbel.github.io/member/collaborators/"
-  },
-  "member-67": {
-    "position": "Assistant Professor",
-    "affiliation": "Department of Radiation Oncology, Gangnam Severance Hospital",
-    "research": "Registration, Quality Assurance",
-    "bio": "",
-    "education": [],
-    "source": "https://ympbel.github.io/member/collaborators/"
-  },
-  "member-68": {
-    "position": "Clinical Assistant Professor",
-    "affiliation": "Department of Radiation Oncology, Yonsei Cancer Center",
-    "research": "Monte Carlo simulation, Particle Therapy",
-    "bio": "",
-    "education": [],
-    "source": "https://ympbel.github.io/member/collaborators/"
-  },
-  "member-69": {
-    "position": "Assistance professor",
-    "affiliation": "Department of Radiation Oncology, Yonsei Cancer Center",
-    "research": "Deep Learning, Clinical Evaluation",
-    "bio": "",
-    "education": [],
-    "source": "https://ympbel.github.io/member/collaborators/"
-  },
-  "jin-sung-kim": {
-    "position": "교수 · Chief Medical Physicist",
-    "position_en": "Professor · Chief Medical Physicist",
+    "position": "임상교수",
     "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
-    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center",
-    "research": "방사선물리학 · 의료영상 · 입자치료물리학",
-    "research_en": "Radiation physics · Medical imaging · Particle therapy physics",
+    "research": "의학물리(Medical Physics) · 근접치료 · 호흡연동치료 · 양성자, 중입자치료(Particle Therapy) · 사고 및 위험요소 분석(Accident & Risk Analysis)",
     "bio": "",
     "education": [
-      "KAIST 원자력 및 양자공학과 공학사 (2000)",
-      "KAIST 원자력 및 양자공학과 의과학 학제전공 석사 (2003)",
-      "KAIST 원자력 및 양자공학과 공학박사 (2007)"
+      "국립강릉원주대학교 학사(1992)",
+      "국립강릉원주대학교 석사(1994)",
+      "성균관대학교 박사(2002)"
     ],
-    "source": "https://ympbel.github.io/member/professor/"
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApMuAmjFYOFflHVa7ADRRLNJkFG9NU5NgQMtwgJ9srU6A%3D",
+    "position_en": "Clinical Professor",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+  },
+  "hojin-kim": {
+    "position": "부교수",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
+    "research": "의학물리 (Medical Physics), · 의료영상처리 (Medical Image Processing), · 치료계획 최적화 알고리즘 (Treatment Plan Optimization Algorithm), · 기계학습 및 심층학습 (Machine Learning, Deep Learning)",
+    "bio": "",
+    "education": [
+      "연세대학교 전기전자공학전공 (2007)",
+      "Stanford University, Electrical Engineering MS (2009)",
+      "Stanford University, Electrical Engineering Ph.D. (2014)"
+    ],
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApMuAmikEvFcRyVaDIDRlJM9%2BBpx6Yv8bh3yj3PZjn0%2Fs%3D",
+    "position_en": "Associate Professor",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+  },
+  "member-65": {
+    "position": "연구교수",
+    "affiliation": "이화여자대학교 의과대학 의과학연구소 · 의공학교실",
+    "research": "의학물리 · 의료인공지능 · 콘빔CT · 방사선치료 · 의료기기",
+    "bio": "이화의료원 의료인공지능센터 부센터장",
+    "education": [],
+    "source": "https://research.ewhamed.ac.kr/part/emricenter08.asp",
+    "position_en": "Research Professor",
+    "affiliation_en": "Ewha Womans University College of Medicine",
+    "bio_en": "Deputy director, Medical AI Center, Ewha Womans University Medical Center"
+  },
+  "member-66": {
+    "position": "임상조교수",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
+    "research": "의학물리 (Medical Physics) · 양성자, 중입자치료(Particle Therapy) · 3D 프린팅 (3D Printing) · 적응방사선치료 (Adaptive Radiotherapy)",
+    "bio": "",
+    "education": [
+      "가톨릭대학교 의생명·건강과학과 이학박사 (2014)"
+    ],
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNcAri2gTFedWVa%2FODRRIPQ6xWRTKEthSWJO5wNd2gJU%3D",
+    "position_en": "Clinical Assistant Professor",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+  },
+  "member-67": {
+    "position": "조교수",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 강남세브란스병원",
+    "research": "Registration, Quality Assurance",
+    "bio": "",
+    "education": [
+      "University of Michigan, Ann Arbor, 기계공학과 공학박사 (2015)",
+      "서울대학교 공과대학 기계공학과 공학석사 (2008)",
+      "서울대학교 공과대학 기계항공공학부 공학사 (2006)"
+    ],
+    "source": "https://gs-cancer.severance.healthcare/gs-cancer/doctor/doctor-view.do?deptSeq=702&empNo=eXVoczIwMjBAKUApMuAmi34XFPh%2BVaDLDRBIMpFD0ddE9ooSzqDjTVWxbag%3D",
+    "position_en": "Assistant Professor",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Gangnam Severance Hospital"
+  },
+  "member-68": {
+    "position": "임상조교수",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
+    "research": "Monte Carlo simulation, Particle Therapy",
+    "bio": "",
+    "education": [
+      "한양대학교 원자력공학과 공학박사(2017)",
+      "한양대학교 원자시스템공학과 공학사(2011)"
+    ],
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNcw6jHYrFdFWVaDPDRdLMQKYpDflkdfdCzagD4iQi9E%3D",
+    "position_en": "Clinical Assistant Professor",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+  },
+  "member-69": {
+    "position": "부교수",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
+    "research": "유방암 · 전이암 (고식적 방사선 치료/ 체부정위 방사선수술)",
+    "bio": "",
+    "education": [
+      "연세대학교 의학과 학사 (2003-2009)",
+      "연세대학교 대학원 의학과 석사 (2011-2013)",
+      "연세대학교 대학원 의학과 박사 (2016-2021)"
+    ],
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNMcDi34XFedrVaDNDRlIMAJD6A%2Fjr74JQ5A8t2tyeC0%3D",
+    "position_en": "Associate Professor",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+  },
+  "jin-sung-kim": {
+    "position": "교수",
+    "position_en": "Professor",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center",
+    "research": "의학물리 (Medical Physics) · 양성자, 중입자치료 (Particle Therapy) · 영상유도방사선치료 (Image Guided Radiation Therapy) · 의료영상 (Medical Imaging)",
+    "bio": "",
+    "education": [
+      "한국과학기술원 (KAIST) 원자력 및 양자공학과 공학사(2000)",
+      "한국과학기술원 (KAIST) 원자력 및 양자공학과 의과학 학제전공 석사(2003)",
+      "한국과학기술원 (KAIST) 원자력 및 양자공학과 공학박사(2007)"
+    ],
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApMuAmi34TFedHVa%2FBDBNJNdEbjhZ5kGLj0TLwEyK0Zbc%3D"
+  },
+  "ho-lee": {
+    "position": "임상교수",
+    "position_en": "Clinical Professor",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
+    "research": "영상유도방사선치료, 근접방사선치료, 기계학습, 의료영상처리, 의료기기",
+    "bio": "",
+    "education": [
+      "숭실대학교 정보통신공학사/석사",
+      "서울대학교 컴퓨터공학박사"
+    ],
+    "email": "HOLEE@yuhs.ac",
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNMQSikEvplTAOqrLDD0oqBznOdCaGD35aYmww50%3D",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+  },
+  "kwangwoo-park": {
+    "position": "임상교수",
+    "position_en": "Clinical Professor",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 용인세브란스병원",
+    "research": "의학물리학 · spectal X-ray를 이용한 성분분석 및 영상 개선 · 입자선에서의 stopping power 산출",
+    "bio": "",
+    "education": [
+      "연세대학교 물리학과 학사,",
+      "뉴욕주립대(SUNY @ Buffalo) 물리학과 박사"
+    ],
+    "email": "KPARK02@yuhs.ac",
+    "source": "https://yi.severance.healthcare/yi/doctor/doctor-view.do?deptSeq=16095&empNo=eXVoczIwMjBAKUApM%2BkzjW0GFflGVa%2FIDRhKNLqHXMqwhCTn%2BdaB5L%2FQfOw%3D",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yongin Severance Hospital"
+  },
+  "changhwan-kim": {
+    "position": "임상조교수",
+    "position_en": "Clinical Assistant Professor",
+    "affiliation": "연세대학교 의과대학 방사선종양학교실 · 연세암병원",
+    "research": "의학물리 (Medical Physics) · 입자치료 (Particle Therapy) · 의료영상 (Medical Imaging)",
+    "bio": "",
+    "education": [
+      "한국과학기술원 (KAIST) 원자력 및 양자공학과 공학사 (2013)",
+      "한국과학기술원 (KAIST) 원자력 및 양자공학과 공학석사 (2015)",
+      "한국과학기술원 (KAIST) 원자력 및 양자공학과 공학박사 (2019)"
+    ],
+    "email": "CHKIM514@yuhs.ac",
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApMuAmi2kqFPpuVaHIDRRIMANWma%2FeDosa8Os0%2F8%2BFVxE%3D",
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
   }
 }

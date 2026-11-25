@@ -18,10 +18,17 @@ interface Props {
 const { locale } = Astro.props;
 const s = t(locale);
 
-const groups = [...groupBy(sortPatents(await getCollection('patents')), 'year')];
+const records = await getCollection('patents');
+const included = records.filter(p => p.data.kind !== 'copyright' && !['확인 필요','출원 준비','거절'].includes(p.data.status ?? ''));
+const groups = [...groupBy(sortPatents(included), 'year')];
+const copyrights = [...groupBy(sortPatents(records.filter(p => p.data.kind === 'copyright')), 'year')];
+const review = [...groupBy(sortPatents(records.filter(p => ['확인 필요','출원 준비','거절'].includes(p.data.status ?? ''))), 'year')];
 ---
 
 <SubLayout title={s.boards.patents} sectionKey="publication" currentHref="/publication/patents/" locale={locale}>
+  <div class="patent-summary"><p>{locale === 'ko' ? '출원·등록 특허' : 'Patent applications & grants'}<strong>{included.length}</strong></p><p>{locale === 'ko' ? '프로그램 저작권' : 'Software copyrights'}<strong>{records.filter(p => p.data.kind === 'copyright').length}</strong></p></div>
   <YearIndex years={groups.map(([year]) => year)} locale={locale} />
-  <PatentList groups={groups} locale={locale} />
+  <div class="patent-main"><PatentList groups={groups} locale={locale} /></div>
+  {copyrights.length > 0 && <section class="patent-related"><h2>{locale === 'ko' ? '프로그램 저작권' : 'Software copyrights'}</h2><PatentList groups={copyrights} locale={locale} idPrefix="copyright-" /></section>}
+  {review.length > 0 && <details class="patent-review"><summary>{locale === 'ko' ? '출원 준비·확인 필요·거절 기록 보기' : 'Preparation, unresolved and rejected records'}</summary><p>{locale === 'ko' ? '아래 항목은 위 특허 건수에 포함하지 않았습니다.' : 'The following records are excluded from the patent count above.'}</p><PatentList groups={review} locale={locale} idPrefix="review-" /></details>}
 </SubLayout>

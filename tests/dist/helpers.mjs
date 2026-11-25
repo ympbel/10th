@@ -3,7 +3,8 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const DIST = fileURLToPath(new URL('../../dist/', import.meta.url));
+// An isolated build can be checked when a desktop sync service adds duplicate output files.
+export const DIST = process.env.MPBEL_TEST_DIST ?? fileURLToPath(new URL('../../dist/', import.meta.url));
 const CONTENT = fileURLToPath(new URL('../../src/content/', import.meta.url));
 
 /** The deployment base (`base` in astro.config.mjs). Built pages link to `${BASE}/people/students/`, but `dist/` is

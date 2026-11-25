@@ -242,7 +242,7 @@ export const ko = {
     /** Terms of the member card and the person page header. */
     terms: {
       program: '과정',
-      department: '학과·전공',
+      department: '학과',
       joined: '합류',
       degree: '학위',
       affiliation: '현 소속',

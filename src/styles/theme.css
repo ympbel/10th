@@ -1,0 +1,57 @@
+:root { --page-bg: #f8f9fb; --surface: #fff; --surface-alt: #edf3fa; --text-primary: #15304d; --text-secondary: #637185; --rule: #cdd6e2; --accent: #1563b4; color-scheme: light; }
+:root[data-theme='dark'] { color-scheme: dark; --page-bg:#0b1420; --surface:#131f2f; --surface-alt:#192b40; --text-primary:#e6edf6; --text-secondary:#a5b7cc; --rule:#314358; --accent:#89baff; --c-ink:#e6edf6; --c-graphite:#e6edf6; --c-slate:#a5b7cc; --c-ash:#91a4bd; --c-hairline:#314358; --c-hairline-soft:#28394c; --c-mist:#192b40; --c-ledger:#131f2f; --c-panel-gray:#192b40; --c-band-gray:#192b40; --c-notice-tint:#192b40; --c-yonsei-navy:#89baff; --c-cobalt:#89baff; }
+html body { background:var(--page-bg); color:var(--text-primary); }
+.theme-toggle { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--rule); border-radius:30px; padding:7px 12px; background:transparent; color:var(--text-primary); cursor:pointer; font:inherit; font-size:12px; order:1; white-space:nowrap; }
+.theme-icon { font-size:18px; line-height:1; }
+.theme-toggle:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+html[data-theme='dark'] body :is(.topmenu,.magazine-header .nav,.photo-edition,.people-edition,.archive-edition,.contents-spread,.edition-contents,.intro-band,.year-panel,.board-links,.snb,.vNav) { background:var(--page-bg); color:var(--text-primary); }
+html[data-theme='dark'] body :is(.contents-chart,.timeline-chart,.yp-col,.contents-photo-index,.alumni-degree-nav a,.empty-state,.how-to-leave,.project,.seminar,.workshop) { background:var(--surface); border-color:var(--rule); }
+html[data-theme='dark'] body :is(.yp-degrees,.portrait-placeholder,.photo-story-images img,.photo-album-image,.pub-part > h2,.prof-list li) { background:var(--surface-alt); }
+html[data-theme='dark'] body :is(h1,h2,h3,h4,.intro-heading,.contents-chapter,.mc-name h3 a,.alumni-name-row h4 a,.faculty-position,.faculty-copy h2,.photo-album a,.former-list a,.yp-summary-counts b,.yp-joined > span:first-child,.yp-summary h3,.mini-chart-heading b) { color:var(--text-primary); }
+html[data-theme='dark'] body :is(.logo-label,.header-contents,.nav-toggle,.intro-body,.figures span,.pub-note,.yr-sub,.yr-meta,.faculty-affiliation,.faculty-other,.faculty-intro,.faculty-details h3,.photo-opening-note p,.photo-album-meta,.photo-featured figcaption,.photo-story-images figcaption,.photo-story-date,.photo-breadcrumb a,.photo-section-head p,.home-comments-note,.timeline-chart-note,.chart-scale,.tl-year,.mini-chart-heading p,.mini-chart-heading small,.mini-chart-heading > span,.contents-chart-label,.mini-year,.contents-preview figcaption p,.contents-preview figcaption span,.contents-chapter small,.contents-footnote,.mc-facts,.mc-facts dt,.mc-facts dd,.mc-name .other,.yp-kicker,.yp-summary-counts,.yp-joined,.yp-col .meta,.yp-col .empty,.alumni-degree-heading small,.alumni-degree-nav span) { color:var(--text-secondary); }
+html[data-theme='dark'] body :is(.figures b,.edition-eyebrow,.faculty-eyebrow,.faculty-source,.photo-archive-kicker,.photo-album-heading > a,.photo-story-return,.home-comments a,.edition-return,.btn-link,.yp-col .more) { color:var(--accent); }
+html[data-theme='dark'] body :is(.timeline-chart,.figures a,.home-comments,.photo-breadcrumb,.photo-section-head,.faculty-profile,.faculty-details,.mc-facts,.alumni-degree-heading,.people-part h2,.pub-year > h2,.pub-year > h3,.pub-item,.photo-tabs a,.yp-col li,.yp-col-heading) { border-color:var(--rule); }
+html[data-theme='dark'] body .yp-awards { background:#18395d; }
+html[data-theme='dark'] body .photo-album-count { background:#132338; color:#e6edf6; }
+
+html[data-theme='dark'] body .langbut li.active a { background:#89baff; color:#0b1420; }
+html[data-theme='dark'] body .langbut a { color:#c2d7f3; border-color:#526b8c; }
+
+html[data-theme='dark'] body .timeline { --chart-accent:#89baff; }
+html[data-theme='dark'] body .timeline-years a.on .tl-year { color:#0b1420; background:#89baff; }
+html[data-theme='dark'] body .students-cover-copy :is(p,em) { color:#e6edf6; }
+@media(max-width:600px){ .theme-toggle {padding:6px 8px;} .theme-toggle-label {display:none;} .magazine-header .topmenu-inner {gap:8px;} }
+html[data-theme='dark'] body :is(.intro-body p,.contents-preview figcaption strong,.contents-story h2,.contents-chart .mini-bar-value,.faculty-details p,.faculty-details li,.photo-index-note,.photo-index-topics span) { color:var(--text-primary); }
+html[data-theme='dark'] body .contents-chapter:hover { color:var(--accent); }
+html[data-theme='dark'] body,
+html[data-theme='dark'] body.archive-edition,
+html[data-theme='dark'] body.people-edition,
+html[data-theme='dark'] body.photo-edition { background:var(--page-bg); color:var(--text-primary); }
+html[data-theme='dark'] body :is(main,#sub_contents,.contentBox,.contents) { background:transparent; }
+html[data-theme='dark'] body :is(.archive-edition .vNav a,.archive-edition .snb .tit,.archive-edition .year-tabs a,.timeline-lead,.timeline-title span) { color:var(--text-secondary); }
+html[data-theme='dark'] body :is(.archive-edition .vNav .active a,.archive-edition .year-tabs a[aria-current='page']) { color:var(--accent); }
+
+/* The supplied white wordmark is separate from the light-theme logo. */
+.logo .logo-dark { display:none; }
+html[data-theme='dark'] .logo .logo-light { display:none; }
+html[data-theme='dark'] .logo .logo-dark { display:block; background:transparent; padding:0; border-radius:0; }
+/* Home year cards: primary content must never retain light-theme navy. */
+html[data-theme='dark'] body :is(.yp-paper-title,.yp-person,.yp-count) { color:var(--text-primary); }
+html[data-theme='dark'] body .yp-count { color:var(--accent); }
+/* Use distinct, readable states across all three chart series. */
+html[data-theme='dark'] body .timeline { --chart-accent:#89baff; --chart-muted:#496c93; }
+html[data-theme='dark'] body .timeline[data-series='presentations'] { --chart-accent:#75d7d3; --chart-muted:#356e75; }
+html[data-theme='dark'] body .timeline[data-series='awards'] { --chart-accent:#c7b1ff; --chart-muted:#67568d; }
+
+html[data-theme='dark'] body .timeline-series { background:var(--surface); border-color:var(--rule); }
+html[data-theme='dark'] body .timeline-series button { color:var(--text-secondary); }
+html[data-theme='dark'] body .timeline-series button[aria-pressed='true'] { background:var(--surface-alt); color:var(--chart-accent); box-shadow:inset 0 0 0 1px var(--chart-accent); }
+html[data-theme='dark'] body .timeline-series button:hover { color:var(--chart-accent); }
+html[data-theme='dark'] body .timeline-chart::before { background-image:linear-gradient(var(--rule) 1px,transparent 1px); }
+html[data-theme='dark'] body .timeline-years .tl-bars i::after { color:#bed0e6; }
+html[data-theme='dark'] body .timeline-years a.on .tl-bars i::after { color:var(--chart-accent); }
+html[data-theme='dark'] body .timeline-years a.on .tl-year { color:#081320; background:var(--chart-accent); }
+html[data-theme='dark'] body :is(.people-edition .snb .tit,.people-edition .vNav a,.people-edition .alumni-degree-nav a,.photo-index-topics span,.photo-index-note) { color:var(--text-secondary); }
+html[data-theme='dark'] body .people-edition .vNav .active a { color:var(--accent); }
+
+html[data-theme='dark'] body #nav .sub a { color:var(--text-secondary); }

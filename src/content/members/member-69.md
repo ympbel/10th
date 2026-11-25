@@ -2,5 +2,5 @@
 role: "professor"
 name: "장지석"
 aliases: []
-order: 8
+order: 10
 ---

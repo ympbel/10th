@@ -2,18 +2,13 @@
 import { sortPhotos } from '../../lib/photos.ts';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import RandomPortraits from '../people/RandomPortraits.astro';
 import { chapters } from '../../lib/chapters.ts';
 import { localePath, type Locale } from '../../lib/locale.ts';
 import { url } from '../../lib/url.ts';
 import facultyOne from '../../assets/portraits/jin-sung-kim.jpg';
 import facultyTwo from '../../assets/portraits/dong-wook-kim.jpg';
 import facultyThree from '../../assets/portraits/hojin-kim.jpg';
-import studentOne from '../../assets/portraits/jeongheon-kim.jpg';
-import studentTwo from '../../assets/portraits/jae-hyun-seok.jpg';
-import studentThree from '../../assets/portraits/chanwoong-lee.jpg';
-import alumniOne from '../../assets/portraits/inkyung-park.jpg';
-import alumniTwo from '../../assets/portraits/jaehee-chun.jpg';
-import alumniThree from '../../assets/portraits/jin-dong-cho.jpg';
 import publicationsImage from '../../assets/chapters/publications.jpg';
 import patentsImage from '../../assets/chapters/patents.jpg';
 import conferencesImage from '../../assets/chapters/conferences.jpg';
@@ -25,6 +20,8 @@ interface Props {
   years: Array<{ year: number; papers: number }>;
 }
 const { locale, counts, years } = Astro.props;
+const members=await getCollection('members');
+const comments=(await getCollection('comments')).sort((a,b)=>a.id.localeCompare(b.id));
 const albums = new Set<string>();
 const photos = sortPhotos(await getCollection('photos')).filter((photo) => {
   const album = photo.data.date + ':' + photo.data.caption;
@@ -43,6 +40,7 @@ const previews = [
   { value: String(counts.presentations), text: ko ? '세계의 연구자들과 나눈 발견' : 'Discoveries shared with the research community' },
   { value: String(counts.awards), text: ko ? '함께 이룬 성취의 순간들' : 'Moments of achievement, made together' },
   { value: counts.photos ? String(counts.photos) : '2016–2026', text: ko ? '사진으로 돌아보는 연구실의 순간들' : 'Our shared moments, remembered in photographs' },
+  { value: String(comments.length), text: ko ? '교수진과 졸업생이 전하는 기억과 응원' : 'Memories and wishes from faculty and alumni' },
 ];
 // Topic illustrations are generated imagery, identified separately from the real member photographs.
 const chapterVisuals = [
@@ -51,7 +49,7 @@ const chapterVisuals = [
   { image: conferencesImage, alt: ko ? '의료영상 발표 화면이 있는 학술대회장을 표현한 이미지' : 'A scientific conference auditorium with a medical imaging presentation' },
   { image: awardsImage, alt: ko ? '연구 성과의 수상을 표현한 크리스털 트로피 이미지' : 'A crystal trophy illustrating research achievement awards' },
 ];
-const portraits = [[facultyOne, facultyTwo, facultyThree], [studentOne, studentTwo, studentThree], [alumniOne, alumniTwo, alumniThree]];
+const facultyPortraits = [facultyOne, facultyTwo, facultyThree];
 const largestYear = Math.max(1, ...years.map((year) => year.papers));
 const paperTotal = years.reduce((total, year) => total + year.papers, 0);
 ---
@@ -86,10 +84,12 @@ const paperTotal = years.reduce((total, year) => total + year.papers, 0);
               </div>
               <p class="contents-chart-label">{ko ? '연도별 논문 수 · 2016–2026' : 'Papers per year · 2016–2026'}</p>
             </div>
-          ) : i >= 1 && i <= 3 ? (
-            <div class="contents-portraits">
-              {portraits[i - 1].map((portrait) => <Image src={portrait} alt="" width={180} height={240} fit="cover" loading="lazy" />)}
-            </div>
+          ) : i === 1 ? (
+            <div class="contents-portraits">{facultyPortraits.map(portrait=><Image src={portrait} alt="" width={180} height={240} fit="cover" loading="lazy" />)}</div>
+          ) : i === 2 || i === 3 ? (
+            <RandomPortraits members={members.filter(m=>m.data.role===(i===2?'student':'alumni'))} className="contents-portraits" poolKey={i===2?'students-contents':'alumni-contents'} />
+          ) : chapter.path === '/archive/comments/' ? (
+            <div class="contents-letters"><p>VOICES / MPBEL</p><strong>{ko?'함께 쓴 10년.':'Ten years, together.'}</strong>{comments[0] && <blockquote lang="ko">{comments[0].body?.trim().slice(0,145)}…<cite>{comments[0].data.name}</cite></blockquote>}</div>
           ) : chapter.path === '/archive/photos/' ? (
             <div class="contents-photo-index">
               <p class="photo-index-label">MPBEL / PHOTO ARCHIVE</p>
@@ -130,13 +130,14 @@ const paperTotal = years.reduce((total, year) => total + year.papers, 0);
 </div>
 
 <script>
+  import { refreshPortraits } from '../../scripts/random-portraits.ts';
   const contents = document.getElementById('edition-contents');
   if (contents) {
     const links = contents.querySelectorAll<HTMLAnchorElement>('[data-chapter]');
     const previews = contents.querySelectorAll<HTMLElement>('[data-preview]');
     const show = (index: string | undefined) => {
       links.forEach((link) => link.classList.toggle('is-active', link.dataset.chapter === index));
-      previews.forEach((preview) => { preview.hidden = preview.dataset.preview !== index; });
+      previews.forEach((preview) => { const wasHidden=preview.hidden; preview.hidden = preview.dataset.preview !== index; if(wasHidden && !preview.hidden){const portraits=preview.querySelector<HTMLElement>('[data-random-portraits]');if(portraits)refreshPortraits(portraits);} });
     };
     links.forEach((link) => {
       link.addEventListener('pointerenter', () => show(link.dataset.chapter));

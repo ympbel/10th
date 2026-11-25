@@ -20,7 +20,7 @@ export const MENU: MenuSection[] = [
   { key: 'people', label: 'PEOPLE', items: [item('faculty', '/people/faculty/'), item('students', '/people/students/'), item('alumni', '/people/alumni/')] },
   {
     key: 'publication',
-    label: 'PUBLICATION',
+    label: 'RESEARCH OUTPUTS',
     items: [
       item('papers', '/publication/papers/'),
       item('patents', '/publication/patents/'),

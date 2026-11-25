@@ -1,15 +1,12 @@
 ---
 // Degree-holder galleries retain the Alumni sheet row order within each degree group.
-import { Image } from 'astro:assets';
-import coverOne from '../../assets/portraits/inkyung-park.jpg';
-import coverTwo from '../../assets/portraits/jaehee-chun.jpg';
-import coverThree from '../../assets/portraits/jin-dong-cho.jpg';
 import { getCollection } from 'astro:content';
 import '../../styles/people.css';
 import SubLayout from '../../layouts/SubLayout.astro';
+import AlumniUsMap from './AlumniUsMap.astro';
 import AlumniCard from './AlumniCard.astro';
 import FormerList from './FormerList.astro';
-import { sortMembersByDegree } from '../../lib/content.ts';
+import { alumniDegreeGroup as degreeGroup, compareAlumni } from '../../lib/voices.ts';
 import type { Locale } from '../../lib/locale.ts';
 import { fill, t } from '../../i18n/index.ts';
 
@@ -21,19 +18,8 @@ const { locale } = Astro.props;
 const s = t(locale);
 
 const members = await getCollection('members');
-const graduates = sortMembersByDegree(
-  members.filter((m) => m.data.degree?.date),
-  'desc',
-).sort((a, b) =>
-  (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER),
-);
+const graduates = members.filter(m=>m.data.degree?.date).sort(compareAlumni);
 
-function degreeGroup(member: (typeof graduates)[number]) {
-  const degree = [member.data.degree?.type, member.data.degree?.type_en].join(' ');
-  if (/박사|doctor|ph\.?\s*d/i.test(degree)) return 'doctoral';
-  if (/석사|master|m\.?sc/i.test(degree)) return 'masters';
-  return 'unclassified';
-}
 const degreeGroups = [
   { key: 'doctoral', label: locale === 'ko' ? '박사 졸업생' : 'Doctoral alumni' },
   { key: 'masters', label: locale === 'ko' ? '석사 졸업생' : "Master’s alumni" },
@@ -59,11 +45,7 @@ const formers = rosterNames.map((name) => {
 ---
 
 <SubLayout title={s.boards.alumni} sectionKey="people" currentHref="/people/alumni/" locale={locale}>
-  <div slot="cover" class="students-cover-portraits" aria-hidden="true">
-    {[coverOne, coverTwo, coverThree].map((photo) => (
-      <Image src={photo} alt="" width={200} height={280} fit="cover" loading="eager" />
-    ))}
-  </div>
+  <AlumniUsMap slot="opening" members={members} locale={locale} />
   <section class="people-part" aria-labelledby="graduates-title">
     <h2 id="graduates-title">
       {s.people.degreeHolders} <small>{fill(s.people.count, { n: graduates.length })}</small>

@@ -328,12 +328,8 @@ for (const [lang, dir] of [
     });
   });
 
-  test(`${lang}: the seminars board says where the posts live`, () => {
-    const $ = page(join(dir, 'activity', 'seminars'));
-    assert.equal(
-      text($('.pub-note').first()),
-      en ? "Seminar posts live on the MPBEL site's seminar board." : '세미나 본문은 MPBEL 사이트 세미나 게시판에 있습니다.',
-    );
+  test(`${lang}: seminars omit explanatory guidance`, () => {
+    assert.equal(page(join(dir,'activity','seminars'))('.pub-note').length,0);
   });
 
   test(`${lang}: Korean seminar text is marked lang="ko" only on the English page`, () => {

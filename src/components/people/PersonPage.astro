@@ -68,7 +68,6 @@ const count = (part: keyof typeof p.partCounts, n: number) => fill(p.partCounts[
     locale={locale}
     count={count('papers', items.papers.length)}
   >
-    <p slot="note" class="person-note">{p.papersNote}</p>
     {
       paperYears.map(([year, list]) => (
         <div class="pp-year">

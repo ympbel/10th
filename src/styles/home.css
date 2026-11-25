@@ -515,3 +515,4 @@
 .photo-index-topics { display: flex; flex-wrap: wrap; gap: 8px; }
 .photo-index-topics span { border: 1px solid #b3c6dc; border-radius: 20px; padding: 5px 10px; font-size: 11px; }
 .photo-index-note { margin-top: 18px; font-size: 12px; color: #52647a; }
+.contents-letters{min-height:320px;padding:34px;background:var(--surface-alt);border-top:1px solid var(--rule);color:var(--text-primary);}.contents-letters>p{font-size:10px;letter-spacing:.14em;color:var(--text-secondary);}.contents-letters>strong{display:block;font-size:36px;font-weight:400;letter-spacing:-.04em;margin:24px 0;}.contents-letters blockquote{font-size:16px;line-height:1.9;margin:0;max-width:480px;}.contents-letters cite{display:block;font-size:13px;font-style:normal;margin-top:20px;color:var(--text-secondary);}

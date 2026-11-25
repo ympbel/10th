@@ -121,11 +121,11 @@ for (const [lang, prefix] of [
     assert.deepEqual(items.map((_, li) => $(li).attr('data-member')).get(), professors.map((m) => m.id));
     items.each((i, li) => {
       assert.ok(text($(li)).includes(shownName(professors[i])));
-      assert.equal($(li).find('.faculty-photo img').length, 1);
+      assert.equal($(li).find('.faculty-photo img, .faculty-photo .portrait-placeholder').length, 1);
       assert.ok(text($(li).find('.faculty-position')));
       assert.ok(text($(li).find('.faculty-affiliation')));
     });
-    assert.equal(items.first().find('a[href*="ympbel.github.io/member/professor"]').length, 1);
+    assert.equal(items.first().find('a[href*="cancer.severance.healthcare/cancer/doctor/doctor-view.do"]').length, 1);
   });
 
   test(`${lang}: students page has one card per student, earliest join first, each linking to the person page`, () => {
@@ -144,8 +144,6 @@ for (const [lang, prefix] of [
 
   test(`${lang}: cards show the join month or that it is unknown, and the record counts`, () => {
     const $ = page(at('people', 'students'));
-    const unknown = students.filter((m) => !joinedOf(m));
-    assert.ok(unknown.length > 0, 'the content has a student without a join date');
     for (const m of students) {
       const card = text($(`.member-card[data-member="${m.id}"]`));
       const joined = joinedOf(m);
@@ -238,7 +236,7 @@ for (const [lang, prefix] of [
         if (c[part] === 0) assert.equal(text(empty), L.noRecords, `${m.id} ${part}`);
         else assert.equal(empty.length, 0, `${m.id} ${part}`);
       }
-      assert.equal(text($('.person-note')), L.note, m.id);
+      assert.equal($('.person-note').length, 0, m.id);
     }
   });
 
@@ -281,3 +279,16 @@ test('en: a Korean department stays in Korean on the English students page, mark
     assert.ok(marked.length >= 1, `${m.id}: ${dept}`);
   }
 });
+
+for (const prefix of ['', 'en/']) {
+  test(`${prefix || 'ko/'}: Ye-In Park appears only among alumni and three faculty contacts are present`, () => {
+    const students = page(prefix+'people/students');
+    const alumni = page(prefix+'people/alumni');
+    const faculty = page(prefix+'people/faculty');
+    assert.equal(students('[data-member="ye-in-park"]').length,0);
+    assert.equal(alumni('.alumni-gallery--graduates > li[data-member="ye-in-park"]').length,1);
+    for (const [id,email] of [['ho-lee','HOLEE@yuhs.ac'],['kwangwoo-park','KPARK02@yuhs.ac'],['changhwan-kim','CHKIM514@yuhs.ac']]) {
+      assert.equal(faculty('[data-member="'+id+'"] a[href="mailto:'+email+'"]').length,1);
+    }
+  });
+}
