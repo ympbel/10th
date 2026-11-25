@@ -8,5 +8,6 @@ __pycache__/
 .superpowers/
 reference/html/.cache/
 data/
+!/src/data/
 .impeccable/review/
 .impeccable/mocks/**/*.png
