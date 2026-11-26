@@ -76,3 +76,17 @@ test('funding edition separates the laboratory totals from the 16 principal-inve
   }
  }
 });
+
+test('home member timeline sits below the eleven-year title and before research metric controls',()=>{
+ for(const prefix of ['','en/']){
+  const $=page(prefix),history=$('#history');
+  const children=history.children().toArray();
+  const titleAt=children.indexOf(history.find('.timeline-head')[0]);
+  const membersAt=children.indexOf(history.find('.home-member-timeline')[0]);
+  const controlsAt=children.indexOf(history.find('.timeline-series')[0]);
+  assert.ok(titleAt<membersAt && membersAt<controlsAt);
+  assert.equal($('.home-member-timeline[open]').length,0);
+  assert.equal($('.home-member-timeline [data-timeline-member]').length,56);
+  assert.equal($('.home-member-timeline [data-member-filter]').length,4);
+ }
+});

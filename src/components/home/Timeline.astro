@@ -1,6 +1,7 @@
 ---
 // An annual chart with a selectable research metric. Year links reveal the corresponding record panel.
 // The chart scrolls horizontally on narrow screens and keeps ordinary year-page links without JavaScript.
+import MemberTimeline from '../people/MemberTimeline.astro';
 import type { Locale } from '../../lib/locale.ts';
 import { YEARS, barHeights } from '../../lib/years.ts';
 import { t } from '../../i18n/index.ts';
@@ -67,6 +68,10 @@ const numLines = (y: Props['years'][number]) => {
   <div class="timeline-head">
     <h2 class="timeline-title" id="timeline-title">{tl.title} <span>{range}</span></h2>
   </div>
+  <details class="home-member-timeline">
+    <summary>{locale==='ko'?'멤버 타임라인':'Member timeline'}<span>{locale==='ko'?'함께한 시간 보기':'Explore our time together'}</span></summary>
+    <MemberTimeline locale={locale} />
+  </details>
   <div class="timeline-series" role="group" aria-label={locale === 'ko' ? '그래프 항목 선택' : 'Chart metric'}>
     {SERIES.map((key) => (
       <button type="button" data-chart-series={key} data-ticks={scales[key].ticks.join(',')} aria-controls="timeline-plot" aria-pressed={key === 'papers'}>
