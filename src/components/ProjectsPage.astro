@@ -32,8 +32,10 @@ const papersOf = (id: string) => sortByYearDesc(papers.filter((p) => p.data.proj
 
 <SubLayout title={s.boards.projects} sectionKey="project" currentHref="/projects/" locale={locale}>
   <FundingDashboard locale={locale} />
+  <details class="legacy-project-records"><summary>{locale==='ko'?'기존 상세 과제 기록':'Earlier detailed project records'} · {sorted.length}</summary>
   <h2 class="project-archive-heading">{locale==='ko'?'상세 과제 기록':'Detailed project records'} <small>{sorted.length}</small></h2>
   <ol class="projects">
     {sorted.map((p) => <ProjectItem id={p.id} project={p.data} papers={papersOf(p.id)} people={people} locale={locale} />)}
   </ol>
+  </details>
 </SubLayout>

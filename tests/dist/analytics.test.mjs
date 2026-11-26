@@ -50,3 +50,29 @@ test('requested summary details, timeline display and removed guidance are refle
   assert.ok(page(prefix+'people/students')('[data-member=jaehwan-lee] img').length || page(prefix+'people/jaehwan-lee')('img.member-portrait').length);
  }
 });
+
+test('funding edition separates the laboratory totals from the 16 principal-investigator projects',()=>{
+ const k=d.funding.k,total=k.projects.reduce((s,p)=>s+p.a,0);
+ assert.equal(k.projects.length,16);
+ assert.equal(k.byYear.reduce((s,r)=>s+r.a,0),total);
+ assert.equal(k.field.reduce((s,r)=>s+r.a,0),total);
+ assert.equal(k.min.reduce((s,r)=>s+r.a,0),total);
+ assert.equal(k.projects.reduce((s,p)=>s+p.n,0),33);
+ for(const prefix of ['','en/']){
+  const $=page(prefix+'projects');
+  assert.equal($('.funding-edition .analytics-jumps a').length,5);
+  assert.equal($('[data-funding-year]').length,11);
+  assert.equal($('[data-principal-year]').length,11);
+  assert.equal($('.funding-project-register tbody tr').length,16);
+  assert.equal($('.funding-gantt-row').length,16);
+  assert.equal($('.funding-cumulative').length,1);
+  assert.equal($('.funding-pis').length,0);
+  assert.equal($('.legacy-project-records[open]').length,0);
+  for(const [i,p] of k.projects.entries()){
+   const row=$('#funding-project-'+i);
+   assert.ok(row.text().includes(p.nm));
+   assert.ok(row.text().includes(p.a.toLocaleString('en-US')));
+   assert.equal($(`.funding-gantt-row a[href="#funding-project-${i}"]`).length,1);
+  }
+ }
+});
