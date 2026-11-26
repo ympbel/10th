@@ -8,7 +8,7 @@
 .voice-letter summary {display:grid;grid-template-columns:230px 1fr 26px;gap:32px;align-items:center;list-style:none;cursor:pointer;padding:32px 0;}
 .voice-letter summary::-webkit-details-marker {display:none;}
 .voice-person {display:flex;align-items:center;gap:20px;}
-.voice-person .member-portrait {width:64px;height:80px;object-fit:contain;background:var(--surface-alt);}
+.voice-person .member-portrait {display:block;width:64px;height:auto;flex:0 0 64px;aspect-ratio:auto;object-fit:cover;background:transparent;margin-right:0;}
 .voice-person small {font-size:10px;color:var(--text-secondary);letter-spacing:.1em;}
 .voices-letters .comment-name {font-size:24px;margin:10px 0 0;color:var(--text-primary);}
 .voice-opening {font-size:15px;line-height:1.8;color:var(--text-secondary);}

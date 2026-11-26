@@ -26,3 +26,14 @@ for(const prefix of ['', 'en/']) {
   assert.ok(!text($('.member-list')).includes('원자력공학'));
  });
 }
+
+test('comment portraits preserve original proportions without square padding',()=>{
+ const $=page('archive/comments');
+ const portraits=$('.voice-person img');
+ assert.ok(portraits.length>0);
+ assert.ok(portraits.toArray().some(el=>Number($(el).attr('height'))>Number($(el).attr('width'))));
+ for(const el of portraits.toArray()){
+  assert.equal(Number($(el).attr('width')),160);
+  assert.ok(Number($(el).attr('height'))>0);
+ }
+});

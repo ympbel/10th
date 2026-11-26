@@ -24,7 +24,7 @@ const total=groups.reduce((n,g)=>n+g.rows.length,0);
       <article class="comment voice-letter" id={'comment-'+id}>
         <details open={index===0}>
           <summary>
-            <div class="voice-person"><MemberPortrait id={member?.id ?? ''} size="thumbnail" fit="contain" /><div><small>{String(index+1).padStart(2,'0')} / LETTER</small><h2 class="comment-name" lang={langOf(data.name,locale)}>{data.name}</h2></div></div>
+            <div class="voice-person"><MemberPortrait id={member?.id ?? ''} size="thumbnail" fit="cover" natural /><div><small>{String(index+1).padStart(2,'0')} / LETTER</small><h2 class="comment-name" lang={langOf(data.name,locale)}>{data.name}</h2></div></div>
             <p class="voice-opening" lang={langOf(body,locale)}>{body?.trim().split(/\n\s*\n/)[0].slice(0,160)}{(body?.trim().split(/\n\s*\n/)[0].length ?? 0)>160?'…':''}</p>
             <span class="voice-expand" aria-hidden="true">+</span>
           </summary>

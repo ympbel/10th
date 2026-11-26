@@ -14,7 +14,8 @@ const { id, size, fallbackName, fit = 'cover', natural = false } = Astro.props;
 // Published portraits from the official MPBEL member directory, matched to archive member IDs.
 const portraits = import.meta.glob<{ default: ImageMetadata }>('/src/assets/portraits/*.jpg', { eager: true });
 const portrait = portraits[`/src/assets/portraits/${id}.jpg`]?.default;
-const width = natural && portrait ? portrait.width : size === 'card' ? 480 : 80;
+const width = natural && portrait ? (size === 'thumbnail' ? 160 : portrait.width) : size === 'card' ? 480 : 80;
+const height = natural && portrait ? Math.round(width * portrait.height / portrait.width) : size === 'card' ? 600 : width;
 ---
 
 {portrait && (
@@ -22,7 +23,7 @@ const width = natural && portrait ? portrait.width : size === 'card' ? 480 : 80;
     src={portrait}
     alt=""
     width={width}
-    height={natural && portrait ? portrait.height : size === 'card' ? 600 : width}
+    height={height}
     fit={fit}
     position="center"
     class={`member-portrait member-portrait--${size}`}
