@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import '../../styles/years.css';
 import '../../styles/pub.css';
 import SubLayout from '../../layouts/SubLayout.astro';
+import YearlySummary from '../analytics/YearlySummary.astro';
 import YearIndex from './YearIndex.astro';
 import PatentList from './PatentList.astro';
 import { groupBy, sortPatents } from '../../lib/content.ts';
@@ -26,7 +27,7 @@ const review = [...groupBy(sortPatents(records.filter(p => ['확인 필요','출
 ---
 
 <SubLayout title={s.boards.patents} sectionKey="publication" currentHref="/publication/patents/" locale={locale}>
-  <div class="patent-summary"><p>{locale === 'ko' ? '출원·등록 특허' : 'Patent applications & grants'}<strong>{included.length}</strong></p><p>{locale === 'ko' ? '프로그램 저작권' : 'Software copyrights'}<strong>{records.filter(p => p.data.kind === 'copyright').length}</strong></p></div>
+  <YearlySummary locale={locale} kind="patents" startYear={2016} records={included.map(p=>p.data)} extra={(locale==='ko'?'프로그램 저작권 별도 ':'Software copyrights listed separately: ')+records.filter(p=>p.data.kind==='copyright').length+(locale==='ko'?'건':'')} />
   <YearIndex years={groups.map(([year]) => year)} locale={locale} />
   <div class="patent-main"><PatentList groups={groups} locale={locale} /></div>
   {copyrights.length > 0 && <section class="patent-related"><h2>{locale === 'ko' ? '프로그램 저작권' : 'Software copyrights'}</h2><PatentList groups={copyrights} locale={locale} idPrefix="copyright-" /></section>}

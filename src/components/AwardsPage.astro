@@ -7,6 +7,7 @@ import '../styles/years.css';
 import '../styles/pub.css';
 import '../styles/boards.css';
 import SubLayout from '../layouts/SubLayout.astro';
+import YearlySummary from './analytics/YearlySummary.astro';
 import YearIndex from './pub/YearIndex.astro';
 import MemberLink from './people/MemberLink.astro';
 import { groupByYear } from '../lib/content.ts';
@@ -51,6 +52,7 @@ const challengeRange =
 ---
 
 <SubLayout title={s.boards.awards} sectionKey="award" currentHref="/awards/" locale={locale}>
+  <YearlySummary locale={locale} kind="awards" records={awards.map(a=>a.data)} startYear={2016} />
   <YearIndex
     years={years.map(({ year }) => year)}
     extra={challengeRows.length > 0 ? { href: '#challenges', label: s.awards.challengesTab } : undefined}

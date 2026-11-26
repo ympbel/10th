@@ -1,0 +1,27 @@
+---
+import {yearlySummary} from '../../lib/yearly-summary.ts';
+import type {Locale} from '../../lib/locale.ts';
+import '../../styles/analytics.css';
+import '../../styles/yearly-summary.css';
+interface Props {locale:Locale;kind:'awards'|'patents'|'presentations';records:Array<{year:number}>;startYear?:number;extra?:string}
+const {locale,kind,records,startYear,extra}=Astro.props;const ko=locale==='ko';
+const summary=yearlySummary(records,startYear);
+const names={awards:{ko:'수상',en:'Awards',kicker:'RECOGNITION / THROUGH THE YEARS'},patents:{ko:'특허',en:'Patents',kicker:'INNOVATION / THROUGH THE YEARS'},presentations:{ko:'학회 발표',en:'Conference presentations',kicker:'CONFERENCES / THROUGH THE YEARS'}};
+const name=names[kind];
+const step=summary.peak<=10?2:summary.peak<=40?5:10;
+const cap=Math.max(step,Math.ceil(summary.peak/step)*step);
+const ticks=Array.from({length:cap/step+1},(_,i)=>i*step);
+const chartWidth=Math.max(900,summary.years.length*74+100),left=50,right=25,plotWidth=chartWidth-left-right;
+const cell=plotWidth/summary.years.length,barWidth=Math.min(42,cell*.5);
+---
+<section class="analytics yearly-summary" data-summary-kind={kind} aria-labelledby={kind+'-summary-title'}>
+ <header class="analytics-head"><div><p class="analytics-kicker">{name.kicker}</p><h2 id={kind+'-summary-title'}>{ko?'연도별 '+name.ko:'Annual '+name.en.toLowerCase()}</h2></div><span>{summary.years[0].year}–{summary.latest.year}{extra && <><br/>{extra}</>}</span></header>
+ <dl class="analytics-stats">
+  <div><dt>{ko?(kind==='patents'?'출원·등록 특허':'전체 '+name.ko):'Total '+name.en.toLowerCase()}</dt><dd data-summary-total>{summary.total}</dd></div>
+ </dl>
+ <div class="analytics-scroll"><svg class="analytics-chart yearly-summary-chart" viewBox={`0 0 ${chartWidth} 330`} style={`min-width:${chartWidth}px`} role="img" aria-labelledby={kind+'-chart-title'}>
+  <title id={kind+'-chart-title'}>{ko?`연도별 ${name.ko} 건수. 막대를 선택하면 해당 연도 목록으로 이동합니다.`:`Annual ${name.en.toLowerCase()}. Select a bar to view that year's records.`}</title>
+  {ticks.map(tick=><g><path d={`M${left} ${265-tick/cap*210}H${chartWidth-right}`} class="analytics-grid"/><text x={left-12} y={269-tick/cap*210} text-anchor="end" class="analytics-axis">{tick}</text></g>)}
+  {summary.years.map((row,i)=>{const x=left+cell*(i+.5);const bar=<g data-summary-year={row.year} data-summary-count={row.count} class:list={['yearly-summary-bar',{'is-latest':row.year===summary.latest.year}]}><title>{row.year}: {row.count}</title><rect x={x-barWidth/2} y={265-row.count/cap*210} width={barWidth} height={row.count?row.count/cap*210:2} rx="4"/><text x={x} y={252-row.count/cap*210} text-anchor="middle" class="analytics-value">{row.count}</text><text x={x} y="302" text-anchor="middle" class="analytics-axis">{row.year}</text></g>;return row.count?<a href={'#y'+row.year} aria-label={`${row.year} ${ko?name.ko:name.en} ${row.count}`}>{bar}</a>:bar;})}
+ </svg></div>
+</section>

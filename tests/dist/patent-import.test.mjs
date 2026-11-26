@@ -18,7 +18,7 @@ test('patent and copyright totals stay separated in both languages',()=>{
   const $=page(prefix+'publication/patents');
   assert.equal($('.patent-main .pub-item').length,patents.length);
   assert.equal($('.patent-related .pub-item').length,records.filter(p=>scalar(p.fm,'kind')==='copyright').length);
-  assert.equal($('.patent-summary strong').first().text(),String(patents.length));
+  assert.equal($('[data-summary-kind=patents] [data-summary-total]').text(),String(patents.length));
   const ids=$('[id]').map((_,e)=>$(e).attr('id')).get();
   assert.equal(new Set(ids).size,ids.length,'unique year anchors');
  }

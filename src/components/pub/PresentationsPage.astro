@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import '../../styles/years.css';
 import '../../styles/pub.css';
 import SubLayout from '../../layouts/SubLayout.astro';
+import YearlySummary from '../analytics/YearlySummary.astro';
 import YearIndex from './YearIndex.astro';
 import PresentationList from './PresentationList.astro';
 import { groupByYear } from '../../lib/content.ts';
@@ -29,6 +30,7 @@ const groups = [...groupByYear(presentations)];
   currentHref="/publication/presentations/"
   locale={locale}
 >
+  <YearlySummary locale={locale} kind="presentations" records={presentations.map(p=>p.data)} startYear={2016} />
   <YearIndex years={groups.map(([year]) => year)} locale={locale} />
   <PresentationList groups={groups} people={people} locale={locale} />
 </SubLayout>
