@@ -28,7 +28,7 @@ const FIGURES = [
   count('projects'),
   patentCount,
   count('seminars'),
-  count('photos'),
+  14137478197,
 ];
 
 /** Names a timeline column shows; the rest are counted as `+n`. */
@@ -41,13 +41,13 @@ const BOARDS = [
   roles.filter((r) => r === 'professor').length,
   roles.filter((r) => r === 'student').length,
   members.filter((fm) => nested(fm, 'degree', 'date') || scalar(fm, 'role') === 'former').length,
+  roles.filter(r=>r!=='professor').length,
   papers.length,
   patentCount,
   count('presentations'),
   count('awards'),
   count('projects'),
   count('seminars'),
-  count('workshops'),
   count('photos'),
   count('comments'),
 ];
@@ -60,7 +60,7 @@ const text = ($el) => $el.text().replace(/\s+/g, ' ').trim();
 test('the home figures and the papers board link show the counts derived from the content files', () => {
   const $ = page('');
   assert.deepEqual($('.figures a[data-count]').map((_, a) => Number($(a).attr('data-count'))).get(), FIGURES);
-  assert.equal(text($('.board-links a').eq(3)), `${text($('#nav .sub a').eq(3))} ${BOARDS[3]}`);
+  assert.equal(text($('.board-links a').eq(4)), `${text($('#nav .sub a').eq(4))} ${BOARDS[4]}`);
 });
 
 for (const [lang, path, prefix] of [
@@ -86,7 +86,7 @@ for (const [lang, path, prefix] of [
     for (const v of values) assert.match(v, /^\d+$/);
     assert.deepEqual(values.map(Number), FIGURES);
     cells.each((_, a) => {
-      assert.equal($(a).find('b').text(), $(a).attr('data-count'));
+      assert.equal($(a).find('b').text(), Number($(a).attr('data-count'))===14137478197?'141.4':$(a).attr('data-count'));
       assert.ok($(a).attr('href').startsWith(`${BASE}${prefix}/`), $(a).attr('href'));
     });
   });

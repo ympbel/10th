@@ -175,7 +175,9 @@ export const seminarSchema = z
     presenter: z.string().optional(),
     // The day the seminar was held, when the post gives it.
     event_date: date.optional(),
-    source_url: z.url(),
+    source_url: z.url().optional(),
+    source_file: z.string().optional(),
+    seminar_type: z.enum(['trend', 'research']).optional(),
   })
   .strict();
 

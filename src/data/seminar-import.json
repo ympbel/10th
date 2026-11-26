@@ -1,0 +1,1608 @@
+{
+  "source_file": "MPBEL_세미나_2024-2026.xlsx",
+  "range": [
+    "2024-01-08",
+    "2026-11-23"
+  ],
+  "records": [
+    {
+      "date": "2024-01-08",
+      "name": "김정헌",
+      "topic": "Development of Mathematical Model of CT Energy Spectrum Using Calibration Phantom"
+    },
+    {
+      "date": "2024-01-08",
+      "name": "한혜진",
+      "topic": "Introducing Mesh-type Phantom Posture Deformer (MPPD) Technology"
+    },
+    {
+      "date": "2024-01-15",
+      "name": "박예인",
+      "topic": "Application of thermal images to predict the occurrence of radiation dermatitis in head and neck cancer: feasibility study"
+    },
+    {
+      "date": "2024-01-15",
+      "name": "이찬웅",
+      "topic": "기업 리뷰: 뷰웍스 (Vieworks)"
+    },
+    {
+      "date": "2024-01-15",
+      "name": "윤영훈",
+      "topic": "AAPM Professional Survey Report 2022"
+    },
+    {
+      "date": "2024-01-22",
+      "name": "유상균",
+      "topic": "Enhancing Brain Metastases Detection and Segmentation in Black-Blood Imaging: A Deep Learning Approaches with Post-Processing using SAM"
+    },
+    {
+      "date": "2024-01-22",
+      "name": "조현정",
+      "topic": "기업 리뷰: Radformation (NY, USA)"
+    },
+    {
+      "date": "2024-01-22",
+      "name": "석재현",
+      "topic": "병원 리뷰: Mayo Clinic (USA)"
+    },
+    {
+      "date": "2024-01-29",
+      "name": "이우찬",
+      "topic": "Preliminary Study of Energy Measurement in VME DAQ"
+    },
+    {
+      "date": "2024-01-29",
+      "name": "윤용도",
+      "topic": "기업 리뷰: Leo Cancer Care"
+    },
+    {
+      "date": "2024-01-29",
+      "name": "이석호",
+      "topic": "병원 리뷰: MD Anderson Cancer Center (MDACC)"
+    },
+    {
+      "date": "2024-02-05",
+      "name": "권나혜",
+      "topic": "기업 리뷰: MVISION"
+    },
+    {
+      "date": "2024-02-05",
+      "name": "김정헌",
+      "topic": "병원 리뷰: MGH"
+    },
+    {
+      "date": "2024-02-05",
+      "name": "성원모",
+      "topic": "Radionuclide therapy dosimetry: from beta to alpha"
+    },
+    {
+      "date": "2024-02-19",
+      "name": "이찬웅",
+      "topic": "Prostate segmentation in online magnetic resonance guided radiotherapy using prior information and segment anything model"
+    },
+    {
+      "date": "2024-02-19",
+      "name": "이우찬",
+      "topic": "기업 리뷰: Limbus AI (Regina, Saskatchewan, Canada)"
+    },
+    {
+      "date": "2024-02-19",
+      "name": "박예인",
+      "topic": "병원 리뷰: MSKCC (New York, USA)"
+    },
+    {
+      "date": "2024-02-26",
+      "name": "석재현",
+      "topic": "주제 미기재"
+    },
+    {
+      "date": "2024-02-26",
+      "name": "이동호",
+      "topic": "기업 리뷰: MIM (Cleveland, USA)"
+    },
+    {
+      "date": "2024-02-26",
+      "name": "최동혁",
+      "topic": "병원 리뷰: UTSW (Dallas, TX, USA)"
+    },
+    {
+      "date": "2024-03-04",
+      "name": "이호연",
+      "topic": "An open-source GPU-based Monte Carlo code for quick proton dose calculation (MOQUI)"
+    },
+    {
+      "date": "2024-03-04",
+      "name": "이석호",
+      "topic": "기업 리뷰: Lunit"
+    },
+    {
+      "date": "2024-03-04",
+      "name": "유상균",
+      "topic": "병원 리뷰: Wash U"
+    },
+    {
+      "date": "2024-05-13",
+      "name": "이동호",
+      "topic": "Therapeutic high-energy Radiation Characteristics Study for Verification of Flat-panel Detector"
+    },
+    {
+      "date": "2024-05-13",
+      "name": "박예인",
+      "topic": "기업 리뷰: Varian"
+    },
+    {
+      "date": "2024-05-13",
+      "name": "최민서",
+      "topic": "병원 리뷰: Wisconsin"
+    },
+    {
+      "date": "2024-05-20",
+      "name": "조현정",
+      "topic": "CSI segmentation"
+    },
+    {
+      "date": "2024-05-20",
+      "name": "최동혁",
+      "topic": "기업 리뷰: Electa"
+    },
+    {
+      "date": "2024-05-20",
+      "name": "이우찬",
+      "topic": "병원 리뷰: Princess margaret hospital"
+    },
+    {
+      "date": "2024-06-03",
+      "name": "한민철",
+      "topic": "논문학습법 강의 3: Introduction 주제: 논문학습법 강의 4: Materials and Methods"
+    },
+    {
+      "date": "2024-06-05",
+      "name": "David Adam",
+      "topic": "Primer and Outlook on Radiopharmaceuticals, A Radiation Oncology Physics Resident’s Point of View; Combining external beam radiotherapy and radiopharmaceutical therapy dosimetry for recurrent head and neck cancer treatment"
+    },
+    {
+      "date": "2024-06-10",
+      "name": "윤영훈",
+      "topic": "Research notes for Elekta Unity"
+    },
+    {
+      "date": "2024-06-10",
+      "name": "유상균",
+      "topic": "기업 리뷰: Mevion"
+    },
+    {
+      "date": "2024-06-10",
+      "name": "이동호",
+      "topic": "병원 리뷰: Sunnybrook Health Sciences Centre"
+    },
+    {
+      "date": "2024-06-17",
+      "name": "최병수",
+      "topic": "Patient-specific dose prediction using Personalized Hyperspace Learning (PHL) IDOL model"
+    },
+    {
+      "date": "2024-06-17",
+      "name": "황준일",
+      "topic": "기업 리뷰: RaySearch"
+    },
+    {
+      "date": "2024-06-17",
+      "name": "이석호",
+      "topic": "병원 리뷰: National Institute of Radiological Sciences, QST"
+    },
+    {
+      "date": "2024-06-24",
+      "name": "윤용도",
+      "topic": "PTCOG 62 Review and Application to the Research"
+    },
+    {
+      "date": "2024-06-24",
+      "name": "석재현",
+      "topic": "기업 리뷰: Accuray"
+    },
+    {
+      "date": "2024-06-24",
+      "name": "최아진",
+      "topic": "병원 리뷰: Tohoku University Hospital"
+    },
+    {
+      "date": "2024-07-01",
+      "name": "최민서",
+      "topic": "Inter-patient registration methods for voxel-based analysis in lung cancer"
+    },
+    {
+      "date": "2024-07-01",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology, Biology, Physics (Red)"
+    },
+    {
+      "date": "2024-07-01",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2024-07-08",
+      "name": "Minsun Kim",
+      "topic": "Clinical Outcome Driven Radiotherapy Planning"
+    },
+    {
+      "date": "2024-07-29",
+      "name": "김정헌",
+      "topic": "Material decomposition algorithm using DECT"
+    },
+    {
+      "date": "2024-07-29",
+      "name": "최병수",
+      "topic": "트렌드 세미나 — Clinical and Translational Radiation Oncology (ctRO)"
+    },
+    {
+      "date": "2024-07-29",
+      "name": "윤용도",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2024-08-05",
+      "name": "권나혜",
+      "topic": "Performance study of the Multigap Resistive Plate Chamber for the TOF detector (CERN Beam test)"
+    },
+    {
+      "date": "2024-08-05",
+      "name": "조현정",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2024-08-05",
+      "name": "윤영훈",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2024-08-12",
+      "name": "박예인",
+      "topic": "Application of angular factor for surface in vivo dosimetry with OSLD"
+    },
+    {
+      "date": "2024-08-12",
+      "name": "최민서",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology (ARO)"
+    },
+    {
+      "date": "2024-08-12",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology, Biology, Physics (RED)"
+    },
+    {
+      "date": "2024-08-19",
+      "name": "이우찬",
+      "topic": "주제 미기재"
+    },
+    {
+      "date": "2024-08-19",
+      "name": "권나혜",
+      "topic": "트렌드 세미나 — Medical Physics (MP)"
+    },
+    {
+      "date": "2024-08-19",
+      "name": "박예인",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2024-08-26",
+      "name": "연구실 내 AAPM 참석 학생",
+      "topic": "학회 리뷰 - 2024 AAPM annual meeting"
+    },
+    {
+      "date": "2024-09-02",
+      "name": "유상균",
+      "topic": "Developing learning-based predictive models for risk factors following radiotherapy. throughout feature processing"
+    },
+    {
+      "date": "2024-09-02",
+      "name": "최병수",
+      "topic": "Optimization of Deep Learning Algorithm for personalized adaptive radiotherapy"
+    },
+    {
+      "date": "2024-09-09",
+      "name": "최동혁",
+      "topic": "Establishment of a Lymphoma Quantitative Evaluation System using Radiomics in PET/CT images"
+    },
+    {
+      "date": "2024-09-09",
+      "name": "최동혁",
+      "topic": "트렌드 세미나 — Clinical and Translational Radiation Oncology (CtRO)"
+    },
+    {
+      "date": "2024-09-09",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2024-09-30",
+      "name": "이동호",
+      "topic": "Feasibility Study on the Implementation of QA for Flat Panel Detectors"
+    },
+    {
+      "date": "2024-09-30",
+      "name": "유상균",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2024-09-30",
+      "name": "이석호",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology (ARO)"
+    },
+    {
+      "date": "2024-10-07",
+      "name": "Hyeri Lee",
+      "topic": "Commissioning of ProBeam 360 at the Ohio State University and IROC credentialing process"
+    },
+    {
+      "date": "2024-10-14",
+      "name": "연구실 내 The 10th Japan-Korea Joint Meeting 참석 학생",
+      "topic": "학회 리뷰(The 10th Japan-Korea Joint Meeting)"
+    },
+    {
+      "date": "2024-10-21",
+      "name": "이석호",
+      "topic": "Geant4 Simulation of In-beam PET System for Dose Prediction in Carbon-ion Radiotherapy"
+    },
+    {
+      "date": "2024-10-21",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology, Biology, Physics (RED)"
+    },
+    {
+      "date": "2024-10-21",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Medical Physics (MP)"
+    },
+    {
+      "date": "2024-10-28",
+      "name": "황준일",
+      "topic": "Improving Medical Image Quality with Knowledge Distillation-Enhanced Diffusion Model in Imbalanced Data Settings"
+    },
+    {
+      "date": "2024-10-28",
+      "name": "윤영훈",
+      "topic": "트렌드 세미나 — Clinical and Translational Radiation Oncology (CTRO)"
+    },
+    {
+      "date": "2024-10-28",
+      "name": "조현정",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2024-11-04",
+      "name": "이찬웅",
+      "topic": "Zero-shot Auto-Segmentation of Prostate Cancer Organ-at-Risks for MRgRT using Pretreatment Imaging"
+    },
+    {
+      "date": "2024-11-04",
+      "name": "조현정",
+      "topic": "트렌드 세미나 — Physics in Medicine and Biology (PMB)"
+    },
+    {
+      "date": "2024-11-04",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2024-11-11",
+      "name": "석재현",
+      "topic": "Development of a new VMAT QA framework for Mobius3D using control-point specific EPID images"
+    },
+    {
+      "date": "2024-11-11",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Physica medica"
+    },
+    {
+      "date": "2024-11-11",
+      "name": "최병수",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology (ARO)"
+    },
+    {
+      "date": "2024-11-18",
+      "name": "정동민",
+      "topic": "Research Proposal : Treatment Planning System"
+    },
+    {
+      "date": "2024-11-18",
+      "name": "윤용도",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2024-11-18",
+      "name": "최민서",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology - Biology - Physics (Red)"
+    },
+    {
+      "date": "2024-11-25",
+      "name": "이삭",
+      "topic": "Research Proposal : Development of Carbon Ion Radiation Treatment Planning System"
+    },
+    {
+      "date": "2024-11-25",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — Medical Physics (MP)"
+    },
+    {
+      "date": "2024-11-25",
+      "name": "권나혜",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2024-12-02",
+      "name": "최병수",
+      "topic": "A Deep Learning Framework for Dose Distribution in Prostate Cancer with a Focus on Empty Bladder: Enhancing Plan Quality and Efficiency in Stereotactic Body Radiation Therapy"
+    },
+    {
+      "date": "2024-12-02",
+      "name": "박예인",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2024-12-02",
+      "name": "최동혁",
+      "topic": "트렌드 세미나 — CtRO"
+    },
+    {
+      "date": "2024-12-09",
+      "name": "윤영훈",
+      "topic": "Anatomical position guided auto-segmentation of vestibular schwannomas for gamma knife radiosurgery"
+    },
+    {
+      "date": "2024-12-09",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2024-12-09",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology (ARO)"
+    },
+    {
+      "date": "2024-12-23",
+      "name": "윤용도",
+      "topic": "Development of a Monte Carlo Simulation-based Linear Energy Transfer Calculation System for Carbon-Ion Radiotherapy"
+    },
+    {
+      "date": "2024-12-23",
+      "name": "이석호",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology - Biology - Physics (Red)"
+    },
+    {
+      "date": "2024-12-23",
+      "name": "황준일",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-01-06",
+      "name": "최민서",
+      "topic": "Multi-modal Esophagitis Prediction"
+    },
+    {
+      "date": "2025-01-06",
+      "name": "최성운",
+      "topic": "트렌드 세미나 — Green Journal"
+    },
+    {
+      "date": "2025-01-06",
+      "name": "손가희",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2025-01-13",
+      "name": "김정헌",
+      "topic": "Synthetic CT Generation from CBCT for Head & Neck Imaging: SSIM-Based Patch Enhancement Approach"
+    },
+    {
+      "date": "2025-01-13",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-01-13",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-01-20",
+      "name": "이동호",
+      "topic": "Research goal for 2025"
+    },
+    {
+      "date": "2025-01-20",
+      "name": "최병수",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2025-01-20",
+      "name": "윤영훈",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2025-02-03",
+      "name": "박예인",
+      "topic": "Skin dose estimation system using angular correction factor in surface in-vivo dosimetry with OSLD"
+    },
+    {
+      "date": "2025-02-03",
+      "name": "최병수",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology (ARO)"
+    },
+    {
+      "date": "2025-02-03",
+      "name": "권나혜",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-02-10",
+      "name": "최동혁",
+      "topic": "Generating DECT image pairs using sequential SECT for proton therapy"
+    },
+    {
+      "date": "2025-02-10",
+      "name": "권나혜",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-02-10",
+      "name": "윤용도",
+      "topic": "트렌드 세미나 — Green journal"
+    },
+    {
+      "date": "2025-02-17",
+      "name": "Paulo Fonte",
+      "topic": "Introduction to gaseous detectors"
+    },
+    {
+      "date": "2025-02-17",
+      "name": "박예인",
+      "topic": "MLC error detection in patient QA using different image feature extraction methods"
+    },
+    {
+      "date": "2025-03-10",
+      "name": "최민서",
+      "topic": "Integrating Large Language Models and Image-Based Techniques for Radiotherapy Toxicity Prediction"
+    },
+    {
+      "date": "2025-03-10",
+      "name": "이석호, 이찬웅",
+      "topic": "PET Image reconstruction using different deep learning architecture"
+    },
+    {
+      "date": "2025-03-17",
+      "name": "Paulo Fonte",
+      "topic": "Introduction to gaseous detectors - part 2"
+    },
+    {
+      "date": "2025-03-17",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2025-03-17",
+      "name": "황준일",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-03-24",
+      "name": "권나혜",
+      "topic": "Carbon Ion beam’s Energy Measurement by Time-Of-Flight (Brainpool project)"
+    },
+    {
+      "date": "2025-03-24",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-03-24",
+      "name": "최동혁",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2025-03-31",
+      "name": "최성운",
+      "topic": "MEMS Magnetic Sensor Based Respiratory Training System : Magnetic Field Study & Guide Signal Generation"
+    },
+    {
+      "date": "2025-03-31",
+      "name": "이혜진, 지금봉",
+      "topic": "Sparse-view CT reconstruction using NeRF"
+    },
+    {
+      "date": "2025-04-07",
+      "name": "황준일",
+      "topic": "4D On-Beam CT Images Reconstruction to Visualize Target Displacement During Radiotherapy"
+    },
+    {
+      "date": "2025-04-07",
+      "name": "최성운",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology"
+    },
+    {
+      "date": "2025-04-07",
+      "name": "손가희",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-04-14",
+      "name": "손가희, 이혜진, 석재현, 권나혜, 윤용도",
+      "topic": "2025 춘계 KSMP 구연발표 리허설"
+    },
+    {
+      "date": "2025-04-21",
+      "name": "이석호",
+      "topic": "Range Prediction of Carbon-ion Radiotherapy Beam using Positron Emission Tomography System"
+    },
+    {
+      "date": "2025-04-21",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2025-04-21",
+      "name": "박규리",
+      "topic": "트렌드 세미나 — Physics in Medicine and Biology"
+    },
+    {
+      "date": "2025-05-12",
+      "name": "지금봉",
+      "topic": "Streak Artifact Reduction in Sparse-View CT Reconstruction Using U-Net Prior and Neural Representation"
+    },
+    {
+      "date": "2025-05-12",
+      "name": "권나혜",
+      "topic": "Mechanism-Based to Understand the RBE of Proton and Carbon Ions in Radiation Therapy"
+    },
+    {
+      "date": "2025-05-19",
+      "name": "이찬웅",
+      "topic": "Synthetic CT Generation from 2-View Diagonal X-rays for Improved Carbon Ion Therapy in Prostate Cancer"
+    },
+    {
+      "date": "2025-05-19",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-05-19",
+      "name": "이원형",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-05-26",
+      "name": "김태호",
+      "topic": "ViewRay A3i"
+    },
+    {
+      "date": "2025-05-26",
+      "name": "윤영훈",
+      "topic": "AI-powered dose prediction for automatic treatment planning: now and then"
+    },
+    {
+      "date": "2025-06-02",
+      "name": "김태호",
+      "topic": "ViewRay A3i (part 2)"
+    },
+    {
+      "date": "2025-06-09",
+      "name": "손가희",
+      "topic": "Development of an Integrated Platform for High-efficiency Patient-specific Quality Assurance in Carbon-ion Radiotherapy"
+    },
+    {
+      "date": "2025-06-09",
+      "name": "손가희",
+      "topic": "Patient-specific Quality Assurance Methods in Proton Therapy"
+    },
+    {
+      "date": "2025-06-16",
+      "name": "배동한",
+      "topic": "Robust Optimization for Particle Radiation Therapy"
+    },
+    {
+      "date": "2025-06-16",
+      "name": "정성문",
+      "topic": "플래시 치료의 최신 동향과 국내 관련 연구 소개"
+    },
+    {
+      "date": "2025-06-23",
+      "name": "박규리",
+      "topic": "Development and Validation of a Portable Magnetic Sensor System for Respiratory Motion Monitoring"
+    },
+    {
+      "date": "2025-06-23",
+      "name": "배동한, 이주찬",
+      "topic": "Accelerating IMRT Plan Optimization with AI : A Comparative Analysis of Dose Prediction and Dose Calculation"
+    },
+    {
+      "date": "2025-06-30",
+      "name": "이혜진",
+      "topic": "Group Sparse Algorithm for RBE-Weighted Dose Optimization in Carbon Ion Radiotherapy"
+    },
+    {
+      "date": "2025-06-30",
+      "name": "최민서",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-06-30",
+      "name": "최동혁",
+      "topic": "트렌드 세미나 — Green journal"
+    },
+    {
+      "date": "2025-07-07",
+      "name": "이삭",
+      "topic": "Development of CIRT Treatment Planning System"
+    },
+    {
+      "date": "2025-07-07",
+      "name": "박예인",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2025-07-07",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-07-14",
+      "name": "이주찬",
+      "topic": "Deep Learning-based Plan Deliverability Prediction with 3D Dose Reconstruction"
+    },
+    {
+      "date": "2025-07-14",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-07-14",
+      "name": "이석호",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2025-07-21",
+      "name": "이원형",
+      "topic": "Log-based Absolute Dosimetry Using EBT Film in CIRT"
+    },
+    {
+      "date": "2025-07-21",
+      "name": "황준일",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2025-07-21",
+      "name": "지금봉",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-08-04",
+      "name": "윤영훈",
+      "topic": "Development progress of an AI Agent System for Unity Comprehensive Motion Monitoring (CMM)"
+    },
+    {
+      "date": "2025-08-04",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2025-08-04",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Phy Med Biol"
+    },
+    {
+      "date": "2025-08-11",
+      "name": "윤용도",
+      "topic": "Monte Carlo study on fetal dose assessment for carbon beam craniospinal irradiation during pregnancy"
+    },
+    {
+      "date": "2025-08-11",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Phy Med Biol"
+    },
+    {
+      "date": "2025-08-11",
+      "name": "이원형",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-08-18",
+      "name": "최민서",
+      "topic": "Multimodal Framework for Predicting Radiation-Induced Severe Acute Esophagitis in Esophageal Cancer"
+    },
+    {
+      "date": "2025-08-18",
+      "name": "권나혜",
+      "topic": "Development of the Radiation-Hard TOF-Based Energy Monitoring System for Carbon Ion Beams in Hadrontherapy"
+    },
+    {
+      "date": "2025-08-25",
+      "name": "이동열",
+      "topic": "Development of alpha particle-based targeted radiopharmaceuticals and dosimetric considerations"
+    },
+    {
+      "date": "2025-09-01",
+      "name": "김정헌",
+      "topic": "Synthetic CT Generation from CBCT for Head & Neck Imaging"
+    },
+    {
+      "date": "2025-09-01",
+      "name": "배동한",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-09-01",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2025-09-08",
+      "name": "이혜진 / 이동호 / 손가희 / 박규리",
+      "topic": "2025 KSMP 추계 학술대회 학생 발표 리허설"
+    },
+    {
+      "date": "2025-09-15",
+      "name": "박예인",
+      "topic": "Early prediction of acute breast edema using CT radiomics: feasibility study"
+    },
+    {
+      "date": "2025-09-15",
+      "name": "이혜진",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2025-09-15",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-09-22",
+      "name": "이동호",
+      "topic": "Quality Assurance Potential of a Novel Dielectric-Layer Detector"
+    },
+    {
+      "date": "2025-09-22",
+      "name": "이주찬",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2025-09-22",
+      "name": "윤영훈",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2025-09-29",
+      "name": "이석호",
+      "topic": "Carbon-Ion Radiotherapy Beam Range Verification Using Positron Emission Tomography Based on Monte Carlo Simulation"
+    },
+    {
+      "date": "2025-09-29",
+      "name": "윤용도",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-09-29",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-10-13",
+      "name": "황준일",
+      "topic": "Knowledge-Distilled Diffusion Models for Medical Imaging with Meta-Learning under Imbalanced Data"
+    },
+    {
+      "date": "2025-10-13",
+      "name": "박예인",
+      "topic": "트렌드 세미나 — ARO"
+    },
+    {
+      "date": "2025-10-13",
+      "name": "박규리",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2025-10-20",
+      "name": "윤영훈",
+      "topic": "Personalized representation for deep learning networks in MR guided radiotherapy"
+    },
+    {
+      "date": "2025-10-20",
+      "name": "지금봉",
+      "topic": "트렌드 세미나 — Medical Physics (MP)"
+    },
+    {
+      "date": "2025-10-20",
+      "name": "황준일",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2025-10-27",
+      "name": "손가희",
+      "topic": "A Comprehensive Solution for Efficient Patient-Specific Quality Assurance in Carbon-Ion Radiotherapy"
+    },
+    {
+      "date": "2025-10-27",
+      "name": "손가희",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology"
+    },
+    {
+      "date": "2025-10-27",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-11-03",
+      "name": "지금봉",
+      "topic": "Hybrid Framework Combining Self-Supervised Data Fidelity with Supervised Image Prior for Extremely Sparse-View CT Reconstruction"
+    },
+    {
+      "date": "2025-11-03",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-11-03",
+      "name": "이원형",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2025-11-10",
+      "name": "석재현",
+      "topic": "Self-and Cross-attention-Based Predictive Model with 3D CT and Dose Distributions for Lymphedema following Breast 3D-CRT"
+    },
+    {
+      "date": "2025-11-10",
+      "name": "배동한",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2025-11-10",
+      "name": "박규리",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2025-11-17",
+      "name": "이찬웅",
+      "topic": "Synthetic CT Generation for MR-Only Radiotherapy Planning Using Diffusion Models"
+    },
+    {
+      "date": "2025-11-17",
+      "name": "이혜진",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2025-11-17",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology"
+    },
+    {
+      "date": "2025-11-24",
+      "name": "이원형",
+      "topic": "1) Range Verification of Low Energy Carbon-ion Beam using Wedged Blocks 2) Development of an Automated Adaptive CIRT Planning for Pancreatic Cancer"
+    },
+    {
+      "date": "2025-11-24",
+      "name": "이주찬",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology (phiRO)"
+    },
+    {
+      "date": "2025-11-24",
+      "name": "윤영훈",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2025-12-01",
+      "name": "배동한",
+      "topic": "Group Sparsity-Based Multi-Angle Optimization with ADMM Robustness for CIRT Planning"
+    },
+    {
+      "date": "2025-12-01",
+      "name": "윤용도",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2025-12-01",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology, Biology, Physics(RED)"
+    },
+    {
+      "date": "2025-12-08",
+      "name": "조종민",
+      "topic": "Machine Learning–Assisted Prediction of VMAT Patient-Specific QA Outcomes; Experiences as a Horizon Europe New Zealand AI & Data Delegate Visiting Premier AI Centers in Europe"
+    },
+    {
+      "date": "2025-12-22",
+      "name": "박규리",
+      "topic": "Research Experiences and Lessons Learned During My Internship"
+    },
+    {
+      "date": "2025-12-22",
+      "name": "권나혜",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2025-12-22",
+      "name": "박예인",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2025-12-29",
+      "name": "이혜진",
+      "topic": "Group Sparse Algorithm for RBE-Weighted Dose Optimization in Carbon Ion Radiotherapy"
+    },
+    {
+      "date": "2025-12-29",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2025-12-29",
+      "name": "이석호",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2026-01-05",
+      "name": "유현종",
+      "topic": "Toward the Design and Implementation of a Router-Orchestrated LLM for Scalable Radiation Oncology Intelligence"
+    },
+    {
+      "date": "2026-01-05",
+      "name": "황준일",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2026-01-12",
+      "name": "한민철",
+      "topic": "이기는 PPT with AI"
+    },
+    {
+      "date": "2026-01-19",
+      "name": "이삭",
+      "topic": "a pencil beam model for carbon-ion dose calculation derived from TOPAS MC simulations"
+    },
+    {
+      "date": "2026-01-19",
+      "name": "지금봉",
+      "topic": "트렌드 세미나 — RED journal"
+    },
+    {
+      "date": "2026-01-19",
+      "name": "손가희",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology"
+    },
+    {
+      "date": "2026-01-26",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — Medical Physics (MP)"
+    },
+    {
+      "date": "2026-01-26",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Radiotherapy & Oncology (Green)"
+    },
+    {
+      "date": "2026-02-02",
+      "name": "이주찬",
+      "topic": "Multi-Task Learning for Predicting VMAT Plan Deliverability and 3D Delivered Dose from Visualized Plan Parameters and 3D Plan Dose"
+    },
+    {
+      "date": "2026-02-02",
+      "name": "이원형",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2026-02-02",
+      "name": "배동한",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2026-02-09",
+      "name": "윤용도",
+      "topic": "Deep Learning-based Prediction of Monte Carlo Dose Distributions from Pencil Beam Algorithms for Carbon Ion Radiotherapy"
+    },
+    {
+      "date": "2026-02-09",
+      "name": "전소영",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2026-02-09",
+      "name": "이동윤",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2026-02-23",
+      "name": "박예인",
+      "topic": "Early prediction of breast edema during radiotherapy based on the quantitative assessment of anatomical changes (공개발표 리허설)"
+    },
+    {
+      "date": "2026-03-09",
+      "name": "김정헌",
+      "topic": "Synthetic CT Generation from CBCT for Head & Neck Imaging"
+    },
+    {
+      "date": "2026-03-09",
+      "name": "이혜진",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology, Biology, Physics (RED)"
+    },
+    {
+      "date": "2026-03-09",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2026-03-16",
+      "name": "정동민",
+      "topic": "RO-Agent: On-premise ReAct / RAG 기반 방사선종양학과 Dual-Agent 플랫폼 (2026 연세의료원 AI Challenge)"
+    },
+    {
+      "date": "2026-03-16",
+      "name": "윤용도",
+      "topic": "트렌드 세미나 — Physics and Imaging in Radiation Oncology"
+    },
+    {
+      "date": "2026-03-16",
+      "name": "윤영훈",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2026-03-23",
+      "name": "이동호",
+      "topic": "Characterization of Flat-Panel Detector for High-Energy Photon Beam Monitoring & Development of a Patient Transit dose Verification Technique in the Cyberknife"
+    },
+    {
+      "date": "2026-03-23",
+      "name": "이주찬",
+      "topic": "트렌드 세미나 — Radiotherapy and Oncology (Green)"
+    },
+    {
+      "date": "2026-03-23",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2026-03-30",
+      "name": "손가희",
+      "topic": "Clinical Evaluation of Beam Delivery Accuracy in Carbon-Ion Radiotherapy Using Patient-Specific Quality Assurance and Fraction-Level Verification"
+    },
+    {
+      "date": "2026-03-30",
+      "name": "박예인",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2026-03-30",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "이찬웅",
+      "topic": "한국물리학회 구두발표 리허설 (주제 미정)"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "이삭",
+      "topic": "ADMM 기반 L∞-norm 최소화 탄소이온방사선치료계획 강건 최적화 알고리즘 개발"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "지금봉",
+      "topic": "한국물리학회 구두발표 리허설 (주제 미정)"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "이주찬",
+      "topic": "VMAT 치료계획의 선량 전달가능성과 전달 선량 예측을 위한 시각화된 치료계획 매개변수 및 계획 선량 기반 멀티태스크 모델 개발"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "이동윤",
+      "topic": "방사선 치료 환자를 위한 신규 호흡 모니터링 레이저 센서의 성능 검증"
+    },
+    {
+      "date": "2026-04-13",
+      "name": "지금봉",
+      "topic": "Cross-Patient Meta-Learning for CSI Target Segmentation"
+    },
+    {
+      "date": "2026-04-13",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2026-04-13",
+      "name": "배동한",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2026-04-20",
+      "name": "이찬웅",
+      "topic": "Flexible Synthetic CT Generation for MROP from Single- and Multi-Sequence Routine Clinical MRI"
+    },
+    {
+      "date": "2026-04-20",
+      "name": "손가희",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology"
+    },
+    {
+      "date": "2026-04-20",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — phiRO"
+    },
+    {
+      "date": "2026-05-04",
+      "name": "석재현",
+      "topic": "Missingness-Aware Neural Cox Model for Predicting Post-Progression Survival and Reirradiation Benefit in Recurrent Glioblastoma"
+    },
+    {
+      "date": "2026-05-04",
+      "name": "이원형",
+      "topic": "트렌드 세미나 — Physica Medica"
+    },
+    {
+      "date": "2026-05-04",
+      "name": "지금봉",
+      "topic": "트렌드 세미나 — Advances in Radiation Oncology"
+    },
+    {
+      "date": "2026-05-11",
+      "name": "이원형",
+      "topic": "Feasibility of Synthetic Four-dimensional Computed Tomography Reconstruction for Adaptive Respiratory-Gated Carbon-Ion Radiotherapy in Pancreatic Cancer"
+    },
+    {
+      "date": "2026-05-11",
+      "name": "전소영",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology Biology Physics (RED)"
+    },
+    {
+      "date": "2026-05-11",
+      "name": "이동윤",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2026-05-18",
+      "name": "배동한",
+      "topic": "Applying ADMM-Based Robust Optimization to Group-Sparse Multi-Field Optimization in Carbon Ion Radiotherapy"
+    },
+    {
+      "date": "2026-05-18",
+      "name": "이혜진",
+      "topic": "트렌드 세미나 — Radiotherapy & Oncology (Green)"
+    },
+    {
+      "date": "2026-05-18",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2026-06-01",
+      "name": "이혜진",
+      "topic": "Biologically Informed Group Sparse Optimization for RBE-Weighted Multi-Field Optimization in Carbon Ion Radiotherapy"
+    },
+    {
+      "date": "2026-06-01",
+      "name": "이주찬",
+      "topic": "주제 미정"
+    },
+    {
+      "date": "2026-06-01",
+      "name": "김응재",
+      "topic": "트렌드 세미나 — International Journal of Radiation Oncology Biology Physics (RED)"
+    },
+    {
+      "date": "2026-06-08",
+      "name": "이동윤",
+      "topic": "Performance Validation and Stability Assessment of a Novel Respiratory Training Sensor for Radiotherapy"
+    },
+    {
+      "date": "2026-06-08",
+      "name": "윤용도",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-06-08",
+      "name": "윤영훈",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2026-06-15",
+      "name": "전소영",
+      "topic": "Feasibility study on EBT film dosimetry using HSV space with a smartphone"
+    },
+    {
+      "date": "2026-06-15",
+      "name": "정동영",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-06-15",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology (PMB)"
+    },
+    {
+      "date": "2026-06-29",
+      "name": "이삭",
+      "topic": "A novel robust optimization for carbon ion radiotherapy using ADMM-based L∞-norm minimization with reduced dose constraint violations"
+    },
+    {
+      "date": "2026-06-29",
+      "name": "박예인",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-06-29",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — Medical physics"
+    },
+    {
+      "date": "2026-07-06",
+      "name": "이주찬",
+      "topic": "Joint prediction of VMAT plan deliverability and delivered dose via multi-task learning from visualized plan parameters and plan dose"
+    },
+    {
+      "date": "2026-07-06",
+      "name": "손가희",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-07-06",
+      "name": "지금봉",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2026-07-13",
+      "name": "김응재",
+      "topic": "Development of NTCP Modeling Toolkit"
+    },
+    {
+      "date": "2026-07-13",
+      "name": "이찬웅",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-07-13",
+      "name": "석재현",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2026-07-20",
+      "name": "정동영",
+      "topic": "Monte Carlo modelling of an electron linac treatment head using Geant4"
+    },
+    {
+      "date": "2026-07-20",
+      "name": "이원형",
+      "topic": "Gated carbon-ion scanning treatment for pancreatic tumour with field specific target volume and organs at risk"
+    },
+    {
+      "date": "2026-07-20",
+      "name": "배동한",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2026-07-27",
+      "name": "윤영훈",
+      "topic": "Progress on End-to-End Framework for Automatic VMAT Radiotherapy Planning"
+    },
+    {
+      "date": "2026-07-27",
+      "name": "전소영",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-07-27",
+      "name": "이동윤",
+      "topic": "트렌드 세미나 — Med Phy"
+    },
+    {
+      "date": "2026-08-03",
+      "name": "윤영훈",
+      "topic": "Optimization of Personalization for a 3D Cine MR Super Resolution Network in MR-Guided Radiotherapy (박사 공개발표 리허설)"
+    },
+    {
+      "date": "2026-08-03",
+      "name": "이혜진",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-08-03",
+      "name": "이삭",
+      "topic": "트렌드 세미나 — RED journal"
+    },
+    {
+      "date": "2026-08-10",
+      "name": "윤용도",
+      "topic": "Deep Learning-based Prediction of Monte Carlo Dose Distributions from Pencil Beam Algorithm for Carbon Ion Radiotherapy"
+    },
+    {
+      "date": "2026-08-10",
+      "name": "이원형",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2026-08-10",
+      "name": "김응재",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-08-24",
+      "name": "김정헌",
+      "topic": "Jacobian-Constrained Directional Total Variation for Topology-Preserving Deformable Image Registration in Radiotherapy"
+    },
+    {
+      "date": "2026-08-24",
+      "name": "손가희",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2026-08-24",
+      "name": "윤용도",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-08-31",
+      "name": "유현종, 지금봉, 이주찬, 이원형, 전소영",
+      "topic": "AOCMP oral presentation 리허설 (13:00 - 15:00)"
+    },
+    {
+      "date": "2026-09-07",
+      "name": "이동호",
+      "topic": "Development of a Transit Dose Verification Technique for CyberKnife Treatment Beams Using a Curved Acrylic Phantom and EBT4 Film"
+    },
+    {
+      "date": "2026-09-07",
+      "name": "김정헌",
+      "topic": "트렌드 세미나 — Red"
+    },
+    {
+      "date": "2026-09-07",
+      "name": "배동한",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-09-14",
+      "name": "손가희",
+      "topic": "Where Is Patient-Specific QA Heading in Carbon-Ion Radiotherapy? A Large-Scale Log-Based Analysis of 8,000+ Prostate Fractions"
+    },
+    {
+      "date": "2026-09-14",
+      "name": "박예인",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2026-09-14",
+      "name": "지금봉",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-09-21",
+      "name": "지금봉",
+      "topic": "Hybrid Framework Combining Iterative Pre-Trained Supervised Image Priors with Neural Representation for Extremely Sparse-view CT Reconstruction (HYPER)"
+    },
+    {
+      "date": "2026-09-21",
+      "name": "이찬웅",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2026-09-21",
+      "name": "석재현",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-09-28",
+      "name": "이찬웅",
+      "topic": "BrainCura: Whole-Brain Anatomical Segmentation on CT"
+    },
+    {
+      "date": "2026-09-28",
+      "name": "이주찬",
+      "topic": "트렌드 세미나 — MP"
+    },
+    {
+      "date": "2026-09-28",
+      "name": "이동호",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-10-12",
+      "name": "석재현",
+      "topic": "Missingness-Aware Neural Cox Model for Predicting Post-Progression Survival and Reirradiation Benefit in Recurrent Glioblastoma"
+    },
+    {
+      "date": "2026-10-12",
+      "name": "전소영",
+      "topic": "트렌드 세미나 — Physics in Medicine & Biology"
+    },
+    {
+      "date": "2026-10-12",
+      "name": "이동윤",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-10-19",
+      "name": "이원형",
+      "topic": "Adaptive Carbon-Ion Radiotherapy for Pancreatic Cancer: A Feasibility Study of Automated Plan Re-Optimization"
+    },
+    {
+      "date": "2026-10-19",
+      "name": "이혜진",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2026-10-19",
+      "name": "이삭",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-10-30",
+      "name": "Marco Durante",
+      "topic": "Innovative Research for Reducing Range Uncertainty in Heavy Ion Therapy"
+    },
+    {
+      "date": "2026-11-02",
+      "name": "배동한",
+      "topic": "A Single Framework for Robust Optimization and Beam Angle Selection in Carbon Ion Radiotherapy for Lung Cancer"
+    },
+    {
+      "date": "2026-11-02",
+      "name": "이주찬",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    },
+    {
+      "date": "2026-11-02",
+      "name": "김응재",
+      "topic": "트렌드 세미나 — RED"
+    },
+    {
+      "date": "2026-11-09",
+      "name": "전소영",
+      "topic": "Feasibility of Smartphone-Based EBT4 Film Dosimetry Using HSV Space Analysis"
+    },
+    {
+      "date": "2026-11-09",
+      "name": "윤영훈",
+      "topic": "A physics-informed, plug-and-play dose engine for gradient-based radiotherapy treatment planning"
+    },
+    {
+      "date": "2026-11-09",
+      "name": "윤용도",
+      "topic": "트렌드 세미나 — Green"
+    },
+    {
+      "date": "2026-11-16",
+      "name": "이동윤",
+      "topic": "Home-Based Guided Breathing Training with a Wearable Magnetic Sensor Improves Breathing Reproducibility for Respiratory Motion Management"
+    },
+    {
+      "date": "2026-11-16",
+      "name": "김정헌",
+      "topic": "Phase 1 Study of Online Proton Adaptive RadioTherapY (PARTY)"
+    },
+    {
+      "date": "2026-11-16",
+      "name": "이동호",
+      "topic": "트렌드 세미나 — PMB"
+    },
+    {
+      "date": "2026-11-23",
+      "name": "김정헌",
+      "topic": "Development of Uncertainty Quantification and Dose Accumulation Methods for CBCT-Based Adaptive Radiotherapy"
+    },
+    {
+      "date": "2026-11-23",
+      "name": "지금봉",
+      "topic": "트렌드 세미나 — Medical Physics"
+    },
+    {
+      "date": "2026-11-23",
+      "name": "이찬웅",
+      "topic": "연구 Main Reference 리뷰 (세부 주제 미기재)"
+    }
+  ],
+  "import": {
+    "matched_existing": 172,
+    "added": 147
+  }
+}

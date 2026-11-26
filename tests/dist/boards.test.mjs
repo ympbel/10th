@@ -58,12 +58,12 @@ const shown = (e) => value(e, 'event_date') ?? value(e, 'date');
 const postNo = (e) => Number(/-(\d+)$/.exec(e.id)?.[1] ?? 0);
 const seminars = [...entries('seminars')].sort(
   (a, b) =>
-    value(b, 'date').slice(0, 4) - value(a, 'date').slice(0, 4) ||
+    shown(b).slice(0, 4) - shown(a).slice(0, 4) ||
     shown(b).localeCompare(shown(a)) ||
     value(b, 'date').localeCompare(value(a, 'date')) ||
     postNo(b) - postNo(a),
 );
-const seminarYearOf = (e) => Number(value(e, 'date').slice(0, 4));
+const seminarYearOf = (e) => Number(shown(e).slice(0, 4));
 const seminarYears = distinct(seminars.map(seminarYearOf));
 
 // At import: 41 awards, 4 challenges, 15 projects, 431 seminars. The checks below count from the files, so adding a
@@ -316,11 +316,11 @@ for (const [lang, dir] of [
       const want = [shown(s).replaceAll('-', '.'), value(s, 'title'), value(s, 'presenter') ?? ''];
       if (JSON.stringify(got) !== JSON.stringify(want)) wrong.push(`${s.id}: ${got.join(' | ')}`);
       const a = cells.eq(1).find('a');
-      if (a.attr('href') !== value(s, 'source_url')) wrong.push(`${s.id}: href ${a.attr('href')}`);
+      if ((a.attr('href') ?? undefined) !== value(s, 'source_url')) wrong.push(`${s.id}: href ${a.attr('href')}`);
     });
     assert.deepEqual(wrong, []);
     const links = $('tbody a');
-    assert.equal(links.length, seminars.length);
+    assert.equal(links.length, seminars.filter(s=>value(s,'source_url')).length);
     links.each((_, a) => {
       assert.ok($(a).attr('href').startsWith(SEMINAR_PREFIX), $(a).attr('href'));
       assert.equal($(a).attr('target'), '_blank');

@@ -13,6 +13,7 @@ export const ko = {
   more: '더보기',
   /** Board titles, keyed by menu item key; also the menu item labels (src/lib/menu.ts). */
   boards: {
+    timeline: '멤버 타임라인',
     faculty: '교수진',
     students: '학생 현황',
     alumni: '졸업 현황',

@@ -1,0 +1,29 @@
+---
+import archive from '../../data/archive-analytics.json';
+import type { Locale } from '../../lib/locale.ts';
+import '../../styles/analytics.css';
+interface Props { locale: Locale }
+const {locale}=Astro.props;const ko=locale==='ko';const d=archive.funding;
+const money=(n:number)=>(n/1e8).toLocaleString(ko?'ko-KR':'en-US',{maximumFractionDigits:1});
+const number=(n:number)=>n.toLocaleString(ko?'ko-KR':'en-US');
+const cap=Math.ceil(Math.max(...d.byYear.map(r=>r.tot))/5e8)*5e8;
+const maxNew=Math.max(...d.byYear.map(r=>r.new));
+const cats=[{key:'정부',en:'Government',color:'var(--analytics-blue)'},{key:'민간',en:'Industry',color:'var(--analytics-teal)'},{key:'교내',en:'University',color:'var(--analytics-gold)'}] as const;
+---
+<section class="analytics funding-dashboard" id="funding" aria-labelledby="funding-title">
+ <header class="analytics-head"><div><p class="analytics-kicker">RESEARCH / FUNDING</p><h2 id="funding-title">{ko?'연구를 가능하게 한 지원.':'Backing the next discovery.'}</h2></div><span>{archive.funding_period} · {ko?'총괄연구비 · 협약액':'Contracted funding'}</span></header>
+ <dl class="analytics-stats"><div><dt>{ko?'누적 연구비 (억원)':'Funding (KRW 100M)'}</dt><dd>{money(d.tot.a)}</dd></div><div><dt>{ko?'고유 과제':'Unique projects'}</dt><dd>{d.tot.u}</dd></div><div><dt>{ko?'연차 협약':'Annual agreements'}</dt><dd>{d.tot.r}</dd></div><div><dt>{ko?'연구책임자':'Principal investigators'}</dt><dd>{d.tot.pi}</dd></div></dl>
+ <div class="analytics-chart-head"><h3>{ko?'연도별 수주 추이':'Annual awards'}</h3><div class="analytics-switch" aria-label={ko?'연구비 그래프 항목':'Funding chart metric'}><button type="button" data-funding-view="amount" aria-pressed="true">{ko?'연구비':'Funding'}</button><button type="button" data-funding-view="projects" aria-pressed="false">{ko?'신규 과제':'New projects'}</button></div></div>
+ <div class="analytics-legend" data-funding-legend>{cats.map(c=><span><i style={'background:'+c.color}/>{ko?c.key:c.en}</span>)}</div>
+ <div class="analytics-scroll" data-funding-panel="amount"><svg class="analytics-chart" viewBox="0 0 1100 330" role="img" aria-labelledby="funding-chart-title"><title id="funding-chart-title">{ko?'연도별 정부·민간·교내 연구비, 단위 억원':'Annual funding by source, in KRW 100M'}</title>
+ {Array.from({length:6},(_,i)=>{const y=270-i*45;return <g><path d={`M60 ${y}H1080`} class="analytics-grid"/><text x="44" y={y+4} text-anchor="end" class="analytics-axis">{money(cap*i/5)}</text></g>;})}
+ {d.byYear.map((r,i)=>{const x=85+i*90;let accumulated=0;return <g><title>{r.y}: {number(r.tot)} KRW</title>{cats.map(c=>{const n=r[c.key];const height=n/cap*225;const y=270-accumulated-height;accumulated+=height;return <rect x={x} y={y} width="40" height={height} fill={c.color}/>;})}<text x={x+20} y={260-r.tot/cap*225} text-anchor="middle" class="analytics-value">{money(r.tot)}</text><text x={x+20} y="302" text-anchor="middle" class="analytics-axis">{r.y}</text></g>;})}
+ </svg></div>
+ <div class="analytics-scroll" data-funding-panel="projects" hidden><h3>{ko?'유형별 고유 과제 · 누적':'Unique projects by type · cumulative'}</h3><div class="funding-type-counts">{cats.map(c=><div style={`--type-color:${c.color}`}><span>{ko?c.key:c.en}</span><strong>{d.tot.cat[c.key].u}</strong><div class="analytics-track"><i style={`width:${d.tot.cat[c.key].u/d.tot.u*100}%;background:${c.color}`}/></div></div>)}</div><h3>{ko?'연도별 신규 과제 · 전체 유형':'New projects by year · all types'}</h3><svg class="analytics-chart" viewBox="0 0 1100 330" role="img" aria-label={ko?'연도별 신규 고유 과제 수':'New unique projects by year'}><path d="M60 270H1080" class="analytics-grid"/>{d.byYear.map((r,i)=><g><rect x={85+i*90} y={270-r.new/maxNew*215} width="40" height={r.new/maxNew*215} fill="var(--analytics-blue)"/><text x={105+i*90} y={258-r.new/maxNew*215} text-anchor="middle" class="analytics-value">{r.new}</text><text x={105+i*90} y="302" text-anchor="middle" class="analytics-axis">{r.y}</text></g>)}</svg></div>
+ <div class="analytics-two"><section><h3>{ko?'재원 구성':'Funding sources'}</h3><div class="analytics-source-list">{cats.map(c=>{const row=d.tot.cat[c.key];return <div><header><span>{ko?c.key:c.en}</span><strong>{money(row.a)} <small>{ko?'억원':'× KRW 100M'}</small></strong></header><div class="analytics-track"><i style={`width:${row.a/d.tot.a*100}%;background:${c.color}`}/></div><p>{(row.a/d.tot.a*100).toFixed(1)}% · {row.u} {ko?'고유 과제':'unique projects'}</p></div>;})}</div></section>
+ <section><h3>{ko?'연구책임자별 연구비':'Funding by investigator'}</h3><div class="analytics-scroll"><table class="analytics-table funding-pis"><thead><tr><th>{ko?'연구책임자':'Investigator'}</th><th>{ko?'고유 과제':'Projects'}</th><th>{ko?'협약':'Agreements'}</th><th>{ko?'연구비 (억원)':'KRW 100M'}</th></tr></thead><tbody>{[...d.pis].sort((a,b)=>b.a-a.a).map(pi=><tr><th scope="row" lang="ko">{pi.n}</th><td>{pi.u}</td><td>{pi.r}</td><td>{money(pi.a)}</td></tr>)}</tbody></table></div></section></div>
+</section>
+<script>
+ const root=document.querySelector('.funding-dashboard');
+ root?.querySelectorAll<HTMLButtonElement>('[data-funding-view]').forEach(button=>button.addEventListener('click',()=>{root.querySelectorAll<HTMLElement>('[data-funding-panel]').forEach(panel=>panel.hidden=panel.dataset.fundingPanel!==button.dataset.fundingView);const legend=root.querySelector<HTMLElement>('[data-funding-legend]');if(legend)legend.hidden=button.dataset.fundingView!=='amount';root.querySelectorAll('[data-funding-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));}));
+</script>

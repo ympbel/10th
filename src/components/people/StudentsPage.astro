@@ -8,7 +8,8 @@ import MemberCard from './MemberCard.astro';
 import { sortMembersByJoined } from '../../lib/content.ts';
 import { itemsOf } from '../../lib/people.ts';
 import { isLabEra } from '../../lib/years.ts';
-import type { Locale } from '../../lib/locale.ts';
+import { localePath, type Locale } from '../../lib/locale.ts';
+import { url } from '../../lib/url.ts';
 import { fill, t } from '../../i18n/index.ts';
 
 interface Props {
@@ -49,3 +50,5 @@ const countsOf = (id: string) => {
     </ul>
   </section>
 </SubLayout>
+
+<style>.student-timeline-link{display:flex;justify-content:flex-end;margin:24px 0;}.student-timeline-link a{padding:12px 20px;border:1px solid var(--rule);color:var(--accent);font-size:15px;}.student-timeline-link a:hover{background:var(--surface-alt);}</style>

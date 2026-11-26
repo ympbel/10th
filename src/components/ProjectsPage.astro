@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import '../styles/years.css';
 import '../styles/boards.css';
 import SubLayout from '../layouts/SubLayout.astro';
+import FundingDashboard from './analytics/FundingDashboard.astro';
 import ProjectItem from './boards/ProjectItem.astro';
 import { sortByYearDesc } from '../lib/content.ts';
 import type { Locale } from '../lib/locale.ts';
@@ -30,6 +31,8 @@ const papersOf = (id: string) => sortByYearDesc(papers.filter((p) => p.data.proj
 ---
 
 <SubLayout title={s.boards.projects} sectionKey="project" currentHref="/projects/" locale={locale}>
+  <FundingDashboard locale={locale} />
+  <h2 class="project-archive-heading">{locale==='ko'?'상세 과제 기록':'Detailed project records'} <small>{sorted.length}</small></h2>
   <ol class="projects">
     {sorted.map((p) => <ProjectItem id={p.id} project={p.data} papers={papersOf(p.id)} people={people} locale={locale} />)}
   </ol>

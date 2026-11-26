@@ -77,7 +77,7 @@ test('one person page per non-professor member in each language, none for profes
   assert.deepEqual(missing, []);
   const extra = professors.flatMap((m) => [`people/${m.id}`, `en/people/${m.id}`]).filter((p) => exists(p));
   assert.deepEqual(extra, []);
-  const boards = new Set(['faculty', 'students', 'alumni']);
+  const boards = new Set(['faculty', 'students', 'alumni', 'timeline']);
   for (const dir of ['people', join('en', 'people')]) {
     const built = readdirSync(join(DIST, dir), { withFileTypes: true })
       .filter((d) => d.isDirectory() && !boards.has(d.name))

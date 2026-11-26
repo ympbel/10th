@@ -2,6 +2,7 @@
 import { sortPhotos } from '../../lib/photos.ts';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import archiveAnalytics from '../../data/archive-analytics.json';
 import RandomPortraits from '../people/RandomPortraits.astro';
 import { chapters } from '../../lib/chapters.ts';
 import { localePath, type Locale } from '../../lib/locale.ts';
@@ -12,6 +13,7 @@ import facultyThree from '../../assets/portraits/hojin-kim.jpg';
 import publicationsImage from '../../assets/chapters/publications.jpg';
 import patentsImage from '../../assets/chapters/patents.jpg';
 import conferencesImage from '../../assets/chapters/conferences.jpg';
+import fundingImage from '../../assets/chapters/funding.png';
 import awardsImage from '../../assets/chapters/awards.jpg';
 
 interface Props {
@@ -21,6 +23,7 @@ interface Props {
 }
 const { locale, counts, years } = Astro.props;
 const members=await getCollection('members');
+const seminars=await getCollection('seminars');
 const comments=(await getCollection('comments')).sort((a,b)=>a.id.localeCompare(b.id));
 const albums = new Set<string>();
 const photos = sortPhotos(await getCollection('photos')).filter((photo) => {
@@ -39,6 +42,8 @@ const previews = [
   { value: String(counts.patents), text: ko ? '연구에서 기술로 이어지는 아이디어' : 'Ideas that connect research and technology' },
   { value: String(counts.presentations), text: ko ? '세계의 연구자들과 나눈 발견' : 'Discoveries shared with the research community' },
   { value: String(counts.awards), text: ko ? '함께 이룬 성취의 순간들' : 'Moments of achievement, made together' },
+  { value: (archiveAnalytics.funding.tot.a/1e8).toFixed(1), text: ko?'연구를 가능하게 한 지원 · 억원':'Funding discovery · KRW 100M' },
+  { value: String(seminars.length), text: ko?'연구와 생각을 함께 나눈 랩세미나':'Research and ideas shared in lab seminars' },
   { value: counts.photos ? String(counts.photos) : '2016–2026', text: ko ? '사진으로 돌아보는 연구실의 순간들' : 'Our shared moments, remembered in photographs' },
   { value: String(comments.length), text: ko ? '교수진과 졸업생이 전하는 기억과 응원' : 'Memories and wishes from faculty and alumni' },
 ];
@@ -88,6 +93,10 @@ const paperTotal = years.reduce((total, year) => total + year.papers, 0);
             <div class="contents-portraits">{facultyPortraits.map(portrait=><Image src={portrait} alt="" width={180} height={240} fit="cover" loading="lazy" />)}</div>
           ) : i === 2 || i === 3 ? (
             <RandomPortraits members={members.filter(m=>m.data.role===(i===2?'student':'alumni'))} className="contents-portraits" poolKey={i===2?'students-contents':'alumni-contents'} />
+          ) : chapter.path === '/projects/' ? (
+            <Image class="contents-science" src={fundingImage} alt={ko?'의료영상 연구 제안서와 연구 장비를 표현한 이미지':'Medical imaging research proposals and laboratory equipment'} width={1100} height={550} fit="cover" loading="eager" />
+          ) : chapter.path === '/activity/seminars/' ? (
+            <Image class="contents-science" src={conferencesImage} alt={ko?'연구 발표와 토론을 표현한 이미지':'Research presentations and discussion'} width={1100} height={550} fit="cover" loading="eager" />
           ) : chapter.path === '/archive/comments/' ? (
             <div class="contents-letters"><p>VOICES / MPBEL</p><strong>{ko?'함께 쓴 10년.':'Ten years, together.'}</strong>{comments[0] && <blockquote lang="ko">{comments[0].body?.trim().slice(0,145)}…<cite>{comments[0].data.name}</cite></blockquote>}</div>
           ) : chapter.path === '/archive/photos/' ? (
@@ -106,7 +115,7 @@ const paperTotal = years.reduce((total, year) => total + year.papers, 0);
           <figcaption>
             <div><strong>{previews[i].value}</strong><span>{ko ? chapter.ko : chapter.title}</span></div>
             <p>{previews[i].text}</p>
-            {i >= 4 && i <= 7 && <p class="contents-image-credit">{ko ? '주제 이미지 · AI 생성' : 'Topic image · AI generated'}</p>}
+            {((i >= 4 && i <= 7) || chapter.path==='/projects/' || chapter.path==='/activity/seminars/') && <p class="contents-image-credit">{ko ? '주제 이미지 · AI 생성' : 'Topic image · AI generated'}</p>}
           </figcaption>
         </figure>
       ))}

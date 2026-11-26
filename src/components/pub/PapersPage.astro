@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import '../../styles/years.css';
 import '../../styles/pub.css';
 import SubLayout from '../../layouts/SubLayout.astro';
+import PublicationMetrics from '../analytics/PublicationMetrics.astro';
 import YearIndex from './YearIndex.astro';
 import PaperList from './PaperList.astro';
 import { groupByYear } from '../../lib/content.ts';
@@ -33,6 +34,8 @@ const range = { from: preLab.at(-1)?.[0] ?? LAB_START - 1, to: LAB_START - 1 };
 ---
 
 <SubLayout title={s.boards.papers} sectionKey="publication" currentHref="/publication/papers/" locale={locale}>
+  <PublicationMetrics locale={locale} />
+  <h2 id="paper-records">{locale==='ko'?'논문 목록':'Paper archive'}</h2>
   <YearIndex
     years={lab.map(([year]) => year)}
     extra={preLab.length > 0 ? { href: '#pre-lab', label: fill(pub.preLabTab, range) } : undefined}

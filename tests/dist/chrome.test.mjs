@@ -5,7 +5,7 @@ import { join, relative, sep } from 'node:path';
 import { load } from 'cheerio';
 import { BASE, DIST, allHtmlFiles, isRedirect, page } from './helpers.mjs';
 
-const SECTIONS = ['PEOPLE', 'RESEARCH OUTPUTS', 'AWARD', 'PROJECT', 'ACTIVITY', 'ARCHIVE'];
+const SECTIONS = ['PEOPLE', 'RESEARCH OUTPUTS', 'AWARD', 'PROJECT', 'SEMINARS', 'ARCHIVE'];
 const NOT_FOUND = `${BASE}/404.html`;
 
 /** The URL path a built file is served at: `dist/people/students/index.html` → `/10th/people/students/`,
@@ -118,7 +118,7 @@ test('sub page frame: visual band label, side navigation with the current board,
     assert.equal($('.sub_visual .sub_visual-label').text().trim(), '10th Anniversary Archive', path);
     assert.match($('.sub_visual').attr('style'), /sub_visual\.jpg/, path);
     assert.equal($('.snb .tit').text().trim(), 'PEOPLE', path);
-    assert.equal($('.snb .vNav li').length, 3, path);
+    assert.equal($('.snb .vNav li').length, 4, path);
     const active = $('.snb .vNav li.active a');
     assert.equal(active.text().trim(), title, path);
     assert.equal(active.attr('href'), href, path);

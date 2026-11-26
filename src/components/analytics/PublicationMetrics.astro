@@ -1,0 +1,21 @@
+---
+import archive from '../../data/archive-analytics.json';
+import type { Locale } from '../../lib/locale.ts';
+import '../../styles/analytics.css';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const ko=locale==='ko';const d=archive.publications;const num=(n:number)=>n.toLocaleString();const maxJournal=Math.max(...d.journals.map(j=>j.c));const maxCitation=Math.ceil(Math.max(...d.schYear.map(y=>y.c))/100)*100;
+---
+<nav class="analytics-jumps" aria-label={ko?'논문 실적 바로가기':'Publication sections'}><a href="#journal-performance">{ko?'저널별 게재':'Journal performance'}</a><a href="#citation-performance">{ko?'인용 성과':'Citations'}</a><a href="#paper-records">{ko?'논문 목록':'Paper archive'}</a></nav>
+<section class="analytics" id="journal-performance" aria-labelledby="journal-performance-title">
+ <header class="analytics-head"><div><p class="analytics-kicker">PUBLICATIONS / JOURNALS</p><h2 id="journal-performance-title">{ko?'저널별 게재 실적':'Journal performance'}</h2></div><span>{ko?'2016–2026 · 상위 20개 저널':'2016–2026 · Top 20 journals'}</span></header>
+ <dl class="analytics-stats"><div><dt>{ko?'논문':'Papers'}</dt><dd>{d.tot.n}</dd></div><div><dt>{ko?'전체 저널':'Journals'}</dt><dd>{d.journalsTotal}</dd></div><div><dt>{ko?'SCI 논문':'SCI papers'}</dt><dd>{d.tot.sci}</dd></div><div><dt>{ko?'누적 IF':'Total IF'}</dt><dd>{d.tot.ifsum.toFixed(1)}</dd></div></dl>
+ <div class="analytics-scroll"><table class="analytics-table journal-performance-table"><thead><tr><th>{ko?'저널':'Journal'}</th><th>{ko?'게재 편수':'Papers'}</th><th>SCI</th><th>{ko?'누적 IF':'Total IF'}</th><th>{ko?'게재 기간':'Years'}</th></tr></thead><tbody>{d.journals.map((j,index)=><tr><th scope="row"><span class="analytics-rank">{String(index+1).padStart(2,'0')}</span>{j.n}<div class="analytics-track journal-track"><i style={`width:${j.c/maxJournal*100}%`}/></div></th><td>{j.c}</td><td>{j.sci}</td><td>{j.s.toFixed(1)}</td><td>{j.y0}–{j.y1}</td></tr>)}</tbody></table></div>
+</section>
+<section class="analytics" id="citation-performance" aria-labelledby="citation-performance-title">
+ <header class="analytics-head"><div><p class="analytics-kicker">RESEARCH / IMPACT</p><h2 id="citation-performance-title">{ko?'인용 성과':'Citation impact'}</h2></div><span>Google Scholar · {ko?'제공된 프로필 기준':'Provided profile'} · {archive.citation_as_of}</span></header>
+ <dl class="analytics-stats"><div><dt>{ko?'전체 경력 인용':'Career citations'}</dt><dd>{num(d.tot.cit)}</dd></div><div><dt>h-index</dt><dd>{d.tot.h}</dd></div><div><dt>i10-index</dt><dd>{d.tot.i10}</dd></div><div><dt>{ko?'2016년 이후 발표분 인용':'Citations to work since 2016'}</dt><dd>{num(d.tot.cit16)}</dd></div></dl>
+ <h3>{ko?'발표연도별 누적 인용':'Cumulative citations by publication year'}</h3><div class="analytics-scroll"><svg class="analytics-chart" viewBox="0 0 1100 330" role="img" aria-label={ko?'2016년 이후 발표한 202건의 발표연도별 누적 인용':'Cumulative citations to 202 works published since 2016, grouped by publication year'}>{Array.from({length:6},(_,i)=><g><path d={`M60 ${270-i*45}H1080`} class="analytics-grid"/><text x="44" y={274-i*45} text-anchor="end" class="analytics-axis">{maxCitation*i/5}</text></g>)}{d.schYear.map((r,i)=><g><title>{r.y}: {r.c} {ko?'회 인용':'citations'} / {r.n} {ko?'건':'works'}</title><rect x={85+i*90} y={270-r.c/maxCitation*225} width="40" height={r.c/maxCitation*225} fill="var(--analytics-teal)" rx="3"/><text x={105+i*90} y={258-r.c/maxCitation*225} text-anchor="middle" class="analytics-value">{r.c}</text><text x={105+i*90} y="302" text-anchor="middle" class="analytics-axis">{r.y}</text></g>)}</svg></div>
+ <p class="analytics-source">{ko?'2016년 이후 발표분 202건 기준 · 해당 연도 발표물의 조회일 현재 누적 인용':'202 works published since 2016 · citations accumulated by the snapshot date, grouped by publication year'}</p>
+ <h3>{ko?'많이 인용된 연구':'Most-cited work'}</h3><ol class="citation-top">{d.top.map((paper,index)=><li><span class="analytics-rank">{String(index+1).padStart(2,'0')}</span><div><h4>{paper.t}</h4><p>{paper.v} · {paper.y}</p></div><strong>{paper.c}<small>{ko?'회 인용':'citations'}</small></strong></li>)}</ol>
+ <p class="analytics-source">{ko?'출처: 공유된 MPBEL 10년 기록의 Google Scholar 조회본 · 실시간 수치가 아닌 2026.09.04 기록':'Source: Google Scholar snapshot in the shared MPBEL archive, dated September 4, 2026'}</p>
+</section>

@@ -8,6 +8,7 @@ import '../styles/years.css';
 import '../styles/pub.css';
 import '../styles/boards.css';
 import SubLayout from '../layouts/SubLayout.astro';
+import SeminarStats from './analytics/SeminarStats.astro';
 import YearIndex from './pub/YearIndex.astro';
 import { yearAnchor } from '../lib/years.ts';
 import { langOf, type Locale } from '../lib/locale.ts';
@@ -27,10 +28,11 @@ const postNo = (id: string) => Number(/-(\d+)$/.exec(id)?.[1] ?? 0);
 const rows = (await getCollection('seminars'))
   .map(({ id, data }) => ({
     id,
-    year: Number(data.date.slice(0, 4)),
+    year: Number((data.event_date ?? data.date).slice(0, 4)),
     posted: data.date,
     day: data.event_date ?? data.date,
     title: data.title,
+    seminar_type: data.seminar_type,
     presenter: data.presenter,
     href: data.source_url,
   }))
@@ -50,10 +52,10 @@ for (const row of rows) {
   else years.set(row.year, [row]);
 }
 
-const [before, after] = s.seminars.note.split('{board}');
 ---
 
 <SubLayout title={s.boards.seminars} sectionKey="activity" currentHref="/activity/seminars/" locale={locale}>
+  <SeminarStats locale={locale} records={rows.map(r=>({date:r.day,title:r.title,seminar_type:r.seminar_type}))} />
   <YearIndex years={[...years.keys()]} locale={locale} />
 
   {
@@ -74,9 +76,7 @@ const [before, after] = s.seminars.note.split('{board}');
                 <tr>
                   <td class="nowrap">{r.day.replaceAll('-', '.')}</td>
                   <td lang={lang(r.title)}>
-                    <a href={r.href} target="_blank" rel="noopener">
-                      {r.title}
-                    </a>
+                    {r.href ? <a href={r.href} target="_blank" rel="noopener">{r.title}</a> : <span>{r.title}</span>}
                   </td>
                   <td lang={lang(r.presenter)}>{r.presenter}</td>
                 </tr>

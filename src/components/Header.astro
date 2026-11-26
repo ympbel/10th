@@ -49,7 +49,7 @@ const languages: Array<{ locale: Locale; label: string; href: string }> = [
         </a>
         <div class="drawer-index"><p>{locale === 'ko' ? '10주년 기념 책자' : 'The anniversary edition'}</p><ol>
           {chapters.map((chapter,index) => <li><a href={chapter.path === '/years/' ? url(localePath('/',locale))+'#history' : url(localePath(chapter.path,locale))}><small>{String(index+1).padStart(2,'0')}</small><span>{locale === 'ko' ? chapter.ko : chapter.title}</span><span aria-hidden="true">↗</span></a></li>)}
-        </ol><div class="drawer-more">{MENU.flatMap(section => section.items).filter(item => ['/projects/','/activity/seminars/','/activity/workshops/'].includes(item.href)).map(item => <a href={url(localePath(item.href,locale))}>{item.label[locale]}</a>)}</div></div>
+        </ol></div>
       </div>
       <ul id="nav">
         {

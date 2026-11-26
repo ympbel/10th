@@ -2,7 +2,7 @@
 // The six lab-wide figures in a 3×2 grid, each a link to its board. `data-count` carries the number for the build
 // test.
 interface Props {
-  items: Array<{ count: number; label: string; href: string }>;
+  items: Array<{ count: number; display?:string; secondary?:{value:string;label:string}; label: string; href: string }>;
 }
 
 const { items } = Astro.props;
@@ -13,8 +13,10 @@ const { items } = Astro.props;
     items.map((f) => (
       <li>
         <a href={f.href} data-count={f.count}>
-          <b>{f.count}</b>
-          <span>{f.label}</span>
+          <div class:list={['figure-pair',{'has-secondary':!!f.secondary}]}>
+            <div class="figure-primary"><b>{f.display ?? f.count}</b><span>{f.label}</span></div>
+            {f.secondary && <div class="figure-secondary"><strong>{f.secondary.value}</strong><span>{f.secondary.label}</span></div>}
+          </div>
         </a>
       </li>
     ))

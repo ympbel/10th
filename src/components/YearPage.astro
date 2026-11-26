@@ -105,7 +105,7 @@ const running = [...stats.projectsRunning]
     };
   });
 
-const seminarCount = seminars.filter((sem) => sem.data.date.startsWith(`${year}-`)).length;
+const seminarCount = seminars.filter((sem) => (sem.data.event_date ?? sem.data.date).startsWith(`${year}-`)).length;
 const yearPhotos = ofYear(photos);
 
 /** The summary line: one count per part, each linking to its part below. */

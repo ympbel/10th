@@ -18,7 +18,6 @@ const BOARDS = [
   'awards',
   'projects',
   'activity/seminars',
-  'activity/workshops',
   'archive/photos',
   'archive/comments',
 ];
@@ -41,7 +40,7 @@ test('eleven year pages and the /years/ redirect in both languages (24 pages)', 
 
 test('the eleven boards in both languages', () => {
   const paths = LANGS.flatMap((lang) => BOARDS.map((board) => `${lang}${board}`));
-  assert.equal(paths.length, 24);
+  assert.equal(paths.length, 22);
   assert.deepEqual(missing(paths), []);
 });
 

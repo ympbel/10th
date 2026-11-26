@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import SubLayout from '../../layouts/SubLayout.astro';
+import archive from '../../data/archive-analytics.json';
+import { displayName } from '../../lib/people.ts';
+import { localePath, type Locale } from '../../lib/locale.ts';
+import { url } from '../../lib/url.ts';
+import '../../styles/analytics.css';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const ko=locale==='ko';
+const members=(await getCollection('members')).filter(m=>m.data.role!=='professor');
+const normalize=(s:string)=>s.replace(/\s/g,'');
+const numeric=(s:string|undefined)=>{if(!s)return null;const [y,m=1]=s.split('-').map(Number);return y+(m-1)/12;};
+const month=(n:number)=>`${Math.floor(n)}.${String(Math.min(12,Math.round((n-Math.floor(n))*12)+1)).padStart(2,'0')}`;
+const asOf=2026+10/12;const low=2016,high=2027;const years=Array.from({length:11},(_,i)=>2016+i);
+const rows=members.map(m=>{const old=archive.member_periods.find(p=>normalize(p.k)===normalize(m.data.name));const start=numeric(m.data.joined) ?? old?.s ?? null;const end=m.data.role==='student'?asOf:numeric(m.data.degree?.date) ?? (m.data.role==='former'?old?.x:null) ?? null;const left=start===null?0:Math.max(0,(start-low)/(high-low)*100);const width=start===null?0:Math.max(.4,((end ?? start)-Math.max(low,start))/(high-low)*100);return {...m,start,end,left,width};}).filter(row=>row.start!==null).sort((a,b)=>(a.start ?? Infinity)-(b.start ?? Infinity) || a.id.localeCompare(b.id));
+const filters=[{key:'all',label:ko?'전체':'All',count:rows.length},{key:'student',label:ko?'재학생':'Students',count:rows.filter(r=>r.data.role==='student').length},{key:'alumni',label:ko?'졸업생':'Alumni',count:rows.filter(r=>r.data.role==='alumni').length},{key:'former',label:ko?'거쳐간 구성원':'Former members',count:rows.filter(r=>r.data.role==='former').length}];
+---
+<SubLayout title={ko?'멤버 타임라인':'Member timeline'} sectionKey="people" currentHref="/people/timeline/" locale={locale}>
+ <section class="analytics member-history" aria-labelledby="member-history-title">
+  <header class="analytics-head"><div><p class="analytics-kicker">PEOPLE / THROUGH THE YEARS</p><h2 id="member-history-title">{ko?'함께한 시간의 궤적.':'Our time, together.'}</h2></div><span>2016–2026 · {ko?'현재 명단 기준':'Current roster'} · 2026.11</span></header>
+  <div class="analytics-switch timeline-filters" aria-label={ko?'구성원 구분':'Member groups'}>{filters.map(f=><button type="button" data-member-filter={f.key} aria-pressed={String(f.key==='all')}>{f.label}<strong>{f.count}</strong></button>)}</div>
+  <div class="analytics-legend"><span><i style="background:var(--analytics-blue)"/>{ko?'재학생':'Students'}</span><span><i style="background:var(--analytics-teal)"/>{ko?'졸업생':'Alumni'}</span><span><i style="background:var(--text-secondary)"/>{ko?'거쳐간 구성원':'Former members'}</span></div>
+  <div class="analytics-scroll"><div class="member-timeline-grid">
+   <div class="member-timeline-head"><span>{ko?'구성원':'Member'}</span><div>{years.map(y=><span>{y}</span>)}</div><span>{ko?'기간':'Period'}</span></div>
+   {rows.map(row=><div class="member-timeline-row" data-timeline-role={row.data.role} data-timeline-member={row.id}>
+    <a href={url(localePath('/people/'+row.id+'/',locale))}>{displayName(row.data,locale)}</a>
+    <div class="member-timeline-track" aria-label={row.start===null?(ko?'기간 미기재':'Dates not recorded'):`${month(row.start)} – ${row.end!==null?month(row.end):ko?'종료 미기재':'End not recorded'}`}>
+     {row.start!==null && <span class:list={['member-timeline-bar',row.data.role,{'is-point':row.end===null}]} style={`left:${row.left}%;width:${row.width}%`}></span>}
+    </div><span class="member-timeline-period">{row.start!==null?month(row.start):'—'}{row.start!==null && <> – {row.data.role==='student'?(ko?'현재':'Present'):row.end!==null?month(row.end):'—'}</>}</span>
+   </div>)}
+  </div></div>
+ </section>
+</SubLayout>
+<script>
+ const root=document.querySelector('.member-history');
+ root?.querySelectorAll<HTMLButtonElement>('[data-member-filter]').forEach(button=>button.addEventListener('click',()=>{root.querySelectorAll<HTMLElement>('[data-timeline-role]').forEach(row=>row.hidden=button.dataset.memberFilter!=='all' && row.dataset.timelineRole!==button.dataset.memberFilter);root.querySelectorAll('[data-member-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));}));
+</script>

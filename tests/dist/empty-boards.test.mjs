@@ -26,7 +26,6 @@ const UNDECIDED = {
   en: 'How to leave a comment has not been decided yet.',
 };
 const BOARDS = [
-  { collection: 'workshops', path: 'activity/workshops', item: 'article.workshop' },
   { collection: 'photos', path: 'archive/photos', item: '.photo-album' },
   { collection: 'comments', path: 'archive/comments', item: 'article.comment' },
 ];

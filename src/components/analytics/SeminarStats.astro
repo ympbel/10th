@@ -1,0 +1,24 @@
+---
+import { seminarDay, seminarDays, seminarType, type SeminarRecord } from '../../lib/seminars.ts';
+import type {Locale} from '../../lib/locale.ts';
+import '../../styles/analytics.css';
+interface Props {locale:Locale;records:SeminarRecord[]}
+const {locale,records}=Astro.props;const ko=locale==='ko';
+const years=[...new Set(records.map(r=>seminarDay(r).slice(0,4)))].sort();
+const yearly=years.map(year=>{const rows=records.filter(r=>seminarDay(r).startsWith(year));return {year,trend:rows.filter(r=>seminarType(r)==='trend').length,research:rows.filter(r=>seminarType(r)==='research').length};});
+const cap=Math.max(10,Math.ceil(Math.max(...yearly.flatMap(y=>[y.trend,y.research]))/10)*10);
+const ticks=Array.from({length:cap/10+1},(_,i)=>i*10);
+---
+<section class="analytics seminar-statistics" aria-labelledby="seminar-stats-title">
+ <header class="analytics-head"><div><p class="analytics-kicker">ACTIVITY / SEMINARS</p><h2 id="seminar-stats-title">{ko?'함께 나눈 연구의 기록.':'Research, shared.'}</h2></div><span>2020–2026 · {ko?'기록 기준':'Recorded activity'}</span></header>
+ <dl class="analytics-stats seminar-summary">
+  <div><dt>{ko?'전체 세미나 개최일':'Seminar days'}</dt><dd>{seminarDays(records)}</dd></div>
+  <div><dt>{ko?'전체 발표 기록':'Presentation records'}</dt><dd>{records.length}</dd></div>
+ </dl>
+ <h3>{ko?'연도별 트렌드·리서치 세미나':'Trend and Research seminars by year'}</h3>
+ <div class="analytics-legend"><span><i style="background:var(--analytics-blue)"/>{ko?'트렌드':'Trend'}</span><span><i style="background:var(--analytics-teal)"/>{ko?'리서치':'Research'}</span></div>
+ <div class="analytics-scroll"><svg class="analytics-chart" viewBox="0 0 1100 330" role="img" aria-label={ko?'연도별 트렌드 및 리서치 발표 건수':'Annual Trend and Research presentation counts'}>
+  {ticks.map(tick=><g><path class="analytics-grid" d={`M60 ${270-tick/cap*210}H1080`}/><text class="analytics-axis" x="44" y={274-tick/cap*210} text-anchor="end">{tick}</text></g>)}
+  {yearly.map((y,i)=><g data-seminar-year={y.year} data-trend={y.trend} data-research={y.research}><rect x={100+i*140} y={270-y.trend/cap*210} width="38" height={y.trend/cap*210} fill="var(--analytics-blue)" rx="3"/><rect x={143+i*140} y={270-y.research/cap*210} width="38" height={y.research/cap*210} fill="var(--analytics-teal)" rx="3"/><text class="analytics-value" x={119+i*140} y={259-y.trend/cap*210} text-anchor="middle">{y.trend}</text><text class="analytics-value" x={162+i*140} y={259-y.research/cap*210} text-anchor="middle">{y.research}</text><text class="analytics-axis" x={140+i*140} y="302" text-anchor="middle">{y.year}</text></g>)}
+ </svg></div>
+</section>

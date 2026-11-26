@@ -8,6 +8,8 @@ export const chapters = [
   { path: '/publication/patents/', title: 'Patents', ko: '특허' },
   { path: '/publication/presentations/', title: 'Conferences', ko: '학회 발표' },
   { path: '/awards/', title: 'Awards', ko: '수상' },
+  { path: '/projects/', title: 'Research Funding', ko: '연구비·과제' },
+  { path: '/activity/seminars/', title: 'Lab Seminars', ko: '랩세미나' },
   { path: '/archive/photos/', title: 'Photos', ko: '사진 아카이브' },
   { path: '/archive/comments/', title: 'Comments', ko: '코멘트' },
 ];

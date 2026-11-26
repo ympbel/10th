@@ -2,6 +2,7 @@
 // The home page in one language: visual band, intro band (six figures + intro copy), the eleven-year timeline with
 // its year panels, and the board link grid. This component loads every collection once and hands each part only the
 // plain values it shows; the parts below do no data work of their own.
+import archiveAnalytics from '../data/archive-analytics.json';
 import { getCollection, getEntry, render } from 'astro:content';
 import '../styles/home.css';
 import '../styles/home-data.css';
@@ -64,15 +65,15 @@ const person = (m: Member) => ({
 // Intro band: the six lab-wide figures, each linking to its board.
 const counts = labCounts(data);
 const figures = [
-  { count: counts.members, label: s.home.figures.members, href: href('/people/students/') },
+  { count: counts.members, label: s.home.figures.members, secondary: {value:String(members.filter(m=>m.data.role==='student').length),label:locale==='ko'?'현재 재학생':'Current students'}, href: href('/people/students/') },
   { count: counts.degrees, label: s.home.figures.degrees, href: href('/people/alumni/') },
-  { count: counts.papers, label: s.home.figures.papers, href: href('/publication/papers/') },
+  { count: counts.papers, label: s.home.figures.papers, secondary: {value:archiveAnalytics.publications.tot.ifsum.toFixed(1),label:locale==='ko'?'누적 IF':'Total IF'}, href: href('/publication/papers/') },
   { count: counts.presentations, label: s.home.figures.presentations, href: href('/publication/presentations/') },
   { count: counts.awards, label: s.home.figures.awards, href: href('/awards/') },
   { count: counts.projects, label: s.home.figures.projects, href: href('/projects/') },
   { count: patents.filter(p => p.data.kind !== 'copyright' && p.data.status !== '확인 필요' && p.data.status !== '출원 준비' && p.data.status !== '거절').length, label: locale === 'ko' ? '특허 · 출원 및 등록' : 'Patents · filed & granted', href: href('/publication/patents/') },
-  { count: seminars.length, label: locale === 'ko' ? '세미나' : 'Seminars', href: href('/activity/seminars/') },
-  { count: photos.length, label: locale === 'ko' ? '사진 기록' : 'Photographs', href: href('/archive/photos/') },
+  { count: seminars.length, label: locale === 'ko' ? '총 랩세미나 발표수' : 'Lab seminar presentations', href: href('/activity/seminars/') },
+  { count: archiveAnalytics.funding.tot.a, display:(archiveAnalytics.funding.tot.a/1e8).toFixed(1), label: locale === 'ko' ? '연구비 총액 · 억원' : 'Total funding · KRW 100M', href: href('/projects/') },
 ];
 
 // Timeline: one column per year, bar heights relative to each series' largest year.
@@ -139,6 +140,7 @@ const panels = YEARS.map((year, i) => {
 
 // Board links: every menu item with its number of records.
 const boardCounts: Record<ItemKey, number> = {
+  timeline: members.filter(m=>m.data.role!=='professor').length,
   faculty: members.filter((m) => m.data.role === 'professor').length,
   students: members.filter((m) => m.data.role === 'student').length,
   // What the alumni board lists: everyone with a degree date (a current student too), then the former members.
@@ -149,7 +151,6 @@ const boardCounts: Record<ItemKey, number> = {
   awards: awards.length,
   projects: projects.length,
   seminars: seminars.length,
-  workshops: workshops.length,
   photos: photos.length,
   comments: comments.length,
 };

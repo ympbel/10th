@@ -11,11 +11,11 @@ test('MENU has the six sections and twelve boards in menu order', () => {
   );
   assert.deepEqual(
     MENU.map((s) => s.label),
-    ['PEOPLE', 'RESEARCH OUTPUTS', 'AWARD', 'PROJECT', 'ACTIVITY', 'ARCHIVE'],
+    ['PEOPLE', 'RESEARCH OUTPUTS', 'AWARD', 'PROJECT', 'SEMINARS', 'ARCHIVE'],
   );
   assert.deepEqual(
     MENU.flatMap((s) => s.items.map((i) => i.key)),
-    ['faculty', 'students', 'alumni', 'papers', 'patents', 'presentations', 'awards', 'projects', 'seminars', 'workshops', 'photos', 'comments'],
+    ['faculty', 'students', 'alumni', 'timeline', 'papers', 'patents', 'presentations', 'awards', 'projects', 'seminars', 'photos', 'comments'],
   );
 });
 

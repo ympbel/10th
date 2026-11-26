@@ -13,6 +13,7 @@ export const en: typeof ko = {
   home: 'Home',
   more: 'More',
   boards: {
+    timeline: 'Member timeline',
     faculty: 'Faculty',
     students: 'Students',
     alumni: 'Alumni',

@@ -15,3 +15,7 @@
 .home-comments a { white-space: nowrap; font-size: 14px; color: #1563b4; }
 .home-comments-note { color: #637185; margin-top: 24px; }
 @media(max-width:600px){ .home .figures {gap:0 18px;} .home .figures b {font-size:36px;} .home .figures a {min-height:112px;} .home-comments-head {display:block;} .home-comments-head a {display:inline-block;margin-top:24px;} }
+
+.home .figures .figure-detail{display:block;margin-top:9px;font-size:14px;font-weight:400;color:var(--text-secondary);}
+
+.home .figure-pair{display:flex;align-items:baseline;gap:24px;}.home .figure-primary{min-width:0;}.home .figure-secondary{padding-left:24px;border-left:1px solid var(--rule);}.home .figure-secondary strong{display:block;font-size:32px;font-weight:500;line-height:1;color:var(--text-primary);font-variant-numeric:tabular-nums;}.home .figure-secondary span{font-size:13px;line-height:1.4;color:var(--text-secondary);}@media(max-width:700px){.home .figure-pair{gap:12px;}.home .figure-secondary{padding-left:12px;}.home .figure-secondary strong{font-size:23px;}.home .figure-secondary span{font-size:12px;}}

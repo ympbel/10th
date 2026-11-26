@@ -27,7 +27,7 @@ function expected(y) {
     projects: entries('projects').filter(
       (p) => yearOf(scalar(p.fm, 'start')) <= y && y <= yearOf(scalar(p.fm, 'end')),
     ),
-    seminars: entries('seminars').filter((s) => yearOf(scalar(s.fm, 'date')) === y),
+    seminars: entries('seminars').filter((s) => yearOf(scalar(s.fm, 'event_date') ?? scalar(s.fm, 'date')) === y),
     photos: inYear('photos', y),
   };
 }
