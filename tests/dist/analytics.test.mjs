@@ -85,8 +85,21 @@ test('home member timeline sits below the eleven-year title and before research 
   const membersAt=children.indexOf(history.find('.home-member-timeline')[0]);
   const controlsAt=children.indexOf(history.find('.timeline-series')[0]);
   assert.ok(titleAt<membersAt && membersAt<controlsAt);
-  assert.equal($('.home-member-timeline[open]').length,0);
+  assert.equal($('.home-member-timeline[open]').length,1);
   assert.equal($('.home-member-timeline [data-timeline-member]').length,56);
   assert.equal($('.home-member-timeline [data-member-filter]').length,4);
+ }
+});
+
+test('latest roster, new alumni letters, funding explanation and default expanded timeline are present',()=>{
+ for(const prefix of ['','en/']){
+  const faculty=page(prefix+'people/faculty');
+  assert.equal(faculty('.faculty-profile').length,10);
+  assert.equal(faculty('[data-member=member-69]').length,0);
+  const voices=page(prefix+'archive/comments');
+  for(const name of ['천재희','최병수','박인경'])assert.ok(voices('#voices-alumni').text().includes(name));
+  assert.equal(voices('#voices-alumni .voice-letter').length,10);
+  assert.equal(page(prefix)('.home-member-timeline[open]').length,1);
+  assert.ok(page(prefix+'projects')('.funding-context').text().includes('공동으로 함께 연구한 의학물리 교수님들의 총 연구비 정보입니다.'));
  }
 });

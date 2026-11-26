@@ -68,7 +68,7 @@ const numLines = (y: Props['years'][number]) => {
   <div class="timeline-head">
     <h2 class="timeline-title" id="timeline-title">{tl.title} <span>{range}</span></h2>
   </div>
-  <details class="home-member-timeline">
+  <details class="home-member-timeline" open>
     <summary>{locale==='ko'?'멤버 타임라인':'Member timeline'}<span>{locale==='ko'?'함께한 시간 보기':'Explore our time together'}</span></summary>
     <MemberTimeline locale={locale} />
   </details>
