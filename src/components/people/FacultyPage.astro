@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import SubLayout from '../../layouts/SubLayout.astro';
 import MemberPortrait from './MemberPortrait.astro';
 import FacultyMoments from './FacultyMoments.astro';
+import Collaborators from './Collaborators.astro';
 import profiles from '../../profiles/faculty.json';
 import { displayName, otherName } from '../../lib/people.ts';
 import type { Locale } from '../../lib/locale.ts';
@@ -24,7 +25,8 @@ const localized = (profile: Profile, key: 'position' | 'affiliation' | 'research
   </div>
   <div class="faculty-team-link"><span>{locale==='ko'?'함께하는 임상 팀':'Clinical team'}</span><a href="https://medphy.tistory.com" target="_blank" rel="noopener noreferrer">{locale==='ko'?'연세암병원 의학물리팀':'Yonsei Cancer Center Medical Physics Team'}<small>medphy.tistory.com</small></a></div>
   <FacultyMoments locale={locale} />
-  <ul class="faculty-list professors">
+  <nav class="faculty-section-nav" aria-label={locale==='ko'?'교수진 구분':'Faculty sections'}><a href="#faculty-profiles">{locale==='ko'?'교수진 소개':'Faculty'}</a><a href="#collaborators">Collaborators</a></nav>
+  <ul class="faculty-list professors" id="faculty-profiles">
     {professors.map((member) => {
       const profile = profileOf(member.id);
       const education = locale === 'en' ? profile.education_en ?? profile.education : profile.education;
@@ -49,4 +51,5 @@ const localized = (profile: Profile, key: 'position' | 'affiliation' | 'research
     })}
   </ul>
 
+  <Collaborators locale={locale} />
 </SubLayout>

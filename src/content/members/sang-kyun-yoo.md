@@ -12,6 +12,7 @@ degree:
   date: "2025-02"
   type: "이학박사"
 affiliation: "연세대학교 디지털헬스연구원"
-position: "박사후연구원"
+position: "연구조교수"
+position_en: "Research Assistant Professor"
 order: 8
 ---
