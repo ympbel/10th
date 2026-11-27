@@ -6,7 +6,7 @@ const people=[...collaborators].sort((a,b)=>a.name.localeCompare(b.name,'ko'));
 ---
 <section class="collaborators" id="collaborators" aria-labelledby="collaborators-title">
  <header class="collaborators-heading"><div><p>COLLABORATORS</p><h2 id="collaborators-title">{locale==='ko'?<><span>함께하는</span><span>교수님들</span></>:'Collaborating professors'}</h2></div><p class="collaborators-intro">{locale==='ko'?'MPBEL과 함께 연구의 지평을 넓혀주신 교수님들을 소개합니다.':'Introducing the professors who have broadened the horizons of research with MPBEL.'}</p></header>
- <ul class="collaborators-grid">{people.map(person=><li><a href={person.source} target="_blank" rel="noopener noreferrer"><h3>{locale==='ko'?person.name:person.name_en}<span class="collaborator-arrow" aria-hidden="true">↗</span></h3>{locale==='ko'&&person.name!==person.name_en&&<p class="collaborator-english">{person.name_en}</p>}<p class="collaborator-affiliation">{locale==='ko'?person.affiliation:person.affiliation_en}</p></a></li>)}</ul>
+ <ul class="collaborators-grid">{people.map(person=><li><a href={person.source} target="_blank" rel="noopener noreferrer"><div class="collaborator-identity"><h3>{locale==='ko'?person.name:person.name_en}</h3>{locale==='ko'&&person.name!==person.name_en&&<p class="collaborator-english">{person.name_en}</p>}</div><img class="collaborator-photo" src={import.meta.env.BASE_URL.replace(/\/?$/, '/')+person.photo} alt="" width="52" height="64" loading="lazy" decoding="async" /><p class="collaborator-affiliation">{locale==='ko'?person.affiliation:person.affiliation_en}</p></a></li>)}</ul>
 </section>
 <style>
 .collaborators{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding:64px 0 24px;margin-top:40px;border-top:1px solid var(--rule);scroll-margin-top:32px;}
@@ -18,15 +18,17 @@ const people=[...collaborators].sort((a,b)=>a.name.localeCompare(b.name,'ko'));
 .collaborators-intro{max-width:220px;margin:24px 0 0;font-size:14px;line-height:1.9;word-break:keep-all;color:var(--text-secondary);}
 .collaborators-grid{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:0;margin:0;}
 .collaborators-grid li{min-width:0;}
-.collaborators-grid a{height:100%;min-height:142px;box-sizing:border-box;display:flex;flex-direction:column;padding:20px;border:1px solid var(--rule);border-radius:8px;text-decoration:none;color:var(--text-primary);background:color-mix(in srgb,var(--text-primary) 2%,transparent);transition:background .2s,border-color .2s,transform .2s;}
+.collaborators-grid a{height:100%;min-height:152px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) 52px;grid-template-rows:1fr auto;gap:16px 12px;padding:20px;border:1px solid var(--rule);border-radius:8px;text-decoration:none;color:var(--text-primary);background:color-mix(in srgb,var(--text-primary) 2%,transparent);transition:background .2s,border-color .2s,transform .2s;}
 .collaborators-grid h3{display:flex;align-items:start;justify-content:space-between;gap:8px;font-size:20px;line-height:1.4;font-weight:500;margin:0;letter-spacing:-.025em;word-break:keep-all;}
 .collaborator-arrow{font-size:16px;color:var(--text-secondary);opacity:.45;transition:color .2s,opacity .2s;}
-.collaborator-english{font-size:11px;color:var(--text-secondary);margin:4px 0 0;line-height:1.5;}
-.collaborator-affiliation{font-size:12px;line-height:1.6;color:var(--text-secondary);margin:16px 0 0;padding-top:0;word-break:keep-all;}
+.collaborator-english{font-size:12px;color:var(--text-secondary);margin:4px 0 0;line-height:1.5;}
+.collaborator-identity{min-width:0;}
+.collaborator-photo{width:52px;height:64px;object-fit:cover;object-position:center 20%;border-radius:4px;background:#fff;}
+.collaborator-affiliation{grid-column:1/-1;font-size:13px;line-height:1.6;color:var(--text-secondary);margin:0;padding-top:0;word-break:keep-all;}
 .collaborators-grid a:hover{background:color-mix(in srgb,var(--accent) 7%,transparent);border-color:color-mix(in srgb,var(--accent) 50%,var(--rule));transform:translateY(-3px);}
 .collaborators-grid a:hover .collaborator-arrow{color:var(--accent);opacity:1;}
 .collaborators-grid a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 @media(max-width:1100px){.collaborators{grid-template-columns:190px minmax(0,1fr);gap:32px;}.collaborators-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media(max-width:700px){.collaborators{grid-template-columns:1fr;gap:28px;padding-top:36px;}.collaborators-heading{position:static;}.collaborators-heading h2{font-size:34px;}.collaborators-heading h2 span:first-child{font-size:24px;}.collaborators-intro{max-width:320px;margin-top:18px;}.collaborators-grid{gap:10px;}.collaborators-grid a{padding:16px;min-height:140px;}.collaborators-grid h3{font-size:19px;}}
+@media(max-width:700px){.collaborators{grid-template-columns:1fr;gap:28px;padding-top:36px;}.collaborators-heading{position:static;}.collaborators-heading h2{font-size:34px;}.collaborators-heading h2 span:first-child{font-size:24px;}.collaborators-intro{max-width:320px;margin-top:18px;}.collaborators-grid{gap:10px;}.collaborators-grid a{padding:14px;min-height:160px;grid-template-columns:minmax(0,1fr) 40px;gap:14px 8px;}.collaborator-photo{width:40px;height:52px;}.collaborators-grid h3{font-size:19px;}}
 @media(prefers-reduced-motion:reduce){.collaborators-grid a{transition:none;}.collaborators-grid a:hover{transform:none;}}
 </style>

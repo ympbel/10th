@@ -4,146 +4,188 @@
     "name_en": "Chunjoo (Justin) Park",
     "affiliation": "Mayo Clinic",
     "affiliation_en": "Mayo Clinic",
-    "source": "https://www.mayoclinic.org/biographies/park-chunjoo-ph-d/bio-20534604"
+    "source": "https://www.mayoclinic.org/biographies/park-chunjoo-ph-d/bio-20534604",
+    "photo": "images/collaborators/person-00.jpg",
+    "photo_source": "https://college.mayo.edu/profile-images/30176661.jpg"
   },
   {
     "name": "손주영",
     "name_en": "Jooyoung (James) Sohn",
     "affiliation": "University of Chicago",
     "affiliation_en": "University of Chicago",
-    "source": "https://profiles.uchicago.edu/profiles/display/39504145"
+    "source": "https://profiles.uchicago.edu/profiles/display/39504145",
+    "photo": "images/collaborators/person-01.jpg",
+    "photo_source": "https://profiles.uchicago.edu/profiles/profile/Modules/CustomViewPersonGeneralInfo/PhotoHandler.ashx?NodeID=39504145&cachekey=08946397-8215-4e5d-a734-20ed756aed20"
   },
   {
     "name": "김태호",
     "name_en": "Taeho Kim",
     "affiliation": "Washington University in St. Louis",
     "affiliation_en": "Washington University in St. Louis",
-    "source": "https://radonc.wustl.edu/people/taeho-kim-phd/"
+    "source": "https://radonc.wustl.edu/people/taeho-kim-phd/",
+    "photo": "images/collaborators/person-02.jpg",
+    "photo_source": "https://radonc.wustl.edu/files/2019/03/Kim-Taeho_RadOnc_web-1axw114-280x386.jpg"
   },
   {
     "name": "장지석",
     "name_en": "Jee Suk Chang",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNMcDi34XFedrVaDNDRlIMAJD6A%2Fjr74JQ5A8t2tyeC0%3D"
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNMcDi34XFedrVaDNDRlIMAJD6A%2Fjr74JQ5A8t2tyeC0%3D",
+    "photo": "images/collaborators/person-03.jpg",
+    "photo_source": "https://cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqqFDBZAMSnqmh56KVhBioapMfiDkvzB%2BV0Mnf20oUliLPVwbduDPdEeGFuPxOs8SPHiPr6H9fAuq2W6fwuOSmIsXGD5mMqm5OOcVUe9oysgRGyfFK3gWGPPZpQeCt5tb2%2B4dWEHzoLNJ4bUtoL6uOr%2Bnnnn%2Byq%2F89OVRQ%3D%3D"
   },
   {
     "name": "윤홍인",
     "name_en": "Hong In Yoon",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://sev.severance.healthcare/sev/doctor/doctor-view.do?empNo=eXVoczIwMjBAKUApNMUCikAaFf5OVaDIDRNLMQra2FP55YY%2FSJJYy4idJZE%3D"
+    "source": "https://sev.severance.healthcare/sev/doctor/doctor-view.do?empNo=eXVoczIwMjBAKUApNMUCikAaFf5OVaDIDRNLMQra2FP55YY%2FSJJYy4idJZE%3D",
+    "photo": "images/collaborators/person-04.jpg",
+    "photo_source": "https://cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqmFDBZAMSnqmh56KVhCiIapMfiDkvzB%2BV0Mnf20oUliLPVwb9qCA9weAX6PxO48QvLjPr6H9fAuq2W6fwCKSmIsXGD5mMqm5OOcVUe9oysgRGyfFK3gWGPPZpQeCt5tb2%2B4dWEHzoLNJ4bUP5UHjOXyS%2BkZqbY6YMeb0Q%3D%3D"
   },
   {
     "name": "Steve Jiang",
     "name_en": "Steve Jiang",
     "affiliation": "UT Southwestern Medical Center",
     "affiliation_en": "UT Southwestern Medical Center",
-    "source": "https://profiles.utsouthwestern.edu/profile/150563/steve-jiang.html"
+    "source": "https://profiles.utsouthwestern.edu/profile/150563/steve-jiang.html",
+    "photo": "images/collaborators/person-05.jpg",
+    "photo_source": "https://profileplus.swmed.edu/facultydata/150563/images/jiang.png"
   },
   {
     "name": "박상준",
     "name_en": "Sangjoon Park",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApM%2Bkzi1oWFcd2VaDADRBLMR0SCVpmLhWCZs%2BLQeQmoqs%3D"
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApM%2Bkzi1oWFcd2VaDADRBLMR0SCVpmLhWCZs%2BLQeQmoqs%3D",
+    "photo": "images/collaborators/person-06.jpg",
+    "photo_source": "https://cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqqFDBZAMSnqmh56KVtCioapMfiDkvzB%2BV0Mnf20oUliLPXqgxsZ1wee8ay2n4V8HpGgAOe08fMnyBz4NRzNCnU%2B14tmKy9qfBdr1ttVOtjDNO5C4CYG9r1b1Ei12kCBlO1fiBGIB01VwlAWjBxEmoNGl%2BABvp9uNtZDFkdtK7JaFj83Day%2ByS2nZ5SKkuR7aRgtbRVQrG69%2BIyQYWra"
   },
   {
     "name": "오유진",
     "name_en": "Yujin Oh",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://medicine.yonsei.ac.kr/medicine/profile-view.do?empNo=eXVoczIwMjBAKUApNMECi0U3FcRyVaDADBNINn7E%2F4j9VaGvQSmi7RcMZ3c%3D"
+    "source": "https://medicine.yonsei.ac.kr/medicine/profile-view.do?empNo=eXVoczIwMjBAKUApNMECi0U3FcRyVaDADBNINn7E%2F4j9VaGvQSmi7RcMZ3c%3D",
+    "photo": "images/collaborators/person-07.jpg",
+    "photo_source": "https://medicine.yonsei.ac.kr/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqmFDBZAMSnrkxl0LVhEjoapMfiDkvzB%2BV0MnemprVtRF%2BrXtBMBwhS81Iq2sKx%2BALmcI9uu7NoL8huhPFzaGP7fo%2FZle0BeEG9qpDcoTue%2F96Ue0k5vwsET3Dza8TRd5YVV%2FMrbj5HXL4jUWcUenoxCg%2BAnqoNpeNxGWFl9bPNFTWR5Wv2%2BSJYx4kFtEK45R0bnWjt%2FXA%3D%3D"
   },
   {
     "name": "Harini Veeraraghavan",
     "name_en": "Harini Veeraraghavan",
     "affiliation": "Memorial Sloan Kettering Cancer Center",
     "affiliation_en": "Memorial Sloan Kettering Cancer Center",
-    "source": "https://www.mskcc.org/profile/harini-veeraraghavan"
+    "source": "https://www.mskcc.org/profile/harini-veeraraghavan",
+    "photo": "images/collaborators/person-08.jpg",
+    "photo_source": "https://www.mskcc.org/sites/default/files/styles/large/public/node/33628/3x2/harini-veeraraghavan_15_1200x800.jpg"
   },
   {
     "name": "백종덕",
     "name_en": "Jongduk Baek",
     "affiliation": "연세대학교 인공지능학과",
     "affiliation_en": "Yonsei University · Artificial Intelligence",
-    "source": "https://ee.yonsei.ac.kr/faculty/depMember.do?mode=view&userId=DtEOF1p2MpwGWs8dpzFcNA%3D%3D"
+    "source": "https://ee.yonsei.ac.kr/faculty/depMember.do?mode=view&userId=DtEOF1p2MpwGWs8dpzFcNA%3D%3D",
+    "photo": "images/collaborators/person-09.jpg",
+    "photo_source": "https://yonsei.elsevierpure.com/files-asset/19375173/A00481.jpg?w=160&f=jpg"
   },
   {
     "name": "이응만",
     "name_en": "Eungman Lee",
     "affiliation": "이화여자대학교 의과대학",
     "affiliation_en": "Ewha Womans University College of Medicine",
-    "source": "https://epm.ewha.ac.kr/researcher/1272"
+    "source": "https://epm.ewha.ac.kr/researcher/1272",
+    "photo": "images/collaborators/person-10.jpg",
+    "photo_source": "https://seoul.eumc.ac.kr/upload/doctor/info/6ec6a7a3c04949e78a96d7a53b760a86.jpg"
   },
   {
     "name": "조승룡",
     "name_en": "Seungryong Cho",
     "affiliation": "KAIST 원자력및양자공학과",
     "affiliation_en": "KAIST · Nuclear and Quantum Engineering",
-    "source": "https://pure.kaist.ac.kr/en/persons/seungryong-cho/"
+    "source": "https://pure.kaist.ac.kr/en/persons/seungryong-cho/",
+    "photo": "images/collaborators/person-11.jpg",
+    "photo_source": "https://pure.kaist.ac.kr/files-asset/7163218/1653.png?w=160&f=jpg"
   },
   {
     "name": "김정인",
     "name_en": "Jung-in Kim",
     "affiliation": "서울대학교병원",
     "affiliation_en": "Seoul National University Hospital",
-    "source": "https://snu.elsevierpure.com/en/persons/y-kim-124/"
+    "source": "https://snu.elsevierpure.com/en/persons/y-kim-124/",
+    "photo": "images/collaborators/person-12.jpg",
+    "photo_source": "https://snu.elsevierpure.com/files-asset/13959734/204_Kim_+Jung+In.jpg?w=160&f=jpg"
   },
   {
     "name": "안우상",
     "name_en": "Woo Sang Ahn",
     "affiliation": "울산대학교 의과대학 · 강릉아산병원",
     "affiliation_en": "University of Ulsan · Gangneung Asan Hospital",
-    "source": "https://www.gnah.co.kr/kor/CMS/DoctorMgr/view.do?docMode=viewMode&doctor_seq=123&mCode=MN092&sch_depart_code=RO"
+    "source": "https://www.gnah.co.kr/kor/CMS/DoctorMgr/view.do?docMode=viewMode&doctor_seq=123&mCode=MN092&sch_depart_code=RO",
+    "photo": "images/collaborators/person-13.png",
+    "photo_source": "https://www.gnah.co.kr/attach/IMAGE/DoctorMgr/SlidingImg/2019/11/EL8gTMeBlNhJK9cY.PNG"
   },
   {
     "name": "Paulo Fonte",
     "name_en": "Paulo Fonte",
     "affiliation": "ISEC · LIP, Portugal",
     "affiliation_en": "ISEC · LIP, Portugal",
-    "source": "https://www.cienciavitae.pt/portal/en/8214-923B-0408"
+    "source": "https://www.cienciavitae.pt/portal/en/8214-923B-0408",
+    "photo": "images/collaborators/person-14.jpg",
+    "photo_source": "https://www.comsol.fr/paper/download/210581/IberianCOMSOLConference.pdf"
   },
   {
     "name": "김용배",
     "name_en": "Yong Bae Kim",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApMuAmi0M%2BEtNGVa%2FIDBBIM8l%2BtPzK4ryhGDA490Jojdg%3D"
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApMuAmi0M%2BEtNGVa%2FIDBBIM8l%2BtPzK4ryhGDA490Jojdg%3D",
+    "photo": "images/collaborators/person-15.jpg",
+    "photo_source": "https://cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqmFDBZAMSnqmh56Kl9Aj4apMfiDkvzB%2BV0Mnf20oUliLPV2Sv6DAPgZLHaPy%2B49QfHhPr6H9fAuq2W8eQCFSmIsXGD5mMqm5OOcVUe9oysgRGyfFK3gWGPPZpQeCt5tb2%2B4dWEHzoLNJ4bU6H4czW%2BT4F666eycidAu8A%3D%3D"
   },
   {
     "name": "금웅섭",
     "name_en": "Woong Sub Koom",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=769&empNo=eXVoczIwMjBAKUApMuEui0ISFedbVa%2FNDRhLNphWqwjfV9OPZTZvBtq05L0%3D"
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=769&empNo=eXVoczIwMjBAKUApMuEui0ISFedbVa%2FNDRhLNphWqwjfV9OPZTZvBtq05L0%3D",
+    "photo": "images/collaborators/person-16.jpg",
+    "photo_source": "https://cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqqFDBZAMSnqmh56Kl9BjIapMfiDkvzB%2BV0Mnf20oUliLPV2S%2FaDAdQeGGuPy%2Bs8SfLkPr6H9fAuq2W8eQGLSmIsXGD5mMqm5OOcVUe9oysgRGyfFK3gWGPPZpQeCt5tb2%2B4dWEHzoLNJ4bUCypeqPEOGgaGnnt7%2Bx8wtQ%3D%3D"
   },
   {
     "name": "최서희",
     "name_en": "Seo Hee Choi",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://medicine.yonsei.ac.kr/news/press/report.do?articleNo=121248&mode=view"
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNOw6i10LFP5aVaDODRBJMUelf%2FgKSMHBn4NBQFtmOXE%3D",
+    "photo": "images/collaborators/person-17.jpg",
+    "photo_source": "https://cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqqFDBZAMSnqmhx3LVpKh4apMfiDkvzB%2BV0Mnf20oUliLPX5nDsXzAe1%2BZGqmJlBIpO%2BKdaQ7ME%2F6DvKGxzNCnU%2B0Kx%2FKyl%2BfAZf0cpBOtXChpBrn3k5KL1KyEi15kGfpexhgKLrOQoy0KsQoAiGYEnMYXdwr4V9K5p0WEpsIqIdUCsjArq%2BknD0Nd6VlPvPuqg0DQ892riocNmfHLggUS54AMJF"
   },
   {
     "name": "조재호",
     "name_en": "Jaeho Cho",
     "affiliation": "연세대학교 의과대학",
     "affiliation_en": "Yonsei University College of Medicine",
-    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=778&empNo=eXVoczIwMjBAKUApNPgWi0c7FPtOVa%2FJDBFINXwhk3dGjYVy%2BG%2BakzILgyE%3D"
+    "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=778&empNo=eXVoczIwMjBAKUApNPgWi0c7FPtOVa%2FJDBFINXwhk3dGjYVy%2BG%2BakzILgyE%3D",
+    "photo": "images/collaborators/person-18.jpg",
+    "photo_source": "https://cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqqFDBZAMSnqmh56KVtCioapMfiDkvzB%2BV0Mnf20oUliLPX7phMf%2FR%2BQ%2B4OHhop9OIa7J9ij%2BMcD%2FjjbKxzNCnU%2B14tmKy9qfBdr1ttVOtjDNOlTxSYb27xn7E6E6kCKke1fiBGIB01VwlAWjBxEmoNGl%2BABvp9uNtZDFkdtK7JaFj83Day%2ByS2nY5SLlOSl1F8asGOqMH3xxHioHinI"
   },
   {
     "name": "조연아",
     "name_en": "Yeona Cho",
     "affiliation": "연세대학교 의과대학 · 강남세브란스병원",
     "affiliation_en": "Yonsei University · Gangnam Severance Hospital",
-    "source": "https://gs-cancer.severance.healthcare/gs-cancer/doctor/doctor-view.do?empNo=eXVoczIwMjBAKUApNPgWi04nFfZyVaDLDRlINNPw8scK6iD24s5yYJccDHE%3D"
+    "source": "https://gs-cancer.severance.healthcare/gs-cancer/doctor/doctor-view.do?empNo=eXVoczIwMjBAKUApNPgWi04nFfZyVaDLDRlINNPw8scK6iD24s5yYJccDHE%3D",
+    "photo": "images/collaborators/person-19.jpg",
+    "photo_source": "https://gs-cancer.severance.healthcare/common/file/downloadFile.do?fileseq=eXVoczIwMjBAKUAp6WmIVum5yFHYMqmFDBZAMSnqmh9wKVdEhoapMfiDkvzB%2BV0Mnf20oUliLPXVnyggwxSb1auSlKxAHbORD%2FOly%2Fok6zX%2FLxzNCnU%2B14RXKyhTfB9n0P1dPPDvS%2BlTxSYSx71q0ITbzzzugZ4%2Fm9Y8SlEho15%2B6zHCwcNRhagi8LR7I8FKWlY3OrQdDH0%2FB6j2njKnYomMifvIpkxUJB36toCr%2FuINscZTF4o%3D"
   },
   {
     "name": "윤해전",
     "name_en": "Hai-Jeon Yoon",
     "affiliation": "이화여자대학교 의과대학",
     "affiliation_en": "Ewha Womans University College of Medicine",
-    "source": "https://pure.ewha.ac.kr/en/persons/hai-jeon-yoon/"
+    "source": "https://pure.ewha.ac.kr/en/persons/hai-jeon-yoon/",
+    "photo": "images/collaborators/person-20.jpg",
+    "photo_source": "https://pure.ewha.ac.kr/files-asset/11184937/153687.jpg?w=160&f=jpg"
   }
 ]
