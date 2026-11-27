@@ -131,7 +131,7 @@ const summary = (['joined', 'degrees', 'papers', 'presentations', 'awards', 'pro
       summary.map((item, i) => (
         <>
           {i > 0 && <span class="sep"> · </span>}
-          <a href={`#part-${item.part}`}>{item.before}<b>{item.n}</b>{item.after}</a>
+          <a href={`#part-${item.part}`}><span class="year-stat-label">{item.before}</span><span class="year-stat-value"><b>{item.n}</b>{item.after}</span></a>
         </>
       ))
     }

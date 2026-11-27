@@ -40,3 +40,47 @@
 .patent-review > p {margin-top:20px;color:var(--text-secondary);}
 .archive-edition .snb .tit { background-image:none !important; }
 .archive-edition .snb .tit::before, .archive-edition .vNav a::before { display:none; }
+
+/* Year pages use the full-width archive layout, rather than the legacy side rail. */
+.archive-edition .side .year-tabs ul { flex-direction:row;flex-wrap:wrap;gap:8px 20px;padding:0; }
+.archive-edition .side .year-tabs li { flex:0 0 auto;margin:0; }
+.archive-edition .side .year-tabs a { width:auto;min-width:52px;padding:12px 8px;text-align:center; }
+
+/* History: a quiet year selector, prominent date and linked annual figures. */
+.history-edition .sub_visual {padding:38px 0 42px;}
+.history-edition .edition-masthead {font-size:clamp(44px,6vw,72px);letter-spacing:-.05em;}
+.history-edition .side .year-tabs {padding:22px 0;margin:0;border-bottom:1px solid var(--rule);}
+.history-edition .side .year-tabs ul {gap:6px;justify-content:space-between;}
+.history-edition .side .year-tabs a {padding:12px 14px;min-width:62px;border-radius:6px;color:var(--text-secondary);font-size:14px;transition:background .2s,color .2s;}
+.history-edition .side .year-tabs a:hover {background:var(--surface-alt);color:var(--text-primary);}
+.history-edition .side .year-tabs a[aria-current=page] {background:var(--accent);color:var(--page-bg);box-shadow:none;}
+.history-edition .cnt_head {margin-top:38px;align-items:flex-end;}
+.history-edition .cnt_title {font-size:clamp(56px,7vw,88px);line-height:1;letter-spacing:-.055em;}
+.history-edition .contents {margin-top:30px;}
+.history-edition .year-summary {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;background:none;padding:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.history-edition .year-summary .sep {display:none;}
+.history-edition .year-summary a {display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:22px 24px;color:var(--text-secondary);font-size:13px;transition:background .2s;}
+.history-edition .year-summary a+a {border-left:1px solid var(--rule);}
+.history-edition .year-summary a:hover {background:var(--surface-alt);}
+.history-edition .year-stat-label {font-size:14px;}
+.history-edition .year-stat-value {display:flex;align-items:baseline;gap:5px;}
+.history-edition .year-summary b {font-size:34px;line-height:1.2;font-weight:500;color:var(--accent);}
+.history-edition .yr-part {margin-top:48px;scroll-margin-top:24px;}
+.history-edition .yr-part>h2 {font-size:24px;font-weight:500;padding-bottom:16px;border-bottom:1px solid var(--rule);color:var(--text-primary);}
+.history-edition .yr-names {gap:10px 24px;padding:18px 0;}
+.history-edition .yr-names .name {border:0;padding:0;color:var(--text-primary);font-size:16px;}
+.history-edition .yr-list>li {padding-top:22px;padding-bottom:22px;}
+.history-edition .yr-papers>li::before {top:22px;}
+@media(max-width:700px){
+ .history-edition .sub_visual {padding:32px 0;}
+ .history-edition .side .year-tabs ul {justify-content:flex-start;gap:4px;}
+ .history-edition .side .year-tabs a {padding:10px 12px;min-width:54px;}
+ .history-edition .cnt_head {margin-top:28px;}
+ .history-edition .year-summary {grid-template-columns:repeat(3,minmax(0,1fr));}
+ .history-edition .year-summary a {padding:18px 14px;}
+ .history-edition .year-summary a:nth-of-type(4) {border-left:0;}
+ .history-edition .year-summary a:nth-of-type(n+4) {border-top:1px solid var(--rule);}
+ .history-edition .yr-part {margin-top:36px;}
+}
+html[data-theme] body.history-edition .side .year-tabs a[aria-current=page] {color:var(--page-bg);}
+.history-edition .contents .yr-part>h2 {border-bottom:1px solid var(--rule);font-size:24px;}

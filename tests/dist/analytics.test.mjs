@@ -40,7 +40,7 @@ test('requested summary details, timeline display and removed guidance are refle
  for(const prefix of ['', 'en/']){
   const home=page(prefix);
   assert.match(home('.figure-secondary').first().text(),/22/);
-  assert.match(home('.figure-secondary').last().text(),/508\.5/);
+  assert.ok(home('.figure-secondary').last().text().includes(d.publications.tot.ifsum.toFixed(1)));
   const timeline=page(prefix+'people/timeline');
   assert.equal(timeline('.is-estimated,.timeline-estimate-key').length,0);
   assert.equal(timeline('.member-timeline-bar').text().trim(),'');

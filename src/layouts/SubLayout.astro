@@ -38,7 +38,7 @@ const editionTitles: Record<string, string> = {publication:'Research in print.',
 const chapter = chapters.find((entry) => entry.path === (side === 'years' ? '/years/' : currentHref));
 ---
 
-<BaseLayout title={title} locale={locale} bodyClass={peopleEdition ? 'edition-board people-edition ' + (studentsEdition ? 'students-edition' : 'alumni-edition') : 'edition-board archive-edition'}>
+<BaseLayout title={title} locale={locale} bodyClass={peopleEdition ? 'edition-board people-edition ' + (studentsEdition ? 'students-edition' : 'alumni-edition') : 'edition-board archive-edition' + (side === 'years' ? ' history-edition' : '')}>
   <slot name="opening" />
   {!Astro.slots.has('opening') && <div class="sub_visual" style={`background-image:url(${url('/images/site/sub_visual.jpg')})`}>
     <div class="wrap">

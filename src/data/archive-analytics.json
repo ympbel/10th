@@ -1013,12 +1013,12 @@
       2026
     ],
     "tot": {
-      "n": 163,
+      "n": 164,
       "sci": 136,
-      "ifsum": 508.5,
+      "ifsum": 509.5,
       "ifmean": 3.74,
       "ifmax": 15.1,
-      "jn": 52,
+      "jn": 53,
       "corr": 32,
       "cocorr": 51,
       "corrIF": 299.4,
@@ -1487,7 +1487,7 @@
         "cit": 8
       }
     ],
-    "journalsTotal": 52,
+    "journalsTotal": 53,
     "schYear": [
       {
         "y": 2016,
