@@ -12,12 +12,12 @@ for(const prefix of ['', 'en/']) {
    const roster=koRoster(selector).map((_,el)=>text(koRoster(el))).get();
    const actual=$(`#voices-${key} .comment-name`).map((_,el)=>text($(el))).get();
    assert.deepEqual(actual,roster.filter(name=>actual.includes(name)));
-   assert.equal($(`#voices-${key} article.comment`).length,key==='faculty'?7:12);
+   assert.equal($(`#voices-${key} article.comment`).length,key==='faculty'?7:13);
    assert.ok(rosterPage(selector).length);
   }
-  assert.equal($('.comment').length,22);
+  assert.equal($('.comment').length,23);
   assert.equal($('#voices-editors .comment').length,3);
-  assert.equal(new Set($('.comment').map((_,el)=>$(el).attr('id')).get()).size,22);
+  assert.equal(new Set($('.comment').map((_,el)=>$(el).attr('id')).get()).size,23);
  });
  test(`${prefix || 'ko/'}: student cards omit undergraduate majors and show updated programs`,()=>{
   const $=page(prefix+'people/students');
