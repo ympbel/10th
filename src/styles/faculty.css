@@ -22,3 +22,17 @@
 .faculty-photo .member-portrait{aspect-ratio:auto;object-fit:cover;background:transparent;}
 .people-edition .students-cover-portraits .member-portrait{aspect-ratio:auto;object-fit:cover;background:transparent;}
 @media(max-width:700px){.faculty-profile{grid-template-columns:1fr;}.faculty-photo{max-width:236px;}}
+
+.faculty-lab{display:grid;grid-template-columns:1fr auto;gap:7px 20px;max-width:450px;padding:18px 0;margin-top:26px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);color:var(--text-primary);text-decoration:none;}
+.faculty-lab>span{grid-column:1/-1;color:var(--text-secondary);font-size:13px;}
+.faculty-lab strong{font-size:19px;font-weight:500;}
+.faculty-lab small{font-size:13px;color:var(--text-secondary);align-self:center;overflow-wrap:anywhere;}
+.faculty-lab:hover strong{color:var(--accent);}
+
+
+.faculty-team-link{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin:-12px 0 28px;}
+.faculty-team-link>span{font-size:12px;color:var(--text-secondary);}
+.faculty-team-link a{display:flex;align-items:center;gap:14px;padding:10px 16px;border:1px solid var(--rule);border-radius:4px;color:var(--text-primary);font-size:14px;text-decoration:none;transition:border-color .2s,color .2s;}
+.faculty-team-link a:hover{border-color:var(--accent);color:var(--accent);}
+.faculty-team-link small{font-size:12px;color:var(--text-secondary);}
+@media(max-width:700px){.faculty-team-link{justify-content:flex-start;flex-wrap:wrap;gap:8px;margin:0 0 24px;}.faculty-team-link a{flex-wrap:wrap;gap:6px 14px;}.faculty-lab{grid-template-columns:1fr;}.faculty-lab>span{grid-column:auto;}}

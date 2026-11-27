@@ -24,7 +24,7 @@ interface Props {
 const { locale, counts, years } = Astro.props;
 const members=await getCollection('members');
 const seminars=await getCollection('seminars');
-const comments=(await getCollection('comments')).sort((a,b)=>a.id.localeCompare(b.id));
+const comments=(await getCollection('comments')).filter(c=>c.data.name!=='김진성').sort((a,b)=>a.id.localeCompare(b.id));
 const albums = new Set<string>();
 const photos = sortPhotos(await getCollection('photos')).filter((photo) => {
   const album = photo.data.date + ':' + photo.data.caption;

@@ -48,7 +48,7 @@ const photoKinds = [...new Set(photos.map((p) => scalar(p.fm, 'kind')))];
 
 for (const [lang, prefix] of LANGS) {
   for (const { collection, path, item } of BOARDS) {
-    const n = entries(collection).length;
+    const n = entries(collection).filter(e=>collection!=='comments'||scalar(e.fm,'name')!=='김진성').length;
 
     test(`${lang} ${collection}: ${n === 0 ? 'the empty state with the record format' : `${n} records, no empty state`}`, () => {
       assert.ok(exists(prefix + path), `${prefix + path}/index.html`);
@@ -89,7 +89,7 @@ for (const [lang, prefix] of LANGS) {
   test(`${lang} comments: letters replace setup guidance`, () => {
     const $ = page(`${prefix}archive/comments`);
     assert.equal($('#how-to-leave').length,0);
-    assert.equal($('.voice-letter').length,entries('comments').length);
+    assert.equal($('.voice-letter').length,entries('comments').filter(e=>scalar(e.fm,'name')!=='김진성').length);
   });
 }
 

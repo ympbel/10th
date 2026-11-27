@@ -25,7 +25,11 @@
     ],
     "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApMuAmikEvFcRyVaDIDRlJM9%2BBpx6Yv8bh3yj3PZjn0%2Fs%3D",
     "position_en": "Associate Professor",
-    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center",
+    "lab": {
+      "name": "LESSON Lab",
+      "url": "https://lesson.yonsei.ac.kr"
+    }
   },
   "member-65": {
     "position": "연구교수",
@@ -62,7 +66,11 @@
     ],
     "source": "https://gs-cancer.severance.healthcare/gs-cancer/doctor/doctor-view.do?deptSeq=702&empNo=eXVoczIwMjBAKUApMuAmi34XFPh%2BVaDLDRBIMpFD0ddE9ooSzqDjTVWxbag%3D",
     "position_en": "Assistant Professor",
-    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Gangnam Severance Hospital"
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Gangnam Severance Hospital",
+    "lab": {
+      "name": "HEART Lab",
+      "url": "https://heartlab.yonsei.ac.kr"
+    }
   },
   "member-68": {
     "position": "임상조교수",
@@ -75,7 +83,11 @@
     ],
     "source": "https://cancer.severance.healthcare/cancer/doctor/doctor-view.do?deptSeq=247&empNo=eXVoczIwMjBAKUApNcw6jHYrFdFWVaDPDRdLMQKYpDflkdfdCzagD4iQi9E%3D",
     "position_en": "Clinical Assistant Professor",
-    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center"
+    "affiliation_en": "Department of Radiation Oncology, Yonsei University College of Medicine · Yonsei Cancer Center",
+    "lab": {
+      "name": "MC Laboratory",
+      "url": "https://mclaboratory.yonsei.ac.kr"
+    }
   },
   "jin-sung-kim": {
     "position": "교수",

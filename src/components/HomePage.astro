@@ -11,6 +11,7 @@ import '../styles/home-refresh.css';
 import '../styles/voices.css';
 import { voiceGroups } from '../lib/voices.ts';
 import Hero from './home/Hero.astro';
+import FounderLetter from './home/FounderLetter.astro';
 import Figures from './home/Figures.astro';
 import Intro from './home/Intro.astro';
 import Timeline from './home/Timeline.astro';
@@ -152,7 +153,7 @@ const boardCounts: Record<ItemKey, number> = {
   projects: projects.length,
   seminars: seminars.length,
   photos: photos.length,
-  comments: comments.length,
+  comments: groupedVoices.reduce((n,g)=>n+g.rows.length,0),
 };
 const boards = MENU.flatMap((section) =>
   section.items.map((item) => ({ href: href(item.href), label: item.label[locale], count: boardCounts[item.key] })),
@@ -168,6 +169,7 @@ const boards = MENU.flatMap((section) =>
     <Figures items={figures} />
   </div>
   <EditionContents locale={locale} counts={boardCounts} years={years} />
+  <FounderLetter locale={locale} />
   <Timeline years={years} selected={latest} locale={locale}>
     <YearPanel panels={panels} selected={latest} locale={locale} />
   </Timeline>

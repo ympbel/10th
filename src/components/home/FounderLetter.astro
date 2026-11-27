@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from 'astro:content';
+import MemberPortrait from '../people/MemberPortrait.astro';
+import type { Locale } from '../../lib/locale';
+const {locale}=Astro.props as {locale:Locale};
+const letter=(await getCollection('comments')).find(c=>c.data.name==='김진성');
+if(!letter)throw new Error('Missing founder letter');
+const {Content}=await render(letter);
+const opening=letter.body?.trim().split(/\n\s*\n/)[0];
+---
+<section class="wrap founder-letter" id="founder-message" aria-labelledby="founder-title">
+ <div class="founder-person"><MemberPortrait id="jin-sung-kim" size="card" natural /><p>{locale==='ko'?'지도교수 김진성':'Jin Sung Kim · Principal investigator'}</p></div>
+ <div class="founder-copy"><span>FROM THE FOUNDER</span><h2 id="founder-title">{locale==='ko'?'함께한 10년, 앞으로의 10년':'Ten years together. The next chapter.'}</h2><p class="founder-opening" lang="ko">{opening}</p><details open><summary>{locale==='ko'?'김진성 교수님의 메시지 전문':'Read the full message'}</summary><div class="founder-full" lang="ko"><Content /></div></details></div>
+</section>
+<style>
+.founder-letter{display:grid;grid-template-columns:180px minmax(0,1fr);gap:48px;padding-top:56px;padding-bottom:56px;border-top:1px solid var(--rule);}
+.founder-person :global(img){width:100%;height:auto;display:block;}
+.founder-person p{font-size:14px;color:var(--text-secondary);margin-top:16px;}
+.founder-copy>span{font-size:12px;letter-spacing:.12em;color:var(--accent);}
+.founder-copy h2{font-size:32px;font-weight:500;line-height:1.4;margin:12px 0 24px;}
+.founder-opening,.founder-full{font-size:16px;line-height:1.95;color:var(--text-primary);}
+.founder-copy:has(details[open]) .founder-opening{display:none;}
+.founder-copy summary{display:list-item;cursor:pointer;font-size:14px;color:var(--accent);padding:20px 0;}
+.founder-full :global(p){margin-bottom:24px;}
+@media(max-width:700px){.founder-letter{grid-template-columns:1fr;gap:24px;padding-top:36px;padding-bottom:36px;}.founder-person{display:flex;gap:20px;align-items:center;}.founder-person :global(img){width:90px;}.founder-copy h2{font-size:26px;}}
+</style>

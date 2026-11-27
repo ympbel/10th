@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import SubLayout from '../../layouts/SubLayout.astro';
 import MemberPortrait from './MemberPortrait.astro';
+import FacultyMoments from './FacultyMoments.astro';
 import profiles from '../../profiles/faculty.json';
 import { displayName, otherName } from '../../lib/people.ts';
 import type { Locale } from '../../lib/locale.ts';
@@ -13,7 +14,7 @@ const { locale } = Astro.props;
 const s = t(locale);
 const professors = (await getCollection('members', (m) => m.data.role === 'professor'))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
-type Profile = { position: string; position_en?: string; affiliation: string; affiliation_en?: string; research: string; research_en?: string; bio: string; bio_en?: string; education: string[]; education_en?: string[]; source: string; email?: string };
+type Profile = { position: string; position_en?: string; affiliation: string; affiliation_en?: string; research: string; research_en?: string; bio: string; bio_en?: string; education: string[]; education_en?: string[]; source: string; lab?: { name: string; url: string }; email?: string };
 const profileOf = (id: string) => (profiles as Record<string, Profile>)[id];
 const localized = (profile: Profile, key: 'position' | 'affiliation' | 'research' | 'bio') => locale === 'en' ? profile[key + '_en' as keyof Profile] as string || profile[key] : profile[key];
 ---
@@ -21,6 +22,8 @@ const localized = (profile: Profile, key: 'position' | 'affiliation' | 'research
   <div slot="cover" class="students-cover-portraits" aria-hidden="true">
     {professors.slice(0, 3).map((m) => <MemberPortrait id={m.id} size="card" fit="cover" natural />)}
   </div>
+  <div class="faculty-team-link"><span>{locale==='ko'?'함께하는 임상 팀':'Clinical team'}</span><a href="https://medphy.tistory.com" target="_blank" rel="noopener noreferrer">{locale==='ko'?'연세암병원 의학물리팀':'Yonsei Cancer Center Medical Physics Team'}<small>medphy.tistory.com</small></a></div>
+  <FacultyMoments locale={locale} />
   <ul class="faculty-list professors">
     {professors.map((member) => {
       const profile = profileOf(member.id);
@@ -38,10 +41,12 @@ const localized = (profile: Profile, key: 'position' | 'affiliation' | 'research
             {localized(profile, 'research') && <section><h3>{locale === 'ko' ? '연구·강의 분야' : 'Research & teaching'}</h3><p>{localized(profile, 'research')}</p></section>}
             {education.length > 0 && <section><h3>{locale === 'ko' ? '학력' : 'Education'}</h3><ul>{education.map((item) => <li>{item}</li>)}</ul></section>}
           </div>
+          {profile.lab && <a class="faculty-lab" href={profile.lab.url} target="_blank" rel="noopener noreferrer"><span>{locale === 'ko' ? '연구실' : 'Research lab'}</span><strong>{profile.lab.name}</strong><small>{new URL(profile.lab.url).hostname}</small></a>}
           {profile.email && <a class="faculty-email" href={'mailto:' + profile.email}>{profile.email}</a>}
           {(member.data.link || profile.source) && <a class="faculty-source" href={profile.source || member.data.link} target="_blank" rel="noopener">{locale === 'ko' ? '공식 소개 보기' : 'Official profile'} ↗</a>}
         </div>
       </li>;
     })}
   </ul>
+
 </SubLayout>

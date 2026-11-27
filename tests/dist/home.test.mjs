@@ -49,7 +49,7 @@ const BOARDS = [
   count('projects'),
   count('seminars'),
   count('photos'),
-  count('comments'),
+  frontmatters('comments').filter(fm=>scalar(fm,'name')!=='김진성').length,
 ];
 
 /** `slogan` of pages/<lang>/home.md. */
@@ -170,3 +170,10 @@ for (const [lang, path, prefix] of [
     );
   });
 }
+
+test('founder message moves to the history home without losing the full letter',()=>{
+ const $=page('');
+ assert.equal($('#founder-message').length,1);
+ assert.ok($('#founder-message .founder-full').text().includes('참 고마운 10년이었습니다'));
+ assert.ok(!page('archive/comments')('.comment-name').toArray().some(el=>page('archive/comments')(el).text()==='김진성'));
+});

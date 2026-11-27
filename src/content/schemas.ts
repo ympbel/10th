@@ -208,6 +208,7 @@ export const photoSchema = z
 /** One comment (the body is the message). */
 export const commentSchema = z
   .object({
+    group: z.enum(['editor']).optional(),
     name: z.string().min(1),
     date,
   })

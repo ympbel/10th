@@ -98,7 +98,7 @@ test('latest roster, new alumni letters, funding explanation and default expande
   assert.equal(faculty('[data-member=member-69]').length,0);
   const voices=page(prefix+'archive/comments');
   for(const name of ['천재희','최병수','박인경'])assert.ok(voices('#voices-alumni').text().includes(name));
-  assert.equal(voices('#voices-alumni .voice-letter').length,10);
+  assert.equal(voices('#voices-alumni .voice-letter').length,12);
   assert.equal(page(prefix)('.home-member-timeline[open]').length,1);
   assert.ok(page(prefix+'projects')('.funding-context').text().includes('공동으로 함께 연구한 의학물리 교수님들의 총 연구비 정보입니다.'));
  }

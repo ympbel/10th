@@ -27,3 +27,5 @@
 
 .voices-letters .md-body p {white-space:pre-line;}
 .voices-group-nav{display:flex;gap:12px;padding:28px 0;}.voices-group-nav a{padding:12px 20px;border:1px solid var(--rule);color:var(--text-primary);font-size:15px;}.voices-group-nav span{margin-left:16px;color:var(--accent);}.voices-group{scroll-margin-top:24px;margin-top:30px;}.voices-group-title{font-size:28px;font-weight:400;padding:20px 0;border-top:1px solid var(--rule);}.voices-group + .voices-group{margin-top:80px;}.home-voices-group{margin-top:42px;}.home-voices-group h3 a{color:var(--text-primary);font-size:20px;}.home-voices-group .home-voices{margin-top:24px;}
+
+.voices-group-nav{flex-wrap:wrap;}
