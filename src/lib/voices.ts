@@ -16,6 +16,6 @@ export function voiceGroups(comments: Comment[],members: Member[]) {
  return [
   {key:'faculty',ko:'교수진 코멘트',en:'Faculty voices',rows:rows.filter(c=>c.data.group!=='editor' && c.member?.data.role==='professor').sort((a,b)=>(a.member!.data.order ?? 999)-(b.member!.data.order ?? 999))},
   {key:'alumni',ko:'졸업생 코멘트',en:'Alumni voices',rows:rows.filter(c=>c.data.group!=='editor' && c.member?.data.role==='alumni').sort((a,b)=>compareAlumni(a.member!,b.member!))},
-  {key:'editors',ko:'10주년을 준비하며',en:'Preparing for our 10th anniversary',rows:rows.filter(c=>c.data.group==='editor').sort((a,b)=>['윤용도','박예인','석재현'].indexOf(a.data.name)-['윤용도','박예인','석재현'].indexOf(b.data.name))},
+  {key:'editors',ko:'10주년을 준비하며',en:'Preparing for our 10th anniversary',rows:rows.filter(c=>c.data.group==='editor').sort((a,b)=>['박예인','윤용도','석재현'].indexOf(a.data.name)-['박예인','윤용도','석재현'].indexOf(b.data.name))},
  ];
 }
